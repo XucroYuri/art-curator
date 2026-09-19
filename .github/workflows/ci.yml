@@ -1,0 +1,23 @@
+name: Pure Python tests
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  gallery:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: astral-sh/setup-uv@v6
+      - name: Install only the test runner (no project, torch or CUDA)
+        run: |
+          uv venv --python 3.12 .venv-ci
+          uv pip install --python .venv-ci/bin/python pytest==8.4.2
+      - name: Verify isolated CPU-only environment
+        run: .venv-ci/bin/python -c "import importlib.util; assert importlib.util.find_spec('torch') is None"
+      - name: Test stdlib-only gallery generator
+        run: .venv-ci/bin/python -m pytest tests/test_build_gallery.py -q

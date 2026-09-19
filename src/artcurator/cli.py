@@ -1,0 +1,69 @@
+"""Argparse command boundary and local-only pipeline orchestration."""
+import argparse
+import logging
+import sys
+import time
+from pathlib import Path
+
+from . import db
+from .config import ROOT, confine_writes, environment, load, output_path
+
+
+def main() -> None:
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("command", choices=["scan", "score", "cluster", "report", "run-all", "previews"])
+    parser.add_argument("--input", type=Path)
+    parser.add_argument("--out", type=Path)
+    parser.add_argument("--limit", type=int)
+    parser.add_argument("--config", type=Path, default=ROOT / "config.yaml")
+    parser.add_argument("--pass", dest="only", choices=["siglip", "aes_v25", "topiq_iaa", "topiq_nr", "qrealign", "nsfw_prob"])
+    args = parser.parse_args()
+    settings = load(args.config)
+    updates = {"out": output_path(args.out or settings.out)}
+    if args.input:
+        updates["input"] = args.input.absolute()
+    settings = settings.model_copy(update=updates)
+    if args.limit is not None and args.limit < 1:
+        parser.error("--limit must be positive")
+    settings.out.mkdir(parents=True, exist_ok=True)
+    environment(settings.out)
+    confine_writes()
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s",
+                        handlers=[logging.FileHandler(settings.out / "run.log", encoding="utf-8"), logging.StreamHandler()])
+    started = time.perf_counter()
+    logging.info("command start name=%s limit=%s out=%s", args.command, args.limit, settings.out)
+    try:
+        from .cluster import cluster
+        from .report import report
+        from .scan import scan
+        from .score import score
+        from .previews import previews
+        match args.command:
+            case "previews":
+                previews(settings)
+            case "scan":
+                scan(settings, args.limit)
+            case "score":
+                score(settings, args.only)
+            case "cluster":
+                cluster(settings)
+            case "report":
+                report(settings)
+            case "run-all":
+                scan(settings, args.limit)
+                score(settings)
+                cluster(settings)
+                label = "smoke" if args.limit else "full"
+                db.meta(settings.out, label + "_wall_seconds", str(time.perf_counter() - started))
+                report(settings)
+        logging.info("command complete name=%s wall_seconds=%.3f", args.command, time.perf_counter() - started)
+    except Exception:
+        # Broad catch at CLI boundary only: full traceback is logged and surfaced.
+        logging.exception("command failed name=%s", args.command)
+        raise
+
+
+if __name__ == "__main__":
+    main()
