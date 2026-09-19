@@ -37,9 +37,9 @@ def verify(out: Path, expected: int) -> None:
         rows = list(reader)
     assert len(rows) == expected, (len(rows), expected)
     allowed = {"uncertain", "gaming_suspect", "nsfw", "id_low", "near_dup_runnerup", "audit_sample"}
-    numeric = list(db.COLUMNS[9:20])
+    numeric = list(db.COLUMNS[9:db.COLUMNS.index("flags")])
     for row in rows:
-        for key in ("aes_v25", "topiq_iaa", "topiq_nr", "qrealign", "nsfw_prob", "identity_sim", "novelty", "consensus_z", "disagreement"):
+        for key in ("aes_v25", "topiq_iaa", "topiq_nr", "qrealign", "hpsv3_mu", "hpsv3_sigma", "nsfw_prob", "identity_sim", "novelty", "consensus_z", "disagreement"):
             assert row[key] != "", (row["sha16"], key, "missing required score")
         for key in numeric:
             assert not row[key] or math.isfinite(float(row[key])), (row["sha16"], key)
@@ -77,13 +77,16 @@ def verify(out: Path, expected: int) -> None:
     for row in originals:
         with Path(row.abs_path).open("rb") as handle:
             assert hashlib.file_digest(handle, "sha256").hexdigest() == row.sha256, row.abs_path
-    quality = np.array([[float(r[k]) for k in ("aes_v25", "topiq_iaa", "topiq_nr", "qrealign")] for r in rows])
+    quality = np.array([[float(r[k]) for k in ("aes_v25", "topiq_iaa", "topiq_nr", "qrealign", "hpsv3_mu")] for r in rows])
     deviation = quality.std(axis=0, ddof=0)
     standardized = (quality - quality.mean(axis=0)) / np.where(deviation > 1e-12, deviation, 1)
     mean = standardized.mean(axis=1)
     expected_consensus = (mean - mean.mean()) / (mean.std(ddof=0) or 1)
     assert np.allclose(expected_consensus, [float(r["consensus_z"]) for r in rows])
-    assert np.allclose(standardized.std(axis=1), [float(r["disagreement"]) for r in rows])
+    sigma = np.array([float(r["hpsv3_sigma"]) for r in rows])
+    assert (sigma >= 0).all()
+    native = (sigma / deviation[-1]) ** 2 / 5 if deviation[-1] > 1e-12 else np.zeros(len(rows))
+    assert np.allclose(np.sqrt(standardized.var(axis=1) + native), [float(r["disagreement"]) for r in rows])
     sample_size = sum(int(r["sha16"][:8], 16) % 5 == 0 for r in rows)
     assert sample_size == sum(bool(r["gaming_delta"]) for r in rows)
     result = {"csv_rows": len(rows), "sqlite_rows": count, "thumbs": len(list((out / "thumbs").glob("*.jpg"))),

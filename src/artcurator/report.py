@@ -38,9 +38,15 @@ def report(settings: Settings) -> None:
                "## Family size distribution (number of families; disjoint bins)",
                *[f"- {k}: {v}" for k, v in distribution.items()], "",
                "## CSV scorer schema",
-               "`qrealign` immediately follows `topiq_nr`; all other frozen columns retain their order. "
+               "`qrealign` immediately follows `topiq_nr`; `hpsv3_mu`, `hpsv3_sigma` follow `qrealign`. "
+               "All existing columns retain their relative order. "
                "Q-ReAlign-Mini (0.8B), official pyiqa quality task, higher is better [0,1]; "
-               "all four scorers contribute equally after population standardization.",
+               "Five quality means contribute equally after population standardization (legacy missing scores skipped). "
+               "HPSv3 sigma is exp(raw head channel 1), not a sixth score. "
+               "disagreement = sqrt(population variance of available scorer z-values + "
+               "(hpsv3_sigma / population_sd(hpsv3_mu))^2 / number_of_available_scorers). "
+               "Native variance is omitted when HPS is absent or its population SD <= 1e-12. "
+               "The unchanged uncertain threshold applies once to this combined signal.",
                "Conservative: queue >= P90 with unchanged gates; review >= P75 or flagged; "
                "unflagged below P75 are archive candidates. Routes take precedence. "
                "Would-be archive candidates with int(sha16[:8],16) % 20 == 0 get audit_sample and review.", "",
@@ -55,7 +61,9 @@ def report(settings: Settings) -> None:
     summary.extend(f"| {name} | {sec:.3f} | {n} | {cached} | {sec / max(n, 1):.5f} | {load:.3f} |"
                    for name, sec, n, cached, load in timings)
     summary += ["", "## Wall clock", *[f"- {k}: {v}" for k, v in metadata.items() if "wall" in k], "",
-                "## Model names, immutable revisions, preprocessing",
+                 "## HPSv3 cost, VRAM and paired tier shifts", "```json",
+                 json.dumps(json.loads(metadata.get("hpsv3_measurements", "{}")), indent=2), "```", "",
+                 "## Model names, immutable revisions, preprocessing",
                 *[f"- {k}: `{v}`" for k, v in metadata.items() if k.startswith("model_")], "",
                 "## License", "pyiqa: PolyForm Noncommercial 1.0.0; personal/research pilot only. "
                 "Applicable NTU S-Lab components and individual model licenses also apply.", "",
@@ -72,7 +80,8 @@ def report(settings: Settings) -> None:
                 "## Read-only / pixel-only evidence",
                 "Python audit hook rejects filesystem writes outside the project. PNG ancillary payloads are seek-skipped "
                 "before Pillow decode; only critical chunks and tRNS pixel transparency reach Pillow. "
-                "All models receive RGB pixels/tensors, never paths, names, metadata, or text. Raw-file SHA is only an I/O "
+                 "Models receive RGB pixels/tensors, never source paths, names, metadata, or image-specific text. "
+                 "HPSv3 uses an empty image-specific prompt plus its fixed upstream instruction/reward token. Raw-file SHA is only an I/O "
                 "identity and prescribed sampling/tie-break key. Library caches and temporary files stay inside out/cache.", "",
                 "## Fallbacks / deviations",
                 "- Main environment retains transformers<5 for measured aesthetic-score compatibility; "

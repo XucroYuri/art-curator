@@ -18,8 +18,11 @@ def main() -> None:
     parser.add_argument("--out", type=Path)
     parser.add_argument("--limit", type=int)
     parser.add_argument("--config", type=Path, default=ROOT / "config.yaml")
-    parser.add_argument("--pass", dest="only", choices=["siglip", "aes_v25", "topiq_iaa", "topiq_nr", "qrealign", "nsfw_prob"])
+    parser.add_argument("--pass", dest="only", choices=["siglip", "aes_v25", "topiq_iaa", "topiq_nr", "qrealign", "hpsv3", "nsfw_prob"])
+    parser.add_argument("--max-new", type=int, default=0, help="HPSv3 new-content budget; 0 means unlimited")
     args = parser.parse_args()
+    if args.max_new < 0 or (args.max_new and (args.command != "score" or args.only != "hpsv3")):
+        parser.error("--max-new must be nonnegative and is only valid for score --pass hpsv3")
     settings = load(args.config)
     updates = {"out": output_path(args.out or settings.out)}
     if args.input:
@@ -46,7 +49,7 @@ def main() -> None:
             case "scan":
                 scan(settings, args.limit)
             case "score":
-                score(settings, args.only)
+                score(settings, args.only, args.max_new)
             case "cluster":
                 cluster(settings)
             case "report":

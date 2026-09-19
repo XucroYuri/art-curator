@@ -24,10 +24,15 @@ def saturated(image: Image.Image) -> Image.Image:
     return ImageEnhance.Color(image).enhance(1.15)
 
 
-def score(settings: Settings, only: str | None = None) -> None:
+def score(settings: Settings, only: str | None = None, max_new: int = 0) -> None:
     rows = db.load_rows(settings.out)
-    names = [only] if only else ["siglip", "aes_v25", "topiq_iaa", "topiq_nr", "qrealign", "nsfw_prob"]
+    names = [only] if only else ["siglip", "aes_v25", "topiq_iaa", "topiq_nr", "qrealign", "hpsv3", "nsfw_prob"]
     for name in names:
+        if name == "hpsv3":
+            subprocess.run([str(ROOT / ".venv-hpsv3/Scripts/python.exe"), "-m", "artcurator.hpsv3_worker",
+                            "--out", str(settings.out), "--max-new", str(max_new)], check=True, cwd=ROOT)
+            rows = db.load_rows(settings.out)
+            continue
         if name == "qrealign":
             subprocess.run([str(ROOT / ".venv-qrealign/Scripts/python.exe"), "-m", "artcurator.qrealign_worker",
                             "--out", str(settings.out), "--workers", str(settings.workers),

@@ -36,8 +36,12 @@ def components(hashes: list[int], embeddings: np.ndarray) -> list[list[int]]:
 
 def cluster(settings: Settings) -> None:
     rows = db.load_rows(settings.out)
+    hps_means = [row.hpsv3_mu for row in rows if row.hpsv3_mu is not None]
+    if hps_means and (len(hps_means) != len(rows) or any(row.hpsv3_sigma is None for row in rows)):
+        raise ValueError("HPSv3 is partially scored; resume score --pass hpsv3 before clustering")
+    hps_scale = float(np.std(hps_means, ddof=0)) if hps_means else 0.0
     standardized: list[list[float]] = [[] for _ in rows]
-    for column in ("aes_v25", "topiq_iaa", "topiq_nr", "qrealign"):
+    for column in ("aes_v25", "topiq_iaa", "topiq_nr", "qrealign", "hpsv3_mu"):
         indices = [i for i, row in enumerate(rows) if getattr(row, column) is not None]
         values = np.asarray([getattr(rows[i], column) for i in indices], dtype=np.float64)
         if len(values):
@@ -48,7 +52,9 @@ def cluster(settings: Settings) -> None:
     consensus = zscore(np.asarray([np.mean(values) for values in standardized]))
     for row, value, scores in zip(rows, consensus, standardized, strict=True):
         row.consensus_z = float(value)
-        row.disagreement = float(np.std(scores, ddof=0))
+        native_variance = ((row.hpsv3_sigma / hps_scale) ** 2 / len(scores)
+                           if row.hpsv3_sigma is not None and hps_scale > 1e-12 else 0.0)
+        row.disagreement = float(np.sqrt(np.var(scores, ddof=0) + native_variance))
     ids = json.loads((settings.out / "embeddings_ids.json").read_text(encoding="utf-8"))
     if ids != [r.sha16 for r in rows]:
         raise ValueError("Embedding row alignment mismatch; rerun score --pass siglip")

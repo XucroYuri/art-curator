@@ -5,11 +5,11 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Final, Iterator
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 COLUMNS: Final = (
     "sha16", "abs_path", "path_rel", "filename", "width", "height", "filesize", "phash",
-    "family_id", "aes_v25", "topiq_iaa", "topiq_nr", "qrealign", "nsfw_prob", "identity_sim",
+    "family_id", "aes_v25", "topiq_iaa", "topiq_nr", "qrealign", "hpsv3_mu", "hpsv3_sigma", "nsfw_prob", "identity_sim",
     "confusable_margin", "novelty", "consensus_z", "disagreement", "gaming_delta",
     "flags", "proposed_tier", "thumb_rel",
 )
@@ -33,6 +33,8 @@ class Row(BaseModel):
     topiq_iaa: float | None = None
     topiq_nr: float | None = None
     qrealign: float | None = None
+    hpsv3_mu: float | None = None
+    hpsv3_sigma: float | None = Field(default=None, ge=0)
     nsfw_prob: float | None = None
     identity_sim: float | None = None
     confusable_margin: float | None = None
