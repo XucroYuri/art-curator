@@ -301,6 +301,9 @@ def test_generated_gallery_contains_native_decoder_and_virtualization_contract(t
     assert "content-visibility:auto" in html
     assert "manual_decision" in html
     assert "previews/" in html
+    assert "@media(min-width:1440px)" in html
+    assert "body:has(.family-panel.is-open)" in html
+    assert "grid-template-columns:minmax(0,1fr) var(--drawer-width)" in html
     assert "__PAYLOAD_B64__" not in html
 
 
