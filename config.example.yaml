@@ -18,3 +18,8 @@ queue_quantile: 0.90
 review_quantile: 0.75
 confusable_margin: 0.05
 champion_slack: 0.15
+identity:
+  device: auto  # CUDA only for a matching numerical certificate; otherwise CPU.
+  precision: float32  # FP16 failed the predeclared CPU/GPU numerical budget.
+  batch_size: 16  # Independent of the legacy scorer batch; CPU always uses 1.
+  embedder: siglip

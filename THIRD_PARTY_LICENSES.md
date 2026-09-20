@@ -37,6 +37,10 @@ Inspect the exact installed release and selected model revision before redistrib
 | [NumPy](https://github.com/numpy/numpy) | BSD-3-Clause; bundled numerical libraries have additional notices |
 | [PyYAML](https://github.com/yaml/pyyaml) | MIT |
 | [Pydantic](https://github.com/pydantic/pydantic) | MIT |
+| [ONNX Runtime](https://github.com/microsoft/onnxruntime) | MIT |
+| [scikit-learn](https://github.com/scikit-learn/scikit-learn) | BSD-3-Clause; supplies the identity HDBSCAN/DBSCAN implementations |
+| [psutil](https://github.com/giampaolo/psutil) | BSD-3-Clause |
+| [OpenCV](https://github.com/opencv/opencv) | Apache-2.0 for current code; optional YuNet artifact terms reviewed separately |
 | [Hatchling](https://github.com/pypa/hatch) (build) | MIT |
 | [pytest](https://github.com/pytest-dev/pytest) (test) | MIT |
 | [uv](https://github.com/astral-sh/uv) (tooling) | MIT / Apache-2.0 |
@@ -57,6 +61,8 @@ project's AGPL; applicable NVIDIA terms still apply.
 | [Q-ReAlign-Mini-0.8B](https://huggingface.co/q-future/Q-ReAlign-Mini-0.8B) | Quality; inspect its pinned revision and base-model terms before use or redistribution |
 | [Falconsai NSFW image detection](https://huggingface.co/Falconsai/nsfw_image_detection) | Current safety signal; inspect the selected card/license (advertises Apache-2.0). Output is not a safety certificate |
 | [WD / Waifu Diffusion tagger family](https://huggingface.co/SmilingWolf) | **Not loaded by the current pipeline.** If adding WD models, check the exact model/version's weight and dataset terms; do not assume every WD model shares one license |
+| [Anime face detection](https://huggingface.co/deepghs/anime_face_detection) | Identity crop detector, v1.4 n/s at `784dc4c0bb692351ddcdbe6131a050b17d3025d5`; upstream advertises MIT; digests and scope in [identity v2](docs/pipeline/identity-v2.md) |
+| [CCIP ONNX](https://huggingface.co/deepghs/ccip_onnx) | Optional, not the default: the pinned card advertises **OpenRAIL**. Exact upstream use restrictions must be assessed and accepted explicitly. Loader/project MIT or AGPL licenses do not remove weight restrictions. Redistribution and intended use need separate review; the card alone does not clear a distribution channel |
 
 No rights to a private corpus or third-party art are granted. Synthetic CSV data
 and placeholder-only demo screenshots contain no real corpus imagery. Model bias,

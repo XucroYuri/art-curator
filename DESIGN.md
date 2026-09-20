@@ -36,6 +36,8 @@ The gallery is a quiet command center for inspecting a noisy visual corpus. It s
 | Accent danger soft | `--color-danger-soft` | `rgba(255,99,99,.14)` | Risk badges and NSFW surfaces |
 | Accent warning soft | `--color-warning-soft` | `rgba(255,188,51,.14)` | Review and caution surfaces |
 | Accent success soft | `--color-success-soft` | `rgba(95,201,146,.14)` | Archive and stable-signal surfaces |
+| Character accent | `--color-character` | `#b8a1ff` | Face boxes, cluster identity affordances |
+| Character accent soft | `--color-character-soft` | `rgba(184,161,255,.16)` | Face popovers and selected character states |
 | Focus ring | `--color-focus` | `#8bd0ff` | Keyboard focus and active image frame |
 | Scrim | `--color-scrim` | `rgba(5,6,8,.76)` | Fullscreen overlays and NSFW privacy |
 | Canvas glow | `--color-canvas-glow` | `rgba(85,179,255,.07)` | Non-interactive ambient depth |
@@ -115,6 +117,33 @@ All spacing derives from 4px: `--space-1` 4px, `--space-2` 8px, `--space-3` 12px
 - **Accessibility**: preview has a live item label, inspector exposes every source field including Q-ReAlign, action buttons expose pressed/current state, the filmstrip is a labelled list of buttons, and overlays trap focus by returning focus to their trigger.
 - **Motion**: 120ms feedback for controls; 200ms opacity/transform for mode and panel changes; no layout-property animation; reduced motion removes non-essential transforms.
 
+### Face overlay
+
+- **Structure**: a positioned overlay layer shares the preview image's contain box and transform; each face is a native button with an optional confirmed-name chip.
+- **Variants**: unlabelled, confirmed, ignored, wrong-box, uncertain, outlier, NSFW-private.
+- **Spacing**: face chips use `--space-1` and `--space-2`; the layer itself is bounded by the preview canvas.
+- **States**: default, hover, focus, selected, popover-open, hidden when identity metadata is absent.
+- **Accessibility**: every face is a labelled button exposing face ID, cluster, confidence and current name; `N` opens the first unlabeled face, `Tab` cycles faces and `Esc` closes the popover.
+- **Motion**: 120ms border/opacity feedback; the anchored name popover uses opacity plus transform only and becomes instantaneous under reduced motion.
+
+### Character panel
+
+- **Structure**: a fixed right drawer with a virtualized cluster list, lazy representative crops and decision actions.
+- **Variants**: absent, loading, populated, active-learning queue, empty-filter, merged/split/outlier decision states.
+- **Spacing**: `--space-3` to `--space-5` shell rhythm and `--space-2` cluster-card gaps.
+- **States**: closed, open, keyboard-focused, crop-missing, selected cluster, pending decision.
+- **Accessibility**: labelled dialog, Escape/backdrop close, native buttons and progress text; no action depends on hover.
+- **Motion**: reuse the existing drawer's 200ms transform/opacity mechanism; reduced motion uses opacity only.
+
+### Character decision journal
+
+- **Structure**: append-only localStorage events keyed by the corpus fingerprint, with import/export controls in the existing journal modal.
+- **Variants**: confirm, new, ignore, wrong-box, merge, split, outlier, undo.
+- **Spacing**: existing journal toolbar and export-row tokens.
+- **States**: no labels, partially named, complete, imported, undoable.
+- **Accessibility**: exact Chinese action labels, visible status text, file input labelled for importing a labels JSON.
+- **Motion**: no automatic entry animation; export/import feedback uses the existing micro transition only.
+
 ### Virtualized table
 
 - **Structure**: semantic sticky-header table with a single delegated body listener and a spacer row; only the visible row window plus overscan is mounted.
@@ -128,6 +157,15 @@ All spacing derives from 4px: `--space-1` 4px, `--space-2` 8px, `--space-3` 12px
 - **States**: open, closed, focus-visible; singleton metadata is explicit and keeps the member strip to one card.
 - **Accessibility**: labelled region, Escape closes, member buttons jump to their table row.
 - **Motion**: 200ms transform/opacity slide; reduced motion disables the transform.
+
+### Uncertainty queue
+
+- **Structure**: a toggleable ordered face review lane in the character drawer, with a bounded progress indicator.
+- **Variants**: standard cluster order, uncertainty-first order, complete, no faces.
+- **Spacing**: `--space-2` list rhythm and `--space-3` queue header.
+- **States**: off, on, focused face, named, pending.
+- **Accessibility**: native toggle with `aria-pressed`; ordering rationale is visible as Chinese helper text.
+- **Motion**: reorder is immediate; only focus and selected-state opacity changes animate, and reduced motion removes transitions.
 
 ### Metric legend modal
 - **Structure**: labelled modal with a two-column metric glossary and direction/caveat notes.
@@ -158,6 +196,9 @@ All spacing derives from 4px: `--space-1` 4px, `--space-2` 8px, `--space-3` 12px
 - `prefers-reduced-motion: reduce` disables non-essential transitions and transforms.
 - `/` focuses search; Escape and backdrop clicks close the active drawer or modal; focus returns to the triggering control.
 - NSFW previews blur by default at `nsfw_prob >= 0.65` or `route_nsfw`, with a visible `点击显示` action.
+- Face overlays inherit the same privacy state as the image. Hidden/blurred media never gets an extra unblurred crop request in the preview stage; crops in the character drawer use the same private class when their source image is private.
+- Identity metadata is optional. If `identities.json` is absent or incomplete, the face layer stays hidden without an empty panel or console error. Unknown producer fields are retained in the embedded metadata for forward compatibility.
+- Overlay coordinates are normalized from source pixels into the rendered contain rectangle, then transformed with the image's zoom/pan matrix. The image and overlay share one positioned media frame so the boxes cannot drift during zoom or pan.
 - Review media uses preview-first resolution (`previews/<sha16>.jpg` → `thumbs/<sha16>.jpg` → placeholder) and swaps sources in place without clearing the current bitmap. Next/previous six items are prefetched with a bounded queue and stale requests are cancelled.
 
 ## 7. Depth & Surface

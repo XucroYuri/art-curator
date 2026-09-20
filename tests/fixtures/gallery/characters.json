@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "characters": [
+    {
+      "name": "人物甲",
+      "cluster_id": 1
+    }
+  ],
+  "future_metadata": {
+    "fixture_only": true
+  }
+}

@@ -37,6 +37,14 @@ When `families.json` is absent, family membership is derived from the CSV
 case. Missing or empty thumbnails render an explicit placeholder tile, and
 missing referenced files switch to a `MISSING` placeholder in the browser.
 
+The optional `identities.json` artifact adds the face/character layer without
+changing the image ledger. Its `detector`, `embedder`, `clustering`, `images`,
+`faces` and `clusters` fields follow the producer contract; omitted fields get
+safe browser defaults, while unknown fields are carried through the compressed
+payload. `characters.json`, when present, is read-only catalog metadata. If
+`identities.json` is absent, face boxes, character controls and the character
+drawer remain hidden.
+
 The header's **Archive pass** is deliberately defined as
 `archive_candidate / total`; `review` remains an audit lane rather than a pass.
 This resolves the otherwise ambiguous `pass-rate` label without changing the
@@ -87,6 +95,25 @@ Manual decisions and an action journal are stored in `localStorage` under the
 embedded corpus fingerprint. The `动作日志` panel exports both JSON and CSV;
 these files are intended to become future human labels. NSFW items remain
 blurred until per-item reveal or the global toggle is enabled.
+
+With identity metadata, the preview draws source-pixel face boxes over the
+same rendered image rectangle used by `object-fit: contain`; 100% zoom and
+pan use the transformed image bounding rectangle, so boxes stay aligned. Face
+buttons open a Chinese naming popover, expose `N` / `Esc` / `Tab` keyboard
+flows, and show confirmed chips. The character drawer virtualizes cluster
+cards, lazy-loads representative crops with four concurrent loads, sorts
+clusters by size, and offers naming, merge, split and outlier decisions. The
+`待确认优先` toggle orders faces by low cluster probability, margin near zero,
+singleton status and low detection score. Exporting人物标签 always downloads
+the exact `character_labels.json` envelope consumed by `identity-apply`:
+
+```json
+{"version":1,"source":"review-studio","corpus_fingerprint":"…","labels":[{"face_id":"f_000001","image_sha16":"…","character":"name","action":"confirm"}]}
+```
+
+The allowed face actions are `confirm`, `new`, `ignore` and `wrong_box`.
+Importing the same envelope restores the current face-label state; merge,
+split and outlier decisions remain reversible journal events for the pipeline.
 
 ## Performance contract
 

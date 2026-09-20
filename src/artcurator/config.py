@@ -7,6 +7,8 @@ from typing import Final
 import yaml
 from pydantic import BaseModel, ConfigDict, Field
 
+from .identity_schema import IdentityOptions
+
 ROOT: Final = Path(__file__).resolve().parents[2]
 
 
@@ -31,6 +33,7 @@ class Settings(BaseModel):
     review_quantile: float = Field(default=0.75, ge=0, le=1)
     confusable_margin: float = 0.05
     champion_slack: float = 0.15
+    identity: IdentityOptions = Field(default_factory=IdentityOptions)
 
 
 def output_path(path: Path) -> Path:

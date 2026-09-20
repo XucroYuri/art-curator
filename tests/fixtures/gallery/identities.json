@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "detector": {
+    "name": "synthetic-detector",
+    "model": "synthetic-model",
+    "revision": "fixture",
+    "min_face_px": 24
+  },
+  "embedder": {
+    "name": "synthetic-embedder",
+    "model": "synthetic-face-model",
+    "revision": "fixture"
+  },
+  "clustering": {
+    "algorithm": "hdbscan",
+    "min_cluster_size": 2
+  },
+  "images": [
+    {
+      "sha16": "0000000000000001",
+      "path_rel": "batch-01/demo-01.jpg",
+      "faces": ["f_00000001", "f_00000002"]
+    }
+  ],
+  "faces": [
+    {
+      "face_id": "f_00000001",
+      "image_sha16": "0000000000000001",
+      "bbox": [220, 280, 220, 260],
+      "det_score": 0.98,
+      "crop_rel": "faces/f_00000001.jpg",
+      "cluster_id": 1,
+      "cluster_prob": 0.84,
+      "is_outlier": false,
+      "cluster_margin": 0.06
+    },
+    {
+      "face_id": "f_00000002",
+      "image_sha16": "0000000000000001",
+      "bbox": [590, 330, 180, 220],
+      "det_score": 0.61,
+      "crop_rel": "faces/f_00000002.jpg",
+      "cluster_id": 2,
+      "cluster_prob": 0.22,
+      "is_outlier": false,
+      "cluster_margin": 0.005
+    }
+  ],
+  "clusters": [
+    {
+      "cluster_id": 1,
+      "size": 1,
+      "centroid_face_id": "f_00000001",
+      "confidence": 0.84,
+      "suggested_character": "人物甲",
+      "confirmed_character": null,
+      "representative_faces": ["f_00000001"]
+    },
+    {
+      "cluster_id": 2,
+      "size": 1,
+      "centroid_face_id": "f_00000002",
+      "confidence": 0.22,
+      "suggested_character": null,
+      "confirmed_character": null,
+      "representative_faces": ["f_00000002"]
+    }
+  ],
+  "future_metadata": {
+    "fixture_only": true
+  }
+}

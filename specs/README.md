@@ -19,10 +19,11 @@ Baseline inspected: 2026-09-20. These specifications encode the supplied archite
 | [030-UX](030-UX.md) | Human decisions and offline review |
 | [040-QUALITY-GATES](040-QUALITY-GATES.md) | Nine gates, fixtures and worked requirement |
 | [050-ROADMAP](050-ROADMAP.md) | Dependencies and graduation |
-| [Identity v2](features/FR-IDENTITY-V2.md) | CPU-only character references |
+| [Identity v2](features/FR-IDENTITY-V2.md) | Profile-bound CPU/GPU character references |
 | [Curation protocol](features/FR-CURATION-PROTOCOL.md) | Content-bound human decisions |
 | [Interop](features/FR-INTEROP.md) | Explicit loss-aware exchange |
 | [ADR-0001](adr/ADR-0001-isolated-scorer-environments.md), [ADR-0002](adr/ADR-0002-dry-run-first-moves.md), [ADR-0003](adr/ADR-0003-columnar-gzip-review.md) | Retrospective decisions, not new certification |
+| [ADR-0004](adr/ADR-0004-gpu-fp32-admission-criterion.md) | Scoped CUDA FP32 admission with unchanged primary budgets |
 | [FEATURE](templates/FEATURE.md), [ADR](templates/ADR.md), [BENCHMARK](templates/BENCHMARK.md), [CERTIFICATION](templates/CERTIFICATION.md), [ADVERSARIAL-REVIEW](templates/ADVERSARIAL-REVIEW.md), [RELEASE-EVIDENCE](templates/RELEASE-EVIDENCE.md) | Authoring forms |
 
 ## Requirement grammar and evidence convention

@@ -13,7 +13,10 @@ def main() -> None:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=["scan", "score", "cluster", "report", "run-all", "previews"])
+    parser.add_argument("command", choices=["scan", "score", "cluster", "report", "run-all", "previews",
+                        "identity", "identity-detect", "identity-embed", "identity-cluster", "identity-report",
+                        "identity-apply", "identity-benchmark"])
+    parser.add_argument("--labels", type=Path, help="Content-bound review-studio character labels")
     parser.add_argument("--input", type=Path)
     parser.add_argument("--out", type=Path)
     parser.add_argument("--limit", type=int)
@@ -44,6 +47,9 @@ def main() -> None:
         from .score import score
         from .previews import previews
         match args.command:
+            case "identity" | "identity-detect" | "identity-embed" | "identity-cluster" | "identity-report" | "identity-apply" | "identity-benchmark":
+                from .identity import run
+                run(settings, args.command, args.labels)
             case "previews":
                 previews(settings)
             case "scan":

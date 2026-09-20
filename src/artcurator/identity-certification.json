@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "model": "google/siglip-so400m-patch14-384",
+  "revision": "9fdffc58afc957d1a03a25b10dba0329ab15c2a3",
+  "preprocess": "crop-jpeg-v1-siglip-official",
+  "execution": {
+    "device": "cuda",
+    "precision": "float32",
+    "batch_size": 16,
+    "runtime": {
+      "torch": "2.11.0+cu128",
+      "transformers": "4.57.6",
+      "Pillow": "12.3.0",
+      "numpy": "2.5.2",
+      "onnxruntime": "1.30.0",
+      "threads": "4",
+      "gpu": "NVIDIA GeForce RTX 5060 Ti",
+      "cuda": "12.8",
+      "capability": "(12, 0)"
+    },
+    "kernel": "sdpa-auto-tf32-off"
+  },
+  "numerical_pass": true,
+  "evidence_sha256": "f9d0c6a5e59f5342805a4841cd76fe2a58f8ba08546fde50c5066d83a7cf48c3"
+}

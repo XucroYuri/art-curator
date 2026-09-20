@@ -310,3 +310,103 @@ def test_parse_args_accepts_generic_title_and_subtitle(tmp_path: Path) -> None:
     # Then both overrides survive argument parsing.
     assert args.title == "批次审查"
     assert args.subtitle == "本地素材库"
+
+
+def test_load_identities_defaults_missing_fields_and_preserves_unknown_fields(tmp_path: Path) -> None:
+    # Given a producer document with partial records and a future field.
+    path = tmp_path / "identities.json"
+    path.write_text(
+        json.dumps(
+            {
+                "future_root": {"keep": True},
+                "images": [{"sha16": "sha-one"}],
+                "faces": [{"face_id": "f_one", "image_sha16": "sha-one", "bbox": [1, 2, 3, 4]}],
+                "clusters": [{"cluster_id": 7}],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    # When the optional identity document is loaded.
+    result = build_gallery.load_identities(path)
+
+    # Then browser-facing defaults exist without dropping forward-compatible data.
+    assert result is not None
+    assert result["version"] == 1
+    assert result["detector"]["min_face_px"] == 0
+    assert result["images"][0]["faces"] == []
+    assert result["faces"][0]["det_score"] is None
+    assert result["clusters"][0]["representative_faces"] == []
+    assert result["future_root"] == {"keep": True}
+
+
+def test_build_payload_hides_identity_layer_when_artifact_is_absent(tmp_path: Path) -> None:
+    # Given the existing image-only contract without identities.json.
+    scores_path = tmp_path / "scores.csv"
+    _write_scores_csv(scores_path, build_gallery.CSV_COLUMNS)
+    rows = tuple(build_gallery.read_scores(scores_path))
+
+    # When the payload is built.
+    payload = build_gallery.build_payload(tmp_path, rows, build_gallery.CSV_COLUMNS)
+
+    # Then the optional feature has no visible metadata at all.
+    assert payload["identities"] is None
+    assert payload["characters"] is None
+
+
+def test_compact_payload_preserves_identity_unknown_fields(tmp_path: Path) -> None:
+    # Given an identity artifact carrying an unknown nested field.
+    scores_path = tmp_path / "scores.csv"
+    _write_scores_csv(scores_path, build_gallery.CSV_COLUMNS)
+    (tmp_path / "identities.json").write_text(
+        json.dumps(
+            {
+                "images": [{"sha16": "sha-one", "faces": ["f_one"]}],
+                "faces": [{"face_id": "f_one", "image_sha16": "sha-one"}],
+                "clusters": [],
+                "future": {"producer_revision": "next"},
+            }
+        ),
+        encoding="utf-8",
+    )
+    payload = build_gallery.build_payload(
+        tmp_path,
+        tuple(build_gallery.read_scores(scores_path)),
+        build_gallery.CSV_COLUMNS,
+    )
+
+    # When the compressed browser payload is decoded.
+    encoded, _ = build_gallery.encode_payload(payload)
+    decoded = json.loads(gzip.decompress(base64.b64decode(encoded)).decode("utf-8"))
+
+    # Then the complete future field survives the Python/browser boundary.
+    assert decoded["y"]["future"] == {"producer_revision": "next"}
+
+
+def test_generated_gallery_contains_character_label_export_contract(tmp_path: Path) -> None:
+    # Given a generic report with a valid optional identity document.
+    scores_path = tmp_path / "scores.csv"
+    _write_scores_csv(scores_path, build_gallery.CSV_COLUMNS)
+    (tmp_path / "identities.json").write_text(
+        json.dumps(
+            {
+                "images": [{"sha16": "sha-one", "faces": ["f_one"]}],
+                "faces": [{"face_id": "f_one", "image_sha16": "sha-one"}],
+                "clusters": [],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    # When the offline report is generated.
+    html = build_gallery.build_gallery(tmp_path).read_text(encoding="utf-8")
+
+    # Then the exact label envelope and supported actions are embedded in the UI.
+    assert 'source:"review-studio"' in html
+    assert "corpus_fingerprint:" in html
+    assert "labels:" in html
+    assert "character_labels.json" in html
+    assert 'lastFocus!==document.body&&!modal.contains(lastFocus)' in html
+    assert "const faceId=state.openFaceId" in html
+    for action in ("confirm", "new", "ignore", "wrong_box"):
+        assert f'"{action}"' in html
