@@ -73,9 +73,9 @@ The gallery is a quiet command center for inspecting a noisy visual corpus. It s
 All spacing derives from 4px: `--space-1` 4px, `--space-2` 8px, `--space-3` 12px, `--space-4` 16px, `--space-5` 20px, `--space-6` 24px, `--space-8` 32px, `--space-10` 40px.
 
 - Max content width: none; the app shell occupies `100dvh` and uses the full viewport at every width.
-- Breakpoints: 520px compact, 760px narrow, 900px drawer overlay, 1200px spotlight rail, 1440px inline drawer.
+- Breakpoints: 520px compact, 760px narrow, 900px compact overlay layout, 1200px spotlight rail, 1440px inline drawer.
 - Primary layout: the app shell owns the viewport; the top header and controls row stay pinned, while the table region owns vertical and horizontal scrolling. The spotlight rail and drawer body have their own named scroll owners.
-- At `min-width: 1440px`, row and family details reserve a 420px right drawer beside the table. Below 900px, the drawer becomes a full-height overlay.
+- At `min-width: 1440px`, row and family details reserve a 420px right drawer beside the table. From 900px through 1439px, the existing fixed right-side overlay keeps the app shell full width. Below 900px, that same drawer remains a full-height overlay while the surrounding studio collapses to its compact single-column layout.
 - Mobile fallback: summary cards, disposition cards, and flag chips wrap naturally; the table remains a labelled horizontal viewport whose overflow never escapes the table region.
 - Review studio: the shell is a bounded `100dvh` grid. Header and mode controls stay fixed; the studio body owns vertical overflow; the preview canvas owns image pan/zoom; the inspector and filmstrip own their named local scroll regions. At compact widths the inspector moves below the preview and the action belt remains reachable without page-level horizontal overflow.
 - Primary review geometry: preview `minmax(0, 1fr)`, inspector `minmax(288px, 360px)`, filmstrip `96px` high, action belt `auto`. The table is a secondary mode and retains its contained two-dimensional scroll region.
