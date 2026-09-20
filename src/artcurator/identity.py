@@ -46,6 +46,12 @@ def run(settings: Settings, command: str, labels: Path | None = None) -> None:
     for selected in commands:
         with stage(settings.out, selected):
             match selected:
+                case "identity-anchor":
+                    from .identity_anchor import create_anchors
+                    create_anchors(settings)
+                case "identity-group":
+                    from .identity_group import group
+                    group(settings.out, settings.identity)
                 case "identity-detect":
                     detect(settings.out, settings.identity)
                 case "identity-embed":

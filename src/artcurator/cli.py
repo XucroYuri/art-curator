@@ -15,7 +15,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("command", choices=["scan", "score", "cluster", "report", "run-all", "previews",
                         "identity", "identity-detect", "identity-embed", "identity-cluster", "identity-report",
-                        "identity-apply", "identity-benchmark"])
+                         "identity-apply", "identity-benchmark", "identity-anchor", "identity-group"])
+    parser.add_argument("--from-folders", action="store_true", help="Use character folder names as human reference labels")
     parser.add_argument("--labels", type=Path, help="Content-bound review-studio character labels")
     parser.add_argument("--input", type=Path)
     parser.add_argument("--out", type=Path)
@@ -24,6 +25,10 @@ def main() -> None:
     parser.add_argument("--pass", dest="only", choices=["siglip", "aes_v25", "topiq_iaa", "topiq_nr", "qrealign", "hpsv3", "nsfw_prob"])
     parser.add_argument("--max-new", type=int, default=0, help="HPSv3 new-content budget; 0 means unlimited")
     args = parser.parse_args()
+    if args.command == "identity-anchor" and not args.from_folders:
+        parser.error("identity-anchor requires --from-folders")
+    if args.from_folders and args.command != "identity-anchor":
+        parser.error("--from-folders is only valid for identity-anchor")
     if args.max_new < 0 or (args.max_new and (args.command != "score" or args.only != "hpsv3")):
         parser.error("--max-new must be nonnegative and is only valid for score --pass hpsv3")
     settings = load(args.config)
@@ -47,7 +52,7 @@ def main() -> None:
         from .score import score
         from .previews import previews
         match args.command:
-            case "identity" | "identity-detect" | "identity-embed" | "identity-cluster" | "identity-report" | "identity-apply" | "identity-benchmark":
+            case "identity" | "identity-detect" | "identity-embed" | "identity-cluster" | "identity-report" | "identity-apply" | "identity-benchmark" | "identity-anchor" | "identity-group":
                 from .identity import run
                 run(settings, args.command, args.labels)
             case "previews":

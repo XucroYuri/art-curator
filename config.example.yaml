@@ -23,3 +23,9 @@ identity:
   precision: float32  # FP16 failed the predeclared CPU/GPU numerical budget.
   batch_size: 16  # Independent of the legacy scorer batch; CPU always uses 1.
   embedder: siglip
+  anchor_faces_per_character: 64
+  anchor_det_score: 0.7
+  anchor_phash_distance: 4
+  anchor_exclude_folders: []  # Root-relative non-character directories; corpus directories auto-excluded.
+  anchor_min_sim: null  # Reference-only impostor centroid P95 measured during anchor construction.
+  anchor_min_margin: null  # max(0.005, reference-only positive stable-margin P10).

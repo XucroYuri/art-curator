@@ -30,6 +30,12 @@ class IdentityOptions(Record):
     threads: int = Field(default=4, ge=1, le=32)
     target_character: str | None = None
     ccip_license_accepted: bool = False
+    anchor_faces_per_character: int = Field(default=64, ge=1, le=1024)
+    anchor_det_score: float = Field(default=.7, ge=0, le=1)
+    anchor_phash_distance: int = Field(default=4, ge=0, le=64)
+    anchor_exclude_folders: list[str] = Field(default_factory=list)
+    anchor_min_sim: float | None = Field(default=None, ge=-1, le=1)
+    anchor_min_margin: float | None = Field(default=None, ge=0, le=2)
 
 
 class ModelInfo(Record):

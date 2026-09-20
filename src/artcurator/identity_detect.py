@@ -39,7 +39,9 @@ def detect(out: Path, options: IdentityOptions, detector: Detector | None = None
     rows = manifest(out)
     adapter = detector or load_detector(options)
     profile = digest(json.dumps({"detector": adapter.info.model_dump(), "artifact": adapter.artifact_sha256,
-                                 "options": options.model_dump(exclude={"device", "precision", "batch_size"}), "preprocess": "legacy-rgb-v1-stretch640-bilinear",
+                                 "options": options.model_dump(exclude={"device", "precision", "batch_size",
+                                     "anchor_faces_per_character", "anchor_det_score", "anchor_phash_distance",
+                                     "anchor_exclude_folders", "anchor_min_sim", "anchor_min_margin"}), "preprocess": "legacy-rgb-v1-stretch640-bilinear",
                                  "crop": "xywh-v1-lanczos256-jpeg90-444"}, sort_keys=True).encode())
     prior = out / "identity-provenance.json"
     if prior.exists():
