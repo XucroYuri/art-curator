@@ -135,6 +135,21 @@ All spacing derives from 4px: `--space-1` 4px, `--space-2` 8px, `--space-3` 12px
 - **Accessibility**: labelled dialog, Escape/backdrop close, native buttons and progress text; no action depends on hover.
 - **Motion**: reuse the existing drawer's 200ms transform/opacity mechanism; reduced motion uses opacity only.
 
+### Character grouping view
+
+- **Structure**: a third top-level tab beside `审查工作台` and `审计表格`, with a compact threshold banner, an intrinsic card grid, and a filtered ledger summary.
+- **Character card**: native button with character name, unique image count, face count, mean similarity, minimum margin, and the active threshold provenance. A separate `未定` card represents empty roles and abstained faces, including fallback cluster labels.
+- **States**: absent (the tab is hidden), loading, populated, selected, empty-filter, and experimental-warning.
+- **Accessibility**: cards expose `aria-pressed`, counts are text (not color-only), the unassigned backlog has a labelled `仅看未定` toggle, and the source/licensing note remains visible in the view.
+- **Interaction**: selecting a card sets the shared ledger filter and `state.visible` navigation queue; `未定` also exposes a one-click naming entry into the existing face popover and journal flow. Image roles come from `character-groups-by-image.csv`, while face labels come from `character-groups-by-character.csv`.
+- **Face badges**: the preview may show multiple role badges for a multi-character image. Assigned face labels use the grouping character; abstained faces fall back to cluster ID and expose similarity, margin, and decision in the existing tooltip.
+- **Motion**: card selection uses the existing 120ms control feedback; mode changes reuse the 200ms opacity/transform contract and become instantaneous under reduced motion.
+
+### Character grouping provenance note
+
+- Grouping is an experimental, uncalibrated retrieval proposal; it is not identity verification or an accuracy claim.
+- Thresholds show `min_sim` and `min_margin` from the grouping artifact. Folder names are human-supplied labels; per-image decisions use pixels only. Source-image rights remain user-supplied and unverified.
+
 ### Character decision journal
 
 - **Structure**: append-only localStorage events keyed by the corpus fingerprint, with import/export controls in the existing journal modal.

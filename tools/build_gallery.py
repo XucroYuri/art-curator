@@ -17,7 +17,7 @@ import sys
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Final, TypedDict
+from typing import Final, TypedDict, assert_never
 
 
 CSV_COLUMNS: Final[tuple[str, ...]] = (
@@ -70,6 +70,9 @@ LOCALIZATION_MAP: Final[dict[str, str]] = {
     "eyebrow": "离线 · 只读 · 图片审查",
     "mode_studio": "审查工作台",
     "mode_table": "审计表格",
+    "mode_grouping": "人物分组",
+    "grouping_unassigned": "未定",
+    "grouping_only_unassigned": "仅看未定",
     "stat_total": "图片总数",
     "stat_consensus": "共识 Z 中位",
     "stat_review": "待人工复核",
@@ -157,6 +160,7 @@ class GalleryPayload(TypedDict):
     source: str
     identities: dict[str, JsonValue] | None
     characters: JsonValue | None
+    grouping: dict[str, JsonValue] | None
 
 
 @dataclass(frozen=True, slots=True)
@@ -571,6 +575,123 @@ def load_characters(characters_path: Path) -> JsonValue | None:
         raise GalleryInputError(f"invalid JSON in {characters_path}: {exc}") from exc
 
 
+def _read_grouping_csv(path: Path) -> list[dict[str, str]]:
+    """Read a grouping CSV while retaining future columns as strings."""
+    if not path.exists():
+        return []
+    try:
+        stream = path.open("r", encoding="utf-8", newline="")
+    except OSError as exc:
+        raise GalleryInputError(f"cannot read {path}: {exc}") from exc
+    with stream:
+        reader = csv.DictReader(stream)
+        return [
+            {key: _cell(raw, key) for key in (reader.fieldnames or ()) if key}
+            for raw in reader
+        ]
+
+
+def _normalize_grouping_entries(value: JsonValue | None) -> list[dict[str, JsonValue]]:
+    """Normalize character entries without dropping producer extensions."""
+    entries: list[dict[str, JsonValue]] = []
+    for raw in _json_list(value):
+        entry = _json_object(raw)
+        entry["character"] = _identity_string(entry.get("character"), "未命名")
+        entry["image_count"] = _identity_integer(entry.get("image_count"))
+        entry["face_count"] = _identity_integer(entry.get("face_count"))
+        entry["images"] = _identity_string_list(entry.get("images"))
+        entry["mean_sim"] = _identity_float(entry.get("mean_sim"))
+        entry["min_margin"] = _identity_float(entry.get("min_margin"))
+        entries.append(entry)
+    return entries
+
+
+def _normalize_grouping_csv_rows(
+    rows: Sequence[dict[str, str]], kind: str,
+) -> list[dict[str, JsonValue]]:
+    """Normalize one grouping CSV family and preserve unknown columns."""
+    normalized: list[dict[str, JsonValue]] = []
+    for raw in rows:
+        entry: dict[str, JsonValue] = dict(raw)
+        entry["sha16"] = raw.get("sha16", "")
+        entry["filename"] = raw.get("filename", "")
+        match kind:
+            case "image":
+                roles = raw.get("characters", "")
+                entry["characters"] = list(dict.fromkeys(role for role in roles.split("|") if role))
+            case "character":
+                entry["character"] = raw.get("character", "")
+                entry["face_id"] = raw.get("face_id", "")
+                entry["sim"] = _grouping_csv_float(raw.get("sim", ""))
+                entry["margin"] = _grouping_csv_float(raw.get("margin", ""))
+                entry["decision"] = raw.get("decision", "")
+            case unreachable:
+                assert_never(unreachable)
+        normalized.append(entry)
+    return normalized
+
+
+def _grouping_csv_float(value: str) -> float | None:
+    """Parse an optional grouping CSV number without making the view fail closed."""
+    if not value:
+        return None
+    try:
+        parsed = float(value)
+    except ValueError:
+        return None
+    return parsed if math.isfinite(parsed) else None
+
+
+def load_character_grouping(out_dir: Path) -> dict[str, JsonValue] | None:
+    """Load optional grouping JSON and CSV exports with tolerant defaults."""
+    grouping_path = out_dir / "character-groups.json"
+    if not grouping_path.exists():
+        return None
+    try:
+        raw: JsonValue = json.loads(grouping_path.read_text(encoding="utf-8"))
+    except OSError as exc:
+        raise GalleryInputError(f"cannot read {grouping_path}: {exc}") from exc
+    except json.JSONDecodeError as exc:
+        raise GalleryInputError(f"invalid JSON in {grouping_path}: {exc}") from exc
+    if not isinstance(raw, dict):
+        return None
+    document = dict(raw)
+    thresholds = _json_object(document.get("thresholds"))
+    thresholds["min_sim"] = _identity_float(thresholds.get("min_sim"))
+    thresholds["min_margin"] = _identity_float(thresholds.get("min_margin"))
+    abstained = _json_object(document.get("abstained"))
+    cluster_groups: list[dict[str, JsonValue]] = []
+    for raw_group in _json_list(abstained.get("cluster_groups")):
+        group = _json_object(raw_group)
+        cluster_id = group.get("cluster_id")
+        if not (
+            cluster_id is None
+            or (isinstance(cluster_id, (int, str)) and not isinstance(cluster_id, bool))
+        ):
+            cluster_id = None
+        group["cluster_id"] = cluster_id
+        group["face_count"] = _identity_integer(group.get("face_count"))
+        group["images"] = _identity_string_list(group.get("images"))
+        cluster_groups.append(group)
+    abstained["face_count"] = _identity_integer(abstained.get("face_count"))
+    abstained["cluster_groups"] = cluster_groups
+    anchors_path = out_dir / "anchors.json"
+    anchors = load_characters(anchors_path) if anchors_path.exists() else None
+    document["version"] = _identity_integer(document.get("version"), 1)
+    document["provenance"] = _json_object(document.get("provenance"))
+    document["thresholds"] = thresholds
+    document["characters"] = _normalize_grouping_entries(document.get("characters"))
+    document["abstained"] = abstained
+    document["by_image"] = _normalize_grouping_csv_rows(
+        _read_grouping_csv(out_dir / "character-groups-by-image.csv"), "image"
+    )
+    document["by_character"] = _normalize_grouping_csv_rows(
+        _read_grouping_csv(out_dir / "character-groups-by-character.csv"), "character"
+    )
+    document["anchors"] = anchors
+    return document
+
+
 def build_stats(rows: Sequence[ScoreRow]) -> StatsPayload:
     """Calculate the compact corpus summary shown in the report header."""
     tier_counts = {tier: 0 for tier in TIERS}
@@ -610,6 +731,7 @@ def build_payload(
         "source": str((out_dir / "scores.csv").resolve()),
         "identities": load_identities(out_dir / "identities.json"),
         "characters": load_characters(out_dir / "characters.json"),
+        "grouping": load_character_grouping(out_dir),
     }
 
 
@@ -650,6 +772,77 @@ COMPACT_COLUMNS: Final[tuple[tuple[str, str], ...]] = (
     ("pt", "proposed_tier"),
     ("th", "thumb_rel"),
 )
+
+
+def _grouping_extras(entry: Mapping[str, JsonValue], known: Sequence[str]) -> dict[str, JsonValue]:
+    """Keep producer fields that the compact browser view does not interpret."""
+    known_fields = set(known)
+    return {key: value for key, value in entry.items() if key not in known_fields}
+
+
+def compact_grouping(grouping: dict[str, JsonValue]) -> dict[str, JsonValue]:
+    """Encode grouping artifacts with short keys while preserving extensions."""
+    compact_characters: list[JsonValue] = []
+    for raw in _json_list(grouping.get("characters")):
+        entry = _json_object(raw)
+        compact_characters.append(
+            [
+                entry.get("character", "未命名"),
+                entry.get("image_count", 0),
+                entry.get("face_count", 0),
+                entry.get("images", []),
+                entry.get("mean_sim"),
+                entry.get("min_margin"),
+                _grouping_extras(
+                    entry,
+                    ("character", "image_count", "face_count", "images", "mean_sim", "min_margin"),
+                ),
+            ]
+        )
+    compact_images: list[JsonValue] = []
+    for raw in _json_list(grouping.get("by_image")):
+        entry = _json_object(raw)
+        compact_images.append(
+            [
+                entry.get("sha16", ""),
+                entry.get("filename", ""),
+                entry.get("characters", []),
+                _grouping_extras(entry, ("sha16", "filename", "characters")),
+            ]
+        )
+    compact_faces: list[JsonValue] = []
+    for raw in _json_list(grouping.get("by_character")):
+        entry = _json_object(raw)
+        compact_faces.append(
+            [
+                entry.get("character", ""),
+                entry.get("sha16", ""),
+                entry.get("filename", ""),
+                entry.get("face_id", ""),
+                entry.get("sim"),
+                entry.get("margin"),
+                entry.get("decision", ""),
+                _grouping_extras(
+                    entry,
+                    ("character", "sha16", "filename", "face_id", "sim", "margin", "decision"),
+                ),
+            ]
+        )
+    unknown_root = _grouping_extras(
+        grouping,
+        ("version", "provenance", "thresholds", "characters", "abstained", "by_image", "by_character", "anchors"),
+    )
+    return {
+        "v": grouping.get("version", 1),
+        "p": grouping.get("provenance", {}),
+        "t": grouping.get("thresholds", {}),
+        "c": compact_characters,
+        "a": grouping.get("abstained", {}),
+        "i": compact_images,
+        "f": compact_faces,
+        "h": grouping.get("anchors"),
+        "u": unknown_root,
+    }
 
 
 def compact_payload(payload: GalleryPayload) -> dict[str, JsonValue]:
@@ -700,6 +893,7 @@ def compact_payload(payload: GalleryPayload) -> dict[str, JsonValue]:
         "a": stats["average_consensus_z"],
         "p": stats["pass_rate"],
     }
+    grouping = payload["grouping"]
     return {
         "v": 4,
         "n": len(row_maps),
@@ -713,6 +907,7 @@ def compact_payload(payload: GalleryPayload) -> dict[str, JsonValue]:
         "o": payload["source"],
         "y": payload["identities"],
         "q": payload["characters"],
+        "r": compact_grouping(grouping) if grouping is not None else None,
     }
 
 
@@ -871,7 +1066,8 @@ HTML_TEMPLATE = r'''<!doctype html>
 @media(max-width:760px){.topbar{flex-direction:column;gap:var(--space-3);padding-inline:var(--space-4)}.topbar:after{inset-inline-start:var(--space-4)}.header-stats{width:100%;flex:0 1 auto}.controls-row{padding-inline:var(--space-4)}.controls-head{align-items:stretch;flex-direction:column}.control-buttons{justify-content:space-between}.filter-line{display:block}.flag-filter-wrap{margin-top:var(--space-3)}.studio-view,.table-view{padding-inline:var(--space-3)}.studio-body{grid-template-rows:minmax(260px,44dvh) minmax(230px,1fr)}.action-belt{flex-wrap:nowrap;overflow:auto}.action-button{flex:0 0 auto}.belt-status{display:none}.filmstrip{grid-template-columns:1fr auto}.filmstrip-title{display:none}.filmstrip-list{grid-column:1/-1;grid-row:1}.film-count{grid-column:2;grid-row:1;align-self:center}.spotlights{grid-template-columns:repeat(3,minmax(220px,1fr));overflow:auto}.table-view{grid-template-rows:minmax(0,1fr) 104px}.legend-list,.shortcut-list{grid-template-columns:1fr}.lightbox,.legend-modal,.help-modal,.journal-modal{padding:var(--space-2)}.lightbox-panel,.legend-panel,.help-panel,.journal-panel{padding:var(--space-4);max-height:94dvh}}
  @media(max-width:520px){.brand h1{font-size:26px}.subtitle{font-size:11px}.header-stat{padding:var(--space-2)}.header-stat strong{font-size:16px}.header-stat small{font-size:9px}.mode-button{padding-inline:var(--space-2)}.tier-card{min-width:calc(50% - 4px);flex:1 1 112px}.score-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.main-region{overflow:auto;overscroll-behavior:contain}.studio-view,.table-view{height:auto;min-height:calc(100dvh - 300px);overflow:visible}.studio-body{grid-template-rows:minmax(230px,39dvh) auto}.inspector{max-height:none;min-height:300px}.preview-stage:before{inset:var(--space-2)}.stage-topline{inset:var(--space-2)}.stage-controls{inset-block-start:var(--space-2);inset-inline-end:var(--space-2)}.table-toolbar{padding:var(--space-2) var(--space-3)}.table-heading p{display:none}.visible-count{font-size:10px}.table-view{padding-inline:var(--space-2)}.spotlights{grid-template-columns:repeat(3,minmax(220px,1fr))}.journal-export-row{grid-template-columns:1fr;gap:2px}.character-panel{width:100%}.face-popover{width:min(340px,calc(100vw - var(--space-4)));padding:var(--space-3)}}
  @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition-duration:0ms!important;animation-duration:1ms!important;animation-iteration-count:1!important}.skip-link{transition:none}.family-panel,.character-panel{transform:none;opacity:0}.family-panel.is-open,.character-panel.is-open{opacity:1}.studio-image,.face-box,.face-tooltip{transition:none}.action-button:hover,.film-card:hover{transform:none}}
-</style>
+ .character-grouping-view{height:100%;min-width:0;min-height:0;overflow:hidden;padding:var(--space-4) var(--space-6);background:linear-gradient(145deg,rgba(184,161,255,.045),transparent 42%)}.grouping-scroll{height:100%;min-height:0;overflow:auto;overscroll-behavior:contain}.grouping-header{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-5);padding:var(--space-2) 0 var(--space-5)}.grouping-heading{min-width:0}.grouping-kicker{margin:0;color:var(--color-character);font:600 10px/1.2 var(--font-mono);letter-spacing:.08em}.grouping-heading h2{margin:var(--space-1) 0 0;font-size:clamp(20px,2.5vw,30px);line-height:1.1}.grouping-heading p{max-width:78ch;margin:var(--space-2) 0 0;color:var(--color-text-muted);font-size:12px;line-height:1.5;overflow-wrap:anywhere}.grouping-provenance{flex:0 1 420px;min-width:min(420px,100%);padding:var(--space-3);border:var(--border-width) solid rgba(184,161,255,.38);border-radius:var(--radius-panel);background:var(--color-character-soft);color:var(--color-text-secondary);font-size:11px;line-height:1.5}.grouping-provenance strong{display:block;color:var(--color-text-primary);font-size:12px}.grouping-provenance span{display:block;margin-top:var(--space-1);overflow-wrap:anywhere}.grouping-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:var(--space-3);padding-bottom:var(--space-5)}.grouping-card{min-width:0;padding:var(--space-4);border:var(--border-width) solid var(--color-border);border-radius:var(--radius-panel);background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.012));box-shadow:var(--shadow-ring);text-align:start;transition:transform var(--motion-micro) ease-out,background-color var(--motion-micro) ease-out,border-color var(--motion-micro) ease-out}.grouping-card:hover,.grouping-card:focus-visible{border-color:var(--color-character);background:var(--color-character-soft)}.grouping-card:active{transform:translateY(1px)}.grouping-card.is-selected{border-color:var(--color-focus);background:linear-gradient(145deg,var(--color-character-soft),var(--color-info-soft));box-shadow:0 0 0 2px var(--color-info-soft),var(--shadow-ring)}.grouping-card.is-unassigned{border-color:rgba(255,188,51,.45)}.grouping-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-2)}.grouping-card h3{min-width:0;margin:0;font-size:15px;line-height:1.25;overflow-wrap:anywhere}.grouping-card-count{flex:none;color:var(--color-character);font:700 22px/1 var(--font-mono);font-variant-numeric:tabular-nums}.grouping-card-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-2);margin-top:var(--space-4)}.grouping-metric{min-width:0;padding:var(--space-2);border:var(--border-width) solid var(--color-border-subtle);border-radius:var(--radius-control);background:rgba(0,0,0,.12)}.grouping-metric small{display:block;color:var(--color-text-muted);font-size:10px}.grouping-metric strong{display:block;margin-top:2px;color:var(--color-text-primary);font:650 12px/1.25 var(--font-mono);overflow-wrap:anywhere}.grouping-card-note{display:block;margin-top:var(--space-3);color:var(--color-text-muted);font-size:11px;line-height:1.35}.grouping-actions{display:flex;flex-wrap:wrap;gap:var(--space-2);margin-top:var(--space-3)}.grouping-action{min-height:30px;padding:0 var(--space-2);border:var(--border-width) solid var(--color-border);border-radius:var(--radius-control);background:var(--color-surface-elevated);color:var(--color-text-secondary);font-size:11px;font-weight:650}.grouping-action:hover{border-color:var(--color-info);background:var(--color-info-soft);color:var(--color-text-primary)}.grouping-status{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);padding:var(--space-3) var(--space-4);border:var(--border-width) solid var(--color-border);border-radius:var(--radius-panel);background:var(--color-surface);box-shadow:var(--shadow-ring);color:var(--color-text-muted);font-size:11px}.grouping-status strong{color:var(--color-info);font-family:var(--font-mono)}.grouping-toggle{display:inline-flex;align-items:center;gap:var(--space-2);color:var(--color-text-secondary);font-weight:650;white-space:nowrap}.grouping-toggle input{accent-color:var(--color-character)}.character-badge-stack{position:absolute;z-index:3;inset-block-end:var(--space-3);inset-inline-start:var(--space-3);display:flex;flex-wrap:wrap;gap:var(--space-1);max-width:calc(100% - var(--space-6));pointer-events:none}.character-image-badge{display:inline-flex;max-width:220px;padding:var(--space-1) var(--space-2);border:var(--border-width) solid var(--color-character);border-radius:var(--radius-control);background:rgba(23,25,27,.92);color:var(--color-character);font-size:11px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.character-image-badge.is-unassigned{border-color:var(--color-warning);color:var(--color-warning)}@media(max-width:760px){.character-grouping-view{padding-inline:var(--space-3)}.grouping-header{display:block}.grouping-provenance{min-width:0;margin-top:var(--space-3)}.grouping-status{align-items:flex-start;flex-direction:column}}@media(prefers-reduced-motion:reduce){.grouping-card{transition:none}.grouping-card:active{transform:none}}
+ </style>
 </head>
 <body>
 <a class="skip-link" href="#studio-view">跳转到审查工作台</a>
@@ -896,8 +1092,8 @@ HTML_TEMPLATE = r'''<!doctype html>
   <section class="controls-row" aria-label="筛选、模式和说明控制">
     <div class="controls-head">
       <div class="search-wrap"><label class="control-label" for="search-input">搜索：文件名、SHA、家族</label><input class="search-input" id="search-input" type="search" placeholder="搜索：文件名、SHA、家族" autocomplete="off" spellcheck="false"></div>
-      <div class="control-buttons">
-        <div class="mode-switch" role="tablist" aria-label="报告模式"><button class="mode-button" id="studio-mode" role="tab" aria-selected="true" aria-pressed="true" type="button">审查工作台</button><button class="mode-button" id="table-mode" role="tab" aria-selected="false" aria-pressed="false" type="button">审计表格</button></div>
+       <div class="control-buttons">
+         <div class="mode-switch" role="tablist" aria-label="报告模式"><button class="mode-button" id="studio-mode" role="tab" aria-selected="true" aria-pressed="true" type="button">审查工作台</button><button class="mode-button" id="table-mode" role="tab" aria-selected="false" aria-pressed="false" type="button">审计表格</button><button class="mode-button" id="grouping-mode" role="tab" aria-selected="false" aria-pressed="false" type="button" hidden>人物分组</button></div>
         <button class="journal-button" id="journal-open" type="button">动作日志 <span id="journal-count">0</span></button><button class="legend-button" id="legend-open" type="button">指标说明</button><button class="control-button" id="help-open" type="button">快捷键 ?</button>
       </div>
     </div>
@@ -915,7 +1111,7 @@ HTML_TEMPLATE = r'''<!doctype html>
           <div class="preview-stage" id="preview-stage" tabindex="0" aria-label="大图审查区域">
             <div class="stage-topline"><span class="stage-label" id="stage-label">—</span><span class="stage-badge-stack"><span class="tier-badge" id="stage-tier">—</span><span class="manual-badge" id="stage-manual" hidden>—</span></span><span class="stage-index" id="stage-index">—</span></div>
             <div class="stage-controls"><button class="zoom-button" id="zoom-toggle" type="button" aria-label="切换适合窗口和 100% 缩放">适合窗口</button><button class="fullscreen-button" id="fullscreen-toggle" type="button">全屏</button></div>
-             <div class="preview-canvas" id="preview-canvas"><img class="studio-image" id="studio-image" alt="" draggable="false"><div class="face-overlay" id="face-overlay" aria-label="当前图片的人脸框" hidden></div><div class="preview-placeholder" id="studio-placeholder" hidden>暂无可用预览</div><button class="privacy-reveal" id="privacy-reveal" type="button" hidden>点击显示 NSFW</button></div>
+             <div class="preview-canvas" id="preview-canvas"><img class="studio-image" id="studio-image" alt="" draggable="false"><div class="face-overlay" id="face-overlay" aria-label="当前图片的人脸框" hidden></div><div class="character-badge-stack" id="preview-character-badges" aria-label="当前图片的人物分组" hidden></div><div class="preview-placeholder" id="studio-placeholder" hidden>暂无可用预览</div><button class="privacy-reveal" id="privacy-reveal" type="button" hidden>点击显示 NSFW</button></div>
             <div class="stage-loading" id="stage-loading" hidden>正在读取预览…</div>
           </div>
           <div class="action-belt" id="action-belt" aria-label="人工决定动作"></div>
@@ -938,8 +1134,15 @@ HTML_TEMPLATE = r'''<!doctype html>
     <section class="table-view" id="table-view" aria-labelledby="table-title" hidden>
       <section class="table-region"><div class="table-toolbar"><div class="table-heading"><h2 id="table-title">审计表格</h2><p>固定表头 · 仅渲染可见行 · 图片使用懒加载和异步解码</p></div><p class="visible-count" id="visible-count" aria-live="polite">—</p></div><div class="table-frame"><div class="table-scroll" id="table-scroll"><table class="score-table" id="score-table"><caption>可排序的图片审计表格</caption><thead><tr><th class="col-thumb" scope="col">缩略图</th><th class="col-filename" data-sort-column="filename" scope="col"><button class="sort-button" data-sort="filename" type="button">文件名 <span class="sort-indicator" aria-hidden="true">↕</span></button></th><th class="col-family" data-sort-column="family_id" scope="col"><button class="sort-button" data-sort="family_id" type="button">家族 <span class="sort-indicator" aria-hidden="true">↕</span></button></th><th class="col-score" data-sort-column="aes_v25" scope="col"><button class="sort-button" data-sort="aes_v25" type="button">美学 v2.5 <span class="sort-indicator" aria-hidden="true">↕</span></button></th><th class="col-score" data-sort-column="topiq_iaa" scope="col"><button class="sort-button" data-sort="topiq_iaa" type="button">TOPIQ-IAA <span class="sort-indicator" aria-hidden="true">↕</span></button></th><th class="col-score" data-sort-column="topiq_nr" scope="col"><button class="sort-button" data-sort="topiq_nr" type="button">TOPIQ-NR <span class="sort-indicator" aria-hidden="true">↕</span></button></th><th class="col-score" data-sort-column="qrealign" data-optional-column="qrealign" scope="col" hidden><button class="sort-button" data-sort="qrealign" type="button">Q-ReAlign <span class="sort-indicator" aria-hidden="true">↕</span></button></th><th class="col-score" data-sort-column="nsfw_prob" scope="col"><button class="sort-button" data-sort="nsfw_prob" type="button">NSFW 概率 <span class="sort-indicator" aria-hidden="true">↕</span></button></th><th class="col-score" data-sort-column="identity_sim" scope="col"><button class="sort-button" data-sort="identity_sim" type="button">身份相似度 <span class="sort-indicator" aria-hidden="true">↕</span></button></th><th class="col-score" data-sort-column="confusable_margin" scope="col"><button class="sort-button" data-sort="confusable_margin" type="button">混淆边际 <span class="sort-indicator" aria-hidden="true">↕</span></button></th><th class="col-score" data-sort-column="novelty" scope="col"><button class="sort-button" data-sort="novelty" type="button">新颖度 <span class="sort-indicator" aria-hidden="true">↕</span></button></th><th class="col-score" data-sort-column="consensus_z" scope="col"><button class="sort-button" data-sort="consensus_z" type="button">共识 Z <span class="sort-indicator" aria-hidden="true">↕</span></button></th><th class="col-score" data-sort-column="disagreement" scope="col"><button class="sort-button" data-sort="disagreement" type="button">分歧度 <span class="sort-indicator" aria-hidden="true">↕</span></button></th><th class="col-score" data-sort-column="gaming_delta" scope="col"><button class="sort-button" data-sort="gaming_delta" type="button">刷分差值 <span class="sort-indicator" aria-hidden="true">↕</span></button></th><th class="col-flags" scope="col">标记</th><th class="col-tier" scope="col">处置</th></tr></thead><tbody id="score-rows"></tbody></table></div><div class="empty-state" id="empty-state" hidden>当前筛选没有匹配的图片</div></div></section>
       <aside class="spotlights" id="spotlights" aria-label="审计焦点"><details class="spotlight" open><summary>分歧焦点 <span class="section-kicker">前 12</span></summary><div class="spotlight-list" id="disagreement-list"></div></details><details class="spotlight" open><summary>刷分审计 <span class="section-kicker">差值 &gt; 0</span></summary><div class="spotlight-list" id="gaming-list"></div></details><details class="spotlight" open><summary>不确定队列 <span class="section-kicker">已标记</span></summary><div class="spotlight-list" id="uncertain-list"></div></details></aside>
-    </section>
-  </main>
+     </section>
+     <section class="character-grouping-view" id="character-grouping-view" aria-labelledby="grouping-title" hidden>
+       <div class="grouping-scroll">
+         <header class="grouping-header"><div class="grouping-heading"><p class="grouping-kicker">离线 · 像素检索提案</p><h2 id="grouping-title">人物分组</h2><p>按每张图片的角色集合筛选审计表与审阅台。未定包含空角色集合和放弃命名的人脸，可直接进入命名循环。</p></div><div class="grouping-provenance" id="grouping-provenance"><strong>实验性、未校准的检索建议</strong><span id="grouping-thresholds">阈值：min_sim — · min_margin —</span><span>文件夹名称 = 人工提供的标签；每张图的决策仅使用像素。不是身份认证或准确率证明。</span></div></header>
+         <div class="grouping-cards" id="grouping-cards" aria-label="人物分组卡片"></div>
+         <div class="grouping-status"><span id="grouping-status-text">—</span><label class="grouping-toggle"><input id="grouping-unassigned-toggle" type="checkbox">仅看未定</label><div class="grouping-actions"><button class="grouping-action" id="grouping-open-studio" type="button">回到审阅台</button><button class="grouping-action" id="grouping-start-naming" type="button">开始命名未定人脸</button></div></div>
+       </div>
+     </section>
+   </main>
 </div>
 
  <div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
@@ -969,8 +1172,10 @@ const decodePayload=async()=>{
 const start=performance.now();
 decodePayload().then((compact)=>boot(compact,start)).catch((error)=>fatal(error instanceof Error?error.message:"报告数据解压失败，请重新生成 gallery.html。"));
 
-function boot(compact,decodeStart){
-  const columnar=compact&&typeof compact==="object"?compact:{};const columns=columnar.c&&typeof columnar.c==="object"?columnar.c:{};const count=Number(columnar.n||0);const flagValues=Array.isArray(columnar.g)?columnar.g:[];const tierValues=Array.isArray(columnar.l)?columnar.l:[];
+ function boot(compact,decodeStart){
+   const groupingUnassigned=(row)=>{const sha16=String(row?.sha16||"");const roles=groupingImageRoles.get(sha16)||[];const faceRows=groupingFacesByImage.get(sha16)||[];return !roles.some((role)=>groupingAssignedNames.has(role))||faceRows.some((face)=>face.decision!=="assigned");};const groupingMatches=(row)=>{if(!groupingEnabled||!state.groupCharacter)return true;const roles=groupingImageRoles.get(String(row?.sha16||""))||[];if(state.groupCharacter==="未定")return groupingUnassigned(row);return roles.includes(state.groupCharacter);};
+   const finiteNumber=(value)=>{if(value===null||value===undefined||value==="")return null;const parsed=Number(value);return Number.isFinite(parsed)?parsed:null;};const compactGrouping=compact&&compact.r&&typeof compact.r==="object"?compact.r:null;const groupingEnabled=Boolean(compactGrouping);const groupingThresholds=compactGrouping?.t&&typeof compactGrouping.t==="object"?compactGrouping.t:{};const groupingCharacters=Array.isArray(compactGrouping?.c)?compactGrouping.c.map((entry)=>Array.isArray(entry)?{name:String(entry[0]||"未命名"),imageCount:Number(entry[1]||0),faceCount:Number(entry[2]||0),images:Array.isArray(entry[3])?entry[3].map(String):[],meanSim:finiteNumber(entry[4]),minMargin:finiteNumber(entry[5])}:null).filter(Boolean):[];const groupingImageRoles=new Map();const groupingFacesByImage=new Map();const groupingFaceById=new Map();const groupingAssignedNames=new Set(groupingCharacters.map((entry)=>entry.name));const addGroupingFace=(entry)=>{const face={character:String(entry?.[0]||""),sha16:String(entry?.[1]||""),filename:String(entry?.[2]||""),faceId:String(entry?.[3]||""),sim:finiteNumber(entry?.[4]),margin:finiteNumber(entry?.[5]),decision:String(entry?.[6]||"")};if(!face.sha16&&!face.faceId)return;if(face.faceId)groupingFaceById.set(face.faceId,face);const current=groupingFacesByImage.get(face.sha16)||[];current.push(face);groupingFacesByImage.set(face.sha16,current);if(face.decision==="assigned"&&face.character)groupingAssignedNames.add(face.character);};(Array.isArray(compactGrouping?.f)?compactGrouping.f:[]).forEach(addGroupingFace);(Array.isArray(compactGrouping?.i)?compactGrouping.i:[]).forEach((entry)=>{if(!Array.isArray(entry))return;const sha16=String(entry[0]||"");const roles=Array.isArray(entry[2])?entry[2].map(String).filter(Boolean):[];if(sha16)groupingImageRoles.set(sha16,[...new Set(roles)]);});groupingCharacters.forEach((entry)=>{entry.images.forEach((sha16)=>{const roles=groupingImageRoles.get(sha16)||[];if(!roles.includes(entry.name))roles.push(entry.name);groupingImageRoles.set(sha16,roles);});});
+   const columnar=compact&&typeof compact==="object"?compact:{};const columns=columnar.c&&typeof columnar.c==="object"?columnar.c:{};const count=Number(columnar.n||0);const flagValues=Array.isArray(columnar.g)?columnar.g:[];const tierValues=Array.isArray(columnar.l)?columnar.l:[];
   const column=(key,index)=>Array.isArray(columns[key])?columns[key][index]??null:null;
   const rows=Array.from({length:count},(_,index)=>{const flagCodes=Array.isArray(column("fl",index))?column("fl",index):[];const tierCode=Number(column("pt",index));const row={sha16:String(column("s",index)||""),abs_path:String(column("a",index)||""),path_rel:String(column("p",index)||""),filename:String(column("n",index)||""),width:column("w",index),height:column("h",index),filesize:column("b",index),phash:String(column("x",index)||""),family_id:String(column("f",index)||"unassigned"),aes_v25:column("ae",index),topiq_iaa:column("ia",index),topiq_nr:column("nr",index),qrealign:column("qr",index),nsfw_prob:column("ns",index),identity_sim:column("id",index),confusable_margin:column("cm",index),novelty:column("nv",index),consensus_z:column("cz",index),disagreement:column("dg",index),gaming_delta:column("gd",index),flags:flagCodes.map((code)=>flagValues[Number(code)]).filter(Boolean),proposed_tier:tierValues[tierCode]||"review",thumb_rel:String(column("th",index)||""),preview_available:Boolean(column("pr",index)),thumb_available:Boolean(column("tb",index))};row.__index=index;row.__key=row.sha16||row.filename||`row-${index}`;return row;});
   const compactFamilies=columnar.f&&typeof columnar.f==="object"?columnar.f:{};const families={};Object.entries(compactFamilies).forEach(([familyId,value])=>{const entry=Array.isArray(value)?value:[];families[familyId]={members:Array.isArray(entry[0])?entry[0]:[],champion:String(entry[1]||""),runner_up:String(entry[2]||"")};});
@@ -989,7 +1194,7 @@ function boot(compact,decodeStart){
   function renderTierBoard(){const board=els("tier-board");const fragment=document.createDocumentFragment();["queue","review","archive_candidate","route_nsfw","route_identity"].forEach((tier)=>{const button=document.createElement("button");button.type="button";button.className="tier-card";button.setAttribute("aria-pressed",String(state.tier===tier));button.dataset.tier=tier;const name=document.createElement("span");name.className="tier-name";name.textContent=tierLabels[tier];const count=document.createElement("strong");count.textContent=Number(stats.tier_counts?.[tier]||0).toLocaleString("zh-CN");const hint=document.createElement("span");hint.className="tier-hint";hint.textContent=state.tier===tier?"已筛选":"点击筛选";button.append(name,count,hint);fragment.append(button);});board.replaceChildren(fragment);}
   function renderFlagFilters(){const group=els("flag-filters");const fragment=document.createDocumentFragment();["uncertain","gaming_suspect","nsfw","id_low","near_dup_runnerup","audit_sample"].forEach((flag)=>{const button=document.createElement("button");button.type="button";button.className="chip";button.textContent=flagLabels[flag];button.dataset.flag=flag;button.setAttribute("aria-pressed",String(state.flags.has(flag)));fragment.append(button);});group.replaceChildren(fragment);}
   function renderActiveFilters(){const container=els("active-filters");const fragment=document.createDocumentFragment();const hasFilters=Boolean(state.search||state.tier||state.flags.size||state.onlyUnreviewed);const label=document.createElement("span");label.className="active-filter-title";label.textContent=hasFilters?"当前筛选：":"筛选状态：未启用";fragment.append(label);if(state.search){const chip=document.createElement("button");chip.type="button";chip.className="active-filter";chip.dataset.clear="search";chip.textContent=`搜索“${state.search}” ×`;fragment.append(chip);}if(state.tier){const chip=document.createElement("button");chip.type="button";chip.className="active-filter";chip.dataset.clear="tier";chip.textContent=`处置：${tierLabels[state.tier]} ×`;fragment.append(chip);}state.flags.forEach((flag)=>{const chip=document.createElement("button");chip.type="button";chip.className="active-filter";chip.dataset.clear=`flag:${flag}`;chip.textContent=`${flagLabels[flag]} ×`;fragment.append(chip);});if(state.onlyUnreviewed){const chip=document.createElement("button");chip.type="button";chip.className="active-filter";chip.dataset.clear="unreviewed";chip.textContent="仅看未审 ×";fragment.append(chip);}if(hasFilters){const clear=document.createElement("button");clear.type="button";clear.className="clear-button";clear.dataset.clear="all";clear.textContent="清除筛选";fragment.append(clear);}container.replaceChildren(fragment);}
-  function refreshView(preferredKey=state.currentKey){recomputeVisible(preferredKey);renderTierBoard();renderFlagFilters();renderActiveFilters();renderStudio();renderSpotlights();scheduleTableRender();}
+   function refreshView(preferredKey=state.currentKey){recomputeVisible(preferredKey);if(groupingEnabled&&state.groupCharacter)state.visible=state.visible.filter((index)=>groupingMatches(rows[index]));renderTierBoard();renderFlagFilters();renderActiveFilters();renderStudio();renderSpotlights();scheduleTableRender();if(state.mode==="grouping")renderGroupingView();}
   function renderDecisionBadge(node,action){node.hidden=!action;node.textContent=action?`人工：${actionLabel(action)}`:"";}
   function renderScoreGrid(row){const grid=els("score-grid");const fragment=document.createDocumentFragment();scoreFields.forEach((field)=>{const card=document.createElement("div");card.className="score-card";const label=document.createElement("label");label.textContent=fieldLabels[field];const value=document.createElement("strong");const raw=row[field];value.textContent=formatField(field,raw);if(!finite(raw)&&numericFields.has(field))value.classList.add("empty");value.title=`原始值：${rawValue(raw)}`;card.append(label,value);fragment.append(card);});grid.replaceChildren(fragment);}
   function renderFlags(container,row){const fragment=document.createDocumentFragment();if(!row){container.replaceChildren();return;}if(!row.flags.length){const badge=document.createElement("span");badge.className="badge";badge.dataset.flag="none";badge.textContent="无";fragment.append(badge);}else row.flags.forEach((flag)=>{const badge=document.createElement("span");badge.className="badge";badge.dataset.flag=flag;badge.textContent=flagLabels[flag]||flag;fragment.append(badge);});container.replaceChildren(fragment);}
@@ -997,14 +1202,14 @@ function boot(compact,decodeStart){
    function journalEntryLabel(entry){if(entry.action==="undo")return"撤销";if(entry.kind==="face")return`人脸 · ${faceActionLabel(entry.action)}${entry.character?` · ${entry.character}`:""}`;if(entry.kind==="cluster")return`聚类 · ${entry.action==="name"?"命名":entry.action==="merge"?"合并":entry.action==="split"?"拆分":entry.action==="outlier"?"离群":entry.action}`;return actionLabel(entry.action);}function renderJournalPreview(){const list=els("journal-list");const entries=journal.entries.slice(-6).reverse();const fragment=document.createDocumentFragment();if(!entries.length){const empty=document.createElement("span");empty.className="journal-note";empty.textContent="暂无人工动作";fragment.append(empty);}else entries.forEach((entry)=>{const line=document.createElement("div");line.className="journal-entry";const name=document.createElement("strong");name.textContent=entry.kind==="face"?entry.face_id:entry.kind==="cluster"?`聚类 ${entry.cluster_id}`:entry.sha16||"当前图片";const action=document.createElement("span");action.textContent=journalEntryLabel(entry);line.append(name,action);fragment.append(line);});list.replaceChildren(fragment);setText("journal-count",journal.entries.filter((entry)=>entry.action!=="undo").length.toLocaleString("zh-CN"));setText("journal-summary",`语料指纹 ${fingerprint} · ${journal.entries.length.toLocaleString("zh-CN")} 条日志 · ${Object.keys(journal.decisions).length.toLocaleString("zh-CN")} 张图片 · ${Object.keys(journal.faceLabels).length.toLocaleString("zh-CN")} 张人脸`);}
   function renderActionBelt(row){const belt=els("action-belt");const fragment=document.createDocumentFragment();actionDefs.forEach((item)=>{const button=document.createElement("button");button.type="button";button.className="action-button";button.dataset.action=item.id;button.setAttribute("aria-pressed",String(manualFor(row)===item.id));button.setAttribute("aria-keyshortcuts",item.key);const key=document.createElement("span");key.className="keycap";key.textContent=item.key;const label=document.createElement("span");label.textContent=item.label;button.append(key,label);fragment.append(button);});const undo=document.createElement("button");undo.type="button";undo.className="action-button";undo.dataset.action="undo";undo.setAttribute("aria-keyshortcuts","U");const undoKey=document.createElement("span");undoKey.className="keycap";undoKey.textContent="U";const undoLabel=document.createElement("span");undoLabel.textContent="撤销";undo.append(undoKey,undoLabel);fragment.append(undo);const status=document.createElement("span");status.className="belt-status";status.id="belt-status";status.textContent=manualFor(row)?"已保存到本地":"选择动作后保存在本地";fragment.append(status);belt.replaceChildren(fragment);}
    function faceOverlayRect(face){const image=els("studio-image");const canvas=els("preview-canvas");if(!image||image.hidden||!image.naturalWidth||!image.naturalHeight)return null;const imageRect=image.getBoundingClientRect();const canvasRect=canvas.getBoundingClientRect();const scaleX=imageRect.width/image.naturalWidth;const scaleY=imageRect.height/image.naturalHeight;const box=Array.isArray(face.bbox)?face.bbox:[0,0,0,0];const left=Number(box[0])||0;const top=Number(box[1])||0;const width=Math.max(0,Number(box[2])||0);const height=Math.max(0,Number(box[3])||0);if(width<=0||height<=0||scaleX<=0||scaleY<=0)return null;return {left:imageRect.left-canvasRect.left+left*scaleX,top:imageRect.top-canvasRect.top+top*scaleY,width:width*scaleX,height:height*scaleY};}
-   function renderFaceOverlay(){const layer=els("face-overlay");const row=currentRow();if(!layer||!identityEnabled||!row){if(layer){layer.hidden=true;layer.replaceChildren();}return;}const faces=facesForRow(row);const fragment=document.createDocumentFragment();faces.forEach((face)=>{const rect=faceOverlayRect(face);if(!rect)return;const button=document.createElement("button");button.type="button";button.className="face-box";button.dataset.faceId=face.face_id;button.setAttribute("aria-label",`${faceMeta(face)}${faceLabel(face)?.character?` · ${faceLabel(face).character}`:""} · 点击命名`);button.title=button.getAttribute("aria-label");button.style.left=`${rect.left}px`;button.style.top=`${rect.top}px`;button.style.width=`${rect.width}px`;button.style.height=`${rect.height}px`;button.classList.toggle("is-selected",state.openFaceId===face.face_id);button.classList.toggle("is-uncertain",uncertaintyScore(face)>=.55);button.classList.toggle("is-outlier",face.is_outlier===true);button.classList.toggle("is-private",privateRow(row));const label=faceLabel(face);if(label?.character){const chip=document.createElement("span");chip.className="face-label-chip";chip.textContent=label.character;button.append(chip);}const tooltip=document.createElement("span");tooltip.className="face-tooltip";tooltip.textContent=faceMeta(face);button.append(tooltip);fragment.append(button);});layer.replaceChildren(fragment);layer.hidden=!faces.length;}
+    function renderFaceOverlay(){const layer=els("face-overlay");const row=currentRow();if(!layer||!identityEnabled||!row){if(layer){layer.hidden=true;layer.replaceChildren();}return;}const faces=facesForRow(row);const fragment=document.createDocumentFragment();faces.forEach((face)=>{const rect=faceOverlayRect(face);if(!rect)return;const grouped=groupingFaceById.get(face.face_id);const localLabel=faceLabel(face);const clusterFallback=face.cluster_id===null||face.cluster_id===undefined?"未定":`聚类 ${String(face.cluster_id)}`;const displayName=grouped?.decision==="assigned"&&grouped.character?grouped.character:localLabel?.character||clusterFallback;const groupedMeta=grouped?` · 相似度 ${numberText(grouped.sim)} · 间隔 ${numberText(grouped.margin)} · 决策 ${grouped.decision||"未提供"}`:"";const button=document.createElement("button");button.type="button";button.className="face-box";button.dataset.faceId=face.face_id;button.setAttribute("aria-label",`${faceMeta(face)} · ${displayName}${groupedMeta} · 点击命名`);button.title=button.getAttribute("aria-label");button.style.left=`${rect.left}px`;button.style.top=`${rect.top}px`;button.style.width=`${rect.width}px`;button.style.height=`${rect.height}px`;button.classList.toggle("is-selected",state.openFaceId===face.face_id);button.classList.toggle("is-uncertain",uncertaintyScore(face)>=.55);button.classList.toggle("is-outlier",face.is_outlier===true);button.classList.toggle("is-private",privateRow(row));const chip=document.createElement("span");chip.className="face-label-chip";chip.textContent=displayName;button.append(chip);const tooltip=document.createElement("span");tooltip.className="face-tooltip";tooltip.textContent=`${faceMeta(face)} · ${displayName}${groupedMeta}`;button.append(tooltip);fragment.append(button);});layer.replaceChildren(fragment);layer.hidden=!faces.length;}
    function renderFaceNameOptions(face){const select=els("face-character-select");if(!select)return;const current=faceLabel(face)?.character||"";const names=[...knownNames].filter(Boolean).sort((left,right)=>left.localeCompare(right,"zh-CN"));select.replaceChildren();const empty=document.createElement("option");empty.value="";empty.textContent="选择已有名字…";select.append(empty);names.forEach((name)=>{const option=document.createElement("option");option.value=name;option.textContent=name;if(name===current)option.selected=true;select.append(option);});const input=els("face-character-name");if(input)input.value=current&&!names.includes(current)?current:"";}
    function positionFacePopover(anchor){const popover=els("face-popover");if(!popover||popover.hidden||!anchor)return;const rect=anchor.getBoundingClientRect();const margin=12;const width=popover.offsetWidth;const height=popover.offsetHeight;const left=Math.max(margin,Math.min(window.innerWidth-width-margin,rect.left));const top=rect.bottom+margin+height<=window.innerHeight?rect.bottom+margin:Math.max(margin,rect.top-height-margin);popover.style.left=`${left}px`;popover.style.top=`${top}px`;}
    function openFacePopover(faceId){const face=faceById.get(faceId);const anchor=els("face-overlay")?.querySelector(`[data-face-id="${CSS.escape(faceId)}"]`);const popover=els("face-popover");if(!face||!popover||!anchor)return;state.openFaceId=faceId;renderFaceNameOptions(face);setText("face-popover-title",faceLabel(face)?.character?"修改人物标注":"标注人脸");setText("face-popover-meta",faceMeta(face));setText("face-popover-status","");popover.hidden=false;positionFacePopover(anchor);renderFaceOverlay();els("face-character-select")?.focus();}
     function closeFacePopover(){const popover=els("face-popover");if(!popover||popover.hidden)return;const faceId=state.openFaceId;popover.hidden=true;state.openFaceId=null;renderFaceOverlay();const target=faceId?els("face-overlay")?.querySelector(`[data-face-id="${CSS.escape(faceId)}"]`):null;target?.focus();}
    function activeFace(){return state.openFaceId?faceById.get(state.openFaceId)||null:null;}
    function facePopoverAction(action){const face=activeFace();if(!face)return;const select=els("face-character-select");const input=els("face-character-name");const selected=select?.value||"";const typed=input?.value.trim()||"";const character=action==="confirm"?(selected||typed):action==="new"?typed:"";if((action==="confirm"||action==="new")&&!character){setText("face-popover-status","请选择已有名字或输入新名字");(input||select)?.focus();return;}recordFaceLabel(face,action,character);closeFacePopover();}
-   function updatePrivacy(row){const canvas=els("preview-canvas");const privateHidden=privateRow(row)&&!state.showNsfw&&!state.revealed.has(rowKey(row));els("studio-image").classList.toggle("is-private",privateHidden);const reveal=els("privacy-reveal");reveal.hidden=!privateHidden;reveal.textContent=privateHidden?"点击显示 NSFW":"";canvas.setAttribute("aria-label",privateHidden?"NSFW 图片，当前已模糊，点击显示":"大图审查区域");renderFaceOverlay();}
+    function updatePrivacy(row){const canvas=els("preview-canvas");const privateHidden=privateRow(row)&&!state.showNsfw&&!state.revealed.has(rowKey(row));els("studio-image").classList.toggle("is-private",privateHidden);const reveal=els("privacy-reveal");reveal.hidden=!privateHidden;reveal.textContent=privateHidden?"点击显示 NSFW":"";canvas.setAttribute("aria-label",privateHidden?"NSFW 图片，当前已模糊，点击显示":"大图审查区域");renderGroupingBadges(row);renderFaceOverlay();}
    function showStudioPlaceholder(text){const image=els("studio-image");image.hidden=true;const placeholder=els("studio-placeholder");placeholder.hidden=false;placeholder.textContent=text;els("stage-loading").hidden=true;const layer=els("face-overlay");if(layer){layer.hidden=true;layer.replaceChildren();}}
    function mountStudioAsset(row){const generation=++mediaGeneration;const image=els("studio-image");const placeholder=els("studio-placeholder");stageCandidates=assetCandidates(row);stageCandidateIndex=0;if(!stageCandidates.length){showStudioPlaceholder("无缩略图 · 暂无可用预览");return;}els("stage-loading").hidden=false;placeholder.hidden=true;image.hidden=false;image.style.opacity=".35";const tryNext=()=>{if(generation!==mediaGeneration)return;if(stageCandidateIndex>=stageCandidates.length){showStudioPlaceholder("文件缺失 · 暂无可用预览");return;}const probe=new Image();const source=stageCandidates[stageCandidateIndex];probe.decoding="async";probe.onload=async()=>{if(typeof probe.decode==="function"){try{await probe.decode();}catch(_error){}}if(generation!==mediaGeneration)return;image.src=source;image.alt=row.filename||"图片预览";image.dataset.source=source;image.style.opacity="1";image.hidden=false;placeholder.hidden=true;els("stage-loading").hidden=true;requestAnimationFrame(renderFaceOverlay);};probe.onerror=()=>{stageCandidateIndex+=1;tryNext();};probe.src=source;};tryNext();}
    function applyZoom(){const canvas=els("preview-canvas");canvas.classList.toggle("is-zoomed",state.zoomed);const image=els("studio-image");image.style.transform=state.zoomed?`translate3d(${state.panX}px,${state.panY}px,0)`:"";setText("zoom-toggle",state.zoomed?"适合窗口":"100% 原图");requestAnimationFrame(renderFaceOverlay);}
@@ -1053,8 +1258,8 @@ function boot(compact,decodeStart){
    const csvCell=(value)=>`"${String(value??"").replaceAll('"','""')}"`;function exportJson(){download(`image-review-${fingerprint}.json`,JSON.stringify({version:1,fingerprint,title:document.getElementById("brand-title")?.textContent||"",exported_at:new Date().toISOString(),decisions:journal.decisions,entries:journal.entries},null,2),"application/json");}function exportCsv(){const header=["sha16","filename","action","manual_decision","proposed_tier","timestamp"];const lines=[header.map(csvCell).join(",")];journal.entries.forEach((entry)=>lines.push([entry.sha16,entry.filename,entry.action,entry.manual_decision,entry.proposed_tier,entry.timestamp].map(csvCell).join(",")));download(`image-review-${fingerprint}.csv`,lines.join("\r\n"),"text/csv;charset=utf-8");}function exportCharacterLabels(){download("character_labels.json",JSON.stringify(characterLabelsPayload(),null,2),"application/json");setText("journal-import-status","人物标签已导出");}function importCharacterLabels(file){if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const parsed=JSON.parse(String(reader.result||""));if(!parsed||typeof parsed!=="object"||parsed.version!==1||parsed.source!=="review-studio"||String(parsed.corpus_fingerprint)!==fingerprint||!Array.isArray(parsed.labels))throw new Error("标签文件与当前语料不匹配");let imported=0;parsed.labels.forEach((raw)=>{if(!raw||typeof raw!=="object"||!LABEL_ACTIONS.has(raw.action))return;const face=faceById.get(String(raw.face_id||""));if(!face)return;const label={face_id:face.face_id,image_sha16:String(raw.image_sha16||face.image_sha16||""),character:String(raw.character||""),action:raw.action};journal.faceLabels[face.face_id]=label;if(label.character)knownNames.add(label.character);imported+=1;});journal.entries.push({kind:"face",action:"import",count:imported,timestamp:new Date().toISOString()});saveJournal();renderFaceOverlay();renderCharacterPanel();renderJournalPreview();renderJournalExport();setText("journal-import-status",`已导入 ${imported} 张人脸标签`);}catch(error){setText("journal-import-status",error instanceof Error?error.message:"标签文件无法读取");}};reader.onerror=()=>setText("journal-import-status","标签文件无法读取");reader.readAsText(file,"utf-8");}function undoRecentCharacter(){for(let index=journal.faceHistory.length-1;index>=0;index-=1){const entry=journal.faceHistory[index];if(!entry.undone){if(undoFaceLabel(entry.face_id)){setText("journal-import-status","已撤销最近人物动作");return;}}}setText("journal-import-status","暂无可撤销的人物动作");}
   function schedulePrefetch(){const position=currentIndex();if(position<0)return;const generation=++prefetch.generation;prefetch.queue=[];prefetch.handles.forEach((image)=>{image.onload=null;image.onerror=null;image.src="";});prefetch.handles.clear();for(let distance=1;distance<=PREFETCH_K;distance+=1){[position+distance,position-distance].forEach((order)=>{if(order>=0&&order<state.visible.length){assetCandidates(rows[state.visible[order]]).forEach((source)=>prefetch.queue.push({source,generation}));}});}const pump=()=>{if(generation!==prefetch.generation)return;while(prefetch.active.size<PREFETCH_CONCURRENCY&&prefetch.queue.length){const item=prefetch.queue.shift();if(!item||item.generation!==generation)continue;const image=new Image();prefetch.active.add(image);prefetch.handles.add(image);const done=()=>{prefetch.active.delete(image);prefetch.handles.delete(image);pump();};image.onload=async()=>{if(typeof image.decode==="function"){try{await image.decode();}catch(_error){}}done();};image.onerror=done;image.src=item.source;}};pump();const idle=window.requestIdleCallback||((callback)=>window.setTimeout(callback,120));idle(()=>warmViewport(generation),{timeout:500});}
   function warmViewport(generation){if(generation!==prefetch.generation)return;const scroll=els("table-scroll");const center=Math.floor(Math.max(0,scroll.scrollTop-44)/88);for(let offset=-8;offset<=8;offset+=1){const index=state.visible[center+offset];if(index!==undefined)assetCandidates(rows[index]).slice(-1).forEach((source)=>{const image=new Image();image.decoding="async";image.src=source;});}}
-  function setMode(mode){state.mode=mode;const studio=mode==="studio";els("studio-view").hidden=!studio;els("table-view").hidden=studio;els("studio-mode").setAttribute("aria-pressed",String(studio));els("studio-mode").setAttribute("aria-selected",String(studio));els("table-mode").setAttribute("aria-pressed",String(!studio));els("table-mode").setAttribute("aria-selected",String(!studio));if(!studio)scheduleTableRender();else renderStudio();}
-  function clearFilters(){state.search="";state.tier=null;state.flags.clear();state.onlyUnreviewed=false;els("search-input").value="";els("only-unreviewed").checked=false;refreshView();}
+   function setMode(mode){state.mode=mode;const studio=mode==="studio";const table=mode==="table";const grouping=mode==="grouping"&&groupingEnabled;els("studio-view").hidden=!studio;els("table-view").hidden=!table;els("character-grouping-view").hidden=!grouping;els("studio-mode").setAttribute("aria-pressed",String(studio));els("studio-mode").setAttribute("aria-selected",String(studio));els("table-mode").setAttribute("aria-pressed",String(table));els("table-mode").setAttribute("aria-selected",String(table));els("grouping-mode").setAttribute("aria-pressed",String(grouping));els("grouping-mode").setAttribute("aria-selected",String(grouping));if(table)scheduleTableRender();else if(studio)renderStudio();else renderGroupingView();}
+   function clearFilters(){state.search="";state.tier=null;state.flags.clear();state.onlyUnreviewed=false;state.groupCharacter=null;els("search-input").value="";els("only-unreviewed").checked=false;refreshView();}
   function toggleFullscreen(){if(document.fullscreenElement){document.exitFullscreen?.();}else els("preview-stage").requestFullscreen?.();}
   function handleTableClick(event){const target=event.target instanceof Element?event.target.closest("[data-action],.sort-button,.active-filter,.clear-button"):null;if(!target)return;if(target.classList.contains("sort-button")){const field=target.dataset.sort||"consensus_z";if(state.sortField===field)state.sortDirection*=-1;else{state.sortField=field;state.sortDirection=field==="consensus_z"?-1:1;}refreshView();return;}const action=target.dataset.action;const index=Number(target.dataset.index);if(action==="preview"){jumpToIndex(index);return;}if(action==="open"){jumpToIndex(index);return;}if(action==="family"){openFamily(target.dataset.family||"");return;}if(action==="family-jump"||action==="spotlight-jump"){jumpToIndex(index);closeFamily();return;}if(action&&action.startsWith("copy:")){copyText(target.dataset.value||"",target);return;}if(target.dataset.clear){const clear=target.dataset.clear;if(clear==="all")clearFilters();else if(clear==="search"){state.search="";els("search-input").value="";refreshView();}else if(clear==="tier"){state.tier=null;refreshView();}else if(clear==="unreviewed"){state.onlyUnreviewed=false;els("only-unreviewed").checked=false;refreshView();}else if(clear.startsWith("flag:")){state.flags.delete(clear.slice(5));refreshView();}}}
   function handleMediaError(event){const image=event.target instanceof HTMLImageElement?event.target:null;if(!image||!image.dataset.media)return;const fallback=image.dataset.fallback;if(fallback&&!image.dataset.fellBack){image.dataset.fellBack="true";image.src=fallback;return;}const parent=image.parentElement;if(parent){const placeholder=document.createElement("span");placeholder.className=parent.classList.contains("table-thumb")?"table-placeholder":"film-placeholder";placeholder.textContent="文件缺失";parent.replaceChildren(placeholder);}}
@@ -1066,7 +1271,8 @@ function boot(compact,decodeStart){
    function init(){document.querySelectorAll('[data-optional-column="qrealign"]').forEach((node)=>{node.hidden=!hasQrealign;});els("show-nsfw").addEventListener("change",(event)=>{state.showNsfw=event.target.checked;const row=currentRow();if(row)updatePrivacy(row);renderFilmstrip();scheduleTableRender();});els("only-unreviewed").addEventListener("change",(event)=>{state.onlyUnreviewed=event.target.checked;refreshView();});els("search-input").addEventListener("input",(event)=>{state.search=event.target.value.trim();refreshView();});els("tier-board").addEventListener("click",(event)=>{const button=event.target.closest("[data-tier]");if(!button)return;state.tier=state.tier===button.dataset.tier?null:button.dataset.tier;refreshView();});els("flag-filters").addEventListener("click",(event)=>{const button=event.target.closest("[data-flag]");if(!button)return;const flag=button.dataset.flag;if(state.flags.has(flag))state.flags.delete(flag);else state.flags.add(flag);refreshView();});els("active-filters").addEventListener("click",handleTableClick);els("action-belt").addEventListener("click",handleActionClick);els("filmstrip-list").addEventListener("click",handleActionClick);els("spotlights").addEventListener("click",handleTableClick);els("score-table").addEventListener("click",handleTableClick);els("family-panel").addEventListener("click",handleTableClick);els("table-scroll").addEventListener("scroll",scheduleTableRender,{passive:true});els("studio-mode").addEventListener("click",()=>setMode("studio"));els("table-mode").addEventListener("click",()=>setMode("table"));els("journal-open").addEventListener("click",()=>{renderJournalPreview();renderJournalExport();openModal("journal-modal");});els("legend-open").addEventListener("click",()=>openModal("legend-modal"));els("help-open").addEventListener("click",()=>openModal("help-modal"));els("journal-close").addEventListener("click",()=>closeModal("journal-modal"));els("legend-close").addEventListener("click",()=>closeModal("legend-modal"));els("help-close").addEventListener("click",()=>closeModal("help-modal"));els("lightbox-close").addEventListener("click",()=>closeModal("lightbox"));els("family-close").addEventListener("click",closeFamily);document.querySelectorAll("[data-close]").forEach((node)=>node.addEventListener("click",()=>{const name=node.dataset.close;closeModal(`${name}-modal`);if(name==="lightbox")closeModal("lightbox");}));els("export-json").addEventListener("click",exportJson);els("export-csv").addEventListener("click",exportCsv);els("privacy-reveal").addEventListener("click",revealCurrent);els("zoom-toggle").addEventListener("click",toggleZoom);els("fullscreen-toggle").addEventListener("click",toggleFullscreen);els("preview-canvas").addEventListener("pointerdown",handleStagePointerDown);els("copy-path").addEventListener("click",()=>{const row=currentRow();if(row)copyText(row.abs_path,els("copy-path"));});els("copy-sha").addEventListener("click",()=>{const row=currentRow();if(row)copyText(row.sha16,els("copy-sha"));});els("original-link").addEventListener("click",(event)=>{if(!event.currentTarget.href||event.currentTarget.getAttribute("href")==="#")event.preventDefault();});els("studio-family").addEventListener("click",()=>{const row=currentRow();if(row)openFamily(row.family_id);});document.addEventListener("keydown",handleKey);document.addEventListener("error",handleMediaError,true);document.addEventListener("fullscreenchange",()=>{setText("fullscreen-toggle",document.fullscreenElement?"退出全屏":"全屏");});renderStats();renderJournalPreview();refreshView();}
    function renderJournalExport(){const container=els("journal-export");const fragment=document.createDocumentFragment();journal.entries.slice().reverse().forEach((entry)=>{const line=document.createElement("div");line.className="journal-export-row";const time=document.createElement("span");time.textContent=entry.timestamp||"—";const name=document.createElement("span");name.textContent=entry.kind==="face"?entry.face_id:entry.kind==="cluster"?`聚类 ${entry.cluster_id}`:entry.filename||entry.sha16||"—";const action=document.createElement("span");action.textContent=journalEntryLabel(entry);line.append(time,name,action);fragment.append(line);});if(!journal.entries.length){const empty=document.createElement("p");empty.className="empty-state";empty.textContent="暂无动作日志";fragment.append(empty);}container.replaceChildren(fragment);}
    function initializeIdentityLayer(){const section=els("character-section");if(!identityEnabled){if(section)section.hidden=true;return;}section.hidden=false;els("face-overlay").addEventListener("click",(event)=>{const target=event.target instanceof Element?event.target.closest("[data-face-id]"):null;if(target)openFacePopover(target.dataset.faceId||"");});els("face-popover-close").addEventListener("click",closeFacePopover);els("face-confirm").addEventListener("click",()=>facePopoverAction("confirm"));els("face-new").addEventListener("click",()=>facePopoverAction("new"));els("face-ignore").addEventListener("click",()=>facePopoverAction("ignore"));els("face-wrong-box").addEventListener("click",()=>facePopoverAction("wrong_box"));els("face-character-name").addEventListener("keydown",(event)=>{if(event.key==="Enter"){event.preventDefault();facePopoverAction("new");}});document.addEventListener("pointerdown",(event)=>{const target=event.target instanceof Node?event.target:null;const popover=els("face-popover");if(!popover.hidden&&target&&!popover.contains(target)&&!els("face-overlay").contains(target))closeFacePopover();});els("character-panel-open").addEventListener("click",openCharacterPanel);els("character-close").addEventListener("click",closeCharacterPanel);els("character-backdrop").addEventListener("click",closeCharacterPanel);els("character-scroll").addEventListener("scroll",renderCharacterClusters,{passive:true});els("character-virtual").addEventListener("click",handleCharacterPanelClick);els("uncertainty-mode").addEventListener("change",(event)=>{state.uncertaintyFirst=event.target.checked;setText("character-queue-note",state.uncertaintyFirst?"当前按不确定度优先：低聚类置信度、边际接近零、单成员和低检测分数。":"按聚类规模排序；打开待确认优先可先处理最有信息量的人脸。");renderCharacterPanel();});els("cluster-name-close").addEventListener("click",closeClusterNameModal);els("cluster-name-confirm").addEventListener("click",confirmClusterName);els("cluster-name-modal").addEventListener("click",(event)=>{if(event.target instanceof Element&&event.target.dataset.close==="cluster-name-modal")closeClusterNameModal();});els("export-character-labels").addEventListener("click",exportCharacterLabels);els("import-character-labels").addEventListener("click",()=>els("character-labels-file").click());els("character-labels-file").addEventListener("change",(event)=>{const input=event.target;const file=input.files?.[0];importCharacterLabels(file||null);input.value="";});els("undo-character").addEventListener("click",undoRecentCharacter);els("show-nsfw").addEventListener("change",renderCharacterPanel);els("studio-image").addEventListener("load",renderFaceOverlay);if(typeof ResizeObserver==="function"){faceResizeObserver=new ResizeObserver(renderFaceOverlay);faceResizeObserver.observe(els("preview-canvas"));faceResizeObserver.observe(els("studio-image"));}window.addEventListener("resize",()=>{renderFaceOverlay();if(!els("face-popover").hidden)positionFacePopover(els("face-overlay")?.querySelector(`[data-face-id="${CSS.escape(state.openFaceId||"")}"]`));},{passive:true});renderCharacterPanel();renderFaceOverlay();}
-   init();initializeIdentityLayer();
+   function groupingRowsFor(name){if(name==="未定")return rows.filter((row)=>groupingUnassigned(row));return rows.filter((row)=>(groupingImageRoles.get(row.sha16)||[]).includes(name));}function groupingFaceStats(name){const faces=[...groupingFaceById.values()].filter((face)=>name==="未定"?face.decision!=="assigned":face.character===name&&face.decision==="assigned");const sims=faces.map((face)=>face.sim).filter(finite);const margins=faces.map((face)=>face.margin).filter(finite);return {faces:faces.length,mean:sims.length?sims.reduce((sum,value)=>sum+Number(value),0)/sims.length:null,min:margins.length?Math.min(...margins):null};}function renderGroupingBadges(row){const container=els("preview-character-badges");if(!container)return;if(!groupingEnabled||!row){container.hidden=true;container.replaceChildren();return;}const roles=groupingImageRoles.get(row.sha16)||[];const display=[...new Set(roles.map((role)=>groupingAssignedNames.has(role)?role:"未定"))];container.replaceChildren();display.forEach((role)=>{const badge=document.createElement("span");badge.className="character-image-badge";badge.classList.toggle("is-unassigned",role==="未定");badge.textContent=role;container.append(badge);});container.hidden=!display.length;}function groupingCardButton(entry,unassigned){const main=document.createElement("button");main.type="button";main.className="grouping-card";main.dataset.groupCharacter=entry.name;main.setAttribute("aria-pressed",String(state.groupCharacter===entry.name));main.classList.toggle("is-selected",state.groupCharacter===entry.name);main.classList.toggle("is-unassigned",unassigned);const head=document.createElement("span");head.className="grouping-card-head";const title=document.createElement("h3");title.textContent=entry.name;const count=document.createElement("strong");count.className="grouping-card-count";count.textContent=String(entry.imageCount);head.append(title,count);main.append(head);const meta=document.createElement("span");meta.className="grouping-card-meta";const stats=groupingFaceStats(entry.name);[["人脸",stats.faces||entry.faceCount],["平均相似度",numberText(stats.mean??entry.meanSim)],["最小间隔",numberText(stats.min??entry.minMargin)],["筛选队列",groupingRowsFor(entry.name).length]].forEach(([label,value])=>{const metric=document.createElement("span");metric.className="grouping-metric";const small=document.createElement("small");small.textContent=String(label);const strong=document.createElement("strong");strong.textContent=String(value);metric.append(small,strong);meta.append(metric);});main.append(meta);const note=document.createElement("span");note.className="grouping-card-note";note.textContent=state.groupCharacter===entry.name?"已筛选 · 点击回到审阅台":"点击筛选图片与导航队列";main.append(note);return main;}function renderGroupingView(){const view=els("character-grouping-view");const tab=els("grouping-mode");if(!view||!tab)return;tab.hidden=!groupingEnabled;view.hidden=state.mode!=="grouping";if(!groupingEnabled)return;const cards=els("grouping-cards");const fragment=document.createDocumentFragment();groupingCharacters.forEach((entry)=>fragment.append(groupingCardButton(entry,false)));const unassignedRows=groupingRowsFor("未定");const unassignedStats=groupingFaceStats("未定");fragment.append(groupingCardButton({name:"未定",imageCount:unassignedRows.length,faceCount:unassignedStats.faces,meanSim:unassignedStats.mean,minMargin:unassignedStats.min},true));cards.replaceChildren(fragment);setText("grouping-thresholds",`阈值：min_sim ${numberText(groupingThresholds.min_sim)} · min_margin ${numberText(groupingThresholds.min_margin)} · 来源：character-groups.json`);setText("grouping-status-text",`${state.groupCharacter?`当前：${state.groupCharacter} · `:""}筛选队列 ${state.groupCharacter?state.visible.length:rows.length} / ${rows.length} 张 · 卡片图片计数按角色集合去重`);const toggle=els("grouping-unassigned-toggle");if(toggle)toggle.checked=state.groupCharacter==="未定";}function setGroupingFilter(name,enterStudio=true){if(!groupingEnabled)return;state.groupCharacter=name;const first=groupingRowsFor(name)[0];if(first)state.currentKey=rowKey(first);refreshView(state.currentKey);if(enterStudio)setMode("studio");renderGroupingView();}function startGroupingNaming(){setGroupingFilter("未定",true);const face=state.visible.flatMap((index)=>facesForRow(rows[index])).find((item)=>!faceIsNamed(item));if(!face){setText("studio-meta","未定队列没有可命名的人脸；可查看空角色图片");return;}const row=rows.find((item)=>item.sha16===face.image_sha16);if(row)state.currentKey=rowKey(row);renderStudio();const open=()=>{const target=els("face-overlay")?.querySelector(`[data-face-id="${CSS.escape(face.face_id)}"]`);if(target)openFacePopover(face.face_id);else if(face.cluster_id!==null&&face.cluster_id!==undefined)openClusterNameModal(String(face.cluster_id));else setText("studio-meta","未定人脸已进入队列 · 可按 N 开始命名");};requestAnimationFrame(open);}function initializeGroupingLayer(){const tab=els("grouping-mode");if(!groupingEnabled){if(tab)tab.hidden=true;return;}if(tab)tab.hidden=false;renderGroupingView();}
+   init();initializeIdentityLayer();initializeGroupingLayer();bindGroupingControls();function bindGroupingControls(){els("grouping-mode")?.addEventListener("click",()=>setMode("grouping"));els("grouping-cards")?.addEventListener("click",(event)=>{const target=event.target instanceof Element?event.target.closest("[data-group-character]"):null;if(target)setGroupingFilter(target.dataset.groupCharacter||"未定",true);});els("grouping-unassigned-toggle")?.addEventListener("change",(event)=>{if(event.target.checked)setGroupingFilter("未定",false);else{state.groupCharacter=null;refreshView();renderGroupingView();}});els("grouping-open-studio")?.addEventListener("click",()=>setMode("studio"));els("grouping-start-naming")?.addEventListener("click",startGroupingNaming);}
 }
 })();
 </script>

@@ -20,6 +20,11 @@
       "sha16": "0000000000000001",
       "path_rel": "batch-01/demo-01.jpg",
       "faces": ["f_00000001", "f_00000002"]
+    },
+    {
+      "sha16": "0000000000000002",
+      "path_rel": "batch-01/demo-02.jpg",
+      "faces": ["f_00000003"]
     }
   ],
   "faces": [
@@ -44,6 +49,17 @@
       "cluster_prob": 0.22,
       "is_outlier": false,
       "cluster_margin": 0.005
+    },
+    {
+      "face_id": "f_00000003",
+      "image_sha16": "0000000000000002",
+      "bbox": [320, 280, 200, 240],
+      "det_score": 0.72,
+      "crop_rel": "faces/f_00000003.jpg",
+      "cluster_id": 2,
+      "cluster_prob": 0.31,
+      "is_outlier": false,
+      "cluster_margin": 0.01
     }
   ],
   "clusters": [

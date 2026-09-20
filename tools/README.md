@@ -45,6 +45,16 @@ payload. `characters.json`, when present, is read-only catalog metadata. If
 `identities.json` is absent, face boxes, character controls and the character
 drawer remain hidden.
 
+The optional reference-grouping bundle is enabled only when
+`character-groups.json` exists. The builder also reads
+`character-groups-by-image.csv` (`sha16,filename,characters`) and
+`character-groups-by-character.csv`
+(`character,sha16,filename,face_id,sim,margin,decision`). Missing fields and
+files use empty defaults; unknown JSON and CSV fields remain in the compressed
+payload. The `人物分组` tab derives its image counts from the image CSV joined to
+the score ledger, so cards and filters reconcile with the table. Empty roles and
+abstained/fallback roles appear in the `未定` backlog.
+
 The header's **Archive pass** is deliberately defined as
 `archive_candidate / total`; `review` remains an audit lane rather than a pass.
 This resolves the otherwise ambiguous `pass-rate` label without changing the
@@ -60,6 +70,16 @@ neighbor filmstrip, progress, and keyboard help. `← →` / `J K` navigate,
 `1–6` apply decisions, `U` undoes, Space toggles fit/100% zoom, `F` toggles
 fullscreen, and `?` opens the shortcut dialog. The secondary `审计表格` keeps
 all columns and spotlights while rendering only a bounded row window.
+
+When grouping data is present, the third `人物分组` tab shows one card per
+known character plus `未定`, threshold provenance (`min_sim` and `min_margin`),
+and the experimental/uncalibrated retrieval disclaimer. Selecting a card sets
+the shared table filter and studio navigation queue. `仅看未定` and `开始命名
+未定人脸` enter the existing face naming, journal, and `character_labels.json`
+export loop. Preview badges use the image CSV's multi-character set; face boxes
+use by-character assignments with similarity, margin, and decision in the
+tooltip, falling back to cluster ID for abstentions. The source note is explicit:
+folder names are human-supplied labels and per-image decisions use pixels only.
 
 The controls row keeps search, disposition cards, flag chips, removable active
 filters, `清除筛选`, `仅看未审`, the global `显示 NSFW` toggle, and `指标说明`

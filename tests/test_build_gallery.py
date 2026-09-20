@@ -163,6 +163,9 @@ def test_localization_map_contains_required_chinese_surface() -> None:
         "清除筛选",
         "审查工作台",
         "审计表格",
+        "人物分组",
+        "未定",
+        "仅看未定",
         "精选",
         "入队通过",
         "归档",
@@ -410,3 +413,116 @@ def test_generated_gallery_contains_character_label_export_contract(tmp_path: Pa
     assert "const faceId=state.openFaceId" in html
     for action in ("confirm", "new", "ignore", "wrong_box"):
         assert f'"{action}"' in html
+
+
+def _write_grouping_artifacts(directory: Path) -> None:
+    """Write a small many-to-many grouping fixture for gallery boundary tests."""
+    (directory / "character-groups.json").write_text(
+        json.dumps(
+            {
+                "version": 1,
+                "future_root": {"producer_revision": "next"},
+                "provenance": {"algorithm": "fixture-grouping"},
+                "thresholds": {"min_sim": 0.9, "min_margin": 0.05},
+                "characters": [
+                    {
+                        "character": "人物甲",
+                        "image_count": 1,
+                        "face_count": 1,
+                        "images": ["sha-one"],
+                        "mean_sim": 0.96,
+                        "min_margin": 0.08,
+                        "future_character": "kept",
+                    }
+                ],
+                "abstained": {
+                    "face_count": 1,
+                    "cluster_groups": [
+                        {"cluster_id": 4, "face_count": 1, "images": ["sha-two"]}
+                    ],
+                },
+            },
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+    (directory / "character-groups-by-image.csv").write_text(
+        "sha16,filename,characters\n"
+        "sha-one,one.png,人物甲|新人物00\n"
+        "sha-two,two.png,\n",
+        encoding="utf-8",
+    )
+    (directory / "character-groups-by-character.csv").write_text(
+        "character,sha16,filename,face_id,sim,margin,decision\n"
+        "人物甲,sha-one,one.png,face-one,0.96,0.08,assigned\n"
+        "新人物00,sha-two,two.png,face-two,0.71,0.01,abstained\n",
+        encoding="utf-8",
+    )
+    (directory / "anchors.json").write_text(
+        json.dumps({"version": 1, "future_anchor": {"keep": True}}),
+        encoding="utf-8",
+    )
+
+
+def test_load_character_grouping_normalizes_csv_and_preserves_unknown_fields(tmp_path: Path) -> None:
+    # Given grouping artifacts with a multi-role image, an empty role, and producer extensions.
+    _write_grouping_artifacts(tmp_path)
+
+    # When the optional grouping boundary is loaded.
+    result = build_gallery.load_character_grouping(tmp_path)
+
+    # Then normalized browser data keeps both role semantics and forward-compatible fields.
+    assert result is not None
+    assert result["future_root"] == {"producer_revision": "next"}
+    assert result["by_image"][0]["characters"] == ["人物甲", "新人物00"]
+    assert result["by_image"][1]["characters"] == []
+    assert result["by_character"][0]["sim"] == 0.96
+    assert result["anchors"] == {"version": 1, "future_anchor": {"keep": True}}
+
+
+def test_compact_payload_embeds_short_key_grouping_data(tmp_path: Path) -> None:
+    # Given one score row and the optional grouping artifacts.
+    scores_path = tmp_path / "scores.csv"
+    _write_scores_csv(scores_path, build_gallery.CSV_COLUMNS, sha16="sha-one")
+    _write_grouping_artifacts(tmp_path)
+    payload = build_gallery.build_payload(
+        tmp_path,
+        tuple(build_gallery.read_scores(scores_path)),
+        build_gallery.CSV_COLUMNS,
+    )
+
+    # When the existing gzip/base64 payload boundary is encoded.
+    encoded, _ = build_gallery.encode_payload(payload)
+    decoded = json.loads(gzip.decompress(base64.b64decode(encoded)).decode("utf-8"))
+
+    # Then grouping uses compact keys while preserving the artifact extension.
+    assert decoded["r"]["v"] == 1
+    assert decoded["r"]["i"][0][2] == ["人物甲", "新人物00"]
+    assert decoded["r"]["u"]["future_root"] == {"producer_revision": "next"}
+
+
+def test_generated_gallery_contains_grouping_view_contract(tmp_path: Path) -> None:
+    # Given a generic score directory with all grouping artifacts.
+    scores_path = tmp_path / "scores.csv"
+    _write_scores_csv(scores_path, build_gallery.CSV_COLUMNS, sha16="sha-one")
+    _write_grouping_artifacts(tmp_path)
+
+    # When the offline report is generated.
+    html = build_gallery.build_gallery(tmp_path).read_text(encoding="utf-8")
+
+    # Then the third view and naming-loop affordances are present in Chinese.
+    for marker in ("人物分组", "仅看未定", "开始命名未定人脸", "min_sim"):
+        assert marker in html
+
+
+def test_build_payload_hides_grouping_when_artifact_is_absent(tmp_path: Path) -> None:
+    # Given the existing image-only contract without grouping.json.
+    scores_path = tmp_path / "scores.csv"
+    _write_scores_csv(scores_path, build_gallery.CSV_COLUMNS)
+    rows = tuple(build_gallery.read_scores(scores_path))
+
+    # When the payload is built.
+    payload = build_gallery.build_payload(tmp_path, rows, build_gallery.CSV_COLUMNS)
+
+    # Then the new view remains absent rather than showing an empty panel.
+    assert payload["grouping"] is None

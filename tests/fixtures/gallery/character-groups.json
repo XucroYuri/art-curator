@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "provenance": {
+    "algorithm": "fixture-grouping",
+    "label_knowledge": "user-organized folders treated as human labels; never query path features",
+    "future_provenance": {"fixture_only": true}
+  },
+  "thresholds": {"min_sim": 0.9, "min_margin": 0.05},
+  "characters": [
+    {
+      "character": "人物甲",
+      "image_count": 2,
+      "face_count": 2,
+      "images": ["0000000000000001", "0000000000000003"],
+      "mean_sim": 0.96,
+      "min_margin": 0.08
+    },
+    {
+      "character": "人物乙",
+      "image_count": 1,
+      "face_count": 1,
+      "images": ["0000000000000003"],
+      "mean_sim": 0.94,
+      "min_margin": 0.06
+    }
+  ],
+  "abstained": {
+    "face_count": 1,
+    "cluster_groups": [{"cluster_id": 2, "face_count": 1, "images": ["0000000000000002"]}]
+  }
+}
