@@ -1,12 +1,16 @@
 """Population consensus, exact union-find families, and proposal-only tiers."""
+import hashlib
 import json
 from collections import defaultdict
+from typing import Final, assert_never
 
 import numpy as np
 
 from . import db
 from .config import Settings
 from .references import normalize
+
+GROUPING_PROFILE_ID: Final = "phash6-or-phash10-cosine096-connected-v1"
 
 
 def zscore(values: np.ndarray) -> np.ndarray:
@@ -36,76 +40,98 @@ def components(hashes: list[int], embeddings: np.ndarray) -> list[list[int]]:
 
 def cluster(settings: Settings) -> None:
     rows = db.load_rows(settings.out)
+    quality_signals: tuple[str, ...] = ("aes_v25", "topiq_iaa", "topiq_nr", "qrealign")
+    match settings.quality_profile:
+        case "five-means-v1":
+            quality_signals += ("hpsv3_mu",)
+        case "four-means-v1":
+            pass
+        case unreachable:
+            assert_never(unreachable)
+    required = quality_signals + (("hpsv3_sigma",) if "hpsv3_mu" in quality_signals else ())
+    missing = [[name for name in (*required, "identity_sim", "nsfw_prob")
+                if getattr(row, name) is None] for row in rows]
+    quality_complete = not any(set(names).intersection(required) for names in missing)
+    identity_complete = all(row.identity_sim is not None for row in rows)
     hps_means = [row.hpsv3_mu for row in rows if row.hpsv3_mu is not None]
-    if hps_means and (len(hps_means) != len(rows) or any(row.hpsv3_sigma is None for row in rows)):
-        raise ValueError("HPSv3 is partially scored; resume score --pass hpsv3 before clustering")
     hps_scale = float(np.std(hps_means, ddof=0)) if hps_means else 0.0
     standardized: list[list[float]] = [[] for _ in rows]
-    for column in ("aes_v25", "topiq_iaa", "topiq_nr", "qrealign", "hpsv3_mu"):
-        indices = [i for i, row in enumerate(rows) if getattr(row, column) is not None]
-        values = np.asarray([getattr(rows[i], column) for i in indices], dtype=np.float64)
+    # Unknown completion bounds invalidate population statistics for the entire cohort.
+    # Do not compute even a display-only surviving-scorer mean under this policy.
+    for column in quality_signals if quality_complete else ():
+        values = np.asarray([getattr(row, column) for row in rows], dtype=np.float64)
         if len(values):
-            for i, value in zip(indices, zscore(values), strict=True):
+            for i, value in enumerate(zscore(values)):
                 standardized[i].append(float(value))
-    if any(not values for values in standardized):
-        raise ValueError("Cannot cluster without at least one quality score per image")
-    consensus = zscore(np.asarray([np.mean(values) for values in standardized]))
-    for row, value, scores in zip(rows, consensus, standardized, strict=True):
-        row.consensus_z = float(value)
+    consensus = zscore(np.asarray([np.mean(values) for values in standardized])) if rows and quality_complete else []
+    for i, (row, scores) in enumerate(zip(rows, standardized, strict=True)):
+        row.consensus_z = float(consensus[i]) if quality_complete else None
+        row.disagreement = None
+        if not quality_complete:
+            continue
         native_variance = ((row.hpsv3_sigma / hps_scale) ** 2 / len(scores)
-                           if row.hpsv3_sigma is not None and hps_scale > 1e-12 else 0.0)
+                           if "hpsv3_mu" in quality_signals and row.hpsv3_sigma is not None and hps_scale > 1e-12 else 0.0)
         row.disagreement = float(np.sqrt(np.var(scores, ddof=0) + native_variance))
     ids = json.loads((settings.out / "embeddings_ids.json").read_text(encoding="utf-8"))
     if ids != [r.sha16 for r in rows]:
         raise ValueError("Embedding row alignment mismatch; rerun score --pass siglip")
     matrix = normalize(np.load(settings.out / "embeddings.npy", allow_pickle=False))
     families = components([int(r.phash, 16) for r in rows], matrix)
-    families.sort(key=lambda group: min(rows[i].sha16 for i in group))
+    families.sort(key=lambda group: min(rows[i].sha256 for i in group))
     champions: dict[str, float] = {}
     family_json = []
     winner_indices: set[int] = set()
-    for number, group in enumerate(families, 1):
-        family_id = f"fam_{number:04d}"
-        ranked = sorted(group, key=lambda i: (-rows[i].consensus_z, rows[i].sha16))
+    for group in families:
+        member_content_ids = sorted({rows[i].sha256 for i in group})
+        canonical = json.dumps([GROUPING_PROFILE_ID, member_content_ids], ensure_ascii=True, separators=(",", ":"))
+        family_id = hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+        ranked = sorted(group, key=lambda i: (-(rows[i].consensus_z or 0.0), rows[i].sha256))
         winner_indices.add(ranked[0])
-        champions[family_id] = rows[ranked[0]].consensus_z
+        champions[family_id] = rows[ranked[0]].consensus_z or 0.0
         for i in group:
             rows[i].family_id = family_id
         family_json.append({"family_id": family_id, "members": [rows[i].sha16 for i in group],
-                            "champion": rows[ranked[0]].sha16,
-                            "runner_up": rows[ranked[1]].sha16 if len(ranked) > 1 else None})
+                            "grouping_profile_id": GROUPING_PROFILE_ID,
+                            "member_content_ids": member_content_ids,
+                            "family_id_schema": "content-set-json-v1",
+                            "champion": rows[ranked[0]].sha16 if quality_complete else None,
+                            "runner_up": rows[ranked[1]].sha16 if quality_complete and len(ranked) > 1 else None})
     identities = [row.identity_sim for row in rows if row.identity_sim is not None]
-    if not identities:
-        raise ValueError("Identity scoring must complete before proposing tiers")
     thresholds = {
-        "identity_route": float(np.quantile(identities, settings.identity_route_quantile)),
-        "identity_queue": float(np.quantile(identities, settings.identity_queue_quantile)),
-        "queue": float(np.quantile(consensus, settings.queue_quantile)),
-        "review": float(np.quantile(consensus, settings.review_quantile)),
+        "identity_route": float(np.quantile(identities, settings.identity_route_quantile)) if identities and identity_complete else None,
+        "identity_queue": float(np.quantile(identities, settings.identity_queue_quantile)) if identities and identity_complete else None,
+        "queue": float(np.quantile(consensus, settings.queue_quantile)) if len(consensus) else None,
+        "review": float(np.quantile(consensus, settings.review_quantile)) if len(consensus) else None,
     }
     for i, row in enumerate(rows):
-        flags = []
-        if row.disagreement > settings.uncertain:
+        flags = [f"signal_unavailable:{name}" for name in missing[i]]
+        if not quality_complete:
+            flags.append("quality_population_unavailable")
+        if not identity_complete:
+            flags.append("identity_population_unavailable")
+        if row.disagreement is not None and row.disagreement > settings.uncertain:
             flags.append("uncertain")
         if row.gaming_delta is not None and row.gaming_delta > settings.gaming_suspect:
             flags.append("gaming_suspect")
         if row.nsfw_prob is not None and row.nsfw_prob >= settings.nsfw_route:
             flags.append("nsfw")
-        identity_low = (row.identity_sim is not None and row.identity_sim < thresholds["identity_route"]
+        identity_low = (row.identity_sim is not None and thresholds["identity_route"] is not None
+                        and row.identity_sim < thresholds["identity_route"]
                         and (row.confusable_margin is None or row.confusable_margin < settings.confusable_margin))
-        if i not in winner_indices:
+        if quality_complete and i not in winner_indices:
             flags.append("near_dup_runnerup")
         if "nsfw" in flags:
             row.proposed_tier = "route_nsfw"
         elif identity_low:
             row.proposed_tier = "route_identity"
             flags.append("id_low")
-        elif (row.consensus_z >= thresholds["queue"] and not flags
+        elif (not flags and row.consensus_z is not None and thresholds["queue"] is not None
+              and thresholds["identity_queue"] is not None and row.consensus_z >= thresholds["queue"]
               and row.nsfw_prob is not None and row.nsfw_prob < settings.nsfw_queue
               and row.identity_sim is not None and row.identity_sim >= thresholds["identity_queue"]
               and (i in winner_indices or champions[row.family_id] - row.consensus_z <= settings.champion_slack)):
             row.proposed_tier = "queue"
-        elif row.consensus_z < thresholds["review"] and not flags:
+        elif not flags and row.consensus_z is not None and thresholds["review"] is not None and row.consensus_z < thresholds["review"]:
             row.proposed_tier = "archive_candidate"
             if int(row.sha16[:8], 16) % 20 == 0:
                 flags.append("audit_sample")
@@ -116,3 +142,6 @@ def cluster(settings: Settings) -> None:
     db.save_rows(settings.out, rows)
     db.write_json(settings.out / "families.json", family_json)
     db.meta(settings.out, "thresholds", json.dumps(thresholds))
+    db.meta(settings.out, "quality_policy", json.dumps({"version": "completion-abstain-v1",
+            "profile": settings.quality_profile, "required_signals": required,
+            "quality_population_complete": quality_complete}))

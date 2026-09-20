@@ -6,7 +6,12 @@ import pytest
 
 from artcurator import db
 from artcurator.cluster import cluster, zscore
-from test_conservative import prepare
+from artcurator.config import Settings
+from test_conservative import prepare as prepare_legacy
+
+
+def prepare(root: Path) -> Settings:
+    return prepare_legacy(root).model_copy(update={"quality_profile": "five-means-v1"})
 
 
 def test_columns_when_hpsv3_added() -> None:
@@ -63,9 +68,11 @@ def test_cluster_when_hpsv3_partially_scored(tmp_path: Path) -> None:
     rows = db.load_rows(tmp_path)
     rows[0].hpsv3_mu, rows[0].hpsv3_sigma = 3.0, 0.1
     db.save_rows(tmp_path, rows)
-    # When attempting to publish mixed four/five-scorer tiers, then resume is required.
-    with pytest.raises(ValueError, match="partially scored"):
-        cluster(settings)
+    # When clustering, then partial evidence widens abstention across the cohort.
+    cluster(settings)
+    results = db.load_rows(tmp_path)
+    assert all(row.proposed_tier == "review" and row.consensus_z is None for row in results)
+    assert "signal_unavailable:hpsv3_mu" in results[1].flags
 
 
 def test_uncertainty_when_hpsv3_constant(tmp_path: Path) -> None:

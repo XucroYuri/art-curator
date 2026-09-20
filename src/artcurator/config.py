@@ -2,7 +2,7 @@
 import os
 import sys
 from pathlib import Path
-from typing import Final
+from typing import Final, Literal
 
 import yaml
 from pydantic import BaseModel, ConfigDict, Field
@@ -33,6 +33,7 @@ class Settings(BaseModel):
     review_quantile: float = Field(default=0.75, ge=0, le=1)
     confusable_margin: float = 0.05
     champion_slack: float = 0.15
+    quality_profile: Literal["four-means-v1", "five-means-v1"] = "five-means-v1"
     identity: IdentityOptions = Field(default_factory=IdentityOptions)
 
 

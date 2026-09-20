@@ -18,6 +18,9 @@ queue_quantile: 0.90
 review_quantile: 0.75
 confusable_margin: 0.05
 champion_slack: 0.15
+# Fixed requested roster, never inferred from surviving scores. Legacy runs may explicitly
+# select four-means-v1; the default five-means-v1 requires HPSv3 mean and sigma.
+quality_profile: five-means-v1
 identity:
   device: auto  # CUDA only for a matching numerical certificate; otherwise CPU.
   precision: float32  # FP16 failed the predeclared CPU/GPU numerical budget.

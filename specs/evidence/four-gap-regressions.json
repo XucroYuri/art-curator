@@ -1,0 +1,64 @@
+{
+  "schema": "scoped-code-gap-regressions-v1",
+  "date": "2026-09-20",
+  "scope": "Synthetic unit and isolated JavaScript DOM regressions only; not full AC or release certification",
+  "execution": {
+    "command": ".venv\\Scripts\\python.exe -m pytest -q",
+    "mode": "foreground",
+    "timeout_seconds": 240,
+    "result": "green (orchestrator re-run, 2026-09-20 14:56 +08:00, from the project root)",
+    "passed": 175,
+    "failed": 0,
+    "verified_by": "orchestrator independent re-run; note: an earlier invocation from the parent directory mis-collected unrelated ComfyUI custom-node tests (4 collection errors) — that was a working-directory error, not a suite failure",
+    "fixture_storage": "pytest tmp_path only",
+    "model_inference": false,
+    "corpus_modified": false,
+    "existing_run_artifacts_regenerated": false
+  },
+  "gaps": [
+    {
+      "id": "GAP-1",
+      "requirement": "FR-DEGRADE-001",
+      "acceptance_subset": "AC-FR-DEGRADE-001-02 conservative rejection of ambiguous completions",
+      "implementation": ["src/artcurator/cluster.py", "src/artcurator/config.py", "src/artcurator/report.py"],
+      "tests": ["tests/test_signal_degradation.py", "tests/test_hpsv3.py::test_cluster_when_hpsv3_partially_scored"],
+      "comparator": "Same synthetic population fully scored versus one required output absent; finite conflicting completion grid",
+      "budget": "Zero surviving-scorer ensembles or quality authorizations with unknown population completion bounds",
+      "remaining": "No bounded unanimous-completion authorization, useful-coverage guarantee, resource-pressure scheduler or certified execution switching qualification"
+    },
+    {
+      "id": "GAP-2",
+      "requirement": "FR-ARCH-001",
+      "acceptance_subset": "AC-FR-ARCH-001-01 no automatic model substitution",
+      "implementation": ["src/artcurator/models.py", "src/artcurator/report.py"],
+      "tests": ["tests/test_model_refusal.py"],
+      "comparator": "Injected requested-model OSError, RuntimeError and ValueError; successful retry",
+      "budget": "Exactly one requested artifact attempt, original error propagated, explicit unavailable record, stale failure cleared on recovery",
+      "remaining": "Three-identity registry, profile compatibility and provider admission remain unqualified; no real model download/load executed"
+    },
+    {
+      "id": "GAP-3",
+      "requirement": "FR-STABLE-001",
+      "acceptance_subset": "AC-FR-STABLE-001-01 exact fixed-member family identity",
+      "implementation": ["src/artcurator/cluster.py", "src/artcurator/report.py"],
+      "tests": ["tests/test_family_ids.py"],
+      "comparator": "Independent canonical digest oracle, short-prefix collisions, duplicates, permutations, unrelated additions and member/profile changes",
+      "budget": "Exact digest match; zero changed IDs for unchanged profile/member sets",
+      "remaining": "Transitive bridges still change membership; quadratic search and legacy short-ID caches/CSV/alignment remain open"
+    },
+    {
+      "id": "GAP-4",
+      "requirement": "FR-UX-001",
+      "acceptance_subset": "AC-FR-UX-001-01 HPS raw evidence and missingness visibility",
+      "implementation": ["tools/build_gallery.py"],
+      "tests": ["tests/test_gallery_hps.py", "tests/gallery_hps_dom.cjs", "tests/test_build_gallery.py"],
+      "comparator": "Source CSV versus decoded gzip payload and generated JavaScript renderer output, including zero, absent, nonfinite and unknown fields",
+      "budget": "Exact raw numeric round trip, unchanged row counts, both HPS labels/fields rendered, absence never zero",
+      "remaining": "No browser screenshots, visual/accessibility or full SYN-STUDIO qualification; DOM unit harness requires Node and skips when it is unavailable"
+    }
+  ],
+  "diagnostics": {
+    "lsp": "Unavailable: configured basedpyright server is not installed; prior installation decline respected",
+    "visual_qa": "Not executed: user restricted execution to code edits and unit tests; no rendered-UI certification claimed"
+  }
+}

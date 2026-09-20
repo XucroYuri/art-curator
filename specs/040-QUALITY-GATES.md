@@ -77,4 +77,20 @@ An actionable recommendation is emitted **only if every admissible completion of
 - AC-FR-DEGRADE-001-01: inject memory pressure on PROFILE-v1 with five requested means and no HPS-compatible certificate; trace batch/prefetch reduction before any fallback, requested roster unchanged, HPS unavailable, zero surviving-scorer renormalization, actual provider and each event recorded; evidence `evidence/AC-FR-DEGRADE-001-01.json`.
 - AC-FR-DEGRADE-001-02: use a finite synthetic completion grid plus analytically bounded continuous intervals on PROFILE-v1; if any admissible completion changes the recommendation, expect review; unanimous completions may emit that recommendation with proof bounds; zero unauthorized actionable outputs; evidence `evidence/AC-FR-DEGRADE-001-02.json`.
 
-Existing `cluster.py` skips missing legacy values, while partial HPS rows raise. Neither behavior implements this completion rule. Exhaustive finite fixture enumeration tests the oracle; production may use sound conservative bounds and abstain when proof is unavailable.
+Implementation note (scoped repair): `cluster.py` now uses the explicit
+`five-means-v1` roster by default (four historical means plus HPS mean and required
+sigma evidence), or explicitly requested `four-means-v1`. The roster is not
+inferred from observed values. Under `completion-abstain-v1`, any missing required
+quality output makes cohort consensus, disagreement and quality quantiles null;
+all quality dispositions abstain because completion ranges/population effects
+are unbounded. No surviving-scorer mean is computed. Per-row
+`signal_unavailable:<field>` flags and cohort reasons survive CSV/report export.
+Incomplete identity populations similarly suppress identity quantiles/quality
+authorization. Observed safety/identity routes remain requests for human
+assessment, not positive quality claims. Re-scoring clears stale missingness.
+
+Evidence: [four-gap-regressions.json](evidence/four-gap-regressions.json), GAP-1.
+The finite conflicting-completion regression checks the conservative rejection
+path; continuous bounded unanimous authorization, memory-pressure scheduling and
+certified execution switching are not certified by these tests. All-abstain is
+sound without proof bounds, but no useful-coverage floor is claimed.

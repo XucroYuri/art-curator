@@ -22,6 +22,14 @@ Resource qualification is orthogonal: T0/T1 CPU paths **specified, unqualified**
 
 ## Open decisions / TBD register
 
+Scoped foundation repairs: the four code discrepancies recorded in
+[the spec index](README.md#grounding-and-known-discrepancies) now have regression
+coverage for conservative missing-signal abstention, refusal of SigLIP
+substitution, fixed-member family digests and raw HPS inspection. Evidence is
+[four-gap-regressions.json](evidence/four-gap-regressions.json). These repairs do
+not graduate phase 0, any resource tier, or the nine qualification gates. No
+inference/performance benchmark or corpus artifact regeneration was performed.
+
 - Numerical budgets per scorer (including BF16/INT8), embedding/rank/family drift, identity precision/recall, target-confusable margins, gaming tolerance and usefulness/coverage floors need labelled evidence and pre-registration.
 - Fixture content digests, release artifact storage/retention/access controls, evidence sign-off owner and certification expiry/revocation policy are TBD; unsigned hashes are integrity identifiers, not authentication.
 - CPU identity latency/RAM targets, browser absolute memory/interaction ceilings, scratch/queue byte allocations and T0–T4 measured capacity are TBD/unqualified. Proposed tier caps are policy defaults, not measurements.

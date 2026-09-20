@@ -3,7 +3,7 @@ from __future__ import annotations
 import gc
 import hashlib
 import importlib.metadata
-import logging
+import json
 from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING, Callable
@@ -156,12 +156,18 @@ def load(name: str, out: Path) -> Predictor:
     match name:
         case "siglip":
             try:
-                return siglip(out)
-            except (OSError, RuntimeError) as error:
-                logging.warning("siglip fallback reason=%s", error)
-                db.meta(out, "siglip_fallback", str(error))
-                release()
-                return siglip(out, "google/siglip-base-patch16-384")
+                predictor = siglip(out)
+            except (OSError, RuntimeError, ValueError) as error:
+                ledger = out / "cache/google--siglip-so400m-patch14-384-revision.txt"
+                db.meta(out, "signal_unavailable_siglip", json.dumps({
+                    "signal": "siglip", "requested_model": "google/siglip-so400m-patch14-384",
+                    "requested_revision": ledger.read_text(encoding="utf-8").strip() if ledger.exists() else None,
+                    "error_type": type(error).__name__, "reason": str(error),
+                }))
+                raise
+            with db.connection(out) as connection:
+                connection.execute("DELETE FROM meta WHERE key='signal_unavailable_siglip'")
+            return predictor
         case "aes_v25":
             return aesthetic(out)
         case "topiq_iaa" | "topiq_nr":

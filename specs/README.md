@@ -49,15 +49,19 @@ Read sources: `src/artcurator/`, `tools/`, all seven test modules, `README.md`, 
 | Current record | Reconciliation / target |
 |---|---|
 | README architecture and pass list say four scorers and omit HPSv3 | Code, HPS documentation and summary have five quality means; sigma is not a sixth scorer |
-| README says missing scores skipped; `cluster.py` uses available means | Legacy behavior conflicts with FR-DEGRADE-001; no silent surviving-scorer renormalization in a qualified profile |
-| `models.load` can fall back from requested SigLIP | Conflicts with FR-ARCH-001; preserve as historical gap, not an allowed tier fallback |
+| Missing-score surviving-scorer renormalization | **Closed (scoped code gap)** — fixed explicit four/five-mean roster; missing required evidence has per-row `signal_unavailable:<field>` flags, and unknown completion bounds invalidate cohort quality statistics/tiers rather than reweight survivors. Tests: `tests/test_signal_degradation.py::test_missing_scorer_cannot_promote_queue`, `::test_conflicting_completion_grid_abstains`, and partial HPS tests. Evidence: [four-gap-regressions.json](evidence/four-gap-regressions.json), GAP-1; AC-FR-DEGRADE-001-02 subset. Resource-pressure scheduling/certified execution fallback remains unqualified under AC-FR-DEGRADE-001-01. |
+| Requested SigLIP variant substitution | **Closed (scoped code gap)** — `models.load` records unavailable model/revision and re-raises the original failure; no alternate artifact is loaded. Tests: `tests/test_model_refusal.py::test_siglip_refuses_substitution` (three failure types), `::test_siglip_success_clears_previous_failure`. Evidence: [four-gap-regressions.json](evidence/four-gap-regressions.json), GAP-2; no-substitution subset of AC-FR-ARCH-001-01, not full profile/resume certification. |
 | Cache filenames/dedup use `sha16`; CSV lacks full SHA | FR-STABLE-001 and FR-CACHE-001 require authoritative full hashes throughout |
 | Worker success is process exit; workers write SQLite directly | FR-WORKER-001/FR-SCORER-001 require handshake and coordinator-owned state |
 | Current PNG decoder discards ancillary ICC/EXIF | Not a certified orientation/color-managed canonicalizer; new rendering profile requires paired evidence |
 | Count-bounded prefetch; 85% physical VRAM HPS allocator cap | Not the byte-bounded queues and availability-aware 80%/85% admission contract |
-| Sequential family IDs / transitive grouping, no blocked-search budget | FR-STABLE-001 requires content-set IDs; corpus-growth instability remains explicit |
+| Sequential family IDs | **Closed (scoped code gap)** — family IDs are full SHA256 digests of version-pinned grouping-profile ID plus sorted unique full member content IDs; `families.json` exports the digest inputs/schema. Tests: `tests/test_family_ids.py::test_family_ids_survive_unrelated_addition`, `::test_family_digest_uses_unique_full_hashes`, permutation/duplicate/profile/member-change cases. Evidence: [four-gap-regressions.json](evidence/four-gap-regressions.json), GAP-3; fixed-member subset of AC-FR-STABLE-001-01. |
+| Transitive grouping / no blocked-search budget | **Still open** — bridges can merge member sets and necessarily change snapshot IDs; no stable-membership or bounded-search claim. FR-STABLE-001 and NFR-DATA-001 limitations remain explicit. |
 | JSONL truncation fails closed with manual recovery; SQLite view/default migration | Not ordered journal recovery or versioned migrations under FR-PERSIST-001 |
-| DESIGN inspector says every source field; gallery omits raw HPS mu/sigma | HPS documentation acknowledges omission; FR-UX-001 makes missing evidence visible |
+| Raw HPS mu/sigma omitted from gallery | **Closed (scoped code gap)** — `build_gallery.py` preserves raw values in `hm`/`hs`, renders Chinese-labelled inspector/table/detail fields and legend, distinguishes missing from zero, and derives detail field counts. Unknown fields remain tolerated, row counts unchanged. Tests: `tests/test_gallery_hps.py::test_gallery_hps_round_trip`, `::test_legacy_gallery_exposes_missing_hps`, `::test_hps_detail_and_inspector_dom`. Evidence: [four-gap-regressions.json](evidence/four-gap-regressions.json), GAP-4; HPS visibility subset of AC-FR-UX-001-01, not browser visual/accessibility certification. |
 | 0.09513 → 0.04149 s/img quoted alongside 4.02× | Different baselines: their ratio is about 2.29×; paired 300-image baseline is 0.16683 s/img |
 
-No code, corpus, existing documentation or output artifact is changed by this tree.
+The original documentation baseline did not change code or output artifacts. The
+scoped repairs above change authored code/tests/docs only; no corpus or existing
+run artifacts were regenerated. The evidence receipt distinguishes unit/DOM
+regressions from the broader proposed acceptance criteria and release gates.

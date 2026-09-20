@@ -18,6 +18,14 @@ Scope: S:* / E:* / T0–T4. Status: proposed.
 - Run identity: unique invocation/resume lineage, snapshot digest, both profile IDs, seed/order, actual placement, tier, requested/completed/unavailable signals and degradation events. Resource tiers are scheduling hints, never semantic identities or quality rankings.
 - AC-FR-ARCH-001-01: vary tier, provider and requested model on PROFILE-v1; no model substitution, all three identities independently inspectable, incompatible resume rejected and cross-profile comparison requires certification reference; evidence `evidence/AC-FR-ARCH-001-01.json`.
 
+Implemented no-substitution subset: requested SigLIP load failures are recorded
+in `signal_unavailable_siglip` metadata with requested model, resolved ledger
+revision (null if unresolved), error type and reason, then re-raised. No alternate
+variant is attempted. Successful retry removes stale unavailable metadata.
+`report.py` exposes these records. Evidence:
+[four-gap-regressions.json](evidence/four-gap-regressions.json), GAP-2. This is not
+three-identity registry, provider-placement or resume-compatibility qualification.
+
 ### FR-ARCH-002 — Ordered coordinator pipeline
 When executing a curation run, the coordinator shall enforce `snapshot → canonicalize/decode → infer → persist evidence → group/evaluate → review/export → plan → execute/undo` with explicit barriers and sole ownership of authoritative state.
 

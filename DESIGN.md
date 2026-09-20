@@ -114,7 +114,7 @@ All spacing derives from 4px: `--space-1` 4px, `--space-2` 8px, `--space-3` 12px
 - **States**: loading, loaded, missing asset, NSFW blurred, NSFW revealed, fit, 100% zoom/pan, selected, manually decided, filtered empty.
 - **Action belt**: native buttons for `精选`, `入队通过`, `归档`, `NSFW 确认`, `身份存疑`, `跳过`; shortcuts `1–6`, `J/K`, arrows, `U`, Space, `F`, `?` are always visible in the help dialog.
 - **Persistence**: manual decisions and an append-only action journal use a localStorage key derived from the embedded corpus fingerprint. The pipeline's `proposed_tier` is never overwritten.
-- **Accessibility**: preview has a live item label, inspector exposes every source field including Q-ReAlign, action buttons expose pressed/current state, the filmstrip is a labelled list of buttons, and overlays trap focus by returning focus to their trigger.
+- **Accessibility**: preview has a live item label, inspector exposes the supported score fields including Q-ReAlign and raw `hpsv3_mu` / `hpsv3_sigma` as `HPSv3 μ` / `HPSv3 σ`; missing HPS values remain visible as `—`, never zero. Detail tooltips preserve source numeric precision and the field count is derived from displayed fields. Unknown CSV columns remain tolerated but are not automatically rendered. Action buttons expose pressed/current state, the filmstrip is a labelled list of buttons, and overlays trap focus by returning focus to their trigger.
 - **Motion**: 120ms feedback for controls; 200ms opacity/transform for mode and panel changes; no layout-property animation; reduced motion removes non-essential transforms.
 
 ### Face overlay
@@ -183,6 +183,7 @@ All spacing derives from 4px: `--space-1` 4px, `--space-2` 8px, `--space-3` 12px
 - **Motion**: reorder is immediate; only focus and selected-state opacity changes animate, and reduced motion removes transitions.
 
 ### Metric legend modal
+- **HPS evidence**: `HPSv3 μ` is the raw preference mean; `HPSv3 σ` is native standard deviation, not a sixth scorer or a calibrated confidence interval. Both appear even on legacy reports to explain unavailable evidence. Reuse existing metric cards, glossary items and CJK-safe labels; no new visual tokens.
 - **Structure**: labelled modal with a two-column metric glossary and direction/caveat notes.
 - **Variants**: closed, open, narrow one-column glossary.
 - **Spacing**: `--space-4` to `--space-6`.

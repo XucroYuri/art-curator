@@ -36,15 +36,23 @@ Read-only images → strict RGB decode → content-addressed manifest + thumbnai
 
 - **Eligibility:** safety/identity routes take precedence; uncertainty, gaming
   suspicion and near-duplicate runner-up flags prevent an automatic queue proposal.
-- **Relative ranking:** aesthetic v2.5, TOPIQ-IAA, TOPIQ-NR and Q-ReAlign contribute
-  equally after population z-normalization. Missing scores are skipped; zero
-  variance is guarded. These are within-corpus scores, not universal quality units.
+- **Relative ranking:** the default `five-means-v1` profile requires aesthetic v2.5,
+  TOPIQ-IAA, TOPIQ-NR, Q-ReAlign and HPSv3 means, plus HPS sigma as uncertainty
+  evidence. Means contribute equally after population z-normalization; zero
+  variance is guarded. An explicit `four-means-v1` profile supports legacy runs
+  without HPS; absence never selects it automatically. Missing required quality
+  evidence makes cohort consensus/thresholds unavailable and widens abstention
+  to review, not a surviving-scorer average. Per-signal reasons are exported in
+  `flags`; safety/identity assessment routes retain precedence. These are
+  within-corpus scores, not universal quality units.
 - **Queue construction:** default queue threshold P90 plus safety, identity and
   family gates. P75+ or flagged items go to review; failing a queue gate abstains
   to review. Lower unflagged items are archive *candidates*, with an approximately
   5% deterministic hash-based audit sample promoted to review.
 - **Families:** connected components from pHash/cosine comparisons; a champion and
   runner-up remain inspectable. Novelty is shown to humans without an invented gate.
+  Snapshot IDs digest the grouping profile and sorted unique full member hashes;
+  unrelated additions preserve existing IDs, while bridges/member changes do not.
 
 ## Requirements and quickstart
 

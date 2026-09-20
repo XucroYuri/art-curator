@@ -27,7 +27,8 @@ python -m http.server 8765 --bind 127.0.0.1 --directory tests/fixtures/gallery
 
 The output directory must contain `scores.csv` and may contain
 `families.json`. The generator accepts both the legacy header and the new
-header with optional `qrealign` immediately after `topiq_nr`; extra or missing
+header with optional `qrealign` immediately after `topiq_nr`, followed by
+`hpsv3_mu` and `hpsv3_sigma`; extra or missing
 columns are ignored safely. `thumb_rel` is normalized from Windows
 backslashes to browser-friendly `/` separators. Empty numeric cells become
 `null`; invalid non-empty numeric cells fail the command with a line number.
@@ -93,7 +94,7 @@ The visible UI labels are intentionally Chinese:
 - Dispositions: `入队候选`, `人工复核`, `归档候选`, `NSFW 复核`, `身份复核`.
 - Flags: `评分分歧`, `刷分嫌疑`, `NSFW`, `身份低分`, `家族备选`, `审计抽样`.
 - Columns: `缩略图`, `文件名`, `家族`, `美学 v2.5`, `TOPIQ-IAA`, `TOPIQ-NR`,
-  optional `Q-ReAlign`,
+  optional `Q-ReAlign`, `HPSv3 μ`, `HPSv3 σ`,
   `NSFW 概率`, `身份相似度`, `新颖度`, `共识 Z`, `分歧度`, `刷分差值`,
   `标记`, `处置`.
 
@@ -101,13 +102,20 @@ Disposition cards filter the ledger by `proposed_tier`; flag chips can be
 combined and removed individually. Search covers filename, `sha16`, and
 `family_id`. Sortable headers expose visible `▲`/`▼` indicators and
 `aria-sort`. NSFW rows (`nsfw_prob >= 0.65` or `route_nsfw`) blur previews until
-`点击显示`. Row/file-name clicks open all 22 raw fields, copy actions for
+`点击显示`. Row/file-name clicks open the supported raw fields (with a derived
+field count), copy actions for
 `sha16`/`abs_path`, and the original `file://` link. Family IDs open the member
 strip with singleton, champion, and runner-up states. The three collapsible
 spotlights (`分歧焦点`, `刷分审计`, `不确定队列`) jump back to the matching row.
 `指标说明` documents direction and caveats for every metric; `Q-ReAlign` is
 shown only when the CSV column exists, and proposals remain explicitly
-uncalibrated. Unknown flags remain visible as neutral badges using their raw
+uncalibrated. Raw HPS means and standard deviations are retained without numeric
+rounding in compact columns `hm` / `hs`; the inspector, table and detail view use
+`HPSv3 μ` / `HPSv3 σ`, with full source precision in tooltips. Missing HPS fields
+remain visible as `—`, including legacy CSVs; zero is a real value, not absence.
+The legend explains that sigma is neither a sixth scorer nor a calibrated
+confidence interval. Unknown CSV columns remain tolerated, not auto-rendered.
+Unknown flags remain visible as neutral badges using their raw
 values. `审计抽样` means a random low-tier sample for finding missed good
 images, not a defect marker.
 

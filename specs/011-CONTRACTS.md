@@ -26,6 +26,20 @@ Scope: S:* / E:* / T0–T4. Status: proposed.
 - Tolerance-bounded: scores, embeddings, ordering and family membership/IDs across certified execution profiles. Family ID within a fixed member set is exactly `SHA256(canonical(grouping-profile ID, sorted unique full member content IDs))`; serialization/version is pinned. Changed members/profile change identity; arbitrary sequential IDs do not qualify. No promise of stable families under corpus growth.
 - AC-FR-STABLE-001-01: permute/duplicate rows and inject identical sha16 prefixes on HASH-v1; exact content/config/pixel/plan comparisons, exact fixed-member family digest and declared NFR-NUM-001 bounds for numeric comparisons; evidence `evidence/AC-FR-STABLE-001-01.json`.
 
+Implemented snapshot subset: `content-set-json-v1` serializes the two-element
+array `[grouping_profile_id, sorted_unique_full_member_sha256s]` as compact JSON
+with separators `,` / `:`, ASCII escapes, UTF-8 bytes, no whitespace/newline;
+`family_id` is the full lowercase SHA256 hex digest (no `fam_` prefix).
+The current grouping profile is
+`phash6-or-phash10-cosine096-connected-v1`; its version binds the existing
+pHash/cosine thresholds and connected-component algorithm. `families.json` adds
+`family_id_schema`, `grouping_profile_id` and `member_content_ids` for replay.
+Existing short-ID `members`/champion fields remain compatibility hints, not
+authoritative content identity. No separate lineage is inferred from old
+sequential IDs. Unknown quality yields null champion/runner-up rather than a
+quality winner. Evidence: [four-gap-regressions.json](evidence/four-gap-regressions.json),
+GAP-3. Cache/embedding alignment/CSV full-hash migration remains open.
+
 ### NFR-NUM-001 — Predeclared numerical and decision budgets
 When certifying numerical equivalence, the evaluator shall compare each scorer against a named reference using `|x−y| ≤ a_m + r_m·|y|` and test decision boundaries separately.
 

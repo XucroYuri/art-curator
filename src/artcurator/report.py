@@ -41,16 +41,19 @@ def report(settings: Settings) -> None:
                "`qrealign` immediately follows `topiq_nr`; `hpsv3_mu`, `hpsv3_sigma` follow `qrealign`. "
                "All existing columns retain their relative order. "
                "Q-ReAlign-Mini (0.8B), official pyiqa quality task, higher is better [0,1]; "
-               "Five quality means contribute equally after population standardization (legacy missing scores skipped). "
+                "The explicitly requested quality roster contributes equally after population standardization. "
+                "Missing required evidence is recorded as signal_unavailable:<field> in flags; "
+                "unknown quality completion bounds invalidate consensus and quality tiers for the entire cohort. "
                "HPSv3 sigma is exp(raw head channel 1), not a sixth score. "
-               "disagreement = sqrt(population variance of available scorer z-values + "
-               "(hpsv3_sigma / population_sd(hpsv3_mu))^2 / number_of_available_scorers). "
-               "Native variance is omitted when HPS is absent or its population SD <= 1e-12. "
+                "disagreement = sqrt(population variance of requested scorer z-values + "
+                "(hpsv3_sigma / population_sd(hpsv3_mu))^2 / number_of_requested_scorers). "
+                "Native variance is omitted when HPS is not requested or its population SD <= 1e-12. "
                "The unchanged uncertain threshold applies once to this combined signal.",
                "Conservative: queue >= P90 with unchanged gates; review >= P75 or flagged; "
                "unflagged below P75 are archive candidates. Routes take precedence. "
                "Would-be archive candidates with int(sha16[:8],16) % 20 == 0 get audit_sample and review.", "",
-               "## Flag counts", *[f"- {k}: {v}" for k, v in sorted(flags.items())], "",
+                "## Flag counts", *[f"- {k}: {v}" for k, v in sorted(flags.items())], "",
+                "## Required signals / completion policy", "```json", metadata.get("quality_policy", "{}"), "```", "",
                "## Quantile thresholds actually used", "```json", metadata.get("thresholds", "{}"), "```", "",
                "## Effective configuration", "```json", settings.model_dump_json(indent=2), "```", "",
                "## Per-pass timings (inference includes decode/cache I/O; load/download separate)",
@@ -64,7 +67,9 @@ def report(settings: Settings) -> None:
                  "## HPSv3 cost, VRAM and paired tier shifts", "```json",
                  json.dumps(json.loads(metadata.get("hpsv3_measurements", "{}")), indent=2), "```", "",
                  "## Model names, immutable revisions, preprocessing",
-                *[f"- {k}: `{v}`" for k, v in metadata.items() if k.startswith("model_")], "",
+                 *[f"- {k}: `{v}`" for k, v in metadata.items() if k.startswith("model_")], "",
+                 "## Unavailable model artifacts",
+                 *[f"- {k}: `{v}`" for k, v in metadata.items() if k.startswith("signal_unavailable_")], "",
                 "## License", "pyiqa: PolyForm Noncommercial 1.0.0; personal/research pilot only. "
                 "Applicable NTU S-Lab components and individual model licenses also apply.", "",
                 "## Honesty / abstention semantics",
@@ -74,7 +79,9 @@ def report(settings: Settings) -> None:
                 "Every tier is a PROPOSAL. review is abstention; route_* requests human assessment, not a verified classification. "
                 "No moves, renames, or corpus copies are performed. Empty gaming_delta means unaudited, not safe. "
                 "The SHA-based gaming sample is deterministic but not necessarily exactly 20%.",
-                "Union-find is transitive: endpoints in a family need not satisfy a direct merge condition. "
+                 "Union-find is transitive: endpoints in a family need not satisfy a direct merge condition. "
+                 "Family snapshot IDs use SHA256 of compact UTF-8 JSON [grouping-profile ID, sorted unique full member SHA256s]. "
+                 "Adding an unrelated image preserves existing fixed-member IDs; bridges or profile changes do not. "
                 "near_dup_runnerup applies to ALL non-champions. Literal 'no flags' queue gating therefore excludes them, "
                 "even when within champion_slack. Gaming delta is a signed maximum drop (negative if both variants improve).", "",
                 "## Read-only / pixel-only evidence",

@@ -13,7 +13,8 @@ from artcurator.scan import scan
 
 def prepare(root: Path) -> Settings:
     """Create 21 singleton families with known quantile positions."""
-    settings = Settings(input=root, out=root, references=root, posted=root, characters_root=root)
+    settings = Settings(input=root, out=root, references=root, posted=root, characters_root=root,
+                        quality_profile="four-means-v1")
     rows = [db.Row(sha16=f"{i + 100:08x}00000000", sha256=f"{i:064x}", abs_path="unused",
                    path_rel="unused", filename="unused", width=32, height=32, filesize=1,
                    phash=f"{((1 << 12) - 1) << (i * 12):064x}", mode="RGB",
