@@ -109,3 +109,46 @@ build completion within the inference bound and valid licenses/provenance.
   fails. Secondary metrics and anecdotes cannot override the primary rule.
 - AC-FR-SEARCH-004-01: compare immutable preregistration digest against report;
   provide separate crop/search verdicts with numerators, thresholds and limitations.
+
+## Prospective amendments — 2026-09-20
+
+### A1 — Baseline pairing
+
+Date: 2026-09-20. Status: amendment. Registered before resumed metric computation.
+Rationale: the saved SigLIP matrix has exact crop-hash matches for 0/145 anchors;
+requiring that unavailable join prevents the intended same-crop comparison.
+For FR-SEARCH-002 and its acceptance criteria, permit re-deriving the anchor
+baseline vectors under the same certified `cuda/fp32/b16` execution profile and
+`crop-jpeg-v1-siglip-official` preprocessing. Use the same existing anchor crops,
+reconstructed from saved bounding boxes only when their crop hashes verify;
+no re-detection, full-image substitution, or cluster-derived character labels.
+Record a new receipt with per-anchor source/crop/vector hashes, model revision,
+preprocessing, execution profile and original row mapping. Preserve the original
+saved-matrix audit. Report each anchor whose crop cannot be re-derived, achieved
+paired denominator, per-class shortfalls and primary results on that denominator.
+This supersedes the prohibition on baseline recomputation and the subset-only
+restriction solely for this documented reconstruction; inconsistent substitution
+remains prohibited. Apply the unchanged >=5 absolute-percentage-point native
+improvement rule to the achieved paired denominator, explicitly stating any
+shortfall from 145. MRL remains diagnostic and cannot rescue the native result.
+
+### A2 — Retrieval fixture
+
+Date: 2026-09-20. Status: amendment. Registered before resumed metric computation.
+Rationale: prior extraction found 36 unique candidates and 21 verified associations,
+not the preregistered 37; absence of reconstruction evidence is not a zero hit rate.
+First inspect sidecar association logic: if a correction reconstructs the exact
+37 original queries, use those 37 and document the correction. Otherwise permit
+the verified associations actually available, frozen before observing rankings.
+For FR-SEARCH-003/004 and their acceptance criteria, report hits/n, achieved n,
+shortfall from 37, language distribution and Wilson 95% interval. Apply the
+unchanged >=60% hit-rate rule to achieved n (required hits = ceil(0.60*n)); zero
+verified queries remains inconclusive. Do not rewrite or translate prompts,
+cherry-pick associations after ranking, or reduce the full preview distractor pool.
+Keep ten frozen Chinese queries anecdotal only. Keep p95 <=2 seconds, native index
+<=10 KiB/image + 1 MiB including necessary metadata, and all execution/provenance
+requirements unchanged. Exclude one warmup and time encoding plus exact ranking.
+
+These two amendments do not reset or extend the 30-minute provisioning/download
+or 90-minute total inference budgets. Any inherited budget overrun must remain
+visible and cannot be converted into a resource-fit pass by a resumed run.
