@@ -25,7 +25,7 @@ identity verification, or a safety certificate.
 ```text
 Read-only images → strict RGB decode → content-addressed manifest + thumbnails
                                       ↓
-         SigLIP references + safety signal + four quality scorers
+         SigLIP references + safety signal + five quality means (incl. HPSv3)
                                       ↓
  Eligibility gates → corpus-relative ranking → queue construction + abstention
                                       ↓
@@ -126,7 +126,7 @@ not a reason to send images to a service. The generated studio needs no network.
 Common options: `--input`, `--out`, `--config`, `--limit`. Scan/run-all inspect the
 whole inventory before choosing SHA-sorted limited rows; other stages use the saved
 manifest. `score --pass` accepts `siglip`, `aes_v25`, `topiq_iaa`, `topiq_nr`,
-`qrealign`, `nsfw_prob`.
+`qrealign`, `hpsv3`, `nsfw_prob`. HPS sigma is uncertainty evidence, not a sixth scorer.
 
 **Resume the same scoring command after interruption; do not rerun scan**, which
 starts a fresh manifest. Then rerun cluster and report:
@@ -221,7 +221,15 @@ corpus paths are intentionally excluded. See [methodology and limits](docs/pipel
 - Q-ReAlign uses a Windows-style worker interpreter path; Linux GPU portability
   is not established. Reference kernels can be slower than optional GPU kernels.
 - Family construction is quadratic, and connected-component endpoints need not
-  meet the direct-pair threshold. Prefetch bounds object counts, not RAM bytes.
+  meet the direct-pair threshold. Decode admission now reserves estimated bytes;
+  ahead-of-consumption inference prefetch is disabled pending peak qualification.
+- Full SHA-256 is authoritative in score CSVs, prediction caches, embedding alignment
+  and family content IDs. `sha16` is only a display/index hint. Legacy CSVs have
+  unavailable full identity until derived from source bytes; legacy short-key caches
+  and embedding alignment files are not silently reused.
+- Isolated scorers use a versioned request/response protocol and never write SQLite.
+  Each uncached microbatch currently starts a fresh bounded worker: model-loading
+  overhead and the 240-second request deadline are unqualified on real workloads.
 - Existing previews are skipped, even if externally corrupted. Rebuild affected
   assets deliberately. The shared model cache location is fixed under `out/library`.
 - The minimal CI job tests only the stdlib gallery builder. It does not certify

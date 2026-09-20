@@ -7,6 +7,13 @@
 
 All gate records: scope S:* / E: changed profile and certified references / T0–T4; status **proposed**. Method, fixture and pass/fail budget are in each AC. Evidence is mandatory even for failure/inconclusive outcomes. Gate “verified” only applies to the named profile/corpus/hardware, never every tier. INV-3/INV-4 failures veto numerical passes.
 
+Foundation batch 2 adds synthetic HASH/PROTOCOL/RESOURCE/MOVE seeds in
+`tests/test_architecture_{identity,worker,resources,persistence}.py`, including
+real foreground stub-process exchanges and actual SQLite migration interruption.
+The scoped receipt is [architecture-gap-regressions.json](evidence/architecture-gap-regressions.json).
+It does not qualify numerical invariance, performance, physical durability,
+external contention or resource tiers; affected gates remain proposed.
+
 ## Fixture registry
 
 Aliases identify planned versioned suites, **not existing committed new fixtures**. Before a gate runs, its manifest binds generated seeds/source revisions and full fixture hashes. Any TBD digest or budget makes qualification inconclusive. Existing tests are seeds for suites, not replacements for immutable fixtures.

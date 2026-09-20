@@ -48,5 +48,5 @@ def test_csv_when_contract_loaded() -> None:
     assert ",".join(module.COLUMNS) == (
         "sha16,abs_path,path_rel,filename,width,height,filesize,phash,family_id,"
         "aes_v25,topiq_iaa,topiq_nr,qrealign,hpsv3_mu,hpsv3_sigma,nsfw_prob,identity_sim,confusable_margin,novelty,"
-        "consensus_z,disagreement,gaming_delta,flags,proposed_tier,thumb_rel"
+        "consensus_z,disagreement,gaming_delta,flags,proposed_tier,thumb_rel,sha256"
     )

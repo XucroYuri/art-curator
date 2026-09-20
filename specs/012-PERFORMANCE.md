@@ -58,6 +58,21 @@ Scope: S:* / E:* / T0–T4. Status: proposed; all tier qualifications TBD, T3/T4
 - Peak memory = **models + runtime + activations + decode + queues + cache + transients**. Reservations include loading, decompression and non-framework/device overhead, with measured estimates before qualification. Explicit byte and item queue limits derive from remaining admitted budget; unknown estimates fail admission, not optimistic allocation.
 - AC-NFR-RESOURCE-001-01: replay RESOURCE-v1 pressure/load/decode cases and external contention; sampled peak and reservations stay within both caps, no paging-dependent fit, shared thread count within admitted total; evidence `evidence/AC-NFR-RESOURCE-001-01.json`. Absolute per-profile browser/CPU scratch ceilings and all unmeasured tiers: TBD before admission certification.
 
+Scoped implementation: `resources.py` applies these formulas and records chosen
+caps. Decode estimates include source staging, pixel/tensor copies and fixed
+scratch; reservations occur before decoding and release on consumption/error.
+Queue cap is at most 512 MiB and one quarter of admitted host memory. Inference
+prefetch is reduced to zero rather than speculating about overlapping peaks.
+Scan/thumbnail/preview paths share byte reservations within each stage. Deferrals
+and peak reserved bytes are persisted as run metadata and exposed in the report.
+GPU allocator ceilings are applied before scorer loading, independently per GPU.
+This is reservation-accounting coverage, **not** measured whole-process/board
+memory qualification: model/runtime/activation/loading estimates, contention,
+shared multi-process reservations and dynamic re-admission remain open.
+Tests: `tests/test_architecture_resources.py`; evidence
+[architecture-gap-regressions.json](evidence/architecture-gap-regressions.json), GAP-C.
+`NFR-MEM-002` is not allocated in this tree; do not silently invent an alias.
+
 ### NFR-DATA-001 — Data-oriented hot paths
 When processing corpus-scale evidence, the pipeline shall use bounded typed data paths with explicit ownership rather than unbounded object graphs or quadratic scratch matrices.
 

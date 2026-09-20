@@ -46,7 +46,7 @@ def test_previews_dimensions_metadata_skip_and_duplicates(tmp_path: Path) -> Non
     db.save_rows(settings.out, [row, row.model_copy()])
     # When
     result = previews(settings)
-    destination = settings.out / "previews" / f"{row.sha16}.jpg"
+    destination = settings.out / "previews" / f"{row.sha256}.jpg"
     stamp = destination.stat().st_mtime_ns
     again = previews(settings)
     # Then

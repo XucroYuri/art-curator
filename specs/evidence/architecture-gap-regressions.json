@@ -1,0 +1,65 @@
+{
+  "schema": "scoped-regression-receipt-v1",
+  "date": "2026-09-20",
+  "scope": "Foundation batch 2; synthetic CPU-only regression coverage, not release certification",
+  "verification": {
+    "command": ".venv\\Scripts\\python.exe -m pytest -q",
+    "cwd": "project root",
+    "baseline_reported_by_request": 175,
+    "result": "passed",
+    "passed": 200,
+    "added_over_baseline": 25,
+    "duration_seconds": 32.63,
+    "warnings": 1,
+    "warning_scope": "Existing scikit-learn HDBSCAN copy-default FutureWarning",
+    "compileall": "passed: src, tools/build_gallery.py and tests",
+    "lsp": "Tool refused project paths as outside request cwd; basedpyright absent in project environment"
+  },
+  "gaps": {
+    "GAP-A": {
+      "requirements": ["FR-STABLE-001", "FR-CACHE-001"],
+      "tests": ["tests/test_architecture_identity.py", "tests/test_family_ids.py", "tests/test_contract.py"],
+      "implementation": "Full SHA CSV/cache/assets/alignment and family content IDs; provenance namespaces; source and payload integrity checks; missing legacy CSV hash is null or derived at plan sealing",
+      "open": ["Legacy experimental identity sidecar and browser decision keys", "Raw model-file attestations beyond pinned artifact identity descriptors", "Cross-profile cache compatibility certification", "Concurrent source mutation after verification"]
+    },
+    "GAP-B": {
+      "requirements": ["FR-WORKER-001", "FR-SCORER-001"],
+      "tests": ["tests/test_architecture_worker.py", "tests/fixtures/protocol_worker.py"],
+      "implementation": "Protocol 1.0 expected/actual handshake; canonical RGB inputs; ordered full IDs, request/run/deadline/provider/output lineage; rejection before coordinator persistence; timeout is failed unavailable evidence",
+      "open": ["Complete third-party scorer manifest/license registration", "Full isolated-environment reproducible lock certification beyond checked pins and shared lock digest", "Hostile native-code OS sandbox", "Real-model startup/240-second deadline qualification and long-lived workers"]
+    },
+    "GAP-C": {
+      "requirements": ["NFR-RESOURCE-001", "NFR-DATA-001", "FR-ARCH-001"],
+      "requested_unallocated_id": "NFR-MEM-002",
+      "tests": ["tests/test_architecture_resources.py"],
+      "implementation": "Availability-aware host/per-GPU cap formulas; pre-decode byte reservations; serial inference prefetch; run budget/deferral records",
+      "open": ["Measured full model/runtime/loading/activation/board peaks", "External-contention re-admission", "Shared multi-process and multi-GPU reservations", "Throughput impact of conservative prefetch policy"]
+    },
+    "GAP-D": {
+      "requirements": ["FR-PERSIST-001"],
+      "tests": ["tests/test_architecture_persistence.py", "tests/test_apply.py"],
+      "implementation": "Ordered hash-framed operation/run/plan journal; torn-tail backup and durable recovery; verified plan-path reconciliation to SQLite; schema version 1 with checked backup and transactional migration ledger",
+      "open": ["Explicit migration of legacy unframed journals", "Ambiguous both-present unlogged copies require inspection", "Physical power loss and every OS/filesystem crash cutpoint", "Cross-output corpus-level exclusion", "Migration backup restore on damaged media"]
+    }
+  },
+  "constraints": {
+    "corpus_modified": false,
+    "full_scoring_or_extraction_run": false,
+    "heavy_gpu_work": false,
+    "committed_or_pushed": false,
+    "fixtures": "Generated temporary synthetic files and a CPU-only protocol stub; no private corpus paths or identifiers"
+  },
+  "qualification": "Scoped regression evidence only; no phase-0, resource-tier or nine-gate graduation",
+  "fixture_source_sha256": {
+    "tests/test_architecture_identity.py": "ab92dfafcd93efb342dc6dc2da3957701ff8e651fc5d25203d583105d00717a4",
+    "tests/test_architecture_persistence.py": "567cae3f21c0dec80e2ed05fd2d5eb3c2f98776d7bcc38dc6e1fcf35154b284e",
+    "tests/test_architecture_resources.py": "14e20ad120c98e35ce0a891fcbff785eb6afcd5a53093e45e713056c88c5cc92",
+    "tests/test_architecture_worker.py": "434d2bdbbb25c70b6b48d7f1ec80010fafd67a6285877856b92a7ff0bc2e3f04"
+  },
+  "source_audit": {
+    "word_boundary_private_identifier_check": "No matches for the requested whole-word identifier in source, new architecture tests or specs; artifact substrings were not treated as matches",
+    "machine_path_and_hidden_process_check": "No matching authored machine paths or hidden PowerShell launch patterns",
+    "module_size": "New architecture modules below 250 nonblank/noncomment lines; existing move primitives remain in the warning band; gallery parser changes retain its pre-existing embedded-template module",
+    "review": "Separate cache lineage, admission, wire validation, worker runtime, coordinator adapter, migration and journal responsibilities; no alternate model or synthesized default on worker failure"
+  }
+}

@@ -13,14 +13,15 @@ from ._moves import (
 
 def restore(entry: Entry, plan: Plan) -> Literal["undone", "already_undone"]:
     """Never overwrite either side; remove reverse source only after equal hashes."""
-    matches = [m for m in plan.moves if m.src == entry.src and m.sha16 == entry.sha16]
+    matches = [m for m in plan.moves if m.src == entry.src and m.sha256 == entry.sha256_before]
     if len(matches) != 1:
         raise MoveError("日志源路径不属于计划")
     move = matches[0]
     if move.dst is None or move.dst == move.src:
         raise MoveError("日志不是计划中的移动操作")
     suffixed = move.dst.with_name(f"{move.dst.stem}__{move.sha16}{move.dst.suffix}")
-    if (entry.dst not in {move.dst, suffixed} or entry.bytes != move.bytes
+    full_suffixed = move.dst.with_name(f"{move.dst.stem}__{move.sha256}{move.dst.suffix}")
+    if (entry.dst not in {move.dst, suffixed, full_suffixed} or entry.bytes != move.bytes
             or entry.sha256_before != move.sha256 or entry.sha256_after != move.sha256):
         raise MoveError("日志目标或哈希不属于计划")
     src = confined(entry.src, move.character)

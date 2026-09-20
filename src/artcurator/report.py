@@ -69,7 +69,10 @@ def report(settings: Settings) -> None:
                  "## Model names, immutable revisions, preprocessing",
                  *[f"- {k}: `{v}`" for k, v in metadata.items() if k.startswith("model_")], "",
                  "## Unavailable model artifacts",
-                 *[f"- {k}: `{v}`" for k, v in metadata.items() if k.startswith("signal_unavailable_")], "",
+                  *[f"- {k}: `{v}`" for k, v in metadata.items() if k.startswith("signal_unavailable_")], "",
+                  "## Resource admission and worker evidence",
+                  *[f"- {k}: `{v}`" for k, v in metadata.items()
+                    if k.startswith(("resource", "worker_failure_", "worker_response_"))], "",
                 "## License", "pyiqa: PolyForm Noncommercial 1.0.0; personal/research pilot only. "
                 "Applicable NTU S-Lab components and individual model licenses also apply.", "",
                 "## Honesty / abstention semantics",

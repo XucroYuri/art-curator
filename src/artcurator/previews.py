@@ -11,6 +11,8 @@ from . import db
 from .config import Settings
 from .parallel import ordered_map
 from .scan import pixels
+from .resources import Budgets, ByteBudget, decode_estimate, record_budget
+from .cache_identity import verify_content
 
 
 @dataclass(frozen=True, slots=True)
@@ -22,7 +24,7 @@ class PreviewResult:
 
 
 def previews(settings: Settings) -> PreviewResult:
-    """Read manifest in SQLite read-only mode; atomically publish q88 JPEGs."""
+    """Read inventory without updates; publish JPEGs and coordinator resource metadata."""
     started = time.perf_counter()
     manifest = (settings.out / "manifest.sqlite").resolve()
     with sqlite3.connect(f"{manifest.as_uri()}?mode=ro", uri=True) as connection:
@@ -30,21 +32,21 @@ def previews(settings: Settings) -> PreviewResult:
             "SELECT payload FROM images ORDER BY position")]
     hashes: dict[str, db.Row] = {}
     for row in rows:
-        if len(row.sha16) != 16 or any(c not in "0123456789abcdef" for c in row.sha16):
-            raise ValueError(f"Invalid preview key: {row.sha16}")
-        if row.sha16 in hashes and hashes[row.sha16].sha256 != row.sha256:
-            raise ValueError(f"sha16 collision: {row.sha16}")
-        hashes[row.sha16] = row
+        if len(row.sha256) != 64 or any(c not in "0123456789abcdef" for c in row.sha256):
+            raise ValueError("Invalid full preview content identity")
+        hashes[row.sha256] = row
     directory = settings.out / "previews"
     directory.mkdir(exist_ok=True)
+    budget = ByteBudget(min(Budgets.current().host_bytes // 4, 512 * 1024**2))
 
     def generate(row: db.Row) -> int:
-        destination = directory / f"{row.sha16}.jpg"
+        destination = directory / f"{row.sha256}.jpg"
         if destination.exists():
             return 0
         temporary = destination.with_suffix(".jpg.tmp")
         try:
-            with pixels(Path(row.abs_path)) as image:
+            verify_content(row)
+            with budget.reserve(decode_estimate(Path(row.abs_path))), pixels(Path(row.abs_path)) as image:
                 image.thumbnail((1024, 1024), Image.Resampling.LANCZOS)
                 image.info.clear()
                 image.save(temporary, "JPEG", quality=88)
@@ -53,7 +55,7 @@ def previews(settings: Settings) -> PreviewResult:
             temporary.unlink(missing_ok=True)
         return 1
 
-    with ordered_map(generate, hashes.values(), workers=settings.workers, capacity=settings.workers * 2) as results:
+    with record_budget(settings.out, "previews", budget), ordered_map(generate, hashes.values(), workers=settings.workers, capacity=settings.workers * 2) as results:
         generated = sum(results)
     result = PreviewResult(len(rows), len(hashes), generated, time.perf_counter() - started)
     db.write_json(settings.out / "previews-timing.json", {

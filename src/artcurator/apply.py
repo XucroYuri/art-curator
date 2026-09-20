@@ -49,6 +49,8 @@ def make_plan(out: Path, config: Path, limit: int | None = None) -> Plan:
             folder = settings.apply.folder(row.proposed_tier)
             dst = character / folder / src.name if folder else None
             full_hash = sha256(src)
+            if row.sha256 and full_hash != row.sha256:
+                raise MoveError("Full content identity differs from score CSV")
             if full_hash[:16] != row.sha16 or src.stat().st_size != row.filesize:
                 raise MoveError(f"源文件与评分记录不一致：{src}")
             moves.append(Move(src=src, dst=dst, character=character, sha16=row.sha16,

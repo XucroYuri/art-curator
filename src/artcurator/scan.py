@@ -12,6 +12,7 @@ from PIL import Image, ImageFile
 from . import db
 from .config import Settings
 from .parallel import ordered_map
+from .resources import Budgets, ByteBudget, Deferred, decode_estimate, record_budget
 
 
 def _source(path: Path) -> bytes:
@@ -97,14 +98,16 @@ def scan(settings: Settings, limit: int | None) -> list[db.Row]:
     paths = image_paths(settings.input)
     rows = []
     rejected = []
+    budget = ByteBudget(min(Budgets.current().host_bytes // 4, 512 * 1024**2))
     # Keep detailed exceptions with their file, without shared worker mutation.
     def inspect_result(path: Path) -> tuple[db.Row | None, str]:
         try:
-            return inspect(path, settings.input), ""
-        except (OSError, ValueError, Image.DecompressionBombError) as error:
+            with budget.reserve(decode_estimate(path)):
+                return inspect(path, settings.input), ""
+        except (OSError, ValueError, Deferred, Image.DecompressionBombError) as error:
             return None, f"{type(error).__name__}: {error}"
 
-    with ordered_map(inspect_result, paths, workers=settings.workers, capacity=settings.workers * 2) as results:
+    with record_budget(settings.out, "scan", budget), ordered_map(inspect_result, paths, workers=settings.workers, capacity=settings.workers * 2) as results:
         for path, (row, reason) in zip(paths, results, strict=True):
             if row is not None:
                 rows.append(row)
@@ -116,40 +119,36 @@ def scan(settings: Settings, limit: int | None) -> list[db.Row]:
     if not rows:
         db.write_json(settings.out / "scan-rejected.json", rejected)
         raise ValueError("Empty corpus")
-    hashes: dict[str, str] = {}
     thumbs = settings.out / "thumbs"
     thumbs.mkdir(exist_ok=True)
     for row in rows:
-        if row.sha16 in hashes and hashes[row.sha16] != row.sha256:
-            raise ValueError(f"sha16 collision: {row.sha16}")
-        hashes[row.sha16] = row.sha256
-        row.thumb_rel = f"thumbs/{row.sha16}.jpg"
+        row.thumb_rel = f"thumbs/{row.sha256}.jpg"
     def thumbnail(row: db.Row) -> str:
         destination = settings.out / row.thumb_rel
         if destination.exists():
             return ""
         try:
-            with pixels(Path(row.abs_path)) as image:
+            with budget.reserve(decode_estimate(Path(row.abs_path))), pixels(Path(row.abs_path)) as image:
                 image.thumbnail((384, 384), Image.Resampling.LANCZOS)
                 buffer = io.BytesIO()
                 image.save(buffer, "JPEG", quality=82)
             destination.write_bytes(buffer.getvalue())
             return ""
-        except (OSError, ValueError, Image.DecompressionBombError) as error:
+        except (OSError, ValueError, Deferred, Image.DecompressionBombError) as error:
             return f"{type(error).__name__}: {error}"
 
-    unique = list({row.sha16: row for row in rows}.values())
+    unique = list({row.sha256: row for row in rows}.values())
     failures: dict[str, str] = {}
-    with ordered_map(thumbnail, unique, workers=settings.workers, capacity=settings.workers * 2) as results:
+    with record_budget(settings.out, "thumbnails", budget), ordered_map(thumbnail, unique, workers=settings.workers, capacity=settings.workers * 2) as results:
         for row, reason in zip(unique, results, strict=True):
             if reason:
-                failures[row.sha16] = reason
+                failures[row.sha256] = reason
     for row in rows:
-        if row.sha16 in failures:
-            reason = failures[row.sha16]
+        if row.sha256 in failures:
+            reason = failures[row.sha256]
             logging.warning("image rejected path=%s stage=thumbnail reason=%s", row.abs_path, reason)
             rejected.append({"path": row.abs_path, "stage": "thumbnail", "reason": reason})
-    rows = [row for row in rows if row.sha16 not in failures]
+    rows = [row for row in rows if row.sha256 not in failures]
     db.write_json(settings.out / "scan-rejected.json", rejected)
     if not rows:
         raise ValueError("Empty corpus after thumbnail rejection")

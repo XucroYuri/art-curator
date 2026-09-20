@@ -22,7 +22,7 @@ def test_family_ids_survive_unrelated_addition(tmp_path: Path) -> None:
     rows.insert(0, added)
     db.save_rows(tmp_path, rows)
     np.save(tmp_path / "embeddings.npy", np.eye(len(rows), dtype=np.float16))
-    db.write_json(tmp_path / "embeddings_ids.json", [row.sha16 for row in rows])
+    db.write_json(tmp_path / "embeddings_ids.json", [row.sha256 for row in rows])
     # When an unrelated image sorts before all existing families.
     cluster(settings)
     # Then no existing content-set ID is renumbered.
@@ -43,7 +43,7 @@ def test_family_digest_uses_unique_full_hashes(tmp_path: Path) -> None:
     rows.reverse()
     db.save_rows(tmp_path, rows)
     np.save(tmp_path / "embeddings.npy", np.eye(3, dtype=np.float16))
-    db.write_json(tmp_path / "embeddings_ids.json", [row.sha16 for row in rows])
+    db.write_json(tmp_path / "embeddings_ids.json", [row.sha256 for row in rows])
     profile = "phash6-or-phash10-cosine096-connected-v1"
     members = ["a" * 16 + "0" * 48, "a" * 16 + "1" * 48]
     canonical = json.dumps([profile, members], ensure_ascii=True, separators=(",", ":"))
@@ -83,7 +83,7 @@ def test_family_ids_survive_permutation_and_duplicate(tmp_path: Path) -> None:
     rows = list(reversed(rows)) + [rows[0].model_copy()]
     db.save_rows(tmp_path, rows)
     np.save(tmp_path / "embeddings.npy", np.eye(len(rows), dtype=np.float16))
-    db.write_json(tmp_path / "embeddings_ids.json", [row.sha16 for row in rows])
+    db.write_json(tmp_path / "embeddings_ids.json", [row.sha256 for row in rows])
     # When the same content sets are regrouped.
     cluster(settings)
     # Then neither ordering nor duplicate row count enters the snapshot digest.

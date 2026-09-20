@@ -11,7 +11,7 @@ COLUMNS: Final = (
     "sha16", "abs_path", "path_rel", "filename", "width", "height", "filesize", "phash",
     "family_id", "aes_v25", "topiq_iaa", "topiq_nr", "qrealign", "hpsv3_mu", "hpsv3_sigma", "nsfw_prob", "identity_sim",
     "confusable_margin", "novelty", "consensus_z", "disagreement", "gaming_delta",
-    "flags", "proposed_tier", "thumb_rel",
+    "flags", "proposed_tier", "thumb_rel", "sha256",
 )
 
 
@@ -51,12 +51,8 @@ class Row(BaseModel):
 def connection(out: Path) -> Iterator[sqlite3.Connection]:
     db = sqlite3.connect(out / "manifest.sqlite")
     try:
-        db.execute("CREATE TABLE IF NOT EXISTS images (position INTEGER PRIMARY KEY, payload TEXT NOT NULL)")
-        db.execute("CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL)")
-        db.execute("CREATE TABLE IF NOT EXISTS timings (pass TEXT, seconds REAL, images INTEGER, cached INTEGER, load_seconds REAL)")
-        fields = ",".join(f"json_extract(payload, '$.{key}') AS {key}" for key in (*COLUMNS, "sha256", "mode"))
-        db.execute("DROP VIEW IF EXISTS scores")
-        db.execute(f"CREATE VIEW scores AS SELECT {fields} FROM images ORDER BY position")
+        from .migrations import migrate
+        migrate(db, out / "manifest.sqlite", COLUMNS)
         yield db
         db.commit()
     finally:

@@ -30,6 +30,15 @@ substitution, fixed-member family digests and raw HPS inspection. Evidence is
 not graduate phase 0, any resource tier, or the nine qualification gates. No
 inference/performance benchmark or corpus artifact regeneration was performed.
 
+Foundation batch 2 adds core full-content cache/CSV alignment, built-in worker
+protocol and coordinator persistence, byte reservation policy, and ordered
+journal/schema recovery. See [architecture-gap-regressions.json](evidence/architecture-gap-regressions.json)
+and the scoped discrepancy rows. Phase 0 still does not graduate: legacy sidecar
+and unframed journal migration, complete scorer registration, measured whole-peak
+resource admission and durability/concurrency qualification remain open. Worker
+startup per microbatch and zero ahead-prefetch can regress throughput; no new
+performance claim or scoring/extraction run accompanies this change.
+
 - Numerical budgets per scorer (including BF16/INT8), embedding/rank/family drift, identity precision/recall, target-confusable margins, gaming tolerance and usefulness/coverage floors need labelled evidence and pre-registration.
 - Fixture content digests, release artifact storage/retention/access controls, evidence sign-off owner and certification expiry/revocation policy are TBD; unsigned hashes are integrity identifiers, not authentication.
 - CPU identity latency/RAM targets, browser absolute memory/interaction ceilings, scratch/queue byte allocations and T0–T4 measured capacity are TBD/unqualified. Proposed tier caps are policy defaults, not measurements.

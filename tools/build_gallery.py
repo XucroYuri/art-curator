@@ -117,6 +117,7 @@ class GalleryInputError(Exception):
 
 class RowPayload(TypedDict):
     sha16: str
+    sha256: str | None
     abs_path: str
     path_rel: str
     filename: str
@@ -174,6 +175,7 @@ class ScoreRow:
     """Parsed and normalized representation of one scores.csv record."""
 
     sha16: str
+    sha256: str | None = field(default=None, kw_only=True)
     abs_path: str
     path_rel: str
     filename: str
@@ -203,6 +205,7 @@ class ScoreRow:
         """Convert the typed row to the legacy JSON-compatible shape."""
         return {
             "sha16": self.sha16,
+            "sha256": self.sha256,
             "abs_path": self.abs_path,
             "path_rel": self.path_rel,
             "filename": self.filename,
@@ -289,6 +292,7 @@ def _parse_row(raw: Mapping[str, str | None], line_number: int) -> ScoreRow:
         raise GalleryInputError(f"scores.csv line {line_number}: unsupported proposed_tier {tier!r}")
     return ScoreRow(
         sha16=_cell(raw, "sha16"),
+        sha256=_cell(raw, "sha256") or None,
         abs_path=_cell(raw, "abs_path"),
         path_rel=_cell(raw, "path_rel"),
         filename=_cell(raw, "filename"),
@@ -761,6 +765,7 @@ def safe_json(payload: GalleryPayload) -> str:
 
 COMPACT_COLUMNS: Final[tuple[tuple[str, str], ...]] = (
     ("s", "sha16"),
+    ("sha", "sha256"),
     ("a", "abs_path"),
     ("p", "path_rel"),
     ("n", "filename"),
@@ -889,7 +894,7 @@ def compact_payload(payload: GalleryPayload) -> dict[str, JsonValue]:
     for row in row_maps:
         sha16 = str(row["sha16"])
         thumb_rel = str(row["thumb_rel"] or f"thumbs/{sha16}.jpg").replace("\\", "/")
-        preview_path = output_root / "previews" / f"{sha16}.jpg"
+        preview_path = output_root / "previews" / f"{row.get('sha256') or sha16}.jpg"
         preview_available.append(preview_path.is_file())
         thumb_available.append(bool(thumb_rel) and (output_root / thumb_rel).is_file())
     columns["pr"] = preview_available

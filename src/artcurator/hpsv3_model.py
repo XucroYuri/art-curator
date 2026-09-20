@@ -82,9 +82,10 @@ def load(precision: Precision) -> Predictor:
     checkpoint = sharded_checkpoint(checkpoint)
     device = "cpu" if precision == "cpu" else "cuda:0"
     if device != "cpu":
-        # WDDM can page CUDA allocations into shared RAM instead of raising OOM.
-        # Bound the allocator to 85% of physical VRAM, leaving room for the desktop/context.
-        torch.cuda.set_per_process_memory_fraction(0.85, 0)
+        from .resources import Budgets
+        free, total = torch.cuda.mem_get_info(0)
+        cap = Budgets.choose(1, 1, 1, [(total, free)]).gpu_bytes[0]
+        torch.cuda.set_per_process_memory_fraction(cap / total, 0)
     match precision:
         case "bf16" | "cpu":
             model = load_checkpoint_and_dispatch(model, checkpoint, device_map={"": device},

@@ -12,8 +12,8 @@ from PIL import Image
 
 from . import db
 from .models import Predictor
-from .parallel import ordered_map
 from .scan import pixels
+from .resources import Budgets, ByteBudget, decode_estimate
 
 if TYPE_CHECKING:
     from torch import Tensor
@@ -32,6 +32,7 @@ class Prefetch:
     workers: int = 8
     batches: int = 2
     transform: Callable[[Image.Image], Image.Image] | None = None
+    budget: ByteBudget | None = None
 
 
 @contextmanager
@@ -53,7 +54,14 @@ def batches(rows: list[db.Row], predictor: Predictor, options: Prefetch) -> Iter
 
     with ThreadPoolExecutor(max_workers=options.workers, thread_name_prefix="curator-decode") as pool:
         def prepare(group: list[db.Row]) -> PreparedBatch:
-            images = list(pool.map(decode, group))
+            images: list[Image.Image] = []
+            try:
+                for image in pool.map(decode, group):
+                    images.append(image)
+            except (OSError, ValueError):
+                for image in images:
+                    image.close()
+                raise
             if predictor.cpu is None:
                 return PreparedBatch(group, images, [])
             try:
@@ -63,8 +71,20 @@ def batches(rows: list[db.Row], predictor: Predictor, options: Prefetch) -> Iter
                     image.close()
 
         groups = (rows[start:start + options.batch_size] for start in range(0, len(rows), options.batch_size))
-        if options.batches == 0:
-            yield map(prepare, groups)
-        else:
-            with ordered_map(prepare, groups, workers=1, capacity=options.batches + 1) as prepared:
-                yield prepared
+        budget = options.budget or ByteBudget(min(Budgets.current().host_bytes // 4, 512 * 1024**2))
+
+        def admitted() -> Iterator[PreparedBatch]:
+            # Conservative scheduler: no ahead-of-consumption decode until peak profiles are qualified.
+            for group in groups:
+                size = sum(decode_estimate(Path(row.abs_path)) for row in group)
+                with budget.reserve(size):
+                    batch = prepare(group)
+                    try:
+                        yield batch
+                    finally:
+                        for image in batch.images:
+                            image.close()
+                        batch.images.clear()
+                        batch.tensors.clear()
+
+        yield admitted()

@@ -7,13 +7,14 @@
 
 ## Existing schemas (informative, not the proposed wire protocol)
 
-`db.Row` is a finite-valued Pydantic record with internal `sha256` and `mode`. `db.COLUMNS` exports exactly this relative order:
+`db.Row` is a finite-valued Pydantic record. `sha256` is now exported additively;
+`sha16` remains a display/index hint and `mode` remains internal. `db.COLUMNS` exports:
 
 ```text
 sha16, abs_path, path_rel, filename, width, height, filesize, phash,
 family_id, aes_v25, topiq_iaa, topiq_nr, qrealign, hpsv3_mu, hpsv3_sigma,
 nsfw_prob, identity_sim, confusable_margin, novelty, consensus_z,
-disagreement, gaming_delta, flags, proposed_tier, thumb_rel
+disagreement, gaming_delta, flags, proposed_tier, thumb_rel, sha256
 ```
 
 SQLite currently stores `images(position,payload)`, `meta(key,value)`, `timings(pass,seconds,images,cached,load_seconds)` and rebuilds a `scores` view. `families.json` contains family_id/members/champion/runner_up. Existing prediction namespace is truncated SHA-256 of name|revision|preproc|variant; files are `<sha16>.npy`. Move plans bind CSV SHA-256, root, character whitelist, target mapping and moves under a canonical JSON digest; `APPLY-<digest[:8]>` is operator confirmation, not authentication. Existing journal fields: ts/sha16/src/dst/bytes/sha256_before/sha256_after/status. These formats need explicit migration, not silent reinterpretation.
@@ -38,7 +39,12 @@ Existing short-ID `members`/champion fields remain compatibility hints, not
 authoritative content identity. No separate lineage is inferred from old
 sequential IDs. Unknown quality yields null champion/runner-up rather than a
 quality winner. Evidence: [four-gap-regressions.json](evidence/four-gap-regressions.json),
-GAP-3. Cache/embedding alignment/CSV full-hash migration remains open.
+GAP-3. Core cache/embedding alignment/CSV full-hash changes are covered by
+[architecture-gap-regressions.json](evidence/architecture-gap-regressions.json),
+GAP-A. Full champion/runner-up identities are additive family fields. Old short
+embedding alignment files are refused, not silently reinterpreted; legacy score
+CSV consumers preserve missing full hashes as unavailable or derive them from
+actual source bytes when sealing a new move plan.
 
 ### NFR-NUM-001 — Predeclared numerical and decision budgets
 When certifying numerical equivalence, the evaluator shall compare each scorer against a named reference using `|x−y| ≤ a_m + r_m·|y|` and test decision boundaries separately.
@@ -80,3 +86,31 @@ Scope: S: persistence/moves / E:* / T0–T4. Status: proposed.
 - Freeze plans and verify destination/source hashes; reconcile both-present, source-only, destination-only and neither-present states. Neither-present or mismatched bytes is explicit manual recovery, never fabricated success. Undo never overwrites later edits. Cross-output concurrent access needs corpus-level exclusion before qualification; current per-output lock is insufficient.
 - AC-FR-PERSIST-001-01: migrate old manifests with interruption and backup-restore on PROTOCOL-v1; schema versions never regress and recovered logical rows equal baseline exactly; evidence `evidence/AC-FR-PERSIST-001-01.json`.
 - AC-FR-PERSIST-001-02: crash/truncate/replay/concurrently execute on MOVE-SYN-v1; zero lost authoritative records, no unverified unlink/overwrite, every conflicting path reported and valid-prefix recovery reconciles exactly; evidence `evidence/AC-FR-PERSIST-001-02.json`.
+
+## Scoped implementation ledger (foundation batch 2)
+
+The historical format paragraph above describes the pre-migration baseline.
+New cache namespaces use full SHA256 over `cache-v2`, artifact identity digest,
+preprocessing/variant digest, `outputs-v1` and execution digest, with full-content
+filenames. Payload digests and finite checks apply on hits; source bytes are
+rehashed. No reuse certificate is inferred from a legacy short-key cache.
+
+`worker_protocol.py` implements protocol 1.0; `worker_adapter.py` independently
+constructs expected build/lock, dependency pins, artifact and preprocessing
+identities. Workers check actual pinned package versions before loading models;
+both requests and responses bind ordered IDs and deadlines. Canonical RGB arrays
+are passed in request-specific files, not image source paths. SQLite persistence
+and prediction caches stay in the coordinator. Process exit alone is insufficient.
+This is not full FR-SCORER manifest registration or a native-code sandbox.
+
+Schema version 1 creates a migration ledger and journal projection and rebuilds
+the score view once, transactionally. Interrupted `started` attempts become
+`interrupted` on retry; checked backups precede rebuilding. New journal v1 records
+have sequence, stable operation ID, run/plan identity, previous-record digest and
+record digest. Recovery preserves torn bytes and records discarded length before
+reconciling verified destination-only moves. Both-present ambiguous unlogged
+copies remain untouched. Unframed legacy journals fail closed, requiring explicit
+migration; midstream corruption never triggers prefix truncation.
+
+Tests and limitations: [architecture-gap-regressions.json](evidence/architecture-gap-regressions.json).
+No requirement's universal qualification status is changed by these synthetic tests.

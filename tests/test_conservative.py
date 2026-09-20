@@ -22,7 +22,7 @@ def prepare(root: Path) -> Settings:
                    identity_sim=0.9, nsfw_prob=0.1) for i in range(21)]
     db.save_rows(root, rows)
     np.save(root / "embeddings.npy", np.eye(21, dtype=np.float16))
-    db.write_json(root / "embeddings_ids.json", [r.sha16 for r in rows])
+    db.write_json(root / "embeddings_ids.json", [r.sha256 for r in rows])
     return settings
 
 
@@ -97,6 +97,7 @@ def test_sql_view_when_reopening_legacy_manifest(tmp_path: Path) -> None:
     with sqlite3.connect(tmp_path / "manifest.sqlite") as connection:
         connection.execute("DROP VIEW scores")
         connection.execute("CREATE VIEW scores AS SELECT position FROM images")
+        connection.execute("PRAGMA user_version=0")
     # When reopening through the persistence boundary.
     with db.connection(tmp_path) as connection:
         values = list(connection.execute("SELECT qrealign FROM scores"))

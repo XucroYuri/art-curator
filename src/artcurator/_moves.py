@@ -64,6 +64,7 @@ class Score(BaseModel):
     abs_path: Path
     filesize: int = Field(ge=0)
     proposed_tier: Tier
+    sha256: Digest | Literal[""] | None = None
 
 
 class Move(Frozen):
@@ -92,6 +93,8 @@ class Plan(Frozen):
 
 
 class Entry(Frozen):
+    sequence: int = 0
+    operation_id: str = ""
     ts: str = Field(default_factory=lambda: datetime.now(UTC).isoformat())
     sha16: ShortHash
     src: Path
@@ -127,19 +130,13 @@ def sha256(path: Path) -> str:
 
 
 def append_entry(log: Path, entry: Entry) -> None:
-    safe_path(log)
-    with log.open("a", encoding="utf-8", newline="\n") as handle:
-        stamped = entry.model_copy(update={"ts": datetime.now(UTC).isoformat()})
-        handle.write(stamped.model_dump_json() + "\n")
-        handle.flush()
-        os.fsync(handle.fileno())
+    from .journal import append
+    append(log, entry)
 
 
 def read_log(log: Path) -> list[Entry]:
-    safe_path(log)
-    if not log.exists():
-        return []
-    return [Entry.model_validate_json(line) for line in log.read_text(encoding="utf-8").splitlines()]
+    from .journal import read
+    return read(log)
 
 
 @contextmanager
@@ -230,7 +227,9 @@ def collision_path(move: Move) -> Path:
     if dst.exists() and sha256(dst) != move.sha256:
         dst = confined(dst.with_name(f"{dst.stem}__{move.sha16}{dst.suffix}"), move.character)
         if dst.exists() and sha256(dst) != move.sha256:
-            raise MoveError(f"带哈希后缀的目标仍冲突，拒绝覆盖：{dst}")
+            dst = confined(move.dst.with_name(f"{move.dst.stem}__{move.sha256}{move.dst.suffix}"), move.character)
+            if dst.exists() and sha256(dst) != move.sha256:
+                raise MoveError(f"带完整哈希后缀的目标仍冲突，拒绝覆盖：{dst}")
     return dst
 
 

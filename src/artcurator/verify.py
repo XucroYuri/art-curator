@@ -49,7 +49,7 @@ def verify(out: Path, expected: int) -> None:
     ids = json.loads((out / "embeddings_ids.json").read_text(encoding="utf-8"))
     assert embeddings.dtype == np.float16 and embeddings.shape[0] == expected
     assert np.isfinite(embeddings).all()
-    assert ids == [r["sha16"] for r in rows]
+    assert ids == [r["sha256"] for r in rows]
     with db.connection(out) as connection:
         count = connection.execute("SELECT count(*) FROM scores").fetchone()[0]
         assert connection.execute("PRAGMA integrity_check").fetchone()[0] == "ok"

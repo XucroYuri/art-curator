@@ -73,7 +73,7 @@ def cluster(settings: Settings) -> None:
                            if "hpsv3_mu" in quality_signals and row.hpsv3_sigma is not None and hps_scale > 1e-12 else 0.0)
         row.disagreement = float(np.sqrt(np.var(scores, ddof=0) + native_variance))
     ids = json.loads((settings.out / "embeddings_ids.json").read_text(encoding="utf-8"))
-    if ids != [r.sha16 for r in rows]:
+    if ids != [r.sha256 for r in rows]:
         raise ValueError("Embedding row alignment mismatch; rerun score --pass siglip")
     matrix = normalize(np.load(settings.out / "embeddings.npy", allow_pickle=False))
     families = components([int(r.phash, 16) for r in rows], matrix)
@@ -94,6 +94,8 @@ def cluster(settings: Settings) -> None:
                             "grouping_profile_id": GROUPING_PROFILE_ID,
                             "member_content_ids": member_content_ids,
                             "family_id_schema": "content-set-json-v1",
+                            "champion_content_id": rows[ranked[0]].sha256 if quality_complete else None,
+                            "runner_up_content_id": rows[ranked[1]].sha256 if quality_complete and len(ranked) > 1 else None,
                             "champion": rows[ranked[0]].sha16 if quality_complete else None,
                             "runner_up": rows[ranked[1]].sha16 if quality_complete and len(ranked) > 1 else None})
     identities = [row.identity_sim for row in rows if row.identity_sim is not None]

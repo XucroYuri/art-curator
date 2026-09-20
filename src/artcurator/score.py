@@ -1,6 +1,5 @@
 """Sequential GPU passes with restartable per-image caches."""
 import io
-import subprocess
 import time
 
 import numpy as np
@@ -8,8 +7,10 @@ from PIL import Image, ImageEnhance
 
 from . import db, models
 from .cache import Pass, infer
-from .config import ROOT, Settings
+from .config import Settings
 from .references import derive
+from .isolated_score import score_isolated
+from .resources import admit_gpu
 
 
 def jpeg68(image: Image.Image) -> Image.Image:
@@ -25,18 +26,12 @@ def saturated(image: Image.Image) -> Image.Image:
 
 
 def score(settings: Settings, only: str | None = None, max_new: int = 0) -> None:
+    admit_gpu(settings.out)
     rows = db.load_rows(settings.out)
     names = [only] if only else ["siglip", "aes_v25", "topiq_iaa", "topiq_nr", "qrealign", "hpsv3", "nsfw_prob"]
     for name in names:
-        if name == "hpsv3":
-            subprocess.run([str(ROOT / ".venv-hpsv3/Scripts/python.exe"), "-m", "artcurator.hpsv3_worker",
-                            "--out", str(settings.out), "--max-new", str(max_new)], check=True, cwd=ROOT)
-            rows = db.load_rows(settings.out)
-            continue
-        if name == "qrealign":
-            subprocess.run([str(ROOT / ".venv-qrealign/Scripts/python.exe"), "-m", "artcurator.qrealign_worker",
-                            "--out", str(settings.out), "--workers", str(settings.workers),
-                            "--prefetch-batches", str(settings.prefetch_batches)], check=True, cwd=ROOT)
+        if name in {"hpsv3", "qrealign"}:
+            score_isolated(settings.out, name, max_new if name == "hpsv3" else 0)
             rows = db.load_rows(settings.out)
             continue
         started = time.perf_counter()
@@ -47,7 +42,7 @@ def score(settings: Settings, only: str | None = None, max_new: int = 0) -> None
         match name:
             case "siglip":
                 np.save(settings.out / "embeddings.npy", values.astype(np.float16), allow_pickle=False)
-                db.write_json(settings.out / "embeddings_ids.json", [row.sha16 for row in rows])
+                db.write_json(settings.out / "embeddings_ids.json", [row.sha256 for row in rows])
                 derive(settings, rows, predictor)
             case "aes_v25":
                 for row, value in zip(rows, values, strict=True):
