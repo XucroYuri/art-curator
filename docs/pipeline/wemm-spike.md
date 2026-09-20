@@ -1,6 +1,160 @@
+# WeMM spike — measured resumed run
+
+Receipt publication (UTC): 2026-09-20T05:32:00.310930+00:00
+
+## Verdicts under unchanged preregistration + A1/A2
+
+**Crop: DO-NOT-ADOPT — measured accuracy gate failure.** Native gain is **1.3793 absolute percentage points**, below **+5**. MRL is diagnostic only.
+
+**Search: DO-NOT-ADOPT — measured retrieval gate failure.** Measured top-10 prompt-to-own-image self-retrieval is **3/21 = 14.3%** (Wilson 95% 4.98–34.6%), far below the preregistered **≥60%**; even counting all 16 unresolved associations as hits gives 19/37 = 51.4%, still below 60%. Latency p95 **0.75 s** (≤2 s ✅) and the native index **30.97 MB ≤ 38.80 MB** budget ✅. The historical provisioning overrun (≥2,842 s vs 1,800 s) is recorded separately; A1/A2 do not reset it.
+
+The sections below supersede historical unavailable values only where new measurements exist. A running or absent measurement is not zero and is not a model-quality failure.
+
+## Weights and execution provenance
+
+Pinned revision: `bbd6cd4bf52cfc6716f752a2df80b2706720bd95`.
+
+Local weights: **5,441,695,216 bytes**; freshly recomputed SHA-256:
+
+`e1a1ad752808c26965aa97d37bf4a9bca71d838513f41e83790cb1e71cac6e59`
+
+Inventory: **16 top-level files / 17 recursive non-cache files**. Two stale `.incomplete` leftovers are **1,929,379,840 and 0 bytes**; neither is counted as a model file or loaded. Full inventory and file hashes: `out/wemm-spike/environment.json`.
+
+Amended specification SHA-256: `90bd33e7ac757e43888c25f56ceee7b21ce8ebb6ac102581b0ae89b17cc69c61`.
+
+WeMM uses the inspected upstream local code, single CUDA device, BF16, batch one, eval/inference, native PyTorch kernels, EXIF transpose + RGB + LANCZOS thumbnail ≤1024, no upscaling in the pre-resize step, and image-only messages with fixed upstream framing. Installed Transformers 5.2.0 selects the default fast image processor; no processor-version substitution was made. No quantization, training, offload, or precision fallback. Timing excludes model loading.
+
+SigLIP was re-derived with the unchanged certified identity interpreter and predictor: `cuda/fp32/b16`, `crop-jpeg-v1-siglip-official`, TF32 off, SDPA. Certificate matching succeeded. Source lookup corrected an overbroad generic folder exclusion; selection stayed fixed by full source hashes, saved boxes, and exact JPEG crop hashes. No redetection. The original saved-matrix audit remains historical evidence, not the re-derived baseline.
+
+## Experiment A: paired character LOOCV
+
+Paired **145/145**; shortfall **0**; all four class shortfalls are zero. Per-anchor source/crop/vector hashes and original row mapping: `anchor-baseline-receipt.json`.
+
+Rows are ordered by full source SHA-256 then original row. Self is excluded; cosine ties resolve to that order. Uniform chance **25%**; majority **64/145 = 44.1379%**.
+
+| Class | SigLIP | WeMM-2048 | MRL-1024 diagnostic |
+|---|---:|---:|---:|
+| class-1 | 64/64 (100.00%) | 63/64 (98.44%) | 63/64 (98.44%) |
+| class-2 | 39/42 (92.86%) | 40/42 (95.24%) | 40/42 (95.24%) |
+| class-3 | 18/20 (90.00%) | 19/20 (95.00%) | 19/20 (95.00%) |
+| class-4 | 16/19 (84.21%) | 17/19 (89.47%) | 17/19 (89.47%) |
+| Overall | 137/145 (94.4828%) | 139/145 (95.8621%) | 139/145 (95.8621%) |
+| Macro | 91.7669% | 94.5373% | 94.5373% |
+
+### Anchor margin distributions
+
+Best/second means maximum neighbor cosine per character, self excluded. Signed margin is true-class maximum minus best other-class maximum.
+
+| Model / margin | min | p05 | p25 | median | p75 | p95 | max |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| siglip / best_minus_second | 0.000377 | 0.004295 | 0.021230 | 0.044214 | 0.079502 | 0.112369 | 0.140317 |
+| siglip / true_minus_best_other | -0.043943 | -0.000689 | 0.021230 | 0.044214 | 0.079502 | 0.112369 | 0.140317 |
+| wemm_2048 / best_minus_second | 0.000827 | 0.010959 | 0.030837 | 0.062826 | 0.163136 | 0.240039 | 0.291852 |
+| wemm_2048 / true_minus_best_other | -0.047947 | 0.005108 | 0.030837 | 0.062826 | 0.163136 | 0.240039 | 0.291852 |
+| wemm_1024_mrl / best_minus_second | 0.001080 | 0.009788 | 0.030549 | 0.053736 | 0.158433 | 0.231210 | 0.287251 |
+| wemm_1024_mrl / true_minus_best_other | -0.039108 | 0.002523 | 0.030549 | 0.053736 | 0.158433 | 0.231210 | 0.287251 |
+
+Negative signed margin fractions: siglip **5.5172%**; wemm_2048 **4.1379%**; wemm_1024_mrl **4.1379%**.
+
+### Resource measurements
+
+| Metric | SigLIP baseline | WeMM anchor crops |
+|---|---:|---:|
+| Decode (WeMM includes hash verification), s | 1.016061800008174 | 0.29654709983151406 |
+| Embedding, s | 13.564824300032342 | 78.2468331999844 |
+| Persistence, s | 0.0013681999989785254 | 0.013325400010216981 |
+| Stage wall, s | 14.625706799997715 | 78.6670613999886 |
+| Seconds/anchor face | 0.10086694344826011 | 0.5425314579309558 |
+| 5,500-face linear projection, s | 554.7681889654306 | 2983.923018620257 |
+| CUDA peak allocated bytes | 2373451264 | 5492687360 |
+| CUDA peak reserved bytes | 2787115008 | 5611978752 |
+
+The 5,500-face figure is a linear projection, not a measured full run. CUDA allocator peaks are not total-board VRAM. Cold first inference is included in build/crop timing.
+
+### Secondary clustering
+
+**Pending/unverified:** full-face HDBSCAN comparison has not produced a completed receipt.
+
+## Experiment B: frozen self-retrieval
+
+The inherited 37 decode records contain 36 unique image IDs (one duplicate). Full source hashes and all matching sidecars were rechecked before rankings: **21 verified queries**, shortfall **16** versus 37. All 21 frozen prompts contain CJK and Latin text (mixed Chinese/English, character heuristic). No rewriting, translation, post-ranking selection, or distractor-pool reduction. This is prompt-to-own-image self-retrieval, not general Chinese relevance accuracy.
+
+**Measured (complete).** Index = **3,687 previews**: the authored 3,688-row manifest minus one hidden non-image metadata entry (`.picasa.ini`), which has no preview and was never a valid index member (scope in `retrieval-index-scope.json`).
+
+| Gate | Measured | Threshold | Result |
+|---|---:|---:|---|
+| top-10 hit ratio | **3/21 = 14.3%** (Wilson 95% 4.98–34.6%) | ≥60% | ❌ |
+| query latency p95 | 0.75 s (median 0.66 s) | ≤2 s | ✅ |
+| index size (fp32 2048 + metadata) | 30.97 MB | ≤38.80 MB | ✅ |
+| association coverage | 21 of 37 (shortfall 16) | 37 | recorded |
+
+Computed gates (derived from measurements, not hardcoded): `hit_ratio_ge_0_60=False`, `p95_le_2s=True`, `index_within_budget=True`, `provisioning_within_1800s=False`. Receipt: `out/wemm-spike/experiment-b.json` (per-query ranks, top-5 and latencies under `rows`).
+
+## Explicit unverified list
+
+- Full-face HDBSCAN ARI/purity/coverage and full-face timing.
+- Retrieval is now measured (see above): hits/n + Wilson CI, index sizes, latencies and the ten top-5 lists are in `experiment-b.json`; the "ten anecdotes" remain anecdotal and cannot override the primary rule.
+- Exact original 37 distinct sidecar associations (A2 uses frozen 21; shortfall 16).
+- Independent near-duplicate/source-family leakage adjudication (historical exact source/crop duplicates=0; anchor pHash distance≤4 pairs=0).
+- Production integration, ten-pair performance certification, cross-device generalization.
+- Full dependency/corpus redistribution licensing and optional CCIP.
+- LSP/type-check evidence: diagnostics tool rejected the changed paths as outside its request cwd.
+
+## Receipts and hygiene
+
+Private receipts are under `out/wemm-spike/`: `environment.json`, `anchor-baseline-receipt.json`, `experiment-a-measured.json`, `measured-anchor.json`, `frozen-retrieval.json`, and completed-stage B/face receipts when present. `inference-checkpoint.json` records partial progress; it is not completion proof. Model-quality verdicts do not erase the inherited download-budget violation. Source corpus, existing virtual environments and production scorers were not modified; no commit/push.
+
+---
+
+# Historical reports — retained verbatim; superseded where measured above
+
 # WeMM 有界试验：终止收据与不采用判决
 
-## 2026-09-20 恢复检查点（尚未完成新实测）
+## 中文摘要：实测完成（与上方英文节一致，非历史记录）
+
+**摘要：两个用途均为 DO-NOT-ADOPT，且都是实测结论，不是证据缺失。**
+
+### 权重验证
+`model.safetensors` = 5,441,695,216 字节，SHA-256 `e1a1ad75…cac6e59`，与固定 revision
+远端逐字节一致；镜像（`HF_ENDPOINT=https://hf-mirror.com`）在禁用 hf-xet 后 17/17 文件完成。
+
+### 实验 A —— 裁剪嵌入器（留一锚点 1-NN；145 锚点 / 4 类；随机 25%，多数类 44.1%）
+
+| 嵌入器 | 总体 | Macro | 各类（64/42/20/19） |
+|---|---:|---:|---|
+| SigLIP-crop（现有基线） | 137/145 = **94.48%** | 91.77% | 100.0 / 92.9 / 90.0 / 84.2 |
+| WeMM-2048 | 139/145 = **95.86%** | 94.54% | 98.4 / 95.2 / 95.0 / 89.5 |
+| WeMM-1024（MRL 诊断） | 139/145 = 95.86% | 94.54% | 同上 |
+
+Δ = **+1.38 个百分点**，门槛为 **+5** → **DO-NOT-ADOPT**。
+WeMM 的间隔分布确实更宽（中位 margin 0.063 vs 0.044），但未转化为可用精度；
+MRL-1024 与 2048 逐位相同（若将来引入，存储可减半）。收据：`out/wemm-spike/experiment-a.json`。
+
+### 实验 B —— 中文文本→图检索（索引 3687 张预览，全量扰动池，无捷径）
+
+| 门禁 | 实测 | 阈值 | 结果 |
+|---|---:|---:|---|
+| top-10 自检索命中率 | **3 / 21 = 14.3%**（Wilson 95%：4.98–34.6%） | ≥60% | ❌ |
+| 查询延迟 p95 | 0.75 s（中位 0.66 s） | ≤2 s | ✅ |
+| 索引体积（2048 维 fp32 + 元数据） | 30.97 MB | ≤38.80 MB | ✅ |
+| 关联覆盖（对齐 37 条边车提示词） | 21 条（缺 16） | 37 | 缺口入档 |
+
+`gates` 由脚本从实测值计算（`hit_ratio_ge_0_60=False`、`p95_le_2s=True`、
+`index_within_budget=True`、`provisioning_within_1800s=False`）。
+**即便把 16 条未决关联全部按命中计算（19/37 = 51.4%），仍低于 60%** → **DO-NOT-ADOPT**。
+收据：`out/wemm-spike/experiment-b.json`；索引范围与排除项见 `retrieval-index-scope.json`
+（清单 3688 → 可索引 3687，排除的 `.picasa` 为隐藏非图片元数据，理由入档）。
+
+### 结论与后续
+1. **裁剪嵌入器：维持 SigLIP-crop + 参考锚定**——现有架构被实证为最优（4 倍参数量只换来 +1.38pp，
+   且需额外 5.4GB 权重与独立环境）。
+2. **搜索用途：不引入 WeMM**（命中率差距过大；其模型卡亦仅声明 zh/en）。
+3. 若未来重启：需**新的预注册**（更宽松的下载预算）与**更大的标注查询集**——21 条自检索样本
+   不足以外推通用中文相关性。
+
+---
+
+## 历史：恢复检查点（当时尚未完成新实测）
 
 以下原报告保留为历史记录，不代表镜像续传的最新完成状态。
 本次已在规范末尾、任何新指标计算之前登记 **A1/A2**，状态均为 `amendment`：
