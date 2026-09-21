@@ -6,7 +6,7 @@
 
 # ADR-0006 — Transactional virtual-album mapping publication
 
-Status: proposed; date: 2026-09-21; owner: Art Curator maintainers.
+Status: accepted; date: 2026-09-21; owner: Art Curator maintainers.
 Requirement and AC trace: INV-M / AC-INV-M-01, FR-ALBUM-MAP-001/003/006,
 NFR-ALBUM-MAP-001 / AC-NFR-ALBUM-MAP-001-01,
 FR-ALBUM-VISION-003/005, FR-ALBUM-NEGOTIATE-003/004, FR-PERSIST-001,
@@ -353,7 +353,7 @@ use becomes required, or publication/undo tests find lost events or mixed revisi
 Do not change backend automatically on failure. Revoke write capability, preserve
 evidence, and recover through a validated backup/exchange with explicit reconciliation.
 No performance, power-loss, identity-accuracy or implementation certification is
-issued by this ADR. Status stays proposed pending maintainer acceptance; acceptance
+issued by this ADR. Accepted by the Art Curator maintainers on 2026-09-21; acceptance
 selects the architecture, while G5 graduation still requires the following evidence.
 
 ### Acceptance criteria implied by this decision

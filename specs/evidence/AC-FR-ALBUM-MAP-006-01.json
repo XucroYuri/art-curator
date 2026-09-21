@@ -1,0 +1,17 @@
+{
+  "schema_version": "album-ac-receipt-v1",
+  "ac_id": "AC-FR-ALBUM-MAP-006-01",
+  "verdict": "inconclusive",
+  "implementation_verdict": "partial",
+  "method": "synthetic regression tests plus implementation/spec audit",
+  "fixture": "ALBUM-MAP-v1 scoped recipe; see run inventory hashes",
+  "comparator": "exact state/receipt contract of the named executed regression, not the entire owning AC",
+  "passed_test_names": [
+    "test_deferred_trigger_once_when_revision_repeated"
+  ],
+  "limitations": [
+    "Automatic clock/evidence scheduling and filters remain open"
+  ],
+  "run_receipt": "album-mapping-run.json",
+  "g5_graduated": false
+}

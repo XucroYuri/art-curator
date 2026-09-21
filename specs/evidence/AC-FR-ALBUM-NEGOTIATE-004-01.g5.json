@@ -1,0 +1,17 @@
+{
+  "schema_version": "album-ac-receipt-v1",
+  "ac_id": "AC-FR-ALBUM-NEGOTIATE-004-01",
+  "verdict": "inconclusive",
+  "implementation_verdict": "partial",
+  "method": "synthetic regression tests plus implementation/spec audit",
+  "fixture": "ALBUM-MAP-v1 scoped recipe; see run inventory hashes",
+  "comparator": "exact state/receipt contract of the named executed regression, not the entire owning AC",
+  "passed_test_names": [
+    "test_consent_when_granted_never_authorizes_context_or_mapping"
+  ],
+  "limitations": [
+    "No UI changed or qualified; v2 capability remains disabled"
+  ],
+  "run_receipt": "album-mapping-run.json",
+  "g5_graduated": false
+}

@@ -1,0 +1,27 @@
+{
+  "schema_version": "album-ac-receipt-v1",
+  "ac_id": "AC-NFR-ALBUM-MAP-001-01",
+  "verdict": "inconclusive",
+  "implementation_verdict": "partial",
+  "method": "synthetic regression tests plus implementation/spec audit",
+  "fixture": "ALBUM-MAP-v1 scoped recipe; see run inventory hashes",
+  "comparator": "exact state/receipt contract of the named executed regression, not the entire owning AC",
+  "passed_test_names": [
+    "test_old_or_complete_revision_when_cutpoint_raises[before-P]",
+    "test_old_or_complete_revision_when_cutpoint_raises[P-artifact]",
+    "test_old_or_complete_revision_when_cutpoint_raises[P-manifest]",
+    "test_old_or_complete_revision_when_cutpoint_raises[after-P]",
+    "test_old_or_complete_revision_when_cutpoint_raises[before-C]",
+    "test_old_or_complete_revision_when_cutpoint_raises[C-marker]",
+    "test_old_or_complete_revision_when_cutpoint_raises[C-event]",
+    "test_old_or_complete_revision_when_cutpoint_raises[C-row]",
+    "test_old_or_complete_revision_when_cutpoint_raises[C-root]",
+    "test_old_or_complete_revision_when_cutpoint_raises[after-C]",
+    "test_old_or_complete_revision_when_cutpoint_raises[acknowledgement]"
+  ],
+  "limitations": [
+    "Exception rollback only; process kill, physical faults, global enrollment and backup/migrations unqualified"
+  ],
+  "run_receipt": "album-mapping-run.json",
+  "g5_graduated": false
+}

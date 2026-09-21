@@ -1,0 +1,17 @@
+{
+  "schema_version": "album-ac-receipt-v1",
+  "ac_id": "AC-FR-ALBUM-MAP-005-01",
+  "verdict": "inconclusive",
+  "implementation_verdict": "partial",
+  "method": "synthetic regression tests plus implementation/spec audit",
+  "fixture": "ALBUM-MAP-v1 scoped recipe; see run inventory hashes",
+  "comparator": "exact state/receipt contract of the named executed regression, not the entire owning AC",
+  "passed_test_names": [
+    "test_unknown_pool_freezes_and_promotes_when_seed_has_ten_images"
+  ],
+  "limitations": [
+    "Richer selection/lineage/coherence qualification remains open"
+  ],
+  "run_receipt": "album-mapping-run.json",
+  "g5_graduated": false
+}

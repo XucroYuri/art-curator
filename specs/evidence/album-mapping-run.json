@@ -1,0 +1,202 @@
+{
+  "schema_version": "album-mapping-evidence-v1",
+  "generated_at": "2026-09-21T15:25:32.706633+00:00",
+  "pytest": {
+    "tests": 503,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 0,
+    "passed": 502
+  },
+  "junit_sha256": "6faedf6d612fb6a1b192b7fdc34440274775fb9d30e770d7cf31d9489c780470",
+  "runtime": {
+    "python": "3.12.13",
+    "sqlite": "3.53.1",
+    "os": "Windows",
+    "machine": "AMD64",
+    "filesystem_qualified": false
+  },
+  "configuration": {
+    "journal_mode": "WAL",
+    "synchronous": "FULL",
+    "foreign_keys": true,
+    "migration": 1
+  },
+  "g5_graduated": false,
+  "power_loss_qualified": false,
+  "performance_measured": false,
+  "fault_model": "Python exceptions at eleven P/C/ack cutpoints, rollback and reopen; not process-kill or power loss",
+  "lsp": "unavailable: basedpyright not installed; prior installation decline respected",
+  "fixture": "ALBUM-MAP-v1 synthetic test recipes; post-run source digests, not a preregistered release fixture",
+  "inventory": [
+    {
+      "path": "docs/pipeline/album-mapping-audit.md",
+      "lines": 26,
+      "nonblank_noncomment_lines": 22,
+      "sha256": "0d3a601f9e57f557dbdf757a8150ceecc6ff2152eae812cecdb6b45381f246bc"
+    },
+    {
+      "path": "docs/pipeline/album-mapping.md",
+      "lines": 231,
+      "nonblank_noncomment_lines": 184,
+      "sha256": "ab033c45202062d66a23fda9e7453b15102ca44f4c76da7d0eb70972c72d623a"
+    },
+    {
+      "path": "specs/adr/ADR-0006-transactional-album-mapping.md",
+      "lines": 425,
+      "nonblank_noncomment_lines": 366,
+      "sha256": "7418bff3b9cd8a2ba4f870969556567da2ddb2f88881bb8c71acaedb37b7fca7"
+    },
+    {
+      "path": "specs/README.md",
+      "lines": 76,
+      "nonblank_noncomment_lines": 58,
+      "sha256": "b95431474b2b8da2a4bc8d15506ff77465e7e1d9ec1806ff1535ed36680c9735"
+    },
+    {
+      "path": "src/artcurator/album_contracts.py",
+      "lines": 84,
+      "nonblank_noncomment_lines": 64,
+      "sha256": "299a735b31d2b38fa929cb9ceb764730f9afe4662b40f74a03e0bbfa42c3ff27"
+    },
+    {
+      "path": "src/artcurator/album_map.py",
+      "lines": 195,
+      "nonblank_noncomment_lines": 181,
+      "sha256": "807a05fbf5d05b764be6ae5bbdefc45730422193f56e1d6022422c67b14e6123"
+    },
+    {
+      "path": "src/artcurator/album_map_browser.py",
+      "lines": 183,
+      "nonblank_noncomment_lines": 159,
+      "sha256": "abf8e64777e11cf0bc2edd94269f556056a39ecedb32e32832141ff3b26f356e"
+    },
+    {
+      "path": "src/artcurator/album_map_cli.py",
+      "lines": 78,
+      "nonblank_noncomment_lines": 71,
+      "sha256": "0e0273349023bf67e1c80e5038e9005bdc19404997f9d28394bbf3b66a6e2750"
+    },
+    {
+      "path": "src/artcurator/album_map_discovery.py",
+      "lines": 119,
+      "nonblank_noncomment_lines": 101,
+      "sha256": "67ec71e68bae9fb740d6e0028b7c2301377a9e65d09252d1746dd8631af36b48"
+    },
+    {
+      "path": "src/artcurator/album_map_exchange.py",
+      "lines": 100,
+      "nonblank_noncomment_lines": 80,
+      "sha256": "80a705e8d14ecebd0b8149c05706692b8eeff7527f75bb16a966f61bc58b95c4"
+    },
+    {
+      "path": "src/artcurator/album_map_protocol.py",
+      "lines": 150,
+      "nonblank_noncomment_lines": 120,
+      "sha256": "1de8c855079270fc7d5c5afa1585f69b32d04d20d1218f6ce4649151e78f3b96"
+    },
+    {
+      "path": "src/artcurator/album_map_recovery.py",
+      "lines": 109,
+      "nonblank_noncomment_lines": 100,
+      "sha256": "fadae9e1082ef9f1e7cc73975a38b28a690d6b9aedd6b609a185551102464928"
+    },
+    {
+      "path": "src/artcurator/album_map_schema.py",
+      "lines": 170,
+      "nonblank_noncomment_lines": 137,
+      "sha256": "e484cbd1e18b69833d80b07e04c20bac708b142741e2f7f03dc439f4d6e9e12c"
+    },
+    {
+      "path": "src/artcurator/album_map_storage.py",
+      "lines": 111,
+      "nonblank_noncomment_lines": 98,
+      "sha256": "8190e5ca842700dbc567b3050edce312522d4128b17f69aafe66fa99b68ae0ce"
+    },
+    {
+      "path": "src/artcurator/album_map_tray.py",
+      "lines": 42,
+      "nonblank_noncomment_lines": 35,
+      "sha256": "e4357bf703e9785b708a94d6adc728c962b89e9fb84b53fe8f2ed5106bd79506"
+    },
+    {
+      "path": "src/artcurator/album_registry.py",
+      "lines": 26,
+      "nonblank_noncomment_lines": 20,
+      "sha256": "25d24c58428b0f9ef507694cdd2d9e8970ee36bf9bc5a795d2630637e400cc55"
+    },
+    {
+      "path": "src/artcurator/cli.py",
+      "lines": 144,
+      "nonblank_noncomment_lines": 138,
+      "sha256": "18a8550569a985d78753f2672013684967fed030a23410d8e495eaaf7869dccb"
+    },
+    {
+      "path": "src/artcurator/identity_labels.py",
+      "lines": 152,
+      "nonblank_noncomment_lines": 133,
+      "sha256": "2cb8ec866e858b8c2a04b43cf0b43fbfe0a04e18dea7b6fddc1825a360fb6ff8"
+    },
+    {
+      "path": "tests/test_album_adapters.py",
+      "lines": 63,
+      "nonblank_noncomment_lines": 47,
+      "sha256": "37040cee9a71c7d8b6ef2f269b3178ee4009901b243e2d98cbc830368e5a8a63"
+    },
+    {
+      "path": "tests/test_album_browser.py",
+      "lines": 32,
+      "nonblank_noncomment_lines": 26,
+      "sha256": "3f53b0f9b2ab99d57ceac034a7e597072b35bc3de133100589d1346db6968456"
+    },
+    {
+      "path": "tests/test_album_cli.py",
+      "lines": 24,
+      "nonblank_noncomment_lines": 16,
+      "sha256": "1fac31534656b0e9d134a05b7810a57becbafadc5fe276102c6d28c80173a55b"
+    },
+    {
+      "path": "tests/test_album_contracts.py",
+      "lines": 29,
+      "nonblank_noncomment_lines": 20,
+      "sha256": "e702eb5083efb9cc84ec57d03d596d595de6f9dcd4cf2fd7e52a5eff45068561"
+    },
+    {
+      "path": "tests/test_album_discovery.py",
+      "lines": 51,
+      "nonblank_noncomment_lines": 41,
+      "sha256": "1f8a684a062628eba7e9a5d8baefa991a6e72fda967fba71328475e5aae193ad"
+    },
+    {
+      "path": "tests/test_album_receipts.py",
+      "lines": 18,
+      "nonblank_noncomment_lines": 14,
+      "sha256": "3007fe93b63378f441b395a4020e0d20aadf8e77611cea0e79156721d66b1409"
+    },
+    {
+      "path": "tests/test_album_recovery.py",
+      "lines": 110,
+      "nonblank_noncomment_lines": 81,
+      "sha256": "ec1ad55e8effb3ac0de4d3d49cec2ecb07510d0bd23f061ab8a77277712d549f"
+    },
+    {
+      "path": "tests/test_album_registry.py",
+      "lines": 33,
+      "nonblank_noncomment_lines": 23,
+      "sha256": "a91825ecb5976f060803165efac9baafd47244803fb8cf9509a7a6c56d3eeac1"
+    },
+    {
+      "path": "tests/test_album_store.py",
+      "lines": 78,
+      "nonblank_noncomment_lines": 59,
+      "sha256": "242205515716dea9dbdf9d6dabfb012ced08555a476d8f185c75faa046af1720"
+    },
+    {
+      "path": "tools/album_mapping_evidence.py",
+      "lines": 96,
+      "nonblank_noncomment_lines": 80,
+      "sha256": "c2eb4eb50275f0def6554e553c5bfe1b1229079843af2cea6c35c813dba284b3"
+    }
+  ],
+  "limitations_document": "docs/pipeline/album-mapping.md"
+}

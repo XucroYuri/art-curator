@@ -5,7 +5,7 @@ from typing import Literal, assert_never
 
 from pydantic import Field
 
-from .identity_schema import Digest, FaceId, IdentityDocument, Label, LabelEnvelope, Record
+from .identity_schema import Digest, FaceId, IdentityDocument, Label, LabelEnvelope, Provenance, Record
 from .identity_store import digest, load_document, load_provenance, save_model
 
 
@@ -39,8 +39,14 @@ class ApplyResult(Record):
 def load_registry(out: Path) -> Registry:
     provenance = load_provenance(out)
     path = out / "characters.json"
-    registry = Registry.model_validate_json(path.read_bytes()) if path.exists() else Registry(
-        corpus_fingerprint=provenance.corpus_fingerprint)
+    payload = path.read_bytes() if path.exists() else Registry(
+        corpus_fingerprint=provenance.corpus_fingerprint).model_dump_json().encode()
+    return read_registry(payload, provenance)
+
+
+def read_registry(payload: bytes, provenance: Provenance) -> Registry:
+    """The original v1 byte/digest algorithm, shared by file and additive import readers."""
+    registry = Registry.model_validate_json(payload)
     if registry.corpus_fingerprint != provenance.corpus_fingerprint:
         raise ValueError("character registry corpus mismatch")
     previous = ""

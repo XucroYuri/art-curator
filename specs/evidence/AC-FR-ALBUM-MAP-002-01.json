@@ -1,0 +1,15 @@
+{
+  "schema_version": "album-ac-receipt-v1",
+  "ac_id": "AC-FR-ALBUM-MAP-002-01",
+  "verdict": "inconclusive",
+  "implementation_verdict": "inconclusive",
+  "method": "synthetic regression tests plus implementation/spec audit",
+  "fixture": "ALBUM-MAP-v1 scoped recipe; see run inventory hashes",
+  "comparator": "exact state/receipt contract of the named executed regression, not the entire owning AC",
+  "passed_test_names": [],
+  "limitations": [
+    "G4 first-pass integration not implemented here"
+  ],
+  "run_receipt": "album-mapping-run.json",
+  "g5_graduated": false
+}
