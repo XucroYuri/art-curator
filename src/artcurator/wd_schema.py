@@ -8,6 +8,7 @@ from .identity_schema import Digest, FaceId, Record, ShortHash
 REVISION: Final = "b25b82a03f7282e41aa2f257a52c7583b710bd1c"
 PREPROCESS: Final = "wd-white-square-bicubic448-bgr-f32-0-255-v1"
 PINS: Final = {"onnxruntime-gpu": "1.24.4", "numpy": "2.5.3", "Pillow": "12.3.0"}
+BUILD_FILES: Final = ("wd_schema.py", "wd_worker.py", "wd_projection.py", "wd_preprocess.py")
 
 
 class ModelSource(Record):
@@ -72,6 +73,7 @@ class Response(Record):
     request_id: str
     input_ids: list[Digest]
     evidence: list[Evidence]
+    raw: list[str] | None = Field(default=None, exclude_if=lambda value: value is None)
     providers_available: list[str]
     providers_active: list[str]
     load_seconds: float = Field(ge=0)
@@ -101,4 +103,7 @@ class TagDocument(Record):
     anchors: list[TaggedAnchor] = Field(default_factory=list)
     batches: list[Response] = Field(default_factory=list)
     cached: int = 0
+    legacy_scanned: int = 0
+    legacy_reused: int = 0
+    legacy_invalidated: int = 0
     wall_seconds: float = 0

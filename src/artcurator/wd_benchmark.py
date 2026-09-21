@@ -35,7 +35,7 @@ def benchmark(out: Path, dlls: Path | None) -> Benchmark:
                     crops=[str((out / f.crop_rel).resolve()) for f in faces],
                     input_ids=[crop_ids[f.face_id] for f in faces],
                     cuda_dll_directory=str(dlls.resolve()) if dlls else None)
-                result.append(exchange.request(request))
+                result.append(exchange.request(request).model_copy(update={"raw": None}))
     receipt = Benchmark(samples=result, total_seconds=time.perf_counter() - started)
     save_model(out / "wd-throughput.json", receipt)
     return receipt

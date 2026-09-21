@@ -37,7 +37,9 @@ class Exchange:
         response = Response.model_validate_json(line)
         if (response.handshake != request.handshake or response.run_id != request.run_id
                 or response.request_id != request.request_id or response.input_ids != request.input_ids
-                or len(response.evidence) != len(request.input_ids) or time.time() >= request.deadline
+                or len(response.evidence) != len(request.input_ids)
+                or (response.raw is not None and len(response.raw) != len(request.input_ids))
+                or time.time() >= request.deadline
                 or not response.providers_active or response.providers_active[0] != request.handshake.provider):
             raise ValueError("WD response lineage mismatch")
         return response
