@@ -85,11 +85,20 @@ class TaggedFace(Record):
     evidence: Evidence
 
 
+class TaggedAnchor(Record):
+    """Folder reference crop evidence, joined to banks by the full source-image digest."""
+
+    image_sha256: Digest
+    crop_sha256: Digest
+    evidence: Evidence
+
+
 class TagDocument(Record):
     version: Literal[1] = 1
     handshake: Handshake
     corpus_fingerprint: Digest
     faces: list[TaggedFace]
+    anchors: list[TaggedAnchor] = Field(default_factory=list)
     batches: list[Response] = Field(default_factory=list)
     cached: int = 0
     wall_seconds: float = 0

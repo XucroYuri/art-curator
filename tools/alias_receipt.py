@@ -7,6 +7,7 @@
 """Regenerate saved-evidence galleries without confirming any real aliases."""
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 
@@ -40,6 +41,8 @@ class Receipt(Record):
     after: Counts
     alias_proposals: int
     banks: int
+    reference_images: int
+    tagged_reference_images: int
     direct_supported_pairs: int
     relatively_strong_pairs: int
     confirmed_aliases: int
@@ -67,6 +70,8 @@ def main() -> None:
         pairs = [pair for bank in aliases.banks for pair in bank.candidates]
         built = build_gallery_with_metrics(out)
         receipt = Receipt(corpus=label, before=before, after=after, alias_proposals=len(pairs), banks=len(aliases.banks),
+            reference_images=sum(bank.reference_images for bank in aliases.banks),
+            tagged_reference_images=sum(bank.tagged_reference_images for bank in aliases.banks),
             direct_supported_pairs=sum(pair.direct.images > 0 for pair in pairs),
             relatively_strong_pairs=sum(pair.strength == "relatively-strong" for pair in pairs),
             confirmed_aliases=sum(record.decision == "confirmed" for char in load_memory(out).characters
@@ -75,7 +80,11 @@ def main() -> None:
         save_model(out / "alias-reconciliation-report.json", receipt)
         receipts.append(receipt)
         print(receipt.model_dump_json())
-    save_model(Path("specs/evidence/alias-reconciliation.json"), Bundle(receipts=receipts))
+    path = Path("specs/evidence/alias-reconciliation.json")
+    existing = json.loads(path.read_bytes()) if path.exists() else {}
+    verification = existing.get("verification")
+    fields = {"receipts": receipts} if verification is None else {"receipts": receipts, "verification": verification}
+    save_model(path, Bundle.model_validate(fields))
 
 
 if __name__ == "__main__":

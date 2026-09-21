@@ -1,13 +1,16 @@
 """Coordinator-owned compact WD evidence, revision/crop/preprocess-bound cache."""
 import time
 import uuid
+from collections.abc import Sequence
+from dataclasses import dataclass
 from pathlib import Path
 
 from pydantic import Field
 
+from .identity_group_schema import Anchor, AnchorDocument
 from .identity_schema import Digest, Record
 from .identity_store import digest, file_digest, load_document, load_provenance, save_model
-from .wd_schema import Evidence, Handshake, PINS, Request, Response, TagDocument, TaggedFace
+from .wd_schema import Evidence, Handshake, PINS, Request, Response, TagDocument, TaggedAnchor, TaggedFace
 from .wd_exchange import worker
 
 
@@ -25,6 +28,43 @@ class TagOptions(Record):
     max_new: int = Field(default=0, ge=0)
     provider: str = "CPUExecutionProvider"
     cuda_dll_directory: Path | None = None
+
+
+@dataclass(frozen=True, slots=True)
+class AnchorInput:
+    image_sha256: str
+    crop_sha256: str
+    path: Path
+    content: str
+
+
+def verified_anchor_crops(out: Path, anchors: Sequence[Anchor]) -> list[AnchorInput]:
+    """Saved reference crops that can be tagged; missing or corrupt files are omitted."""
+    result: list[AnchorInput] = []
+    for anchor in anchors:
+        path = out / "anchors" / f"{anchor.crop_sha256}.jpg"
+        if not path.is_file():
+            continue
+        content = file_digest(path)
+        if content != anchor.crop_sha256:
+            continue
+        result.append(AnchorInput(anchor.image_sha256, anchor.crop_sha256, path, content))
+    return result
+
+
+def content_key(content: str, handshake: Handshake) -> str:
+    return digest((content + handshake.model_dump_json()).encode())
+
+
+def cached_evidence(cache: Path, key: str, handshake: Handshake) -> Evidence | None:
+    entry = cache / (key + ".json")
+    if not entry.exists():
+        return None
+    hit = CacheEntry.model_validate_json(entry.read_bytes())
+    if (hit.key != key or hit.handshake != handshake
+            or hit.payload_sha256 != digest(hit.evidence.model_dump_json().encode())):
+        raise ValueError("WD cache integrity mismatch")
+    return hit.evidence
 
 
 def tag(out: Path, options: TagOptions | None = None) -> TagDocument:
@@ -52,15 +92,22 @@ def tag(out: Path, options: TagOptions | None = None) -> TagDocument:
         content = file_digest(crop)
         if content != provenance.crops[face.face_id]:
             raise ValueError("saved crop differs from identity provenance")
-        key = digest((content + handshake.model_dump_json()).encode())
-        keys[content], paths[content] = key, crop
-        entry = cache / (key + ".json")
-        if entry.exists():
-            hit = CacheEntry.model_validate_json(entry.read_bytes())
-            if hit.key != key or hit.handshake != handshake or hit.payload_sha256 != digest(hit.evidence.model_dump_json().encode()):
-                raise ValueError("WD cache integrity mismatch")
-            known[content] = hit.evidence
+        keys[content], paths[content] = content_key(content, handshake), crop
+        hit = cached_evidence(cache, keys[content], handshake)
+        if hit is not None:
+            known[content] = hit
             cached += 1
+    tagged_anchors: list[tuple[AnchorInput, str]] = []
+    anchors_path = out / "anchors.json"
+    if anchors_path.exists():
+        anchors = AnchorDocument.model_validate_json(anchors_path.read_bytes()).anchors
+        for anchor in verified_anchor_crops(out, anchors):
+            keys[anchor.content], paths[anchor.content] = content_key(anchor.content, handshake), anchor.path
+            hit = cached_evidence(cache, keys[anchor.content], handshake)
+            if hit is not None:
+                known[anchor.content] = hit
+                cached += 1
+            tagged_anchors.append((anchor, anchor.content))
     pending = [content for content in paths if content not in known]
     if options.max_new:
         pending = pending[:options.max_new]
@@ -83,6 +130,8 @@ def tag(out: Path, options: TagOptions | None = None) -> TagDocument:
     result = TagDocument(handshake=handshake, corpus_fingerprint=provenance.corpus_fingerprint,
         faces=[TaggedFace(face_id=f.face_id, image_sha16=f.image_sha16, crop_sha256=provenance.crops[f.face_id],
             evidence=known[provenance.crops[f.face_id]]) for f in document.faces if provenance.crops[f.face_id] in known],
+        anchors=[TaggedAnchor(image_sha256=anchor.image_sha256, crop_sha256=anchor.crop_sha256,
+            evidence=known[content]) for anchor, content in tagged_anchors if content in known],
         batches=batches, cached=cached, wall_seconds=time.perf_counter() - started)
     save_model(out / "wd-tagger.json", result)
     return result

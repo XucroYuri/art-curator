@@ -8,10 +8,10 @@ from .alias_schema import AliasBank, AliasCandidate, AliasDocument, AliasError, 
 from .character_memory import load_memory
 from .identity_anchor import effective_references, load_anchors
 from .identity_group_math import ReferenceBank, similarities, without_crop
-from .identity_group_schema import Anchor
+from .identity_group_schema import Anchor, AnchorDocument
 from .identity_labels import load_registry
 from .identity_store import file_digest, load_document, load_provenance, load_vectors, save_model
-from .wd_schema import TagDocument
+from .wd_schema import Evidence, TagDocument
 
 
 @dataclass(frozen=True, slots=True)
@@ -20,6 +20,12 @@ class Observation:
     tag: str
     score: float
     top1: bool
+
+
+def observations_for(image: str, evidence: Evidence) -> list[Observation]:
+    """One row per character tag; multi-crop images stay one support unit downstream."""
+    top = max((tag.score for tag in evidence.characters), default=0)
+    return [Observation(image, tag.tag, tag.score, tag.score == top) for tag in evidence.characters]
 
 
 def summarize(rows: list[Observation]) -> Support:
@@ -41,8 +47,10 @@ def generate(out: Path) -> AliasDocument:
     vectors = load_vectors(out, document)
     references: list[Anchor] = []
     bank = ReferenceBank(np.empty((0, vectors.shape[1]), dtype=np.float32), (), ())
+    anchor_document: AnchorDocument | None = None
     if (out / "anchors.json").exists():
-        references, bank = effective_references(out, *load_anchors(out))
+        anchor_document, matrix = load_anchors(out)
+        references, bank = effective_references(out, anchor_document, matrix)
     else:
         # Session names remain explicit human events; query paths never supply labels.
         selected = [i for i, face in enumerate(document.faces) if face.face_id in registry.references]
@@ -69,9 +77,7 @@ def generate(out: Path) -> AliasDocument:
         if face.face_id in registry.excluded:
             continue
         image = provenance.contents[face.image_sha16]
-        tags = tagged[face.face_id].evidence.characters if face.face_id in tagged else []
-        top = max((tag.score for tag in tags), default=0)
-        rows = [Observation(image, tag.tag, tag.score, tag.score == top) for tag in tags]
+        rows = observations_for(image, tagged[face.face_id].evidence) if face.face_id in tagged else []
         observations.extend(rows)
         names, _, scores = similarities(vector, without_crop(bank, provenance.crops[face.face_id]))
         strongest = max(scores, default=0)
@@ -79,6 +85,13 @@ def generate(out: Path) -> AliasDocument:
         if strongest > .35 and len(leaders) == 1:
             cohorts[leaders[0]].add(image)
             cohort_rows[leaders[0]].extend(rows)
+    if wd and anchor_document is not None and wd.anchors:
+        # Reference crops join by full source-image digest; crop similarity alone is not evidence.
+        bound = {(anchor.image_sha256, anchor.crop_sha256) for anchor in anchor_document.anchors}
+        for anchor in wd.anchors:
+            if (anchor.image_sha256, anchor.crop_sha256) not in bound:
+                raise AliasError("WD anchor evidence is not bound to the saved reference anchors")
+            observations.extend(observations_for(anchor.image_sha256, anchor.evidence))
     banks: list[AliasBank] = []
     for name in sorted(set(bank.labels)):
         images = {r.image_sha256 for r in references if r.character == name}

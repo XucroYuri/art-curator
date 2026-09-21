@@ -2,16 +2,58 @@
 from pathlib import Path
 
 import pytest
+from test_alias_reconciliation import decision_file, seed
 
 from artcurator.alias_candidates import Observation, generate, summarize
-from artcurator.alias_schema import AliasRecord
+from artcurator.alias_schema import AliasError, AliasRecord
 from artcurator.character_memory import apply_alias_decisions, load_memory, save_memory
 from artcurator.identity_anchor import load_anchors
 from artcurator.identity_candidates_v2 import emit
 from artcurator.identity_store import save_model
 from artcurator.memory_curation import combine, import_memory
 from artcurator.memory_schema import Character, Memory
-from test_alias_reconciliation import decision_file, seed
+from artcurator.wd_schema import Evidence, Tag, TagDocument, TaggedAnchor
+
+
+def tag_anchors(out: Path, *anchors: TaggedAnchor) -> None:
+    """Replace saved anchor observations without touching the query-face evidence."""
+    path = out / "wd-tagger.json"
+    document = TagDocument.model_validate_json(path.read_bytes())
+    save_model(path, document.model_copy(update={"anchors": list(anchors)}))
+
+
+def test_anchor_when_wd_covers_reference_image_joins_direct(tmp_path: Path) -> None:
+    # Given WD evidence saved for reference A's own image content, not for the query face.
+    seed(tmp_path)
+    tag_anchors(tmp_path, TaggedAnchor(image_sha256="4" * 64, crop_sha256="4" * 64,
+        evidence=Evidence(characters=[Tag(tag="anchor_tag", score=.99)])))
+    # When proposals are generated; then the anchor observation is direct support for A alone.
+    banks = {bank.reference_name: bank for bank in generate(tmp_path).banks}
+    assert banks["A"].tagged_reference_images == 1
+    assert next(row for row in banks["A"].candidates if row.wd_tag == "anchor_tag").direct.images == 1
+    assert banks["B"].tagged_reference_images == 0
+    assert all(row.wd_tag != "anchor_tag" for row in banks["B"].candidates)
+
+
+def test_anchor_when_only_crop_digest_matches_refuses_direct_support(tmp_path: Path) -> None:
+    # Given WD evidence whose crop digest equals reference A's crop but whose source image digest is foreign.
+    seed(tmp_path)
+    tag_anchors(tmp_path, TaggedAnchor(image_sha256="7" * 64, crop_sha256="4" * 64,
+        evidence=Evidence(characters=[Tag(tag="anchor_tag", score=.99)])))
+    # When generating; then unbound evidence fails closed instead of faking a content match.
+    with pytest.raises(AliasError, match="anchor"):
+        generate(tmp_path)
+
+
+def test_anchor_when_wd_has_no_anchor_evidence_stays_weak(tmp_path: Path) -> None:
+    # Given saved folder references but no WD observations for their images yet.
+    seed(tmp_path)
+    # When proposals are generated; then direct support stays empty and the pair is weak.
+    bank = next(row for row in generate(tmp_path).banks if row.reference_name == "A")
+    pair = next(row for row in bank.candidates if row.wd_tag == "hero_tag")
+    assert bank.tagged_reference_images == 0
+    assert pair.direct.images == 0
+    assert pair.strength == "weak"
 
 
 def test_summary_when_multiple_crops_share_image() -> None:
@@ -100,6 +142,7 @@ def test_v1_when_read_migrates_without_inventing_decisions(tmp_path: Path) -> No
 def test_reference_when_alias_crop_names_overlap_preserves_support(tmp_path: Path) -> None:
     # Given one crop labelled by two curated spellings of the same character.
     import numpy as np
+
     from artcurator.identity_anchor import effective_references
     seed(tmp_path)
     save_memory(tmp_path, Memory(characters=[Character(name="A", aliases=["hero_tag"])]))

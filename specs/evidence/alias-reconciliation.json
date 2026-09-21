@@ -1,27 +1,5 @@
 {
   "method": "Saved evidence only; no human confirmations, no accuracy estimate",
-  "verification": {
-    "fixture": "ALIAS-SYN-v1",
-    "command": "uv run --no-project --python .venv/Scripts/python.exe -m pytest -q",
-    "cwd": "project root",
-    "passed": 320,
-    "warnings": 1,
-    "new_alias_tests": 18,
-    "red_cases": "Missing API/sidecar: 8 failed, 1 passed; missing gallery sidecar key failed; aliased duplicate crop preservation failed before canonicalization fix",
-    "comparators": [
-      "Confirmed compatible alias flips demoted to eligible but remains unverified",
-      "Unconfirmed, rejected and no-alias cases remain demoted",
-      "Rejection survives label synchronization, reload and proposal regeneration",
-      "Import/export preserves decisions; stale contradictory import and ambiguous ownership fail closed",
-      "Rename/merge preserve compatible decisions; delete retracts alias",
-      "Unique-image maximum scores and quantiles match analytic values",
-      "Foreign corpus batch leaves authoritative memory unchanged"
-    ],
-    "browser_to_api": "specs/evidence/alias-browser-apply.json",
-    "ui": "specs/evidence/alias-reconciliation-ui.json",
-    "lsp": "Unavailable: basedpyright and TypeScript servers not installed; installation previously declined",
-    "javascript_syntax": "node --check passed for gallery_aliases.js and gallery_suggestions.js"
-  },
   "receipts": [
     {
       "corpus": "pilot",
@@ -37,23 +15,25 @@
         "proposals": 1013,
         "confusable": 0
       },
-      "alias_proposals": 21,
+      "alias_proposals": 25,
       "banks": 4,
-      "direct_supported_pairs": 0,
-      "relatively_strong_pairs": 0,
+      "reference_images": 145,
+      "tagged_reference_images": 112,
+      "direct_supported_pairs": 5,
+      "relatively_strong_pairs": 2,
       "confirmed_aliases": 0,
       "gallery_rows": 1207,
       "input_digests": {
         "anchors.json": "b536e768b503cae097609e99367bcf633a57ef8115c1a883c42f11e01254e4ad",
         "anchors.npy": "bd82eaec8c93b5814ecf9cc9c1eeb95bb26906ebb4772c9758983fb5d6ceb0a2",
         "character-memory.json": "312e9c4a4ac00b9894663ebd9c70d06751b74329e5cc786ac39d7963d9791a14",
-        "wd-tagger.json": "7dd2e1a5afe41314b3d08d20b69af87677ec4ff8bf0134d97169eabba4fcc452",
+        "wd-tagger.json": "1db876786ea8dbb2622abe6e4886c9e3476ba3f955625a7376166e00997ea4e7",
         "identities.json": "d3f8ca75e98ce20929e79d52ade4fb62db34218706058513bbe88fbe304ebb6e",
         "identities.npy": "8226ceff5200919e88e8455acdbab3acf328b690e0d47338e18f02b228a9114c",
         "identity-provenance.json": "811d0e7ad0ee3e532325a2c10480e01a75ca88822ffe41eaf5392d0e60df9f6a",
         "identity-embedding.json": "7ca1318c4990b4f2efee9b71afedb6bffba8763466d00d3c0b840d071f2ed92a"
       },
-      "gallery_sha256": "99e90eeda26fa9050987e4478b1b6b9fa3875ff815356bec64a988f3444b5ec2"
+      "gallery_sha256": "9652b1d0c114fc19974ff8dee7b12b45224ad46b79446d5d02f770b574c10085"
     },
     {
       "corpus": "review",
@@ -69,23 +49,25 @@
         "proposals": 2885,
         "confusable": 143
       },
-      "alias_proposals": 48,
+      "alias_proposals": 51,
       "banks": 4,
-      "direct_supported_pairs": 0,
-      "relatively_strong_pairs": 0,
+      "reference_images": 145,
+      "tagged_reference_images": 112,
+      "direct_supported_pairs": 5,
+      "relatively_strong_pairs": 2,
       "confirmed_aliases": 0,
       "gallery_rows": 3688,
       "input_digests": {
         "anchors.json": "92e14669a274b5a83a177080545182b0523b875c685bdab319fb870165ddc19b",
         "anchors.npy": "bd82eaec8c93b5814ecf9cc9c1eeb95bb26906ebb4772c9758983fb5d6ceb0a2",
         "character-memory.json": "312e9c4a4ac00b9894663ebd9c70d06751b74329e5cc786ac39d7963d9791a14",
-        "wd-tagger.json": "47edc8fab8fa0210fdcc06674a32d1d86e956c8f90c8e715216382221a123594",
+        "wd-tagger.json": "76b6592f0c7445f10a6d08964284615a88e89eec9bcebca61d59904504ed5348",
         "identities.json": "5b145f24a1f85afc9c4e282a49f5b2d15acdc42a4b5a88c02aaf207807dde39f",
         "identities.npy": "8e983f85b705c7fd30739721d69f1f0f8cc79d23089b187b670547e69e0905a8",
         "identity-provenance.json": "84d5c6633352226aa91ec0d2850446f1184b725e9e4939e5ed975bb7b59006e9",
         "identity-embedding.json": "3bde10964fe3fc4f17fa8c63792266d20d697bbc35c496637677c718ecfb8206"
       },
-      "gallery_sha256": "5cd6d95b4c74572817b96b4ab5dbf9d3de9c412059cc09c5831ea712112662e0"
+      "gallery_sha256": "1f5b98af438ff2d988fc245e0684e79c17705f8d36f06f46c8d19d5011b4e9be"
     },
     {
       "corpus": "similarity",
@@ -101,23 +83,53 @@
         "proposals": 267,
         "confusable": 11
       },
-      "alias_proposals": 18,
+      "alias_proposals": 22,
       "banks": 4,
-      "direct_supported_pairs": 0,
-      "relatively_strong_pairs": 0,
+      "reference_images": 145,
+      "tagged_reference_images": 112,
+      "direct_supported_pairs": 5,
+      "relatively_strong_pairs": 2,
       "confirmed_aliases": 0,
       "gallery_rows": 448,
       "input_digests": {
         "anchors.json": "a55252558ae5c485b7ce818966954eb221319e626d484eb2e203e0b38c663e54",
         "anchors.npy": "bd82eaec8c93b5814ecf9cc9c1eeb95bb26906ebb4772c9758983fb5d6ceb0a2",
         "character-memory.json": "312e9c4a4ac00b9894663ebd9c70d06751b74329e5cc786ac39d7963d9791a14",
-        "wd-tagger.json": "3a943ea2b215ccacb900dc2e9fc6125642550413387e3febe5c2a42974312e9f",
+        "wd-tagger.json": "ca2e00dcc6f51972906ea164a965f4df8a8f9e07386f410580210e96ac45ba6f",
         "identities.json": "5cdac25f6860eb05be1b79ffa6489aadf78d8154c06e424b6aacf503714dcf2f",
         "identities.npy": "05a0936a086deb3a9ce5d871860b11e3ce923375c02f38d7e4b8ac61b97a7c8d",
         "identity-provenance.json": "8c67b233577f6bb8eb4ecd89d66119332aebe279f114a52014804fffef196542",
         "identity-embedding.json": "ce65c8d32a065fba8ba2b86a45eb4b2a6143ce08f03043a4119b0e269ea95ba9"
       },
-      "gallery_sha256": "f79ef079e9923bfada2d97a808c6b60e8b8c40fb3ec754cf29045b15315bbcaf"
+      "gallery_sha256": "b8731b99b9e3132b099e830ede3e34eeaa58f3e8e04b05eafff50b5d3998912b"
     }
-  ]
+  ],
+  "verification": {
+    "fixture": "ALIAS-SYN-v1 plus synthetic reference-crop fixtures",
+    "command": "uv run --no-project --python .venv/Scripts/python.exe -m pytest -q",
+    "cwd": "project root",
+    "passed": 433,
+    "failed": 1,
+    "failure_note": "tests/test_ingest_process.py::test_background_when_client_exits_owner_finishes fails in uncommitted parallel ingest work (Windows GBK subprocess decode); not touched by this change",
+    "warnings": 2,
+    "new_alias_tests": 9,
+    "red_cases": "Missing TaggedAnchor/TagDocument.anchors, persist_crops/restore_crops and verified_anchor_crops failed collection/assertions before implementation; anchor direct-join, full-digest binding and degradation tests now green",
+    "comparators": [
+      "Confirmed compatible alias flips demoted to eligible but remains unverified",
+      "Unconfirmed, rejected and no-alias cases remain demoted",
+      "Rejection survives label synchronization, reload and proposal regeneration",
+      "Import/export preserves decisions; stale contradictory import and ambiguous ownership fail closed",
+      "Rename/merge preserve compatible decisions; delete retracts alias",
+      "Unique-image maximum scores and quantiles match analytic values",
+      "Foreign corpus batch leaves authoritative memory unchanged",
+      "Legacy wd-tagger.json without anchors parses with anchors defaulting empty",
+      "Reference-crop WD observations enter the direct join by full image digest only",
+      "Crop-digest-only or unbound anchor evidence fails closed",
+      "Missing or corrupt persisted reference crops degrade to weak-only without error"
+    ],
+    "browser_to_api": "specs/evidence/alias-browser-apply.json",
+    "ui": "specs/evidence/alias-reconciliation-ui.json",
+    "lsp": "Unavailable: basedpyright and TypeScript servers not installed; installation previously declined",
+    "javascript_syntax": "node --check passed for gallery_aliases.js and gallery_suggestions.js"
+  }
 }

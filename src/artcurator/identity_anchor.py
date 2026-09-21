@@ -11,7 +11,7 @@ from PIL import Image
 
 from .config import Settings
 from .character_memory import load_memory
-from .identity_anchor_sources import collect
+from .identity_anchor_sources import collect, persist_crops
 from .identity_detector import load_detector
 from .identity_embed import load_embedder
 from .identity_group_math import ReferenceBank, calibrate
@@ -34,6 +34,7 @@ def create_anchors(settings: Settings) -> None:
         raise GroupingError("anchor construction requires the exact certified execution/model/preprocess")
     detector = load_detector(options)
     samples = collect(settings, detector)
+    persist_crops(settings.out, samples.anchors, samples.encoded)
     values = []
     for offset in range(0, len(samples.encoded), predictor.execution.batch_size):
         with ExitStack() as stack:

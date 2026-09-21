@@ -1,7 +1,9 @@
 """Read-only folder reference sampling; directory labels are human knowledge."""
 import io
+from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Final
 
 import imagehash
 from PIL import Image
@@ -9,10 +11,12 @@ from PIL import Image
 from .config import Settings
 from .identity_detect import crop_bytes
 from .identity_detector import Detector
-from .identity_group_schema import Anchor, GroupingError
+from .identity_group_schema import Anchor, AnchorDocument, GroupingError
 from .identity_schema import IdentityOptions
-from .identity_store import digest, file_digest, manifest
+from .identity_store import atomic_bytes, digest, file_digest, manifest
 from .scan import pixels
+
+IMAGE_SUFFIXES: Final = frozenset({".png", ".jpg", ".jpeg", ".webp"})
 
 
 @dataclass(frozen=True, slots=True)
@@ -21,6 +25,12 @@ class Samples:
     encoded: tuple[bytes, ...]
     folders: dict[str, dict[str, int]]
     excluded: tuple[str, ...]
+
+
+@dataclass(frozen=True, slots=True)
+class RestoredCrops:
+    persisted: int
+    unavailable: tuple[str, ...]
 
 
 def accept_sample(score: float, phash: int, accepted: list[int], options: IdentityOptions) -> bool:
@@ -54,7 +64,7 @@ def collect(settings: Settings, detector: Detector) -> Samples:
         counts = dict(candidates=0, examined=0, accepted=0, ambiguous=0, rejected=0, errors=0, excluded=0)
         candidates = {}
         for path in folder.rglob("*"):
-            if not path.is_file() or path.suffix.lower() not in {".png", ".jpg", ".jpeg", ".webp"}:
+            if not path.is_file() or path.suffix.lower() not in IMAGE_SUFFIXES:
                 continue
             resolved = path.resolve()
             if not resolved.is_relative_to(folder) or any(resolved.is_relative_to(p) for p in excluded):
@@ -96,3 +106,72 @@ def collect(settings: Settings, detector: Detector) -> Samples:
         folders[folder.name] = counts
     relative_exclusions = tuple(sorted(p.relative_to(root).as_posix() for p in excluded if p.is_relative_to(root)))
     return Samples(tuple(anchors), tuple(encoded), folders, relative_exclusions)
+
+
+def persist_crops(out: Path, anchors: Sequence[Anchor], encoded: Sequence[bytes]) -> int:
+    """Publish accepted reference crops by content digest before any embedding work."""
+    if len(anchors) != len(encoded):
+        raise GroupingError("anchor crop count disagrees with accepted anchors")
+    for anchor, crop in zip(anchors, encoded, strict=True):
+        if digest(crop) != anchor.crop_sha256:
+            raise GroupingError("accepted anchor crop does not match its content digest")
+    directory = out / "anchors"
+    directory.mkdir(parents=True, exist_ok=True)
+    for anchor, crop in zip(anchors, encoded, strict=True):
+        path = directory / f"{anchor.crop_sha256}.jpg"
+        if path.exists():
+            if file_digest(path) != anchor.crop_sha256:
+                raise GroupingError("persisted anchor crop is corrupt")
+            continue
+        atomic_bytes(path, crop)
+    return len(anchors)
+
+
+def restore_crops(settings: Settings) -> RestoredCrops:
+    """Rebuild content-addressed crops for corpora anchored before persistence existed."""
+    out = settings.out
+    document = AnchorDocument.model_validate_json((out / "anchors.json").read_bytes())
+    wanted = {anchor.image_sha256 for anchor in document.anchors}
+    folders = {anchor.source_folder for anchor in document.anchors}
+    root = settings.characters_root.resolve()
+    excluded = excluded_directories(settings)
+    sources: dict[str, Path] = {}
+    for folder in sorted(root.iterdir()):
+        if not folder.is_dir() or folder.is_symlink() or folder.name not in folders:
+            continue
+        for path in folder.rglob("*"):
+            if not path.is_file() or path.suffix.lower() not in IMAGE_SUFFIXES:
+                continue
+            resolved = path.resolve()
+            if not resolved.is_relative_to(folder) or any(resolved.is_relative_to(p) for p in excluded):
+                continue
+            try:
+                full = file_digest(path)
+            except OSError:
+                continue
+            if full in wanted:
+                sources.setdefault(full, path)
+        if wanted <= sources.keys():
+            break
+    restored: list[Anchor] = []
+    encoded: list[bytes] = []
+    unavailable: list[str] = []
+    for anchor in document.anchors:
+        source = sources.get(anchor.image_sha256)
+        crop = None
+        if source is not None:
+            try:
+                if file_digest(source) != anchor.image_sha256:
+                    raise GroupingError("reference source changed during crop restore")
+                with pixels(source) as image:
+                    crop = crop_bytes(image, anchor.bbox)
+            except OSError:
+                crop = None
+        if crop is None:
+            unavailable.append(anchor.crop_sha256)
+            continue
+        if digest(crop) != anchor.crop_sha256:
+            raise GroupingError("restored reference crop differs from the saved anchor digest")
+        restored.append(anchor)
+        encoded.append(crop)
+    return RestoredCrops(persisted=persist_crops(out, restored, encoded), unavailable=tuple(unavailable))
