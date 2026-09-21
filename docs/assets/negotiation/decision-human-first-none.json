@@ -1,0 +1,22 @@
+{
+  "actor": "local:review-studio",
+  "operation_id": "d4a88a68-822d-4c72-853a-2c9076608ae8",
+  "affirmative": true,
+  "report_digest": "20eff71e69ed63df5e0e238eaaa8b6ec9bdafd0a7a2bd42cc5d2a647f50d9164",
+  "snapshot_digest": "51e128416c91870eeeb50a0112416935151167494ac7496777858f0267246feb",
+  "profile_digest": "31fe8126bbf654eb85402f6e1c331c453345b43d814fb8bd89f4d72597f2462f",
+  "mode": "human-first",
+  "inheritance": "none",
+  "folders": [],
+  "threshold_overrides": [],
+  "cost_ceiling_seconds": 0,
+  "acknowledged": [
+    "SYNTHETIC-UI-FIXTURE: analytic values, not measured model performance; never apply",
+    "heuristic-unvalidated-not-identity-accuracy",
+    "G1-whole-image-vectors-unavailable-crop-evidence-separate",
+    "human-label-independence-is-an-attestation",
+    "context-disabled-G2-does-not-implement-grouping",
+    "G4-G5-mapping-execution-unavailable-no-source-writes",
+    "cost-and-tier-estimates-unavailable-not-zero"
+  ]
+}

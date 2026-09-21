@@ -80,6 +80,20 @@ def test_consent_when_new_member_is_consumed_refuses(corpus: Settings) -> None:
         api.authorize(corpus.out, ("future.png",))
 
 
+def test_consent_when_frozen_source_mutated_fails_closed(corpus: Settings) -> None:
+    # Given: active consent over an unchanged synthetic corpus.
+    api, report = prepared(corpus)
+    api.confirm(corpus.out, decision(report, "auto-first", "all"))
+    # When: an external process changes a frozen member after confirmation.
+    Image.new("RGB", (48, 32), "yellow").save(corpus.input / "folder-a/red.png")
+    # Then: consumption revalidates every frozen hash and refuses without re-consent.
+    with pytest.raises(IngestError, match="changed"):
+        api.authorize(corpus.out, ("folder-a/red.png",))
+    fresh = decision(report, "human-first", "none").model_copy(update={"operation_id": "after-mutation"})
+    with pytest.raises(IngestError, match="changed"):
+        api.confirm(corpus.out, fresh)
+
+
 def test_retraction_when_restarted_leaves_only_inactive_history(corpus: Settings) -> None:
     # Given
     api, report = prepared(corpus)

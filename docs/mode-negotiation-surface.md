@@ -105,6 +105,9 @@ All files are under [assets/negotiation](assets/negotiation/).
 
 ## Contract gaps and verification limits
 
+Items 1–3 were resolved by the follow-up reconciliation at the end of this record;
+the original findings are kept verbatim. Items 4–6 remain open.
+
 1. Frozen contract line 40 says all four binding digests are echoed, but its
    Decision example and the strict backend model accept only report_digest,
    snapshot_digest and profile_digest. The exporter follows the exact accepted
@@ -123,3 +126,35 @@ All files are under [assets/negotiation](assets/negotiation/).
 6. Direct `file://` browser QA was not completed (the MCP browser blocks it).
    Loopback offline behavior was exercised. Screen-reader testing, Lighthouse,
    real-corpus authorization/application and calibrated measurement are unverified.
+
+## Follow-up reconciliation for gaps 1–3
+
+All three gaps above were closed in the frozen contract's **prose** — not by changing
+the wire model, the backend policy digest or the exporter, none of which needed a
+change:
+
+1. **Binding digests.** `docs/pipeline/mode-negotiation.md` now states that the
+   accepted `Decision` wire is exactly `report_digest` + `snapshot_digest` +
+   `profile_digest`, and that `analysis_profile_digest` and `seal_digest` are
+   inspectable but non-binding: the CLI revalidates them from sealed local evidence.
+   This matches the exporter below, `negotiation_consent.Decision`, the Decision
+   example and the governing spec (`FR-ALBUM-NEGOTIATE-003` names
+   report/snapshot/profile digests). No forbidden extra fields were added anywhere.
+2. **Freshness.** The contract now says plainly that the report carries no
+   stale-state field and that freshness is a CLI revalidation duty: on every
+   consumption it re-derives the report digest, `snapshot_digest == job.revision`,
+   `analysis_profile_digest == job.profile_digest`, the seal digest, the
+   `negotiation*.py` policy digest, the `launch.json` analysis profile and every
+   frozen member hash, failing closed with `stale ... re-consent required`. That is
+   the existing backend behavior and matches this surface's own status copy
+   (`离线快照无法监测外部变更；CLI 将重新校验绑定。`). No contract field was added, so
+   report/digest identity is unchanged.
+3. **`median`.** The prose now names the real report field `coherence.median`
+   (gates: `coherence.median` and `coherence.p10`), matching the backend metric and
+   the renderer label `视觉一致性 median`.
+
+The nine exported Decision envelopes and `keyboard-decision.json` ship under
+`docs/assets/negotiation/` so the strict-model claim is reproducible from a checkout
+(`tests/test_gallery_negotiation.py` reads them, and without them the suite cannot
+pass on a fresh clone). No digest, envelope or fixture was regenerated, so no
+operation ID or binding changed.

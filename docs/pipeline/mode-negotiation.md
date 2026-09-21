@@ -36,8 +36,8 @@ Top level of `NegotiationReport`, `schema_version = "album-negotiation-v1"`:
 
 | Field | Type | Client obligation |
 |---|---|---|
-| `report_digest` | sha256 | Echo it back in `Decision.report_digest`; display staleness, never recompute |
-| `snapshot_digest`, `analysis_profile_digest`, `seal_digest`, `profile_digest` | sha256 | Bind the report to the frozen corpus and policy; all four are echoed back |
+| `report_digest` | sha256 | Echo it back in `Decision.report_digest`; display it, never recompute |
+| `snapshot_digest`, `analysis_profile_digest`, `seal_digest`, `profile_digest` | sha256 | Bind the report to the frozen corpus and policy. Display all four. Exactly `snapshot_digest` and `profile_digest` are echoed back: with `report_digest` they are the whole accepted `Decision` wire (below). `analysis_profile_digest` and `seal_digest` are inspectable but non-binding for the client — the CLI revalidates them from sealed local evidence and never trusts a client-supplied copy |
 | `g1_report_ref` | path | Link to the sealed G1 analysis report |
 | `labels`, `labels_digest` | object | Human labels actually used; empty means measurements are visual/weak only |
 | `global_evidence` | object | Global counts and denominators (table below) |
@@ -87,8 +87,9 @@ Every measured fraction is an object `{numerator, denominator, value, interval, 
 * `unresolved_labels` stays in the purity denominator; `purity_identity` names the
   count used. No labels means identity purity is unavailable, and weak agreement is
   never relabelled purity.
-* `coherence.scores` is one nullable cosine per sampled image; `medium`/`p10` are the
-  gates. Regimes are `heuristic/unvalidated` with `confidence: null`; `status` is one of
+* `coherence.scores` is one nullable cosine per sampled image; the gates are the
+  report's `coherence.median` and `coherence.p10` fields (the field name is `median`).
+  Regimes are `heuristic/unvalidated` with `confidence: null`; `status` is one of
   `recommended`, `ambiguous`, `undetermined`, `insufficient-evidence`.
 
 ## Presentation object (copy as data)
@@ -150,6 +151,14 @@ confirmation channel; absence of a response leaves `job.json.progress.stage = CO
 }
 ```
 
+The strict wire model (`artcurator.negotiation_consent.Decision`, `extra="forbid"`)
+accepts exactly three report-bound digests — `report_digest`, `snapshot_digest`,
+`profile_digest`. The report's `analysis_profile_digest` and `seal_digest` are
+inspectable evidence, not client assertions: `ingest-confirm` re-derives them from
+the stored job revision and seal, so echoing them back would carry no authority and
+is rejected as an unknown field. Prose, example, backend and the offline exporter
+must therefore agree on three echoes; a surface that sends four is malformed.
+
 Rules the client must honor (all fail closed server-side):
 
 * `affirmative` must be the literal `true`; omission is rejected.
@@ -164,7 +173,36 @@ Rules the client must honor (all fail closed server-side):
   a digest mismatch is refused with a stable `IngestError`.
 * Changing labels, re-running analysis or adding members makes the report stale: the
   old receipt can no longer authorize anything (`authorize`/`confirm` fail closed).
-  Retract explicitly (`ingest-retract --actor ...`) before a new choice.
+  Retract explicitly (`ingest-retract --actor ...`) before a new choice. See
+  "Freshness" below for what the CLI rechecks.
+
+### Freshness: the CLI revalidates; the report carries no stale flag
+
+A `NegotiationReport` is a frozen, digest-bound artifact and deliberately carries no
+mutable freshness/stale field: a frozen artifact cannot know whether the corpus around
+it changed. Currentness is a consumption-time duty of the CLI, not data the client
+supplies or infers. On every `ingest-confirm`, `ingest-dismiss`, `ingest-retract` and
+`authorize`, `artcurator.negotiation.current` re-reads `job.json`, the revision seal
+and the stored report and re-derives:
+
+* the recomputed `report_digest`, the stored `job.negotiation.report_digest`, and the
+  three digests the decision echoes;
+* `snapshot_digest == job.revision`, `analysis_profile_digest == job.profile_digest`,
+  `seal_digest` equal to the stored seal digest, and `profile_digest` equal to the
+  implementation policy digest over `negotiation*.py`;
+* when `launch.json` exists, that the recorded analysis profile still reproduces
+  `job.profile_digest`;
+* every frozen member source re-hashed (`verify_sources`): a mutated, deleted or
+  unreadable member fails closed.
+
+Any mismatch raises a stable `IngestError` (`stale report/snapshot/profile digest;
+re-consent required`), so an old receipt authorizes nothing; revocation stays explicit
+(`ingest-retract`), and re-preparing a proposal never resurrects consent. Paths added
+after the snapshot are simply not covered — `descendants: current-snapshot` never grows
+to include them, and a new member requires a new ingestion and a new receipt. The
+offline surface cannot observe the corpus: it may mark a report stale locally (the
+strict `parseNegotiationReport` refuses a re-import of the same digest, and a different
+report clears selection) but it must never assert freshness. The CLI is authoritative.
 
 ## Confirmation receipt (what the surface may display)
 

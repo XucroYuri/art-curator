@@ -1,7 +1,7 @@
 {
   "schema_version": "album-ac-receipt-v1",
   "ac_id": "AC-NFR-ALBUM-MAP-001-01",
-  "verdict": "inconclusive",
+  "verdict": "partial",
   "implementation_verdict": "partial",
   "method": "synthetic regression tests plus implementation/spec audit",
   "fixture": "ALBUM-MAP-v1 scoped recipe; see run inventory hashes",
