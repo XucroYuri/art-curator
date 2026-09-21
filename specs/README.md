@@ -19,6 +19,10 @@ Baseline inspected: 2026-09-20. These specifications encode the supplied archite
 | [030-UX](030-UX.md) | Human decisions and offline review |
 | [040-QUALITY-GATES](040-QUALITY-GATES.md) | Nine gates, fixtures and worked requirement |
 | [050-ROADMAP](050-ROADMAP.md) | Dependencies and graduation |
+| [Album vision](features/FR-ALBUM-VISION.md) | Governing product definition, proposed mapping/provenance invariants, open-world taxonomy and G1–G7 dependencies |
+| [Album ingestion](features/FR-ALBUM-INGEST.md) | Read-only eight-stage orchestration, incremental resume, throughput/storage budgets and action costs |
+| [Album mode negotiation](features/FR-ALBUM-NEGOTIATE.md) | Measured cluster/folder report, working-mode consent, inheritance and Chinese honesty copy |
+| [Virtual album mapping](features/FR-ALBUM-MAP.md) | Mapping schema, first-pass tiers, batch undo, cluster naming/promotion and optional physical export |
 | [Identity v2](features/FR-IDENTITY-V2.md) | Profile-bound CPU/GPU character references |
 | [Identity grouping](features/FR-IDENTITY-GROUPING.md) | Reference-anchored character grouping and abstention |
 | [Identity candidates](features/FR-IDENTITY-CANDIDATES.md) | Ranked per-face options; enumerate, do not force a guess |
