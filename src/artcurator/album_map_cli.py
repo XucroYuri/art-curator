@@ -14,9 +14,13 @@ from .album_map_tray import TrayAction, tray_request
 from .album_map_discovery import DiscoveryInput, preview_pool, recluster
 from .album_map_promotion import DiscoveryDecision, stage_discovery
 from .album_map_vectors import SavedVectors, Wall, representative_wall, saved_vectors
+from .first_pass import execute as execute_first_pass, preview as preview_first_pass
+from .first_pass_schema import Preview as FirstPassPreview, Run as FirstPassRun
+from .first_pass_audit import Incident, freeze
 
 Operation = Literal["init", "snapshot", "prepare", "publish", "abort", "undo", "export", "restore", "stage", "confirm", "tray",
-                    "pool", "discover", "recluster", "promote", "vectors", "wall"]
+                     "pool", "discover", "recluster", "promote", "vectors", "wall",
+                     "first-pass-preview", "first-pass-execute", "first-pass-audit-error"]
 
 
 def add_arguments(parser: argparse.ArgumentParser) -> None:
@@ -27,6 +31,7 @@ def add_arguments(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--album-manifest", type=Path)
     parser.add_argument("--album-batch")
     parser.add_argument("--album-authorize")
+    parser.add_argument("--first-pass-root", type=Path)
 
 
 def handle(args: argparse.Namespace, parser: argparse.ArgumentParser) -> None:
@@ -43,6 +48,18 @@ def handle(args: argparse.Namespace, parser: argparse.ArgumentParser) -> None:
     payload = Path(args.album_file).read_bytes() if args.album_file is not None else b""
     with AlbumStore.open(path) as store:
         match operation:
+            case "first-pass-audit-error":
+                print(freeze(store, Incident.model_validate_json(payload)).model_dump_json(indent=2))
+            case "first-pass-preview" | "first-pass-execute":
+                if args.first_pass_root is None:
+                    parser.error("first pass requires --first-pass-root (G2 job directory)")
+                root = Path(args.first_pass_root)
+                if operation == "first-pass-preview":
+                    result = preview_first_pass(store.snapshot(), FirstPassRun.model_validate_json(payload), root)
+                else:
+                    result = execute_first_pass(store, FirstPassPreview.model_validate_json(payload),
+                                                (root, args.album_authorize or ""))
+                print(result.model_dump_json(indent=2))
             case "snapshot":
                 print(store.snapshot().model_dump_json(indent=2))
             case "prepare":

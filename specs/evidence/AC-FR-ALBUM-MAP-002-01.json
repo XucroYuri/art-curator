@@ -1,15 +1,107 @@
 {
   "schema_version": "album-ac-receipt-v1",
   "ac_id": "AC-FR-ALBUM-MAP-002-01",
-  "verdict": "inconclusive",
-  "implementation_verdict": "inconclusive",
-  "method": "synthetic regression tests plus implementation/spec audit",
-  "fixture": "ALBUM-MAP-v1 scoped recipe; see run inventory hashes",
-  "comparator": "exact state/receipt contract of the named executed regression, not the entire owning AC",
-  "passed_test_names": [],
-  "limitations": [
-    "G4 first-pass integration not implemented here"
+  "verdict": "partial",
+  "implementation_verdict": "partial",
+  "method": "Analytic boundary and adversarial tests; real G2 sealed synthetic inventory/consent; real G5 SQLite publication, inverse and CLI subprocess tests. No model downloads or real-corpus inference.",
+  "fixture": "Scoped analytic ALBUM-MAP-v1 and ALBUM-CONFUSABLE-v1 recipes, plus existing synthetic ALBUM-FLOW-v1 G2 corpus. Not a held-out labelled identity benchmark.",
+  "fixture_recipe_sha256": {
+    "tests/test_first_pass_policy.py": "1a5e7ae1a30c05a1369eb3fbef649ad88e7fe7f127b2009a25f0665c98887587",
+    "tests/test_first_pass_execution.py": "b2ab227a08a8ff09987b2dee7229b86a362146378412ee5c147db44543536530",
+    "tests/test_first_pass_boundaries.py": "b670e8df9be36cb5baef7090070ea56d9b8c661a44398f28ab9fc60d2fb60fb2"
+  },
+  "comparator": "Exact tier table and boundary decisions; zero model-only/contradictory auto assignments; zero automatic verification or reference enrollment; exact separate deterministic ceil-5% image samples; exact before-image restoration except reported later-edit conflicts.",
+  "policy": {
+    "version": "album-first-pass-v1",
+    "classification": "configurable engineering policy, not calibrated optima",
+    "enumeration_strictly_greater_than": 0.35,
+    "auto_similarity_floor": 0.90,
+    "auto_stable_margin_floor": 0.05,
+    "auto_uses_maximum_of_floor_and_calibration": true,
+    "model_hypothesis_score": 0.85,
+    "model_hypothesis_margin": 0.20,
+    "compact_missing_runner_upper_bound": 0.35,
+    "audit_fraction": 0.05,
+    "audit_seed": "album-first-pass-v1",
+    "audit_derivation": "Ascending SHA256(UTF8(seed + newline + snapshot_digest + newline + base_tier + newline + full_image_hash)), full-hash tie break; unique images; first (n+19)//20 independently for auto and eligible-none. No trailing newline.",
+    "historical_design_evidence": [
+      "1285/1580 = 81.33% without character tag >=0.35; not a population accuracy estimate and not the strict >0.35 enumeration count",
+      "143 supplied adversarial proposals pass >=0.85 and >=0.20; synthetic comparator recreates their count with score .97 and runner-up .60",
+      "32/43 scaffold coverage; no minimum auto coverage promise",
+      "Existing .90/.05 fallback and exploratory anchor calibration approximately .9484/.00682 motivate conservative floors, not optimality"
+    ]
+  },
+  "evidence": [
+    {
+      "tests": "tests/test_first_pass_policy.py::test_143_high_score_2b_proposals_when_contradicted_all_review",
+      "comparator": "143 review, 0 auto, all model_demoted despite WD .97 and margin .37",
+      "observed": "passed"
+    },
+    {
+      "tests": "tests/test_first_pass_policy.py and tests/test_first_pass_boundaries.py",
+      "comparator": "Exact/just-below floors, calibration max and stale bindings, non-self/profile/winner gates, normal unknown, human support lookup, per-candidate metric units, contradiction persistence and sibling isolation",
+      "observed": "full-suite result below"
+    },
+    {
+      "tests": "tests/test_first_pass_execution.py::test_execution_when_authority_invalid_fails_closed",
+      "comparator": "No consent, revoked consent, absent measurement and stale measurement each yield zero mapping revisions",
+      "observed": "passed"
+    },
+    {
+      "tests": "tests/test_first_pass_execution.py::test_execution_when_committed_undo_and_repeat_restore_before_images; test_undo_when_later_human_edit_preserves_it_and_reports_partial",
+      "comparator": "One original batch; one idempotent inverse; exact eligible before-images; later human edit survives with partial_undo and exact conflict ID",
+      "observed": "passed"
+    },
+    {
+      "tests": "tests/test_first_pass_execution.py::test_execution_when_auto_gates_pass_assigns_with_real_consent; test_cli_when_preview_execute_undo_and_revoked_error",
+      "comparator": "Real active G2 consent plus committed human reference support produces unverified assigned relation; CLI preview/execute/undo works and revoked execute fails",
+      "observed": "passed"
+    },
+    {
+      "tests": "tests/test_first_pass_execution.py::test_execution_when_audit_error_freezes_prepared_batch_and_offers_undo; test_execution_when_preview_before_state_forged_is_rejected",
+      "comparator": "Durable audit incident blocks pending publication; forged before-state cannot supply false support",
+      "observed": "full-suite result below"
+    }
   ],
-  "run_receipt": "album-mapping-run.json",
+  "full_suite": {
+    "command": ".venv\\Scripts\\python.exe -m pytest -q",
+    "working_directory": "project root",
+    "status": "passed",
+    "passed": 610,
+    "failed": 0,
+    "warnings": 1,
+    "duration_seconds": 207.61,
+    "warning": "Pre-existing sklearn HDBSCAN copy-default FutureWarning in tests/test_identity_edges.py",
+    "g4_added_cases": 49,
+    "count_note": "Observed whole-tree count; concurrent work contributes other tests beyond the supplied 537 baseline. No attribution of all 73 additional tests to G4."
+  },
+  "verification": {
+    "compileall": "passed for all six changed production Python files",
+    "lsp": "unavailable: basedpyright not installed; previous installation decline respected",
+    "source_writes": "No source-locator write operation in G4; synthetic integration compares source bytes/paths before and after. No all-eight-stage INV-M certification."
+  },
+  "client_contract": "docs/pipeline/first-pass.md",
+  "file_inventory_total_and_pure_lines": {
+    "src/artcurator/first_pass_schema.py": [143, 113],
+    "src/artcurator/first_pass_policy.py": [94, 88],
+    "src/artcurator/first_pass_mapping.py": [153, 142],
+    "src/artcurator/first_pass.py": [63, 55],
+    "src/artcurator/first_pass_audit.py": [53, 43],
+    "src/artcurator/album_map_cli.py": [112, 105],
+    "tests/test_first_pass_policy.py": [188, 116],
+    "tests/test_first_pass_execution.py": [200, 157],
+    "tests/test_first_pass_boundaries.py": [174, 126],
+    "docs/pipeline/first-pass.md": [163, null]
+  },
+  "limitations": [
+    "Explicit reviewed evidence adapter input, not automatic conversion of every legacy candidate/anchor sidecar; no independent recomputation of supplied LOO calibration or visual measurements.",
+    "Producer profile/measurement enrollment and independently authenticated reference-set receipts remain open; supplied metrics are not safe as arbitrary untrusted client assertions.",
+    "No labelled held-out corpus precision, recall, optimal-threshold or real 143-row corpus rerun claimed.",
+    "No UI or automatic ingest-stage progression; G2 prediction/copy wire remains unchanged and intent-only.",
+    "Context disabled; no contextual residue created. G2 revocation blocks new execution but committed context-free mappings use explicit batch undo.",
+    "G5 retains image-row undo granularity and existing power-loss, global-writer enrollment and producer-integrity qualification gaps.",
+    "No clean LSP/type-check claim because basedpyright is unavailable."
+  ],
+  "evidence_artifact": "specs/evidence/AC-FR-ALBUM-MAP-002-01.json",
   "g5_graduated": false
 }
