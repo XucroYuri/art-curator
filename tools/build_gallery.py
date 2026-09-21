@@ -629,6 +629,17 @@ def load_identities(identities_path: Path) -> dict[str, JsonValue] | None:
     clustering["min_cluster_size"] = _identity_integer(clustering.get("min_cluster_size"))
     images = _normalize_identity_images(document.get("images"))
     faces = _normalize_identity_faces(document.get("faces"))
+    candidate_document = _json_object(load_characters(identities_path.with_name("identity-candidates.json")))
+    if candidate_document.get("version") == 1:
+        candidate_rows = {
+            (_identity_string(item.get("face_id")), _identity_string(item.get("image_sha16"))): item
+            for item in (_json_object(value) for value in _json_list(candidate_document.get("faces")))
+        }
+        for face in faces:
+            evidence = candidate_rows.get((_identity_string(face.get("face_id")),
+                                           _identity_string(face.get("image_sha16"))))
+            if evidence is not None:
+                face["candidate_evidence"] = evidence
     clusters = _normalize_identity_clusters(document.get("clusters"))
     document["version"] = _identity_integer(document.get("version"), 1)
     document["detector"] = detector
@@ -1457,7 +1468,7 @@ decodePayload().then((compact)=>boot(compact,start)).catch((error)=>fatal(error 
    function rapidDefinitions(){return [{id:"queue",label:"通过 / 入队",key:"1",tone:"success"},{id:"archive",label:"淘汰 / 归档",key:"2",tone:"danger"},{id:"skip",label:"跳过",key:"3",tone:"neutral"}];}
    function rapidLabel(action){return rapidDefinitions().find((item)=>item.id===action)?.label||actionLabel(action);}
    function hasUndoForRow(row){if(!row)return false;const key=rowKey(row);return journal.history.some((entry)=>entry.sha16===key&&!entry.undone);}
-   function faceDecision(face){const label=journal.faceLabels[face.face_id];return Boolean(label&&LABEL_ACTIONS.has(label.action));}
+    function faceDecision(face){const label=faceLabel(face);return Boolean(state.candidateSkipped?.has(face.face_id)||(label&&LABEL_ACTIONS.has(label.action)));}
    function faceSuggestion(face){const grouped=groupingFaceById.get(face.face_id);if(grouped?.decision==="assigned"&&grouped.character)return grouped.character;const cluster=faceCluster(face);return cluster?.suggested_character||cluster?.confirmed_character||"";}
 
    function map_face_bbox_to_displayed_rect(bbox,geometry){
@@ -1533,16 +1544,10 @@ decodePayload().then((compact)=>boot(compact,start)).catch((error)=>fatal(error 
      if(rowKey(next.row)!==rowKey(currentRow())){state.currentKey=rowKey(next.row);renderStudio();requestAnimationFrame(()=>openFacePopover(next.face.face_id));}else{requestAnimationFrame(()=>openFacePopover(next.face.face_id));}
    }
 
-   function renderFaceQuickActions(face){
-     const popover=els("face-popover");if(!popover)return;let quick=popover.querySelector(".face-quick-actions");if(!quick){quick=document.createElement("div");quick.className="face-quick-actions";const select=els("face-character-select");popover.insertBefore(quick,select);}
-     const suggestion=faceSuggestion(face);const fullNodes=[popover.querySelector('label[for="face-character-select"]'),els("face-character-select"),popover.querySelector(".select-hint"),popover.querySelector('label[for="face-character-name"]'),els("face-character-name"),popover.querySelector(".face-popover-actions")].filter(Boolean);fullNodes.forEach((node)=>{node.dataset.faceFull="true";node.hidden=Boolean(suggestion);});quick.replaceChildren();quick.hidden=!suggestion;if(!suggestion)return;
-     const make=(action,label,tone)=>{const button=document.createElement("button");button.type="button";button.className="face-quick-action";button.dataset.faceQuick=action;button.dataset.tone=tone;button.textContent=label;return button;};quick.append(make("confirm",`是 ${suggestion}`,"yes"),make("ignore","不是","no"),make("skip","跳过","skip"),make("full","完整命名","full"));
-   }
-
-   function showFullFacePicker(){const popover=els("face-popover");if(!popover)return;popover.querySelectorAll("[data-face-full]").forEach((node)=>{node.hidden=false;});const quick=popover.querySelector(".face-quick-actions");if(quick)quick.hidden=true;els("face-character-select")?.focus();}
+    __CANDIDATE_PICKER_JS__
 
    function openFacePopover(faceId){
-     const face=faceById.get(faceId);const anchor=els("face-overlay")?.querySelector(`[data-face-id="${CSS.escape(faceId)}"]`);const popover=els("face-popover");if(!face||!popover||!anchor)return;state.openFaceId=faceId;renderFaceNameOptions(face);setText("face-popover-title",faceLabel(face)?.character?"修改人物标注":"标注人脸");setText("face-popover-meta",faceMeta(face));setText("face-popover-status","");popover.hidden=false;renderFaceQuickActions(face);positionFacePopover(anchor);renderFaceOverlay();const focusTarget=faceSuggestion(face)?popover.querySelector('[data-face-quick="confirm"]'):els("face-character-select");focusTarget?.focus();
+      const face=faceById.get(faceId);const anchor=els("face-overlay")?.querySelector(`[data-face-id="${CSS.escape(faceId)}"]`)||els("preview-canvas");const popover=els("face-popover");if(!face||!popover||!anchor)return;state.openFaceId=faceId;renderFaceNameOptions(face);setText("face-popover-title",faceLabel(face)?.character?"修改人物标注":"标注人脸");setText("face-popover-meta",faceMeta(face));setText("face-popover-status","");popover.hidden=false;renderFaceQuickActions(face);positionFacePopover(anchor);renderFaceOverlay();popover.querySelector('[data-candidate-choice]')?.focus();
    }
 
    function facePopoverAction(action){
@@ -1553,11 +1558,8 @@ decodePayload().then((compact)=>boot(compact,start)).catch((error)=>fatal(error 
      const target=event.target instanceof Element?event.target.closest("[data-rapid-action],[data-rapid-undo]"):null;if(!target)return;if(target.dataset.rapidAction){rapidImageDecision(target.dataset.rapidAction);return;}if(target.dataset.rapidUndo)rapidUndo();
    }
 
-   function handleFaceQuickClick(event){
-     const target=event.target instanceof Element?event.target.closest("[data-face-quick]"):null;if(!target)return;const action=target.dataset.faceQuick||"";const face=activeFace();if(!face)return;if(action==="full"){showFullFacePicker();return;}const faceId=face.face_id;if(action==="skip"){closeFacePopover();advanceToNextUnlabeledFace(faceId);return;}const suggestion=faceSuggestion(face);if(!suggestion)return;recordFaceLabel(face,action==="confirm"?"confirm":"ignore",action==="confirm"?suggestion:"");closeFacePopover();advanceToNextUnlabeledFace(faceId);
-   }
-
     function handleKey(event){
+      if(handleCandidateKey(event))return;
       if(event.key==="Tab"&&els("face-popover").hidden&&!(event.target instanceof Element&&event.target.closest("[data-face-id]")))return;
      const tag=event.target instanceof HTMLElement?event.target.tagName.toLowerCase():"";if(event.key==="Escape"){if(!els("face-popover").hidden){closeFacePopover();return;}if(!els("cluster-name-modal").hidden){closeClusterNameModal();return;}if(!els("help-modal").hidden)closeModal("help-modal");else if(!els("journal-modal").hidden)closeModal("journal-modal");else if(!els("legend-modal").hidden)closeModal("legend-modal");else if(!els("lightbox").hidden)closeModal("lightbox");else if(!els("family-panel").hidden)closeFamily();else if(!els("character-panel").hidden)closeCharacterPanel();return;}if(tag==="input"||tag==="textarea"||tag==="select"||event.target?.isContentEditable)return;if(event.key==="?"){event.preventDefault();openModal("help-modal");return;}if(state.mode!=="studio")return;if(identityEnabled&&event.key==="Tab"&&els("face-popover").hidden){event.preventDefault();cycleFaces(event.shiftKey?-1:1);return;}if(identityEnabled&&event.key.toLowerCase()==="n"){const face=facesForRow(currentRow()).find((item)=>!faceDecision(item));if(face){event.preventDefault();openFacePopover(face.face_id);}return;}if(event.key==="ArrowLeft"||event.key.toLowerCase()==="j"){event.preventDefault();navigate(-1);return;}if(event.key==="ArrowRight"||event.key.toLowerCase()==="k"){event.preventDefault();navigate(1);return;}if(event.key==="1"){event.preventDefault();rapidImageDecision("queue");return;}if(event.key==="2"){event.preventDefault();rapidImageDecision("archive");return;}if(event.key==="3"){event.preventDefault();rapidImageDecision("skip");return;}const legacy=actionDefs.find((item)=>item.key===event.key);if(legacy&&legacy.key!=="1"&&legacy.key!=="2"&&legacy.key!=="3"){event.preventDefault();actionForCurrent(legacy.id);return;}if(event.key.toLowerCase()==="u"){event.preventDefault();rapidUndo();return;}if(event.key===" "){event.preventDefault();toggleZoom();return;}if(event.key.toLowerCase()==="f"){event.preventDefault();toggleFullscreen();}
    }
@@ -1580,6 +1582,10 @@ decodePayload().then((compact)=>boot(compact,start)).catch((error)=>fatal(error 
 </body>
 </html>
 '''
+
+HTML_TEMPLATE = HTML_TEMPLATE.replace(
+    "__CANDIDATE_PICKER_JS__", Path(__file__).with_name("gallery_candidates.js").read_text(encoding="utf-8")
+).replace("</style>", Path(__file__).with_name("gallery_candidates.css").read_text(encoding="utf-8") + "</style>")
 
 
 if __name__ == "__main__":

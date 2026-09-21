@@ -6,6 +6,7 @@ from pathlib import Path
 import numpy as np
 
 from .identity_anchor import effective_references, load_anchors
+from .identity_candidates import CandidateDocument, FaceCandidates, rank_candidates, write_candidates_csv
 from .identity_group_export import ExportRows, FaceExport, export, report
 from .identity_group_math import decide, without_crop
 from .identity_group_schema import (Abstained, Anchor, CharacterGroup, ClusterGroup, Decision, GroupDocument,
@@ -32,9 +33,13 @@ def group(out: Path, options: IdentityOptions) -> GroupDocument:
     gates = Thresholds(min_sim=defaults.min_sim if options.anchor_min_sim is None else options.anchor_min_sim,
                        min_margin=defaults.min_margin if options.anchor_min_margin is None else options.anchor_min_margin)
     decisions = []
+    candidate_faces = []
     for face, vector in zip(document.faces, vectors, strict=True):
         available = without_crop(bank, source.crops[face.face_id])
         decisions.append(Decision() if face.face_id in registry.excluded else decide(vector[None], available, gates)[0])
+        candidate_faces.append(FaceCandidates(face_id=face.face_id, image_sha16=face.image_sha16,
+            candidates=rank_candidates(vector, available), suggested=decisions[-1].character,
+            abstained=decisions[-1].character is None))
     filenames = {image.sha16: Path(image.path_rel).name for image in document.images}
     rows = ExportRows(faces=[FaceExport(face=f, filename=filenames[f.image_sha16], decision=d)
                              for f, d in zip(document.faces, decisions, strict=True)], filenames=filenames)
@@ -72,5 +77,8 @@ def group(out: Path, options: IdentityOptions) -> GroupDocument:
     result = GroupDocument(provenance=p, thresholds=gates, characters=characters,
                             abstained=Abstained(face_count=len(abstained), cluster_groups=cluster_groups))
     export(out, result, rows)
+    candidates = CandidateDocument(provenance=p, thresholds=gates, faces=candidate_faces)
+    save_model(out / "identity-candidates.json", candidates)
+    write_candidates_csv(out / "identity-candidates.csv", candidates)
     report(out, result, anchors)
     return result

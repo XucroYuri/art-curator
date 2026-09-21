@@ -34,6 +34,7 @@ Aliases identify planned versioned suites, **not existing committed new fixtures
 | LICENSE-v1 | Inventory of code, weights, processors, calibration datasets and distribution channels; digest TBD |
 | SYN-STUDIO-v1 | `tests/fixtures/gallery` 60-row synthetic corpus plus new missing/degraded cases; exact file digests TBD |
 | ID-SYN-v1 | Consent/licensed labelled character crops, confusables, unknowns and repeat naming sessions; new, digest/labels TBD |
+| CANDIDATES-SYN-v1 | Deterministic vectors and synthetic studio records for ranked identity options; seed `tests/test_identity_candidates.py`, `tests/test_gallery_candidates.py`; digest TBD |
 
 ### NFR-GATE-001 — Visual-input invariance
 When decoding, preprocessing or a model artifact changes, the evaluator shall test visual-input invariance before qualification.

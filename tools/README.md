@@ -127,8 +127,11 @@ blurred until per-item reveal or the global toggle is enabled.
 With identity metadata, the preview draws source-pixel face boxes over the
 same rendered image rectangle used by `object-fit: contain`; 100% zoom and
 pan use the transformed image bounding rectangle, so boxes stay aligned. Face
-buttons open a Chinese naming popover, expose `N` / `Esc` / `Tab` keyboard
-flows, and show confirmed chips. The character drawer virtualizes cluster
+buttons open a Chinese naming popover with a ranked candidate list (up to five
+known characters, then `其他` and `新建角色`). Number keys `1`–`5` confirm a
+candidate, arrows move focus, Enter activates the focused choice, and `Esc`
+closes without recording. `N` / `Tab` still open or cycle faces. The popover
+states that only documented characters can be ranked. Confirmed chips remain. The character drawer virtualizes cluster
 cards, lazy-loads representative crops with four concurrent loads, sorts
 clusters by size, and offers naming, merge, split and outlier decisions. The
 `待确认优先` toggle orders faces by low cluster probability, margin near zero,

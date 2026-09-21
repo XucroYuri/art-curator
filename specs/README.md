@@ -20,6 +20,8 @@ Baseline inspected: 2026-09-20. These specifications encode the supplied archite
 | [040-QUALITY-GATES](040-QUALITY-GATES.md) | Nine gates, fixtures and worked requirement |
 | [050-ROADMAP](050-ROADMAP.md) | Dependencies and graduation |
 | [Identity v2](features/FR-IDENTITY-V2.md) | Profile-bound CPU/GPU character references |
+| [Identity grouping](features/FR-IDENTITY-GROUPING.md) | Reference-anchored character grouping and abstention |
+| [Identity candidates](features/FR-IDENTITY-CANDIDATES.md) | Ranked per-face options; enumerate, do not force a guess |
 | [Semantic search spike](features/FR-SEMANTIC-SEARCH.md) | Query-only Chinese search; WeMM vs SigLIP-crop preregistration |
 | [Curation protocol](features/FR-CURATION-PROTOCOL.md) | Content-bound human decisions |
 | [Interop](features/FR-INTEROP.md) | Explicit loss-aware exchange |

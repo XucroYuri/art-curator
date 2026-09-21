@@ -152,6 +152,52 @@ def test_export_when_threshold_override_abstains(tmp_path: Path) -> None:
     assert result.thresholds.min_margin == 1.1
 
 
+def test_candidates_when_grouping_writes_sidecar(tmp_path: Path) -> None:
+    # Given the existing synthetic grouping fixture.
+    fixture(tmp_path)
+    module = importlib.import_module("artcurator.identity_group")
+    options = importlib.import_module("artcurator.identity_schema").IdentityOptions()
+    # When grouping reuses saved matrices.
+    module.group(tmp_path, options)
+    document = importlib.import_module("artcurator.identity_candidates").CandidateDocument.model_validate_json(
+        (tmp_path / "identity-candidates.json").read_bytes())
+    # Then every face is ranked, suggestions follow existing gates, and CSV matches JSON.
+    assert [face.face_id for face in document.faces] == ["f_00000001", "f_00000002", "f_00000003"]
+    assert [face.suggested for face in document.faces] == ["A", "B", None]
+    assert [face.abstained for face in document.faces] == [False, False, True]
+    assert all(len(face.candidates) <= 5 for face in document.faces)
+    assert document.faces[0].candidates[0].character == "A"
+    assert document.faces[2].suggested is None
+    with (tmp_path / "identity-candidates.csv").open(encoding="utf-8", newline="") as handle:
+        rows = list(csv.DictReader(handle))
+    assert {row["face_id"] for row in rows} == {"f_00000001", "f_00000002", "f_00000003"}
+    assert rows[0]["suggested"] == "A"
+    assert any(row["face_id"] == "f_00000003" and row["abstained"] == "True" for row in rows)
+
+
+def test_labels_when_other_and_new_names_apply(tmp_path: Path) -> None:
+    # Given the existing review-studio envelope with 其他 and a typed new name.
+    fixture(tmp_path)
+    labels = {"version": 1, "source": "review-studio", "corpus_fingerprint": "c" * 64,
+              "labels": [
+                  {"face_id": "f_00000001", "image_sha16": "a" * 16, "character": "其他", "action": "confirm"},
+                  {"face_id": "f_00000002", "image_sha16": "a" * 16, "character": "新角色", "action": "new"},
+              ]}
+    envelope = importlib.import_module("artcurator.identity_schema").LabelEnvelope.model_validate(labels)
+    dumped = envelope.model_dump()
+    path = tmp_path / "character_labels.json"
+    path.write_text(json.dumps(labels), encoding="utf-8")
+    # When parsed and applied through identity-apply.
+    result = importlib.import_module("artcurator.identity_labels").apply_labels(tmp_path, path)
+    # Then required label fields are unchanged and both names are accepted.
+    assert set(dumped) == {"version", "source", "corpus_fingerprint", "labels"}
+    assert set(dumped["labels"][0]) == {"face_id", "image_sha16", "character", "action"}
+    assert result.faces_changed == 2
+    registry = json.loads((tmp_path / "characters.json").read_text(encoding="utf-8"))
+    assert registry["references"]["f_00000001"] == "其他"
+    assert registry["references"]["f_00000002"] == "新角色"
+
+
 def test_export_when_query_names_are_misleading(tmp_path: Path) -> None:
     # Given identical vectors but filenames suggesting opposite character labels.
     fixture(tmp_path)

@@ -128,6 +128,17 @@ All spacing derives from 4px: `--space-1` 4px, `--space-2` 8px, `--space-3` 12px
 
 ### Character panel
 
+The face naming popover enumerates up to five ranked, native candidate buttons,
+then `其他` and `新建角色`. Reuse elevated surfaces, caption/metric typography,
+`--space-2` gaps and `--space-3` padding. Each candidate shows cosine and signed
+strongest-other margin; absent evidence uses `—`. No probability styling.
+The honesty line and abstention status remain visible. Popovers own vertical
+overflow within viewport gutters, and text wraps at narrow widths. Native focus
+rings distinguish keyboard focus from a model suggestion. Number keys 1–5
+confirm choices; arrows focus choices, Enter activates, Esc dismisses. Inputs
+retain ordinary typing/IME. Confirm/skip advance without generating image actions.
+Skip is session-only; `不是` retains the existing face-ignore semantics.
+
 - **Structure**: a fixed right drawer with a virtualized cluster list, lazy representative crops and decision actions.
 - **Variants**: absent, loading, populated, active-learning queue, empty-filter, merged/split/outlier decision states.
 - **Spacing**: `--space-3` to `--space-5` shell rhythm and `--space-2` cluster-card gaps.

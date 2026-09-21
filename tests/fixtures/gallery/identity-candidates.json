@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "faces": [
+    {
+      "face_id": "f_00000001",
+      "image_sha16": "0000000000000001",
+      "candidates": [
+        {"character": "人物甲", "score": 0.91, "margin_vs_runner_up": 0.12, "source": "anchor"},
+        {"character": "人物乙", "score": 0.79, "margin_vs_runner_up": -0.12, "source": "anchor"}
+      ],
+      "suggested": "人物甲",
+      "abstained": false
+    },
+    {
+      "face_id": "f_00000002",
+      "image_sha16": "0000000000000001",
+      "candidates": [
+        {"character": "人物乙", "score": 0.64, "margin_vs_runner_up": 0.03, "source": "anchor"},
+        {"character": "人物甲", "score": 0.61, "margin_vs_runner_up": -0.03, "source": "anchor"}
+      ],
+      "suggested": null,
+      "abstained": true
+    },
+    {
+      "face_id": "f_00000003",
+      "image_sha16": "0000000000000002",
+      "candidates": [
+        {"character": "人物甲", "score": 0.55, "margin_vs_runner_up": 0.04, "source": "anchor"},
+        {"character": "人物乙", "score": 0.51, "margin_vs_runner_up": -0.04, "source": "anchor"}
+      ],
+      "suggested": null,
+      "abstained": true
+    }
+  ]
+}
