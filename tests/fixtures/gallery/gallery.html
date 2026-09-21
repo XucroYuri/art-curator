@@ -33,12 +33,60 @@
   @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition-duration:0ms!important;animation-duration:1ms!important;animation-iteration-count:1!important}.skip-link{transition:none}.family-panel,.character-panel{transform:none;opacity:0}.family-panel.is-open,.character-panel.is-open{opacity:1}.studio-image,.face-box,.face-tooltip{transition:none}.action-button:hover,.film-card:hover{transform:none}}
  .character-grouping-view{height:100%;min-width:0;min-height:0;overflow:hidden;padding:var(--space-4) var(--space-6);background:linear-gradient(145deg,rgba(184,161,255,.045),transparent 42%)}.grouping-scroll{height:100%;min-height:0;overflow:auto;overscroll-behavior:contain}.grouping-header{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-5);padding:var(--space-2) 0 var(--space-5)}.grouping-heading{min-width:0}.grouping-kicker{margin:0;color:var(--color-character);font:600 10px/1.2 var(--font-mono);letter-spacing:.08em}.grouping-heading h2{margin:var(--space-1) 0 0;font-size:clamp(20px,2.5vw,30px);line-height:1.1}.grouping-heading p{max-width:78ch;margin:var(--space-2) 0 0;color:var(--color-text-muted);font-size:12px;line-height:1.5;overflow-wrap:anywhere}.grouping-provenance{flex:0 1 420px;min-width:min(420px,100%);padding:var(--space-3);border:var(--border-width) solid rgba(184,161,255,.38);border-radius:var(--radius-panel);background:var(--color-character-soft);color:var(--color-text-secondary);font-size:11px;line-height:1.5}.grouping-provenance strong{display:block;color:var(--color-text-primary);font-size:12px}.grouping-provenance span{display:block;margin-top:var(--space-1);overflow-wrap:anywhere}.grouping-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:var(--space-3);padding-bottom:var(--space-5)}.grouping-card{min-width:0;padding:var(--space-4);border:var(--border-width) solid var(--color-border);border-radius:var(--radius-panel);background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.012));box-shadow:var(--shadow-ring);text-align:start;transition:transform var(--motion-micro) ease-out,background-color var(--motion-micro) ease-out,border-color var(--motion-micro) ease-out}.grouping-card:hover,.grouping-card:focus-visible{border-color:var(--color-character);background:var(--color-character-soft)}.grouping-card:active{transform:translateY(1px)}.grouping-card.is-selected{border-color:var(--color-focus);background:linear-gradient(145deg,var(--color-character-soft),var(--color-info-soft));box-shadow:0 0 0 2px var(--color-info-soft),var(--shadow-ring)}.grouping-card.is-unassigned{border-color:rgba(255,188,51,.45)}.grouping-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-2)}.grouping-card h3{min-width:0;margin:0;font-size:15px;line-height:1.25;overflow-wrap:anywhere}.grouping-card-count{flex:none;color:var(--color-character);font:700 22px/1 var(--font-mono);font-variant-numeric:tabular-nums}.grouping-card-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-2);margin-top:var(--space-4)}.grouping-metric{min-width:0;padding:var(--space-2);border:var(--border-width) solid var(--color-border-subtle);border-radius:var(--radius-control);background:rgba(0,0,0,.12)}.grouping-metric small{display:block;color:var(--color-text-muted);font-size:10px}.grouping-metric strong{display:block;margin-top:2px;color:var(--color-text-primary);font:650 12px/1.25 var(--font-mono);overflow-wrap:anywhere}.grouping-card-note{display:block;margin-top:var(--space-3);color:var(--color-text-muted);font-size:11px;line-height:1.35}.grouping-actions{display:flex;flex-wrap:wrap;gap:var(--space-2);margin-top:var(--space-3)}.grouping-action{min-height:30px;padding:0 var(--space-2);border:var(--border-width) solid var(--color-border);border-radius:var(--radius-control);background:var(--color-surface-elevated);color:var(--color-text-secondary);font-size:11px;font-weight:650}.grouping-action:hover{border-color:var(--color-info);background:var(--color-info-soft);color:var(--color-text-primary)}.grouping-status{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);padding:var(--space-3) var(--space-4);border:var(--border-width) solid var(--color-border);border-radius:var(--radius-panel);background:var(--color-surface);box-shadow:var(--shadow-ring);color:var(--color-text-muted);font-size:11px}.grouping-status strong{color:var(--color-info);font-family:var(--font-mono)}.grouping-toggle{display:inline-flex;align-items:center;gap:var(--space-2);color:var(--color-text-secondary);font-weight:650;white-space:nowrap}.grouping-toggle input{accent-color:var(--color-character)}.character-badge-stack{position:absolute;z-index:3;inset-block-end:var(--space-3);inset-inline-start:var(--space-3);display:flex;flex-wrap:wrap;gap:var(--space-1);max-width:calc(100% - var(--space-6));pointer-events:none}.character-image-badge{display:inline-flex;max-width:220px;padding:var(--space-1) var(--space-2);border:var(--border-width) solid var(--color-character);border-radius:var(--radius-control);background:rgba(23,25,27,.92);color:var(--color-character);font-size:11px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.character-image-badge.is-unassigned{border-color:var(--color-warning);color:var(--color-warning)}@media(max-width:760px){.character-grouping-view{padding-inline:var(--space-3)}.grouping-header{display:block}.grouping-provenance{min-width:0;margin-top:var(--space-3)}.grouping-status{align-items:flex-start;flex-direction:column}}@media(prefers-reduced-motion:reduce){.grouping-card{transition:none}.grouping-card:active{transform:none}}
  .face-popover{max-height:calc(100dvh - var(--space-6));overflow-y:auto;max-width:calc(100vw - var(--space-6))}
-.face-popover .face-quick-actions{display:flex;flex-direction:column;gap:var(--space-2)}
+.face-popover .face-quick-actions{display:flex;flex-direction:column;gap:var(--space-2);min-width:0}
 .candidate-note{margin:0;color:var(--color-text-secondary);font-size:12px;line-height:1.45;overflow-wrap:anywhere}
+.suggestion-tiers{display:flex;flex-direction:column;gap:var(--space-2)}
+.suggestion-badge{padding:var(--space-2);border-radius:var(--radius-control)}
+.suggestion-model{color:var(--color-warning);background:var(--color-warning-soft)}
+.suggestion-verified{color:var(--color-success);background:var(--color-success-soft)}
+.suggestion-conflict summary{color:var(--color-danger);cursor:pointer;font-size:12px;overflow-wrap:anywhere}
+.suggestion-conflict summary:focus-visible{outline:2px solid var(--color-focus)}
+.suggestion-conflict .suggestion-badge{margin-block:var(--space-2)}
+.candidate-section h4{flex-wrap:wrap}
+.candidate-section .candidate-provenance{flex-basis:100%;text-align:start}
 .candidate-choice{display:flex;justify-content:space-between;align-items:center;gap:var(--space-2);width:100%;min-height:var(--space-10);padding:var(--space-2) var(--space-3);white-space:normal;text-align:left;overflow-wrap:anywhere}
 .candidate-metric{font-family:ui-monospace,"Cascadia Mono",monospace;font-size:12px;color:var(--color-text-secondary);flex-shrink:0}
 .candidate-secondary{display:flex;gap:var(--space-2)}
 .candidate-choice:focus-visible{outline:2px solid var(--color-focus);outline-offset:2px;background:var(--color-surface-active)}
+.candidate-section{display:flex;flex-direction:column;gap:var(--space-2);padding-block:var(--space-2);border-block-start:var(--border-width) solid var(--color-border-subtle)}
+.candidate-section h4{display:flex;align-items:baseline;justify-content:space-between;gap:var(--space-2);margin:0;color:var(--color-text-primary);font-size:12px;font-weight:700}
+.candidate-provenance{color:var(--color-text-muted);font:600 10px/1.3 var(--font-mono);text-align:end;overflow-wrap:anywhere}
+.candidate-list,.candidate-bucket-list{display:flex;flex-direction:column;gap:var(--space-1)}
+.candidate-unavailable,.attribute-unavailable{margin:0;color:var(--color-text-muted);font-size:12px}
+.candidate-group-heading{justify-content:flex-start;background:var(--color-surface);color:var(--color-text-primary);font-weight:700}
+.candidate-group-heading:disabled{cursor:default;opacity:1}
+.candidate-attributes{display:flex;flex-direction:column;gap:var(--space-1);padding:var(--space-2) var(--space-3);border:var(--border-width) solid var(--color-border);border-radius:var(--radius-control);background:var(--color-surface);color:var(--color-text-secondary);font-size:11px}
+.candidate-attributes>strong{color:var(--color-text-primary);font-size:11px}
+.attribute-grid{display:flex;flex-wrap:wrap;gap:var(--space-1) var(--space-2)}
+.attribute-item{overflow-wrap:anywhere}
+.attribute-tags{flex-basis:100%;color:var(--color-text-muted)}
+.candidate-mark-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-2);padding-block-start:var(--space-1);border-block-start:var(--border-width) solid var(--color-border-subtle)}
+.candidate-mark-actions .candidate-choice{min-height:var(--space-8);padding-inline:var(--space-2);background:var(--color-character-soft);border-color:rgba(184,161,255,.42);color:var(--color-text-primary);font-size:11px}
+.candidate-mark-actions .candidate-choice:hover{border-color:var(--color-character);background:var(--color-character-soft)}
+.candidate-shortcuts{color:var(--color-text-muted);font-family:var(--font-mono)}
+.character-memory-panel{position:fixed;z-index:var(--z-drawer);inset-block:0;inset-inline-end:0;width:min(var(--character-drawer-width),calc(100vw - var(--space-4)));display:flex;flex-direction:column;min-width:0;background:var(--color-surface-elevated);border-inline-start:var(--border-width) solid var(--color-border);box-shadow:var(--shadow-float);transform:translateX(100%);opacity:0;transition:transform var(--motion-standard) var(--ease-standard),opacity var(--motion-standard) ease-out}
+.character-memory-panel.is-open{transform:translateX(0);opacity:1}
+.memory-header{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-4);padding:var(--space-5) var(--space-5) var(--space-3);border-block-end:var(--border-width) solid var(--color-border)}
+.memory-header h2{margin:var(--space-1) 0;color:var(--color-text-primary);font-size:20px;line-height:1.2}
+.memory-header p:not(.panel-kicker){margin:0;color:var(--color-text-muted);font-size:12px;line-height:1.45;overflow-wrap:anywhere}
+.memory-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:var(--space-2);padding:var(--space-3) var(--space-5);border-block-end:var(--border-width) solid var(--color-border);color:var(--color-text-secondary);font-size:12px}
+.memory-toolbar [data-memory-action="export"],.memory-toolbar [data-memory-action="import"]{min-height:30px;padding:0 var(--space-2)}
+.memory-status{flex-basis:100%;margin:0;color:var(--color-text-muted);overflow-wrap:anywhere}
+.character-memory-list{min-block-size:0;flex:1;overflow:auto;padding:var(--space-4) var(--space-5)}
+.memory-character-card{display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-3);border:var(--border-width) solid var(--color-border);border-radius:var(--radius-panel);background:var(--color-surface);box-shadow:var(--shadow-ring)}
+.memory-character-card+ .memory-character-card{margin-block-start:var(--space-2)}
+.memory-character-heading{display:flex;align-items:center;justify-content:space-between;gap:var(--space-2)}
+.memory-character-heading h3{min-width:0;margin:0;color:var(--color-text-primary);font-size:14px;overflow-wrap:anywhere}
+.memory-origin{flex:none;color:var(--color-character);font:600 10px/1.3 var(--font-mono)}
+.memory-counts{margin:0;color:var(--color-text-secondary);font:600 11px/1.35 var(--font-mono)}
+.memory-card-actions{display:flex;flex-wrap:wrap;gap:var(--space-1)}
+.memory-action{min-height:28px;padding:0 var(--space-2);border:var(--border-width) solid var(--color-border);border-radius:var(--radius-control);background:var(--color-surface-elevated);color:var(--color-text-secondary);font-size:11px}
+.memory-action:hover{border-color:var(--color-info);background:var(--color-info-soft);color:var(--color-text-primary)}
+.memory-empty{margin:0;color:var(--color-text-muted)}
+.studio-toast{position:fixed;z-index:var(--z-modal);inset-inline-start:50%;inset-block-end:var(--space-6);max-width:calc(100vw - var(--space-6));padding:var(--space-2) var(--space-3);border:var(--border-width) solid var(--color-success);border-radius:var(--radius-control);background:var(--color-surface-elevated);box-shadow:var(--shadow-float);color:var(--color-text-primary);font-size:12px;opacity:0;pointer-events:none;transform:translate(-50%,var(--space-2));transition:opacity var(--motion-micro) ease-out,transform var(--motion-micro) ease-out}
+.studio-toast.is-visible{opacity:1;transform:translate(-50%,0)}
+@media(max-width:520px){.face-popover .face-quick-actions{min-width:0}.candidate-mark-actions{grid-template-columns:1fr}.memory-header{padding-inline:var(--space-4)}.memory-toolbar,.character-memory-list{padding-inline:var(--space-4)}.character-memory-panel{width:100%}}
+@media(prefers-reduced-motion:reduce){.character-memory-panel,.character-memory-panel.is-open,.studio-toast,.studio-toast.is-visible{transition:none}.character-memory-panel{transform:translateX(100%)}.character-memory-panel.is-open{transform:translateX(0)}.studio-toast{transform:translate(-50%,0)}}
 </style>
  <style>
   /* Review-shell corrections: every local scroll owner yields before the image. */
@@ -78,12 +126,60 @@
     .preview-column{min-height:230px}
   }
  .face-popover{max-height:calc(100dvh - var(--space-6));overflow-y:auto;max-width:calc(100vw - var(--space-6))}
-.face-popover .face-quick-actions{display:flex;flex-direction:column;gap:var(--space-2)}
+.face-popover .face-quick-actions{display:flex;flex-direction:column;gap:var(--space-2);min-width:0}
 .candidate-note{margin:0;color:var(--color-text-secondary);font-size:12px;line-height:1.45;overflow-wrap:anywhere}
+.suggestion-tiers{display:flex;flex-direction:column;gap:var(--space-2)}
+.suggestion-badge{padding:var(--space-2);border-radius:var(--radius-control)}
+.suggestion-model{color:var(--color-warning);background:var(--color-warning-soft)}
+.suggestion-verified{color:var(--color-success);background:var(--color-success-soft)}
+.suggestion-conflict summary{color:var(--color-danger);cursor:pointer;font-size:12px;overflow-wrap:anywhere}
+.suggestion-conflict summary:focus-visible{outline:2px solid var(--color-focus)}
+.suggestion-conflict .suggestion-badge{margin-block:var(--space-2)}
+.candidate-section h4{flex-wrap:wrap}
+.candidate-section .candidate-provenance{flex-basis:100%;text-align:start}
 .candidate-choice{display:flex;justify-content:space-between;align-items:center;gap:var(--space-2);width:100%;min-height:var(--space-10);padding:var(--space-2) var(--space-3);white-space:normal;text-align:left;overflow-wrap:anywhere}
 .candidate-metric{font-family:ui-monospace,"Cascadia Mono",monospace;font-size:12px;color:var(--color-text-secondary);flex-shrink:0}
 .candidate-secondary{display:flex;gap:var(--space-2)}
 .candidate-choice:focus-visible{outline:2px solid var(--color-focus);outline-offset:2px;background:var(--color-surface-active)}
+.candidate-section{display:flex;flex-direction:column;gap:var(--space-2);padding-block:var(--space-2);border-block-start:var(--border-width) solid var(--color-border-subtle)}
+.candidate-section h4{display:flex;align-items:baseline;justify-content:space-between;gap:var(--space-2);margin:0;color:var(--color-text-primary);font-size:12px;font-weight:700}
+.candidate-provenance{color:var(--color-text-muted);font:600 10px/1.3 var(--font-mono);text-align:end;overflow-wrap:anywhere}
+.candidate-list,.candidate-bucket-list{display:flex;flex-direction:column;gap:var(--space-1)}
+.candidate-unavailable,.attribute-unavailable{margin:0;color:var(--color-text-muted);font-size:12px}
+.candidate-group-heading{justify-content:flex-start;background:var(--color-surface);color:var(--color-text-primary);font-weight:700}
+.candidate-group-heading:disabled{cursor:default;opacity:1}
+.candidate-attributes{display:flex;flex-direction:column;gap:var(--space-1);padding:var(--space-2) var(--space-3);border:var(--border-width) solid var(--color-border);border-radius:var(--radius-control);background:var(--color-surface);color:var(--color-text-secondary);font-size:11px}
+.candidate-attributes>strong{color:var(--color-text-primary);font-size:11px}
+.attribute-grid{display:flex;flex-wrap:wrap;gap:var(--space-1) var(--space-2)}
+.attribute-item{overflow-wrap:anywhere}
+.attribute-tags{flex-basis:100%;color:var(--color-text-muted)}
+.candidate-mark-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-2);padding-block-start:var(--space-1);border-block-start:var(--border-width) solid var(--color-border-subtle)}
+.candidate-mark-actions .candidate-choice{min-height:var(--space-8);padding-inline:var(--space-2);background:var(--color-character-soft);border-color:rgba(184,161,255,.42);color:var(--color-text-primary);font-size:11px}
+.candidate-mark-actions .candidate-choice:hover{border-color:var(--color-character);background:var(--color-character-soft)}
+.candidate-shortcuts{color:var(--color-text-muted);font-family:var(--font-mono)}
+.character-memory-panel{position:fixed;z-index:var(--z-drawer);inset-block:0;inset-inline-end:0;width:min(var(--character-drawer-width),calc(100vw - var(--space-4)));display:flex;flex-direction:column;min-width:0;background:var(--color-surface-elevated);border-inline-start:var(--border-width) solid var(--color-border);box-shadow:var(--shadow-float);transform:translateX(100%);opacity:0;transition:transform var(--motion-standard) var(--ease-standard),opacity var(--motion-standard) ease-out}
+.character-memory-panel.is-open{transform:translateX(0);opacity:1}
+.memory-header{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-4);padding:var(--space-5) var(--space-5) var(--space-3);border-block-end:var(--border-width) solid var(--color-border)}
+.memory-header h2{margin:var(--space-1) 0;color:var(--color-text-primary);font-size:20px;line-height:1.2}
+.memory-header p:not(.panel-kicker){margin:0;color:var(--color-text-muted);font-size:12px;line-height:1.45;overflow-wrap:anywhere}
+.memory-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:var(--space-2);padding:var(--space-3) var(--space-5);border-block-end:var(--border-width) solid var(--color-border);color:var(--color-text-secondary);font-size:12px}
+.memory-toolbar [data-memory-action="export"],.memory-toolbar [data-memory-action="import"]{min-height:30px;padding:0 var(--space-2)}
+.memory-status{flex-basis:100%;margin:0;color:var(--color-text-muted);overflow-wrap:anywhere}
+.character-memory-list{min-block-size:0;flex:1;overflow:auto;padding:var(--space-4) var(--space-5)}
+.memory-character-card{display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-3);border:var(--border-width) solid var(--color-border);border-radius:var(--radius-panel);background:var(--color-surface);box-shadow:var(--shadow-ring)}
+.memory-character-card+ .memory-character-card{margin-block-start:var(--space-2)}
+.memory-character-heading{display:flex;align-items:center;justify-content:space-between;gap:var(--space-2)}
+.memory-character-heading h3{min-width:0;margin:0;color:var(--color-text-primary);font-size:14px;overflow-wrap:anywhere}
+.memory-origin{flex:none;color:var(--color-character);font:600 10px/1.3 var(--font-mono)}
+.memory-counts{margin:0;color:var(--color-text-secondary);font:600 11px/1.35 var(--font-mono)}
+.memory-card-actions{display:flex;flex-wrap:wrap;gap:var(--space-1)}
+.memory-action{min-height:28px;padding:0 var(--space-2);border:var(--border-width) solid var(--color-border);border-radius:var(--radius-control);background:var(--color-surface-elevated);color:var(--color-text-secondary);font-size:11px}
+.memory-action:hover{border-color:var(--color-info);background:var(--color-info-soft);color:var(--color-text-primary)}
+.memory-empty{margin:0;color:var(--color-text-muted)}
+.studio-toast{position:fixed;z-index:var(--z-modal);inset-inline-start:50%;inset-block-end:var(--space-6);max-width:calc(100vw - var(--space-6));padding:var(--space-2) var(--space-3);border:var(--border-width) solid var(--color-success);border-radius:var(--radius-control);background:var(--color-surface-elevated);box-shadow:var(--shadow-float);color:var(--color-text-primary);font-size:12px;opacity:0;pointer-events:none;transform:translate(-50%,var(--space-2));transition:opacity var(--motion-micro) ease-out,transform var(--motion-micro) ease-out}
+.studio-toast.is-visible{opacity:1;transform:translate(-50%,0)}
+@media(max-width:520px){.face-popover .face-quick-actions{min-width:0}.candidate-mark-actions{grid-template-columns:1fr}.memory-header{padding-inline:var(--space-4)}.memory-toolbar,.character-memory-list{padding-inline:var(--space-4)}.character-memory-panel{width:100%}}
+@media(prefers-reduced-motion:reduce){.character-memory-panel,.character-memory-panel.is-open,.studio-toast,.studio-toast.is-visible{transition:none}.character-memory-panel{transform:translateX(100%)}.character-memory-panel.is-open{transform:translateX(0)}.studio-toast{transform:translate(-50%,0)}}
 </style>
  <style>
   .rapid-review{display:flex;align-items:center;gap:var(--space-2);width:100%;min-width:0;padding:var(--space-2);border:var(--border-width) solid var(--color-border);border-radius:var(--radius-control);background:var(--color-surface-elevated);box-shadow:var(--shadow-ring)}
@@ -121,12 +217,60 @@
   @media(max-width:1439px){.face-label-chip{display:none}}
   @media(prefers-reduced-motion:reduce){.rapid-action{transition:none}.rapid-action:active:not(:disabled){transform:none}}
  .face-popover{max-height:calc(100dvh - var(--space-6));overflow-y:auto;max-width:calc(100vw - var(--space-6))}
-.face-popover .face-quick-actions{display:flex;flex-direction:column;gap:var(--space-2)}
+.face-popover .face-quick-actions{display:flex;flex-direction:column;gap:var(--space-2);min-width:0}
 .candidate-note{margin:0;color:var(--color-text-secondary);font-size:12px;line-height:1.45;overflow-wrap:anywhere}
+.suggestion-tiers{display:flex;flex-direction:column;gap:var(--space-2)}
+.suggestion-badge{padding:var(--space-2);border-radius:var(--radius-control)}
+.suggestion-model{color:var(--color-warning);background:var(--color-warning-soft)}
+.suggestion-verified{color:var(--color-success);background:var(--color-success-soft)}
+.suggestion-conflict summary{color:var(--color-danger);cursor:pointer;font-size:12px;overflow-wrap:anywhere}
+.suggestion-conflict summary:focus-visible{outline:2px solid var(--color-focus)}
+.suggestion-conflict .suggestion-badge{margin-block:var(--space-2)}
+.candidate-section h4{flex-wrap:wrap}
+.candidate-section .candidate-provenance{flex-basis:100%;text-align:start}
 .candidate-choice{display:flex;justify-content:space-between;align-items:center;gap:var(--space-2);width:100%;min-height:var(--space-10);padding:var(--space-2) var(--space-3);white-space:normal;text-align:left;overflow-wrap:anywhere}
 .candidate-metric{font-family:ui-monospace,"Cascadia Mono",monospace;font-size:12px;color:var(--color-text-secondary);flex-shrink:0}
 .candidate-secondary{display:flex;gap:var(--space-2)}
 .candidate-choice:focus-visible{outline:2px solid var(--color-focus);outline-offset:2px;background:var(--color-surface-active)}
+.candidate-section{display:flex;flex-direction:column;gap:var(--space-2);padding-block:var(--space-2);border-block-start:var(--border-width) solid var(--color-border-subtle)}
+.candidate-section h4{display:flex;align-items:baseline;justify-content:space-between;gap:var(--space-2);margin:0;color:var(--color-text-primary);font-size:12px;font-weight:700}
+.candidate-provenance{color:var(--color-text-muted);font:600 10px/1.3 var(--font-mono);text-align:end;overflow-wrap:anywhere}
+.candidate-list,.candidate-bucket-list{display:flex;flex-direction:column;gap:var(--space-1)}
+.candidate-unavailable,.attribute-unavailable{margin:0;color:var(--color-text-muted);font-size:12px}
+.candidate-group-heading{justify-content:flex-start;background:var(--color-surface);color:var(--color-text-primary);font-weight:700}
+.candidate-group-heading:disabled{cursor:default;opacity:1}
+.candidate-attributes{display:flex;flex-direction:column;gap:var(--space-1);padding:var(--space-2) var(--space-3);border:var(--border-width) solid var(--color-border);border-radius:var(--radius-control);background:var(--color-surface);color:var(--color-text-secondary);font-size:11px}
+.candidate-attributes>strong{color:var(--color-text-primary);font-size:11px}
+.attribute-grid{display:flex;flex-wrap:wrap;gap:var(--space-1) var(--space-2)}
+.attribute-item{overflow-wrap:anywhere}
+.attribute-tags{flex-basis:100%;color:var(--color-text-muted)}
+.candidate-mark-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-2);padding-block-start:var(--space-1);border-block-start:var(--border-width) solid var(--color-border-subtle)}
+.candidate-mark-actions .candidate-choice{min-height:var(--space-8);padding-inline:var(--space-2);background:var(--color-character-soft);border-color:rgba(184,161,255,.42);color:var(--color-text-primary);font-size:11px}
+.candidate-mark-actions .candidate-choice:hover{border-color:var(--color-character);background:var(--color-character-soft)}
+.candidate-shortcuts{color:var(--color-text-muted);font-family:var(--font-mono)}
+.character-memory-panel{position:fixed;z-index:var(--z-drawer);inset-block:0;inset-inline-end:0;width:min(var(--character-drawer-width),calc(100vw - var(--space-4)));display:flex;flex-direction:column;min-width:0;background:var(--color-surface-elevated);border-inline-start:var(--border-width) solid var(--color-border);box-shadow:var(--shadow-float);transform:translateX(100%);opacity:0;transition:transform var(--motion-standard) var(--ease-standard),opacity var(--motion-standard) ease-out}
+.character-memory-panel.is-open{transform:translateX(0);opacity:1}
+.memory-header{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-4);padding:var(--space-5) var(--space-5) var(--space-3);border-block-end:var(--border-width) solid var(--color-border)}
+.memory-header h2{margin:var(--space-1) 0;color:var(--color-text-primary);font-size:20px;line-height:1.2}
+.memory-header p:not(.panel-kicker){margin:0;color:var(--color-text-muted);font-size:12px;line-height:1.45;overflow-wrap:anywhere}
+.memory-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:var(--space-2);padding:var(--space-3) var(--space-5);border-block-end:var(--border-width) solid var(--color-border);color:var(--color-text-secondary);font-size:12px}
+.memory-toolbar [data-memory-action="export"],.memory-toolbar [data-memory-action="import"]{min-height:30px;padding:0 var(--space-2)}
+.memory-status{flex-basis:100%;margin:0;color:var(--color-text-muted);overflow-wrap:anywhere}
+.character-memory-list{min-block-size:0;flex:1;overflow:auto;padding:var(--space-4) var(--space-5)}
+.memory-character-card{display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-3);border:var(--border-width) solid var(--color-border);border-radius:var(--radius-panel);background:var(--color-surface);box-shadow:var(--shadow-ring)}
+.memory-character-card+ .memory-character-card{margin-block-start:var(--space-2)}
+.memory-character-heading{display:flex;align-items:center;justify-content:space-between;gap:var(--space-2)}
+.memory-character-heading h3{min-width:0;margin:0;color:var(--color-text-primary);font-size:14px;overflow-wrap:anywhere}
+.memory-origin{flex:none;color:var(--color-character);font:600 10px/1.3 var(--font-mono)}
+.memory-counts{margin:0;color:var(--color-text-secondary);font:600 11px/1.35 var(--font-mono)}
+.memory-card-actions{display:flex;flex-wrap:wrap;gap:var(--space-1)}
+.memory-action{min-height:28px;padding:0 var(--space-2);border:var(--border-width) solid var(--color-border);border-radius:var(--radius-control);background:var(--color-surface-elevated);color:var(--color-text-secondary);font-size:11px}
+.memory-action:hover{border-color:var(--color-info);background:var(--color-info-soft);color:var(--color-text-primary)}
+.memory-empty{margin:0;color:var(--color-text-muted)}
+.studio-toast{position:fixed;z-index:var(--z-modal);inset-inline-start:50%;inset-block-end:var(--space-6);max-width:calc(100vw - var(--space-6));padding:var(--space-2) var(--space-3);border:var(--border-width) solid var(--color-success);border-radius:var(--radius-control);background:var(--color-surface-elevated);box-shadow:var(--shadow-float);color:var(--color-text-primary);font-size:12px;opacity:0;pointer-events:none;transform:translate(-50%,var(--space-2));transition:opacity var(--motion-micro) ease-out,transform var(--motion-micro) ease-out}
+.studio-toast.is-visible{opacity:1;transform:translate(-50%,0)}
+@media(max-width:520px){.face-popover .face-quick-actions{min-width:0}.candidate-mark-actions{grid-template-columns:1fr}.memory-header{padding-inline:var(--space-4)}.memory-toolbar,.character-memory-list{padding-inline:var(--space-4)}.character-memory-panel{width:100%}}
+@media(prefers-reduced-motion:reduce){.character-memory-panel,.character-memory-panel.is-open,.studio-toast,.studio-toast.is-visible{transition:none}.character-memory-panel{transform:translateX(100%)}.character-memory-panel.is-open{transform:translateX(0)}.studio-toast{transform:translate(-50%,0)}}
 </style>
  </head>
 <body>
@@ -220,7 +364,7 @@
  <div class="journal-modal" id="journal-modal" role="dialog" aria-modal="true" aria-labelledby="journal-title" aria-hidden="true" hidden><div class="modal-backdrop" data-close="journal"></div><div class="journal-panel"><div class="modal-heading"><div><h2 id="journal-title">动作日志</h2><p>按当前语料指纹保存，作为未来人工标签的导出入口</p></div><button class="close-button" id="journal-close" type="button">关闭</button></div><div class="journal-toolbar"><button class="journal-button" id="export-json" type="button">导出 JSON</button><button class="journal-button" id="export-csv" type="button">导出 CSV</button><button class="journal-button" id="export-character-labels" type="button">导出人物标签</button><button class="journal-button" id="import-character-labels" type="button">导入人物标签</button><input class="import-input" id="character-labels-file" type="file" accept="application/json,.json" aria-label="导入人物标签 JSON 文件"><button class="journal-button" id="undo-character" type="button">撤销最近人物动作</button></div><p class="journal-summary" id="journal-summary">—</p><p class="journal-import-status" id="journal-import-status" aria-live="polite"></p><div class="journal-export" id="journal-export"></div></div></div>
 <div class="fatal" id="fatal" hidden><div class="fatal-card"><h1>无法读取离线报告</h1><p id="fatal-message">当前浏览器不支持原生 gzip 解压，报告没有加载任何数据。</p><code>请使用最新 Chrome / Edge，或在本地只读服务器中打开 gallery.html。报告不需要网络、CDN 或框架。</code></div></div>
 
-<script id="gallery-payload" type="application/octet-stream">H4sIAAAAAAACCu1ca5LjthG+yhR/czTEk6SSykXGUyxKoiTGepmkZj27tQfIf1eqcoT8S+VfnOu47GukG3wIIECB4ziu2LU7OyDRQDe6PzYa4KPnU/AaLHkYnIKljMLgaziEwSZYPgf1PicyCIN8VWeXvNnDKR6yqjjA6bY8FKf8WMDph3KjWvdFuds3XVtdfsS2yz6vsW2bH8vDW1ZuUGBRZ69UwFlzvpTfZGWeD+enCgVd6leWHa/DaV3ujtjnVG8/ZJfqvILzclOcmrJ5g8YjVNfn0/Za56tDkR3zaleesPv5tTg0b21rXZzqa519hNqmrPNdVRRHkADVHeh22mUb6IuDbA/5rkbVq/PlXBebrCkL1KrZX48rZf0LCAyWn4IaYYrMfwR6jkjUJjGbxG2SsEnSJsU2KbFJqU3KbdLKJq1t0sYmFTZpa5FIZJNsvIiNF7HxIjZexMaL2HgRGy9i40VsvIiNF7HxIjZexMaL2HgRGy9q40VtvKiNF7XxojZe1MaL2nhRGy9q40VtvKiNF7XxojZe1MaL2nhRGy9m48VsvJiNF7PxYjZezMaL2XgxGy9m48VsvJiNF7PxYmsMPxCbIfacrodD+KWYUwBmiFjwVL+dmn3RlOun+nyt1sXTpjieH/74VK+r8tL86eGr4Kfv/v1VsPjzZQfYu7s/RtTTzjzt3NMuPO3S0x572hNPe3q/nUSeduJp9+BHPPgRD37Egx/x4Ec8+BEPfsSDH/XgRz34UQ9+1IMf9eBHPfhRD37Ugx/14Ec9+DEPfsyDH/Pgxzz4MQ9+zIMf8+DHPPgxD37Mgx/34Mc9+HEPftyDH/fgxz34cQ9+3IMf9+DHPfgJD37Cg5/w4Cc8+AkPfsKDn/DgJzz4CQ9+woOfbPGDRfmCi/Iqb9b7x4jcX4uNXrcleERmbjJ3k4WbLN3k2E1O3OTUSR6Wzo5MRyvmiEzdZOYmczdZuMnSTY7d5MRNTp1kOrKSjda1EZm6ycxN5m6ycJOlmxy7yYmbnDrJbGQlH60+IzJ1k5mbzN1k4SZLNzl2kxM3OXWS+chKMVojRmTqJjM3mbvJwk2WbnLsJiducuoki5GVchTJR2TqJjM3mbvJwk2WbnLsJiducuok3wLvCQPv3XhrhlkzuppB1YylZgg1I6cZMM04aYZHMyqawdCMgWboMyOeGejM+GaGNTOamUHMjF1myDIjlRmgzLhkhiMzCpnBx4w5ZqgxI4wZWMx4YoYRM3qYQcOMFWaIMCODGRDMOGBOf3PWm5PdnOPm1DZntDmRzflrTltztpqT1Jyb5pQ0Z6I5Ac15Z043c5aNJtcHmFwkojwkRNCQ0CQKCY+S8EZTDyZGtFG/touD90Zru0yNoWhtl/9vXQCxPSLW1aEQNApH1V5Ld6smf6pVVQ1DfrsDAWIrRIyLCCk8SWOCDSkHWIVMCQuJjJIEkJY8EaITFNM4jeEgYwkXJ4lilsKBxwRkJIlMQEZKZe8SNIpEyuHAhRRwSASTISVURDEcJI+TkEIjT7vuNGEpCSmjTFI4SMZYSHnEIpDBOY1BBk8ol113IWHMkMqIiBQOnLAIDgmJQEZMoxhkxDLirOsOwhOQkMSpAC1SUBS0SEWSgow0TWQasoglvMOMERInFA4iFgwOaQxeh5qlAg6xlDJkjEgWd91ZKmKQwJkQERxiQUnIBOEpyBCCS5ABWLBuJjAZsxgkxAS6wkEwksAhpUkKV+ZbXFrVi6/H7oXQUKF6hekVrleEXpF6JdYriV5J9UquV1Z6Za1XNnql0CtbraJe2wwV3R6i20N0e4huD9HtIbo9RLeH6PYQ3R6i20N0e4huD9HtIbo9RLeH6vZQ3R6q20N1e6huD9Xtobo9VLeH6vZQ3R6q20N1e6huD9Xtobo9VLeH6fYw3R6m28N0e5huD9PtYbo9TLeH6fYw3R6m28N0e9rXFVucEdv8+Khmgzqh/QnrT3h/IvoT2Z/E/UnSn3yR8zuSgy9nCnARseChWEgCBcRuuYgYFBC35YJ3K5hcJHEYL2BrES9oCoWAX1j64kXaLVqT/HIhu5Vnih+H72RMsKvhOxlOdjV6p+kEuxq9k+FkV6N3Mix2gKrEF1nRAhaeaCEIwRJWbChTBqWENQrKuAMsWsQCO8awTEYLWEOxxNOBves25gYWIg32rqPJbQ/eDzviHg/eD+tUXWfvh3WorrN33dyqa+z9uC7d8ba4UuAybMVtDIxGUCsupeJCWTelZIxtMcU2J0s/GioiKZ1i6bqNBrFZun53FGt5+mswrVjL0psxrVnLM4CW3DWmN8OhGG7xj19eWb/zlfW+/gLZOyE71WoCR+h2hCrvxImPHjmiDXRFUhHD7G+SyECn4W9cPi4iGwVTO39VgFTNsmf70mA24Cd/x9az1OVhuGREHBvhJhnLuL1sw7p7r4uS0veb7tEK6ftN92iF9P2me7RC+n7TPVohfb9fw16cuK8KXrVeUIZrDE3xUsBdOK4myvm5FLclNVWLNgqTagFXK38SIedtaXPLAHa1fqGQfg10yNAV6dc2pwxdkX6/4hKia9Lb4RSiadIbcgeSVkpviEMIeu9HgPeRwCYTCkqwhGvyiDsjLCXHst9mP+Kl6WOG2gsIJVPbQoEQCQVwEMU8ltzLGQRDCRxjyQP6rWiCrSPRraS7SreyO1lupZXkTvNJpVvJveoOpQHIza4NA8qLE0VW+x3CiYoUKking59SjgrQWHV38fRap6gtVd7g5On7jYaxeYb5Pa1by9RrOK1by9P3m9at5ek1vKOb4un7uVQDgHft0hSxNiI/Rt2VGUpFHvyUTvV4jHQ/NKl2OSivQtkMaRM9FPdN2NRwE+LcZju6OUXfwwSfwhwA2OfoJXwm8AuUZwa/cNfzHIWKEvZ1JHW/v7uu+NFJgx4WkhCaQnDCX/PsBRMJ8HFYEAZ9UkH9dCzrujztHvPufdL8/yMBq3cL+OX/I8J4G91U1yLc5of6S/k/LNGhVl/Q/rXQ/gwLFE7f62ldVE2u8oy6BKL6Wl+KddPlKakUpexwxpNTkVfZ5nrJquvpVFTXC2ZBXTdlk9X58XIocMpgcA6+uRZXfM5fFa9lgZx5td6Xr0W2zk+bcpM3qvF8bYqsG6Ot9MlQ3cP2T/1DV4j3MxKU0llpOemsZJR0VgpGiop2saJ7LOxQlc7JWXKlC+WzkmTyWakh+VhV5lKVzcmlcqUxrWYl76xmpaysxqpyl6p8To6XK71qPSupaD0rlWY9VlW4VBVzcs9caV+bWclOG1eKz0gv6dJLzkmAc+WeFbMyrgpXntFIr9ilVzwrCy+elXsWz8q4isd6JS69klmpgMmsBLhkVtpXMugFAfsjRsQuwbXB8zbMLuFOsY+06twOtm2XW7zV6kPIBdrnLureFoUl3PmP1wXFfBPTrQ4t1VogWoX0NWIZwTDHYNnejWI6E5wQjh89SCK6UqpPquFmC/qeg2XQFHVTP23Lb5trVdRPu/xwKKq3p3p9hupiXb8CRm+o+mtR1eUZFcevmRrQ91wp2DDHdxkM33E/Do2gzHlTHIzGltKi2ooLurGxe3nKtvm6yC7fBkvKQcPiuCo2m8I90NDoGgjl3BsNhK8P17opKrgCKD4/7M5V2eBLiGC/WdVwjTuVun6ZylheInDlMd8V+Bz5U5cEvXQtokMy9HL85Xf/FRoqqXKEt5nGN1QoOufkEPTuEHRyCAZSX24Nn9QZJl4vTTWUkdkd+1arM37JQim4WUgTVbbnEsoX5SaZciR0uBT8fV2dL526avin24Cduj3WqA65VVVK91I9ng7KOoP5dcCc62W78Rq6dYndS/UUIRhmaQaXHybjumg3Pj/P2kFaC9p6n1f5ukElgh++//6nv/z9p+/+Cd1u9oL6rT7Za91N2+yq5h7O3DbbAZjz03oPkwUvtC3zh3/9TZcZpxMyHyeEYibodQe+2hSbkaL5qsZAhHSF4mfUwAEOfYcriBQvP2NYkptDjF1BknuuQB2uQG1XoHSuK0TiHb5AfxFfGF03ySd9IWJzfWHkX5JM+4JTqOkL6lGQ7gR4ezjlA8wHCr35ANPDQaRK7vCBmN7zATbPBxiZ6wPkHS4wy9r3hgMhpl2A/8xwIO65AP+5LvAyANiZZobkdhVEPGF7U51hkzIRUfEPbvQ4t5F7GDubgkvxVEezR6tnVVxgRwJj5g1uwVxLp1otRy4zS11qqYvRxaluq8x/oyft1t8r7kOyY9Hk4Ea58sV2b5KdT4e37mr0nrg+X0+NMkip31XZzdf7DsDxzXi7NujYXtBuI2Xgrl/j+drBYGpr9qqGuYy3UR3H4w42xBfcZoXBIV8Vh+zr0/nDodjsUI1rXVSP52qXn+BKbR625wNs6eqHpipgcm0e8vphfz3mpwfFWf/h4VSAaQ+wQa/eHnD787CFjrh3DQatITy8Fqe8n+FOvdU2H3d3+NdhcLlu93payBCf1V9xgZsVDSkKP3OemMAmKwSh7fuP8BNA+qzPYQI/zxM8vH0JAjzt3yT4ZFxybVOkYLXn6MhHiLZdtQMZuCL62NRzIGO7qgPx0tnkiIzG/vN5oiMbZwwZKGtQTfDzcY7Rc/DjX//RskVRy9V9V2pK9hlpxLDbFQzyui53GCU7ffTRQi8MxuKCn5+F7Zp0C76GjzhVtSAbCVXv09SN30hVfe2YL5MHmjOaMtt0jDbcXcFBP7cuFBSySDjNCyHTgvM0gntOEXz+DxdjFpBBSgAA</script>
+<script id="gallery-payload" type="application/octet-stream">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</script>
 <script>
 (() => {
 "use strict";
@@ -242,7 +386,7 @@ decodePayload().then((compact)=>boot(compact,start)).catch((error)=>fatal(error 
   const column=(key,index)=>Array.isArray(columns[key])?columns[key][index]??null:null;
   const rows=Array.from({length:count},(_,index)=>{const flagCodes=Array.isArray(column("fl",index))?column("fl",index):[];const tierCode=Number(column("pt",index));const row={sha16:String(column("s",index)||""),abs_path:String(column("a",index)||""),path_rel:String(column("p",index)||""),filename:String(column("n",index)||""),width:column("w",index),height:column("h",index),filesize:column("b",index),phash:String(column("x",index)||""),family_id:String(column("f",index)||"unassigned"),aes_v25:column("ae",index),topiq_iaa:column("ia",index),topiq_nr:column("nr",index),qrealign:column("qr",index),hpsv3_mu:column("hm",index),hpsv3_sigma:column("hs",index),nsfw_prob:column("ns",index),identity_sim:column("id",index),confusable_margin:column("cm",index),novelty:column("nv",index),consensus_z:column("cz",index),disagreement:column("dg",index),gaming_delta:column("gd",index),flags:flagCodes.map((code)=>flagValues[Number(code)]).filter(Boolean),proposed_tier:tierValues[tierCode]||"review",thumb_rel:String(column("th",index)||""),preview_available:Boolean(column("pr",index)),thumb_available:Boolean(column("tb",index))};row.__index=index;row.__key=row.sha16||row.filename||`row-${index}`;return row;});
   const compactFamilies=columnar.f&&typeof columnar.f==="object"?columnar.f:{};const families={};Object.entries(compactFamilies).forEach(([familyId,value])=>{const entry=Array.isArray(value)?value:[];families[familyId]={members:Array.isArray(entry[0])?entry[0]:[],champion:String(entry[1]||""),runner_up:String(entry[2]||"")};});
-   const compactStats=columnar.z&&typeof columnar.z==="object"?columnar.z:{};const stats={total:Number(compactStats.n||count),tier_counts:compactStats.t||{},flag_counts:compactStats.f||{},consensus_z_median:compactStats.m,average_consensus_z:compactStats.a,pass_rate:Number(compactStats.p||0)};const hasQrealign=Array.isArray(columnar.d)&&columnar.d.includes("qrealign");const fingerprint=String(columnar.i||"e6e842ae569e44905385");
+   const compactStats=columnar.z&&typeof columnar.z==="object"?columnar.z:{};const stats={total:Number(compactStats.n||count),tier_counts:compactStats.t||{},flag_counts:compactStats.f||{},consensus_z_median:compactStats.m,average_consensus_z:compactStats.a,pass_rate:Number(compactStats.p||0)};const hasQrealign=Array.isArray(columnar.d)&&columnar.d.includes("qrealign");const fingerprint=String(columnar.i||"c553e4c9ec9057cd9791");
    const identityDocument=columnar.y&&typeof columnar.y==="object"?columnar.y:null;const characterDocument=columnar.q??null;const identityEnabled=Boolean(identityDocument);const identityFaces=identityEnabled&&Array.isArray(identityDocument.faces)?identityDocument.faces.map((raw,index)=>{const entry=raw&&typeof raw==="object"?{...raw}:{};const faceId=String(entry.face_id||`face-${index+1}`);const bbox=Array.isArray(entry.bbox)?entry.bbox.slice(0,4).map((value)=>Number.isFinite(Number(value))?Number(value):0):[0,0,0,0];while(bbox.length<4)bbox.push(0);return {...entry,face_id:faceId,image_sha16:String(entry.image_sha16||""),bbox,det_score:Number.isFinite(Number(entry.det_score))?Number(entry.det_score):null,crop_rel:String(entry.crop_rel||"").replaceAll("\\","/"),cluster_id:entry.cluster_id??null,cluster_prob:Number.isFinite(Number(entry.cluster_prob))?Number(entry.cluster_prob):null,is_outlier:entry.is_outlier===true,cluster_margin:Number.isFinite(Number(entry.cluster_margin))?Number(entry.cluster_margin):null};}):[];const identityClusters=identityEnabled&&Array.isArray(identityDocument.clusters)?identityDocument.clusters.map((raw,index)=>{const entry=raw&&typeof raw==="object"?{...raw}:{};return {...entry,cluster_id:entry.cluster_id??`cluster-${index+1}`,size:Number.isFinite(Number(entry.size))?Number(entry.size):0,confidence:Number.isFinite(Number(entry.confidence))?Number(entry.confidence):null,suggested_character:typeof entry.suggested_character==="string"?entry.suggested_character:null,confirmed_character:typeof entry.confirmed_character==="string"?entry.confirmed_character:null,representative_faces:Array.isArray(entry.representative_faces)?entry.representative_faces.filter((value)=>typeof value==="string"):[]};}):[];const faceById=new Map(identityFaces.map((face)=>[face.face_id,face]));const facesByImage=new Map();const addImageFace=(sha,faceId)=>{if(!sha||!faceId)return;const current=facesByImage.get(sha)||[];if(!current.includes(faceId))current.push(faceId);facesByImage.set(sha,current);};identityFaces.forEach((face)=>addImageFace(face.image_sha16,face.face_id));if(identityEnabled&&Array.isArray(identityDocument.images))identityDocument.images.forEach((raw)=>{if(!raw||typeof raw!=="object")return;const sha=String(raw.sha16||"");if(Array.isArray(raw.faces))raw.faces.forEach((faceId)=>addImageFace(sha,String(faceId||"")));});const clusterById=new Map(identityClusters.map((cluster)=>[String(cluster.cluster_id),cluster]));const clusterFaces=new Map();identityFaces.forEach((face)=>{const key=String(face.cluster_id??"outlier");const current=clusterFaces.get(key)||[];current.push(face.face_id);clusterFaces.set(key,current);});const knownNames=new Set();const catalogByFace=new Map();const catalogByCluster=new Map();const addCharacterName=(value)=>{if(typeof value==="string"&&value.trim())knownNames.add(value.trim());};const collectCharacterSource=(value)=>{if(Array.isArray(value)){value.forEach((item)=>collectCharacterSource(item));return;}if(!value||typeof value!=="object")return;const entry=value;const name=typeof entry.character==="string"?entry.character:typeof entry.name==="string"?entry.name:typeof entry.confirmed_character==="string"?entry.confirmed_character:"";addCharacterName(name);const faceId=typeof entry.face_id==="string"?entry.face_id:"";const clusterId=entry.cluster_id===undefined||entry.cluster_id===null?"":String(entry.cluster_id);if(name&&faceId)catalogByFace.set(faceId,name);if(name&&clusterId)catalogByCluster.set(clusterId,name);Object.entries(entry).forEach(([key,item])=>{if(["character","name","confirmed_character","face_id","cluster_id"].includes(key))return;if(typeof item==="string"){addCharacterName(item);if(key.startsWith("f_"))catalogByFace.set(key,item);else if(key.startsWith("c_")||/^[-]?\d+$/.test(key))catalogByCluster.set(key,item);}else if(Array.isArray(item)||item&&typeof item==="object")collectCharacterSource(item);});};collectCharacterSource(characterDocument);identityClusters.forEach((cluster)=>{addCharacterName(cluster.confirmed_character);addCharacterName(cluster.suggested_character);if(cluster.confirmed_character)catalogByCluster.set(String(cluster.cluster_id),cluster.confirmed_character);});
    rows.forEach((row)=>{if(row.preview_available&&!row.thumb_available)row.thumb_rel=`thumbs/${row.sha16}.jpg`;});
    const els=(id)=>document.getElementById(id);const finite=(value)=>typeof value==="number"&&Number.isFinite(value);const numberText=(value)=>finite(value)?Number(value).toFixed(3):"—";const percentText=(value)=>finite(value)?`${(Number(value)*100).toFixed(1)}%`:"—";const formatBytes=(value)=>`${(Number(value)/1024).toFixed(1)} KB`;const rowKey=(row)=>String(row.__key);const privateRow=(row)=>finite(row.nsfw_prob)&&Number(row.nsfw_prob)>=.65||row.proposed_tier==="route_nsfw";
@@ -265,7 +409,7 @@ decodePayload().then((compact)=>boot(compact,start)).catch((error)=>fatal(error 
   const compareIndices=(leftIndex,rightIndex)=>{const field=state.sortField;const left=sortKeys[field]?.[leftIndex];const right=sortKeys[field]?.[rightIndex];if(left===null&&right===null)return leftIndex-rightIndex;if(left===null)return 1;if(right===null)return-1;const result=typeof left==="number"?left-right:String(left).localeCompare(String(right),"zh-CN",{numeric:true,sensitivity:"base"});return result*state.sortDirection||leftIndex-rightIndex;};const matches=(row)=>{const search=state.search.toLocaleLowerCase("zh-CN");const haystack=[row.filename,row.sha16,row.family_id].map((value)=>String(value||"").toLocaleLowerCase("zh-CN")).join(" ");const flagMatch=!state.flags.size||row.flags.some((flag)=>state.flags.has(flag));const reviewMatch=!state.onlyUnreviewed||!manualFor(row);return(!search||haystack.includes(search))&&(!state.tier||row.proposed_tier===state.tier)&&flagMatch&&reviewMatch;};
   function recomputeVisible(preferredKey=state.currentKey){const previousPosition=state.visible.findIndex((index)=>rowKey(rows[index])===preferredKey);state.visible=rows.map((_,index)=>index).filter((index)=>matches(rows[index])).sort(compareIndices);const found=state.visible.find((index)=>rowKey(rows[index])===preferredKey);if(found!==undefined)state.currentKey=rowKey(rows[found]);else if(state.visible.length)state.currentKey=rowKey(rows[state.visible[Math.min(Math.max(previousPosition,0),state.visible.length-1)]]);else state.currentKey=null;}
   const setText=(id,value)=>{const node=els(id);if(node)node.textContent=String(value);};const currentIndex=()=>state.visible.findIndex((index)=>rowKey(rows[index])===state.currentKey);const currentRow=()=>{const index=currentIndex();return index>=0?rows[state.visible[index]]:null;};
-  function renderStats(){const tierCounts=stats.tier_counts||{};const flagCounts=stats.flag_counts||{};setText("stat-total",Number(stats.total||rows.length).toLocaleString("zh-CN"));setText("stat-consensus",numberText(stats.consensus_z_median));setText("stat-review",Number(tierCounts.review||0).toLocaleString("zh-CN"));const risk=Number(flagCounts.nsfw||0)+Number(flagCounts.id_low||0)+Number(flagCounts.gaming_suspect||0);setText("stat-risk",risk.toLocaleString("zh-CN"));const payloadText=`${rows.length.toLocaleString("zh-CN")} 条 · gzip ${formatBytes(3564)} · 解码 ${(performance.now()-decodeStart).toFixed(0)}ms · 无网络访问`;setText("run-meta",payloadText);document.title=document.getElementById("brand-title")?.textContent||document.title;}
+  function renderStats(){const tierCounts=stats.tier_counts||{};const flagCounts=stats.flag_counts||{};setText("stat-total",Number(stats.total||rows.length).toLocaleString("zh-CN"));setText("stat-consensus",numberText(stats.consensus_z_median));setText("stat-review",Number(tierCounts.review||0).toLocaleString("zh-CN"));const risk=Number(flagCounts.nsfw||0)+Number(flagCounts.id_low||0)+Number(flagCounts.gaming_suspect||0);setText("stat-risk",risk.toLocaleString("zh-CN"));const payloadText=`${rows.length.toLocaleString("zh-CN")} 条 · gzip ${formatBytes(3887)} · 解码 ${(performance.now()-decodeStart).toFixed(0)}ms · 无网络访问`;setText("run-meta",payloadText);document.title=document.getElementById("brand-title")?.textContent||document.title;}
   function renderTierBoard(){const board=els("tier-board");const fragment=document.createDocumentFragment();["queue","review","archive_candidate","route_nsfw","route_identity"].forEach((tier)=>{const button=document.createElement("button");button.type="button";button.className="tier-card";button.setAttribute("aria-pressed",String(state.tier===tier));button.dataset.tier=tier;const name=document.createElement("span");name.className="tier-name";name.textContent=tierLabels[tier];const count=document.createElement("strong");count.textContent=Number(stats.tier_counts?.[tier]||0).toLocaleString("zh-CN");const hint=document.createElement("span");hint.className="tier-hint";hint.textContent=state.tier===tier?"已筛选":"点击筛选";button.append(name,count,hint);fragment.append(button);});board.replaceChildren(fragment);}
   function renderFlagFilters(){const group=els("flag-filters");const fragment=document.createDocumentFragment();["uncertain","gaming_suspect","nsfw","id_low","near_dup_runnerup","audit_sample"].forEach((flag)=>{const button=document.createElement("button");button.type="button";button.className="chip";button.textContent=flagLabels[flag];button.dataset.flag=flag;button.setAttribute("aria-pressed",String(state.flags.has(flag)));fragment.append(button);});group.replaceChildren(fragment);}
   function renderActiveFilters(){const container=els("active-filters");const fragment=document.createDocumentFragment();const hasFilters=Boolean(state.search||state.tier||state.flags.size||state.onlyUnreviewed);const label=document.createElement("span");label.className="active-filter-title";label.textContent=hasFilters?"当前筛选：":"筛选状态：未启用";fragment.append(label);if(state.search){const chip=document.createElement("button");chip.type="button";chip.className="active-filter";chip.dataset.clear="search";chip.textContent=`搜索“${state.search}” ×`;fragment.append(chip);}if(state.tier){const chip=document.createElement("button");chip.type="button";chip.className="active-filter";chip.dataset.clear="tier";chip.textContent=`处置：${tierLabels[state.tier]} ×`;fragment.append(chip);}state.flags.forEach((flag)=>{const chip=document.createElement("button");chip.type="button";chip.className="active-filter";chip.dataset.clear=`flag:${flag}`;chip.textContent=`${flagLabels[flag]} ×`;fragment.append(chip);});if(state.onlyUnreviewed){const chip=document.createElement("button");chip.type="button";chip.className="active-filter";chip.dataset.clear="unreviewed";chip.textContent="仅看未审 ×";fragment.append(chip);}if(hasFilters){const clear=document.createElement("button");clear.type="button";clear.className="clear-button";clear.dataset.clear="all";clear.textContent="清除筛选";fragment.append(clear);}container.replaceChildren(fragment);}
@@ -435,7 +579,201 @@ decodePayload().then((compact)=>boot(compact,start)).catch((error)=>fatal(error 
      if(rowKey(next.row)!==rowKey(currentRow())){state.currentKey=rowKey(next.row);renderStudio();requestAnimationFrame(()=>openFacePopover(next.face.face_id));}else{requestAnimationFrame(()=>openFacePopover(next.face.face_id));}
    }
 
-    // Embedded in the studio boot scope; no network or independent journal schema.
+    // Presentation only: no suggestion ever writes the human decision journal.
+function renderSuggestionTiers(evidence) {
+  const container = document.createElement("div");
+  container.className = "suggestion-tiers";
+  const verified = evidence?.suggested_verified ?? evidence?.suggested;
+  const model = evidence?.suggested_model;
+  const demoted = Boolean(evidence?.model_demoted || evidence?.disagreements?.length);
+  const badge = (tier, text) => {
+    const node = document.createElement("p");
+    node.className = `candidate-note suggestion-badge suggestion-${tier}`;
+    node.textContent = text;
+    return node;
+  };
+  const verifiedName = typeof verified === "string" ? verified : v2CandidateName(verified);
+  if (verifiedName) {
+    container.append(badge("verified", `已核实建议：${verifiedName} · 参考/记忆门禁通过，仍需人工确认`));
+  } else if (!model || demoted) {
+    container.append(badge("empty", demoted ? "证据冲突 · 暂不推荐模型结果，请人工选择" : "暂无建议 · 仍可人工选择"));
+  }
+  if (model) {
+    const score = Number(model.score).toFixed(3);
+    const margin = Number(model.margin_vs_runner_up).toFixed(3);
+    const bound = model.margin_basis === "runner-up-upper-bound-0.35" ? "≥" : "";
+    const modelBadge = badge("model", `模型建议（未核实）：${v2CandidateName(model)} · 分数 ${score} · 间隔 ${bound}+${margin}`);
+    modelBadge.dataset.primary = String(!verifiedName && !demoted);
+    if (demoted) {
+      const details = document.createElement("details");
+      details.className = "suggestion-conflict";
+      const summary = document.createElement("summary");
+      summary.textContent = "模型建议已降级 · 与参考/记忆证据不一致";
+      details.append(summary, modelBadge);
+      for (const conflict of evidence.disagreements || []) {
+        const line = document.createElement("p");
+        line.className = "candidate-note";
+        line.textContent = `${conflict.source} → ${conflict.evidence_name} · 证据分数 ${Number(conflict.score).toFixed(3)}`;
+        details.append(line);
+      }
+      container.append(details);
+    } else {
+      container.append(modelBadge);
+    }
+  }
+  const honesty = document.createElement("p");
+  honesty.className = "candidate-note candidate-honesty";
+  honesty.textContent = "模型建议来自 WD 分数与间隔，未经核实、可能认错；已核实建议仅表示参考/记忆门禁通过，不等于人工确认。间隔 ≥ 为保守下界。模型枚举不限于已建档角色。";
+  container.append(honesty);
+  return container;
+}
+
+// Embedded in the studio boot scope; v2 candidates stay local and journal-only.
+const V2_BUCKETS = ["普通人物", "新角色设计", "无法确定"];
+let v2FocusedCandidate = null;
+let v2LastMarkFaceId = null;
+let v2MemoryDocument = null;
+
+function v2Numeric(value) {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function v2Evidence(face) {
+  return face && face.candidate_evidence && typeof face.candidate_evidence === "object"
+    ? face.candidate_evidence : null;
+}
+
+function v2CandidateName(candidate) {
+  return String(candidate?.display || candidate?.name || candidate?.character || "").trim();
+}
+
+function v2CandidateSource(candidate) {
+  const source = String(candidate?.source || "");
+  return source === "anchor" || source === "model" ? "model" : source;
+}
+
+function v2CandidateScore(candidate, source) {
+  const value = source === "memory" ? candidate?.score_memory : candidate?.score_model;
+  return v2Numeric(value) ?? v2Numeric(candidate?.score);
+}
+
+function v2SourceLine(source) {
+  if (!source) return "来源未提供";
+  if (typeof source === "string") return source;
+  const name = String(source.name || source.model || source.path || "来源未提供");
+  const licence = source.license || source.licence;
+  const closed = source.closed_set ?? source.closed_set_size;
+  const parts = [name];
+  if (licence) parts.push(`许可 ${licence}`);
+  if (v2Numeric(closed) !== null) parts.push(`封闭集 ${v2Numeric(closed).toLocaleString("zh-CN")}`);
+  return parts.join(" · ");
+}
+
+function v2ShowToast(text) {
+  let toast = document.getElementById("studio-toast");
+  if (!toast) {
+    toast = document.createElement("div");
+    toast.id = "studio-toast";
+    toast.className = "studio-toast";
+    toast.setAttribute("role", "status");
+    toast.setAttribute("aria-live", "polite");
+    document.body.append(toast);
+  }
+  toast.textContent = text;
+  toast.classList.add("is-visible");
+  window.clearTimeout(Number(toast.dataset.timer || 0));
+  toast.dataset.timer = String(window.setTimeout(() => toast.classList.remove("is-visible"), 1800));
+}
+
+function v2MakeButton(action, label) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "face-quick-action candidate-choice";
+  button.dataset.faceQuick = action;
+  button.dataset.candidateChoice = "true";
+  button.textContent = label;
+  return button;
+}
+
+function v2RenderAttributes(attributes) {
+  const block = document.createElement("div");
+  block.className = "candidate-attributes";
+  const title = document.createElement("strong");
+  title.textContent = "属性证据 · WD tags";
+  block.append(title);
+  if (!attributes || typeof attributes !== "object") {
+    const unavailable = document.createElement("span");
+    unavailable.className = "attribute-unavailable";
+    unavailable.textContent = "不可用";
+    block.append(unavailable);
+    return block;
+  }
+  const grid = document.createElement("div");
+  grid.className = "attribute-grid";
+  [["发色", attributes.hair_color], ["发型", attributes.hair_style]].forEach(([label, value]) => {
+    const item = document.createElement("span");
+    item.className = "attribute-item";
+    item.textContent = `${label}：${String(value || "—")}`;
+    grid.append(item);
+  });
+  const tags = Array.isArray(attributes.tags) ? attributes.tags : [];
+  const tagItem = document.createElement("span");
+  tagItem.className = "attribute-item attribute-tags";
+  tagItem.textContent = `主要标签：${tags.length ? tags.slice(0, 8).map((tag) => {
+    const name = String(tag?.tag || "");
+    return v2Numeric(tag?.score) === null ? name : `${name} ${v2Numeric(tag.score).toFixed(2)}`;
+  }).filter(Boolean).join(" · ") : "—"}`;
+  grid.append(tagItem);
+  block.append(grid);
+  return block;
+}
+
+function v2CandidateButton(candidate, shortcut) {
+  const source = v2CandidateSource(candidate);
+  const button = v2MakeButton("candidate", `${shortcut ? `${shortcut}  ` : ""}${v2CandidateName(candidate) || "未命名"}`);
+  button.dataset.character = v2CandidateName(candidate);
+  button.dataset.candidateSource = source;
+  const metric = document.createElement("span");
+  metric.className = "candidate-metric";
+  const score = v2CandidateScore(candidate, source);
+  const margin = v2Numeric(candidate?.margin_vs_runner_up ?? candidate?.margin);
+  metric.textContent = score === null ? "分数 —" : `${source === "memory" ? "相似度" : "分数"} ${Number(score).toFixed(3)}`;
+  if (margin !== null) metric.textContent += ` · 间隔 ${margin >= 0 ? "+" : ""}${margin.toFixed(3)}`;
+  button.append(metric);
+  if (shortcut) {
+    button.dataset.candidateIndex = String(shortcut - 1);
+    button.setAttribute("aria-keyshortcuts", String(shortcut));
+  }
+  button.addEventListener("focus", () => {
+    v2FocusedCandidate = { character: button.dataset.character || "", source };
+  });
+  return button;
+}
+
+function v2CandidateSection(title, source, candidates, sourceMeta, shortcutStart) {
+  const section = document.createElement("section");
+  section.className = "candidate-section";
+  const heading = document.createElement("h4");
+  heading.textContent = title;
+  const provenance = document.createElement("span");
+  provenance.className = "candidate-provenance";
+  provenance.textContent = v2SourceLine(sourceMeta);
+  heading.append(provenance);
+  section.append(heading);
+  const list = document.createElement("div");
+  list.className = "candidate-list";
+  candidates.forEach((candidate, index) => list.append(v2CandidateButton(candidate, index + shortcutStart)));
+  if (!candidates.length) {
+    const empty = document.createElement("p");
+    empty.className = "candidate-unavailable";
+    empty.textContent = "暂无可用候选";
+    list.append(empty);
+  }
+  section.append(list);
+  return section;
+}
+
 function renderFaceQuickActions(face) {
   const popover = els("face-popover");
   let quick = popover.querySelector(".face-quick-actions");
@@ -444,61 +782,107 @@ function renderFaceQuickActions(face) {
     quick.className = "face-quick-actions";
     popover.insertBefore(quick, els("face-character-select"));
   }
-  const fullNodes = [popover.querySelector('label[for="face-character-select"]'),
-    els("face-character-select"), popover.querySelector(".select-hint"),
-    popover.querySelector('label[for="face-character-name"]'),
+  const fullNodes = [popover.querySelector('label[for="face-character-select"]'), els("face-character-select"),
+    popover.querySelector(".select-hint"), popover.querySelector('label[for="face-character-name"]'),
     els("face-character-name"), popover.querySelector(".face-popover-actions")].filter(Boolean);
-  fullNodes.forEach(node => { node.dataset.faceFull = "true"; node.hidden = true; });
+  fullNodes.forEach((node) => { node.dataset.faceFull = "true"; node.hidden = true; });
   quick.replaceChildren();
   quick.hidden = false;
-  const evidence = face.candidate_evidence;
-  const candidates = Array.isArray(evidence?.candidates) ? evidence.candidates.slice(0, 5) : [];
-  const heading = document.createElement("p");
-  heading.className = "candidate-note";
-  heading.textContent = evidence ? (evidence.suggested ? `门禁建议：${evidence.suggested} · 仍由你选择` : "模型弃权 · 仍可人工选择") : "候选证据未提供 · 可手动命名";
-  const honesty = document.createElement("p");
-  honesty.className = "candidate-note";
-  honesty.textContent = "候选仅含已建档角色；其他角色需先建立参考";
-  const units = document.createElement("p");
-  units.className = "candidate-note";
-  units.textContent = "余弦 / 与最强其他角色的间隔（非概率） · 1–5 选择 · 方向键 + Enter";
-  quick.append(heading, honesty, units);
-  const make = (action, label) => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "face-quick-action candidate-choice";
-    button.dataset.faceQuick = action;
-    button.dataset.candidateChoice = "true";
-    button.textContent = label;
-    return button;
-  };
-  candidates.forEach((candidate, index) => {
-    const button = make("candidate", `${index + 1}  ${candidate.character}`);
-    button.dataset.character = candidate.character;
-    button.dataset.candidateIndex = String(index);
-    button.setAttribute("aria-keyshortcuts", String(index + 1));
-    const metric = document.createElement("span");
-    metric.className = "candidate-metric";
-    const gap = candidate.margin_vs_runner_up;
-    metric.textContent = `${numberText(candidate.score)} / ${finite(gap) && gap > 0 ? "+" : ""}${numberText(gap)}`;
-    button.append(metric);
-    quick.append(button);
+  v2FocusedCandidate = null;
+  const make = (action, label) => v2MakeButton(action, label);
+  const evidence = v2Evidence(face);
+  const candidates = Array.isArray(evidence?.candidates) ? evidence.candidates : [];
+  const model = candidates.filter((candidate) => ["model", "anchor", ""].includes(v2CandidateSource(candidate)));
+  const memory = candidates.filter((candidate) => v2CandidateSource(candidate) === "memory");
+  quick.append(renderSuggestionTiers(evidence));
+  quick.append(v2CandidateSection("模型枚举", "model", model, evidence?.sources?.model, 1));
+  quick.append(v2CandidateSection("我的命名", "memory", memory, evidence?.sources?.memory, model.length + 1));
+  quick.append(v2RenderAttributes(evidence?.attributes));
+  const other = make("other", "其他");
+  other.classList.add("candidate-group-heading");
+  other.disabled = true;
+  quick.append(other);
+  const bucket = document.createElement("div");
+  bucket.className = "candidate-bucket-list";
+  V2_BUCKETS.forEach((name) => {
+    const button = v2MakeButton("bucket", name);
+    button.dataset.character = name;
+    bucket.append(button);
   });
-  quick.append(make("other", "其他"), make("full", "新建角色"));
+  quick.append(bucket);
+  quick.append(make("full", "新建角色"));
+  const marks = document.createElement("div");
+  marks.className = "candidate-mark-actions";
+  const baseline = v2MakeButton("mark", "标为基准参考形象");
+  baseline.dataset.faceMark = "baseline";
+  baseline.setAttribute("aria-keyshortcuts", "B");
+  const variant = v2MakeButton("mark", "标为变体参考");
+  variant.dataset.faceMark = "variant";
+  variant.setAttribute("aria-keyshortcuts", "V");
+  marks.append(baseline, variant);
+  quick.append(marks);
   const actions = document.createElement("div");
   actions.className = "candidate-secondary";
   const reject = make("ignore", "不是");
   reject.title = "忽略此人脸，保留原有排除语义；不是针对某个角色的负参考";
   actions.append(reject, make("skip", "跳过"));
   quick.append(actions);
+  const map = document.createElement("p");
+  map.className = "candidate-note candidate-shortcuts";
+  map.textContent = "1–5 选择 · B 基准 · V 变体 · 方向键 + Enter";
+  quick.append(map);
 }
 
 function showFullFacePicker() {
   const popover = els("face-popover");
-  popover.querySelectorAll("[data-face-full]").forEach(node => { node.hidden = false; });
+  popover.querySelectorAll("[data-face-full]").forEach((node) => { node.hidden = false; });
   els("face-character-select").value = "";
+  v2FocusedCandidate = null;
   els("face-character-name").focus();
   positionFacePopover(els("preview-canvas"));
+}
+
+function v2MarkNote(mark) {
+  if (mark !== "variant") return "";
+  const answer = window.prompt("变体参考备注（可留空）", "");
+  return answer === null ? null : answer.trim().slice(0, 160);
+}
+
+function recordV2Mark(face, mark) {
+  const candidate = v2FocusedCandidate;
+  if (!face || !candidate?.character) {
+    setText("face-popover-status", "请先聚焦模型枚举或我的命名中的角色候选");
+    return false;
+  }
+  const note = v2MarkNote(mark);
+  if (note === null) return false;
+  const previous = journal.faceLabels[face.face_id] || null;
+  const next = { face_id: face.face_id, image_sha16: String(face.image_sha16 || ""), character: candidate.character, action: "confirm", mark };
+  journal.faceLabels[face.face_id] = next;
+  journal.faceHistory.push({ face_id: face.face_id, previous, next, mark, note, undone: false });
+  journal.entries.push({ kind: "face", face_id: face.face_id, image_sha16: next.image_sha16, character: next.character, action: "confirm", mark, note, filename: rowForFace(face)?.filename || "", timestamp: new Date().toISOString() });
+  knownNames.add(candidate.character);
+  v2LastMarkFaceId = face.face_id;
+  saveJournal();
+  renderFaceOverlay();
+  renderCharacterPanel();
+  renderJournalPreview();
+  renderJournalExport();
+  updateCharacterSummary();
+  v2ShowToast(mark === "baseline" ? "已标为基准参考形象" : "已标为变体参考");
+  return true;
+}
+
+function v2UndoLastMark() {
+  for (let index = journal.faceHistory.length - 1; index >= 0; index -= 1) {
+    const entry = journal.faceHistory[index];
+    if (!entry.undone && entry.mark && undoFaceLabel(entry.face_id)) {
+      v2LastMarkFaceId = null;
+      v2ShowToast("已撤销参考形象标记");
+      return true;
+    }
+  }
+  return false;
 }
 
 function handleFaceQuickClick(event) {
@@ -507,12 +891,22 @@ function handleFaceQuickClick(event) {
   if (!target || !face) return;
   const action = target.dataset.faceQuick;
   if (action === "full") { showFullFacePicker(); return; }
+  if (action === "mark") {
+    if (recordV2Mark(face, target.dataset.faceMark || "baseline")) {
+      const faceId = face.face_id;
+      closeFacePopover();
+      advanceToNextUnlabeledFace(faceId);
+    }
+    return;
+  }
   const faceId = face.face_id;
   if (action === "skip") {
     state.candidateSkipped ??= new Set();
     state.candidateSkipped.add(faceId);
-  } else if (action === "candidate" || action === "other") {
-    recordFaceLabel(face, "confirm", action === "other" ? "其他" : target.dataset.character);
+  } else if (action === "candidate" || action === "bucket" || action === "other") {
+    const character = target.dataset.character || (action === "other" ? "其他" : "");
+    if (!character) return;
+    recordFaceLabel(face, "confirm", character);
   } else if (action === "ignore") {
     recordFaceLabel(face, "ignore", "");
   } else return;
@@ -527,8 +921,17 @@ function handleCandidateKey(event) {
   if (event.isComposing || event.ctrlKey || event.altKey || event.metaKey) return true;
   const target = event.target;
   if (target instanceof Element && (target.matches("input,textarea,select") || target.isContentEditable)) {
-    if (event.key === "Enter" && target.id === "face-character-name") {
-      event.preventDefault(); facePopoverAction("new");
+    if (event.key === "Enter" && target.id === "face-character-name") { event.preventDefault(); facePopoverAction("new"); }
+    return true;
+  }
+  if (event.key.toLowerCase() === "b" || event.key.toLowerCase() === "v") {
+    event.preventDefault();
+    const face = activeFace();
+    const mark = event.key.toLowerCase() === "b" ? "baseline" : "variant";
+    if (face && recordV2Mark(face, mark)) {
+      const faceId = face.face_id;
+      closeFacePopover();
+      advanceToNextUnlabeledFace(faceId);
     }
     return true;
   }
@@ -544,9 +947,241 @@ function handleCandidateKey(event) {
     const index = choices.indexOf(document.activeElement);
     choices[(index + direction + choices.length) % choices.length]?.focus();
   }
-  // Enter/Space/Tab keep native button behavior; never leak into image shortcuts.
   return true;
 }
+
+function v2NormalizeMemory(value) {
+  if (!value || typeof value !== "object") return null;
+  const documentValue = { ...value };
+  documentValue.characters = Array.isArray(value.characters) ? value.characters.map((raw) => ({
+    ...raw,
+    name: String(raw?.name || "").trim(),
+    origin: String(raw?.origin || "unknown"),
+    aliases: Array.isArray(raw?.aliases) ? raw.aliases.map(String) : [],
+    baseline_faces: Array.isArray(raw?.baseline_faces) ? raw.baseline_faces.map(String) : [],
+    variant_faces: Array.isArray(raw?.variant_faces) ? raw.variant_faces.map((item) => ({ ...item, face_id: String(item?.face_id || ""), note: String(item?.note || "") })) : [],
+    assigned_faces: Array.isArray(raw?.assigned_faces) ? raw.assigned_faces.map(String) : [],
+    attribute_profile: raw?.attribute_profile && typeof raw.attribute_profile === "object" ? { ...raw.attribute_profile } : {},
+    updated_at: String(raw?.updated_at || ""),
+  })).filter((item) => item.name) : [];
+  return documentValue;
+}
+
+function v2MergeCharacters(target, source) {
+  target.aliases = [...new Set([...(target.aliases || []), ...(source.aliases || []), source.name])].filter(Boolean);
+  target.baseline_faces = [...new Set([...(target.baseline_faces || []), ...(source.baseline_faces || [])])];
+  const variants = [...(target.variant_faces || []), ...(source.variant_faces || [])];
+  target.variant_faces = [...new Map(variants.map((item) => [item.face_id, item])).values()];
+  target.assigned_faces = [...new Set([...(target.assigned_faces || []), ...(source.assigned_faces || [])])];
+  return target;
+}
+
+function v2MemoryCharacters() {
+  const entries = new Map();
+  const add = (raw, origin = "model") => {
+    const name = String(raw?.name || raw || "").trim();
+    if (!name) return;
+    if (!entries.has(name)) entries.set(name, { name, origin, aliases: [], baseline_faces: [], variant_faces: [], assigned_faces: [], attribute_profile: {}, updated_at: "" });
+    if (raw && typeof raw === "object") v2MergeCharacters(entries.get(name), v2NormalizeMemory({ characters: [raw] }).characters[0]);
+  };
+  v2MemoryDocument?.characters?.forEach((item) => add(item, item.origin || "memory"));
+  knownNames.forEach((name) => add(name, "model"));
+  identityFaces.forEach((face) => (Array.isArray(v2Evidence(face)?.candidates) ? v2Evidence(face).candidates : []).forEach((candidate) => {
+    if (["model", "memory", "anchor"].includes(v2CandidateSource(candidate))) add(v2CandidateName(candidate), v2CandidateSource(candidate));
+  }));
+  Object.values(journal.faceLabels).forEach((label) => { if (label?.character) add(label.character, label.action === "new" ? "user" : "memory"); });
+  journal.entries.filter((entry) => entry.kind === "memory").forEach((entry) => {
+    const from = String(entry.from || "");
+    const to = String(entry.to || "");
+    if (entry.action === "import" && entry.memory) {
+      entries.clear();
+      v2NormalizeMemory(entry.memory)?.characters?.forEach((item) => add(item, item.origin || "memory"));
+    } else if (entry.action === "rename" && from && to && entries.has(from)) {
+      const item = entries.get(from); entries.delete(from); item.name = to; add(item, item.origin);
+    } else if (entry.action === "merge" && from && to && entries.has(from)) {
+      const source = entries.get(from); entries.delete(from); add(to, "memory"); v2MergeCharacters(entries.get(to), source);
+    } else if (entry.action === "delete" && from) entries.delete(from);
+  });
+  Object.values(journal.faceLabels).forEach((label) => {
+    const item = entries.get(label?.character);
+    if (!item) return;
+    if (label.mark === "baseline") item.baseline_faces = [...new Set([...item.baseline_faces, label.face_id])];
+    if (label.mark === "variant" && !item.variant_faces.some((variant) => variant.face_id === label.face_id)) item.variant_faces.push({ face_id: label.face_id, note: "" });
+    if (label.action === "confirm" || label.action === "new") item.assigned_faces = [...new Set([...item.assigned_faces, label.face_id])];
+  });
+  return [...entries.values()].sort((left, right) => left.name.localeCompare(right.name, "zh-CN"));
+}
+
+function v2MemoryDocumentForExport() {
+  const documentValue = v2MemoryDocument ? { ...v2MemoryDocument } : { version: 1 };
+  documentValue.characters = v2MemoryCharacters().map((item) => ({ ...item, aliases: [...(item.aliases || [])].filter((alias) => alias !== item.name) }));
+  return documentValue;
+}
+
+function v2RenderMemoryPanel() {
+  const list = els("character-memory-list");
+  if (!list) return;
+  const fragment = document.createDocumentFragment();
+  const characters = v2MemoryCharacters();
+  characters.forEach((character) => {
+    const card = document.createElement("article"); card.className = "memory-character-card";
+    const heading = document.createElement("div"); heading.className = "memory-character-heading";
+    const name = document.createElement("h3"); name.textContent = character.name;
+    const origin = document.createElement("span"); origin.className = "memory-origin"; origin.textContent = ["user", "memory"].includes(character.origin) ? "我的命名" : "模型已知";
+    heading.append(name, origin); card.append(heading);
+    const counts = document.createElement("p"); counts.className = "memory-counts";
+    counts.textContent = `基准 ${character.baseline_faces.length} · 变体 ${character.variant_faces.length} · 指派 ${character.assigned_faces.length}`;
+    card.append(counts);
+    const actions = document.createElement("div"); actions.className = "memory-card-actions";
+    [["rename", "重命名"], ["merge", "合并到…"], ["delete", "删除"]].forEach(([action, label]) => {
+      const button = document.createElement("button"); button.type = "button"; button.className = "memory-action"; button.dataset.memoryAction = action; button.dataset.memoryName = character.name; button.textContent = label; actions.append(button);
+    });
+    card.append(actions); fragment.append(card);
+  });
+  if (!characters.length) { const empty = document.createElement("p"); empty.className = "memory-empty"; empty.textContent = "暂无人物记忆"; fragment.append(empty); }
+  list.replaceChildren(fragment);
+  setText("character-memory-summary", `${characters.length} 个角色 · 操作只写入本地日志`);
+}
+
+function v2RecordMemoryOperation(operation) {
+  journal.entries.push({ kind: "memory", ...operation, timestamp: new Date().toISOString() });
+  saveJournal(); v2RenderMemoryPanel(); renderJournalPreview(); renderJournalExport();
+}
+
+function v2MemoryExport() {
+  download("character-memory.json", JSON.stringify(v2MemoryDocumentForExport(), null, 2), "application/json");
+  download("character-memory-journal.json", JSON.stringify({ version: 1, source: "review-studio", corpus_fingerprint: fingerprint, entries: journal.entries }, null, 2), "application/json");
+  setText("character-memory-status", "已导出 character-memory.json 与动作日志");
+}
+
+function v2MemoryImport(file) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const parsed = JSON.parse(String(reader.result || ""));
+      const memory = parsed?.characters ? parsed : parsed?.memory;
+      const normalized = v2NormalizeMemory(memory);
+      if (!normalized) throw new Error("文件不是 character-memory.json v1");
+      v2MemoryDocument = normalized;
+      v2RecordMemoryOperation({ action: "import", memory: normalized });
+      setText("character-memory-status", "已导入人物记忆；历史动作仍由管线应用");
+      v2ShowToast("人物记忆已导入");
+    } catch (error) { setText("character-memory-status", error instanceof Error ? error.message : "人物记忆无法读取"); }
+  };
+  reader.onerror = () => setText("character-memory-status", "人物记忆无法读取");
+  reader.readAsText(file, "utf-8");
+}
+
+function v2OpenMemoryPanel() {
+  const panel = els("character-memory-panel"); const backdrop = els("character-memory-backdrop");
+  if (!panel || !backdrop) return;
+  window.clearTimeout(Number(panel.dataset.closeTimer || 0));
+  panel.inert = false;
+  panel.hidden = false; backdrop.hidden = false; panel.setAttribute("aria-hidden", "false");
+  requestAnimationFrame(() => panel.classList.add("is-open")); v2RenderMemoryPanel(); els("character-memory-close")?.focus();
+}
+
+function v2CloseMemoryPanel() {
+  const panel = els("character-memory-panel"); const backdrop = els("character-memory-backdrop");
+  if (!panel || panel.hidden) return;
+  els("character-memory-open")?.focus();
+  panel.classList.remove("is-open"); panel.setAttribute("aria-hidden", "true"); panel.inert = true;
+  panel.dataset.closeTimer = String(window.setTimeout(() => {
+    if (panel.getAttribute("aria-hidden") === "true") { panel.hidden = true; backdrop.hidden = true; }
+  }, 220));
+}
+
+function v2HandleMemoryClick(event) {
+  const target = event.target instanceof Element ? event.target.closest("[data-memory-action]") : null;
+  if (!target) return;
+  const action = target.dataset.memoryAction; const name = target.dataset.memoryName || "";
+  if (action === "export") { v2MemoryExport(); return; }
+  if (action === "import") { els("character-memory-file")?.click(); return; }
+  if (action === "rename") {
+    const next = window.prompt("重命名人物", name)?.trim();
+    if (next && next !== name) { v2RecordMemoryOperation({ action: "rename", from: name, to: next }); v2ShowToast("人物已记录重命名"); }
+  } else if (action === "merge") {
+    const targetName = window.prompt("合并到哪个人物？", "")?.trim();
+    if (targetName && targetName !== name && window.confirm("合并会重新归属视觉记忆与历史指派，确定继续？")) { v2RecordMemoryOperation({ action: "merge", from: name, to: targetName, warning: "visual-memory-and-history-re-attribution" }); v2ShowToast("已记录合并操作"); }
+  } else if (action === "delete" && window.confirm("删除只写入本地操作日志，管线稍后应用。确定删除？")) { v2RecordMemoryOperation({ action: "delete", from: name }); v2ShowToast("已记录删除操作"); }
+}
+
+function v2EnsureMemoryPanel() {
+  const hasMemory = Boolean(v2MemoryDocument || identityEnabled || knownNames.size);
+  if (!hasMemory) return;
+  let button = els("character-memory-open");
+  if (!button) {
+    button = document.createElement("button"); button.type = "button"; button.id = "character-memory-open"; button.className = "control-button"; button.textContent = "人物记忆";
+    els("journal-open")?.after(button);
+  }
+  button.hidden = false; button.addEventListener("click", v2OpenMemoryPanel);
+  if (!els("character-memory-panel")) {
+    const backdrop = document.createElement("div"); backdrop.id = "character-memory-backdrop"; backdrop.className = "drawer-backdrop"; backdrop.hidden = true;
+    const panel = document.createElement("aside"); panel.id = "character-memory-panel"; panel.className = "character-memory-panel"; panel.hidden = true; panel.setAttribute("role", "dialog"); panel.setAttribute("aria-modal", "true"); panel.setAttribute("aria-labelledby", "character-memory-title"); panel.setAttribute("aria-hidden", "true");
+    panel.innerHTML = '<div class="memory-header"><div><p class="panel-kicker">人物关系 · 本地日志</p><h2 id="character-memory-title">人物记忆</h2><p>模型已知和我的命名都可维护；管线负责应用这些操作。</p></div><button class="close-button" id="character-memory-close" type="button">关闭</button></div><div class="memory-toolbar"><span id="character-memory-summary">—</span><button class="journal-button" data-memory-action="export" type="button">导出</button><button class="journal-button" data-memory-action="import" type="button">导入</button><input class="import-input" id="character-memory-file" type="file" accept="application/json,.json" aria-label="导入人物记忆 JSON 文件"><p id="character-memory-status" class="memory-status" aria-live="polite"></p></div><div id="character-memory-list" class="character-memory-list"></div>';
+    document.body.append(backdrop, panel); backdrop.addEventListener("click", v2CloseMemoryPanel); panel.addEventListener("click", v2HandleMemoryClick); els("character-memory-close").addEventListener("click", v2CloseMemoryPanel); els("character-memory-file").addEventListener("change", (event) => { v2MemoryImport(event.target.files?.[0] || null); event.target.value = ""; });
+  }
+  v2RenderMemoryPanel();
+}
+
+function v2CharacterLabelsPayload() {
+  return { version: 1, source: "review-studio", corpus_fingerprint: fingerprint, labels: Object.values(journal.faceLabels).filter((label) => label && LABEL_ACTIONS.has(label.action)).map((label) => {
+    const output = { face_id: String(label.face_id || ""), image_sha16: String(label.image_sha16 || ""), character: String(label.character || ""), action: label.action };
+    if (["baseline", "variant"].includes(label.mark)) output.mark = label.mark;
+    return output;
+  }) };
+}
+
+function v2ExportCharacterLabels(event) {
+  event.stopImmediatePropagation();
+  download("character_labels.json", JSON.stringify(v2CharacterLabelsPayload(), null, 2), "application/json");
+  setText("journal-import-status", "人物标签已导出（含可选基准 / 变体标记）");
+}
+
+function v2ImportCharacterLabels(file) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const parsed = JSON.parse(String(reader.result || ""));
+      if (!parsed || parsed.version !== 1 || parsed.source !== "review-studio" || String(parsed.corpus_fingerprint) !== fingerprint || !Array.isArray(parsed.labels)) throw new Error("标签文件与当前语料不匹配");
+      let imported = 0;
+      parsed.labels.forEach((raw) => {
+        if (!raw || typeof raw !== "object" || !LABEL_ACTIONS.has(raw.action)) return;
+        const face = faceById.get(String(raw.face_id || "")); if (!face) return;
+        const label = { face_id: face.face_id, image_sha16: String(raw.image_sha16 || face.image_sha16 || ""), character: String(raw.character || ""), action: raw.action };
+        if (["baseline", "variant"].includes(raw.mark)) label.mark = raw.mark;
+        journal.faceLabels[face.face_id] = label; if (label.character) knownNames.add(label.character); imported += 1;
+      });
+      journal.entries.push({ kind: "face", action: "import", count: imported, timestamp: new Date().toISOString() }); saveJournal(); renderFaceOverlay(); renderCharacterPanel(); renderJournalPreview(); renderJournalExport(); v2RenderMemoryPanel(); setText("journal-import-status", `已导入 ${imported} 张人物标签`);
+    } catch (error) { setText("journal-import-status", error instanceof Error ? error.message : "标签文件无法读取"); }
+  };
+  reader.onerror = () => setText("journal-import-status", "标签文件无法读取"); reader.readAsText(file, "utf-8");
+}
+
+function installV2CandidateContract() {
+  v2MemoryDocument = v2NormalizeMemory(columnar.m);
+  v2EnsureMemoryPanel();
+  const shortcutList = document.querySelector("#help-modal .shortcut-list");
+  if (shortcutList && !shortcutList.querySelector("[data-v2-shortcut]")) {
+    [["标为基准参考形象", "B"], ["标为变体参考（弹出备注）", "V"]].forEach(([label, key]) => {
+      const item = document.createElement("div"); item.className = "shortcut-item"; item.dataset.v2Shortcut = "true";
+      const name = document.createElement("span"); name.textContent = label; const code = document.createElement("kbd"); code.textContent = key;
+      item.append(name, code); shortcutList.append(item);
+    });
+  }
+  els("export-character-labels")?.addEventListener("click", v2ExportCharacterLabels, true);
+  els("character-labels-file")?.addEventListener("change", (event) => { event.stopImmediatePropagation(); v2ImportCharacterLabels(event.target.files?.[0] || null); event.target.value = ""; }, true);
+  document.addEventListener("keydown", (event) => {
+    const target = event.target;
+    const typing = event.isComposing || target instanceof Element && (target.matches("input,textarea,select") || target.isContentEditable);
+    if (!typing && event.key === "Escape" && !els("character-memory-panel")?.hidden) { event.preventDefault(); event.stopImmediatePropagation(); v2CloseMemoryPanel(); return; }
+    if (!typing && event.key.toLowerCase() === "u" && v2UndoLastMark()) { event.preventDefault(); event.stopImmediatePropagation(); }
+  }, true);
+}
+
+installV2CandidateContract();
 
 
    function openFacePopover(faceId){
@@ -581,6 +1216,6 @@ function handleCandidateKey(event) {
  }
  })();
 </script>
-<!-- build metrics: legacy=38948B columnar=19009B gzip=3564B base64=4752B fingerprint=e6e842ae569e44905385 -->
+<!-- build metrics: legacy=40713B columnar=20769B gzip=3887B base64=5184B fingerprint=c553e4c9ec9057cd9791 -->
 </body>
 </html>

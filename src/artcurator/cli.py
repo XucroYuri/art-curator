@@ -15,7 +15,14 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("command", choices=["scan", "score", "cluster", "report", "run-all", "previews",
                         "identity", "identity-detect", "identity-embed", "identity-cluster", "identity-report",
-                         "identity-apply", "identity-benchmark", "identity-anchor", "identity-group"])
+                         "identity-apply", "identity-benchmark", "identity-anchor", "identity-group",
+                         "identity-tag", "identity-candidates", "character-memory"])
+    parser.add_argument("--memory-op", choices=["rename", "merge", "delete", "import", "export", "list"])
+    parser.add_argument("--name", default="")
+    parser.add_argument("--target", default="")
+    parser.add_argument("--memory-file", type=Path)
+    parser.add_argument("--wd-provider", choices=["CPUExecutionProvider", "CUDAExecutionProvider"], default="CPUExecutionProvider")
+    parser.add_argument("--wd-cuda-dlls", type=Path)
     parser.add_argument("--from-folders", action="store_true", help="Use character folder names as human reference labels")
     parser.add_argument("--labels", type=Path, help="Content-bound review-studio character labels")
     parser.add_argument("--input", type=Path)
@@ -52,6 +59,31 @@ def main() -> None:
         from .score import score
         from .previews import previews
         match args.command:
+            case "identity-tag":
+                from .identity_tag import tag, TagOptions
+                from .identity_store import stage
+                with stage(settings.out, "identity-tag"):
+                    tag(settings.out, TagOptions(provider=args.wd_provider, cuda_dll_directory=args.wd_cuda_dlls))
+            case "identity-candidates":
+                from .identity_candidates_v2 import emit
+                from .identity_store import stage
+                with stage(settings.out, "identity-candidates"):
+                    emit(settings.out)
+            case "character-memory":
+                from .memory_curation import curate, export_memory, import_memory
+                from .character_memory import load_memory
+                match args.memory_op:
+                    case "rename" | "merge" | "delete":
+                        curate(settings.out, args.memory_op, args.name, args.target)
+                    case "import" | "export":
+                        if args.memory_file is None:
+                            parser.error("memory import/export requires --memory-file")
+                        operation = import_memory if args.memory_op == "import" else export_memory
+                        operation(settings.out, args.memory_file)
+                    case "list":
+                        print(load_memory(settings.out).model_dump_json(indent=2))
+                    case _:
+                        parser.error("character-memory requires --memory-op")
             case "identity" | "identity-detect" | "identity-embed" | "identity-cluster" | "identity-report" | "identity-apply" | "identity-benchmark" | "identity-anchor" | "identity-group":
                 from .identity import run
                 run(settings, args.command, args.labels)

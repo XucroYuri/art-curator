@@ -1,0 +1,32 @@
+{
+  "date": "2026-09-21",
+  "scope": "FR-CANDIDATES-008/009; synthetic fixture and three private output galleries",
+  "method": "Playwright MCP browser_run_code_unsafe against loopback-only Python HTTP servers; actual DOM interactions, screenshots and page/console listeners",
+  "fixture_geometry": [
+    {"viewport": [1280, 900], "popover_client_width": 343, "popover_scroll_width": 343},
+    {"viewport": [768, 900], "popover_client_width": 343, "popover_scroll_width": 343},
+    {"viewport": [375, 900], "popover_client_width": 323, "popover_scroll_width": 323}
+  ],
+  "model_state": {"label": "模型建议（未核实）", "score": 0.99, "margin": 0.42, "primary": true},
+  "demotion_state": {"model_primary": false, "verified_name": "人物乙", "model_name": "人物甲", "score": 0.98, "margin_lower_bound": 0.63, "details_opened": true},
+  "keyboard_observations": [
+    {"action": "Focus candidate index 0, press B", "face_id": "f_00000001", "character": "人物甲", "journal_action": "confirm", "mark": "baseline"},
+    {"action": "Press U", "face_id": "f_00000001", "label_after_undo": null},
+    {"action": "Reopen face, press 1", "face_id": "f_00000001", "character": "人物甲", "journal_action": "confirm", "mark": null}
+  ],
+  "galleries": [
+    {"snapshot": "fixture", "external_asset_refs": 0, "script_src_tags": 0, "stylesheet_links": 0},
+    {"snapshot": "pilot", "rows": 1207, "external_asset_refs": 0, "script_src_tags": 0, "stylesheet_links": 0},
+    {"snapshot": "review", "rows": 3688, "external_asset_refs": 0, "script_src_tags": 0, "stylesheet_links": 0},
+    {"snapshot": "similarity", "rows": 448, "external_asset_refs": 0, "script_src_tags": 0, "stylesheet_links": 0}
+  ],
+  "external_network_requests": 0,
+  "browser_console_errors_all_session": 0,
+  "screenshots": ["docs/assets/v12-fixture-model.png", "docs/assets/v12-fixture-demotion.png", "docs/assets/v12-fixture-768.png", "docs/assets/v12-fixture-375.png"],
+  "limits": [
+    "Recorded execution evidence, not a checked-in automated browser regression runner.",
+    "Browser MCP blocks file protocol; direct-file navigation was not requalified.",
+    "Primary executor visually inspected captures. Independent source reviewers found no implementation blocker but their models cannot decode images, so independent visual sign-off is unavailable.",
+    "External refs means external network asset dependencies; existing local preview image files are not embedded."
+  ]
+}

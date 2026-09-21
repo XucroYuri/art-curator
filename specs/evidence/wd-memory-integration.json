@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "status": "implemented-experiment; scoped execution evidence, not recognition certification",
+  "requirements": ["FR-CANDIDATES-005", "FR-CANDIDATES-006", "FR-CANDIDATES-007", "FR-WD-001"],
+  "model": {
+    "name": "SmilingWolf/wd-eva02-large-tagger-v3",
+    "revision": "b25b82a03f7282e41aa2f257a52c7583b710bd1c",
+    "license": "Apache-2.0",
+    "closed_set_size": 2751,
+    "sha256": "9e768793060c7939b277ccb382783e8670e8a042d29d77aa736be0c8cc898bfc"
+  },
+  "execution": {
+    "onnxruntime-gpu": "1.24.4",
+    "numpy": "2.5.3",
+    "Pillow": "12.3.0",
+    "gpu": "NVIDIA GeForce RTX 5060 Ti 16 GB",
+    "provider": "CUDAExecutionProvider, CPUExecutionProvider (shape/host nodes)",
+    "batch_size": 8,
+    "threads": 8,
+    "preprocess": "wd-white-square-bicubic448-bgr-f32-0-255-v1"
+  },
+  "paired_throughput": {
+    "method": "same eight saved crops, CPU then CUDA, two repeats; no ten-pair qualification",
+    "cpu_batch_seconds": [28.630544899962842, 26.406096999999136],
+    "cuda_batch_seconds": [1.2826612000353634, 0.6919075999758206],
+    "cpu_load_seconds": 3.55696459999308,
+    "cuda_load_seconds": 3.094157300016377,
+    "receipt": "out/<benchmark-corpus>/wd-throughput.json"
+  },
+  "corpora_in_task_order": [
+    {"faces": 1349, "model_candidate_faces": 1105, "memory_candidates": 0, "suggested": 0, "abstained": 1349,
+     "confusable_occurrences": 0, "wall_seconds": 264.07993830001215},
+    {"faces": 3701, "model_candidate_faces": 3240, "memory_candidates": 0, "suggested": 0, "abstained": 3701,
+     "confusable_occurrences": 204, "wall_seconds": 604.6899332000175},
+    {"faces": 452, "model_candidate_faces": 308, "memory_candidates": 0, "suggested": 0, "abstained": 452,
+     "confusable_occurrences": 18, "wall_seconds": 154.10298379999585}
+  ],
+  "confusable": "2b_(nier:automata)",
+  "artifacts": ["out/<corpus>/wd-tagger.json", "out/<corpus>/identity-candidates.json", "out/<corpus>/character-memory.json", "out/<corpus>/identity-candidates-report.json"],
+  "tests": ["tests/test_identity_v2_memory.py", "tests/test_wd_tagger.py", "tests/test_identity_grouping_exports.py"],
+  "verification": {
+    "suite_receipt": "out/zero-shot-candidates/integration-tests.xml",
+    "build_receipt": "out/zero-shot-candidates/build/",
+    "lsp": "blocked: tool rejects project path as outside request cwd",
+    "strict_typecheck": "not clean: unknown third-party/numpy types, import-cycle and strict annotation diagnostics; not certified"
+  },
+  "limitations": [
+    "All three curated stores start empty: no human decisions were fabricated; all suggestions abstain.",
+    "Confusable counts are occurrences, not labelled false positives; snapshots may overlap.",
+    "Face crops lose clothing/context relative to the supplied full-image probe.",
+    "CPU/CUDA scores are not certified numerically equivalent; separate caches are mandatory.",
+    "Multi-file curation publication is not power-loss atomic; concurrent direct API writers unsupported.",
+    "Visual-reference imports require same-corpus saved embeddings.",
+    "Studio and tools are outside this task."
+  ]
+}

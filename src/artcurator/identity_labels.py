@@ -104,6 +104,7 @@ def apply_labels(out: Path, labels_path: Path) -> ApplyResult:
     events = registry.events.copy()
     unknown = []
     changed = set()
+    accepted = []
     # Validate the entire batch before publishing any authoritative state.
     for label in envelope.labels:
         if label.face_id not in faces:
@@ -111,10 +112,12 @@ def apply_labels(out: Path, labels_path: Path) -> ApplyResult:
             continue
         if faces[label.face_id].image_sha16 != label.image_sha16:
             raise ValueError("label image does not own the named face")
+        accepted.append(label)
         before = (references.get(label.face_id), label.face_id in excluded)
         _replay(label, references, excluded)
         after = (references.get(label.face_id), label.face_id in excluded)
-        if before == after:
+        last_mark = next((e.label.mark for e in reversed(events) if e.label.face_id == label.face_id), None)
+        if before == after and (label.mark is None or label.mark == last_mark):
             continue
         changed.add(label.face_id)
         payload = {"sequence": len(events) + 1, "previous_event": events[-1].event_id if events else "",
@@ -132,7 +135,12 @@ def apply_labels(out: Path, labels_path: Path) -> ApplyResult:
     conflicts = [c.cluster_id for c in updated.clusters if len({references[f.face_id] for f in updated.faces
                  if f.cluster_id == c.cluster_id and f.face_id in references}) > 1]
     save_model(out / "identities.json", updated)
+    from .character_memory import sync_labels
+    sync_labels(out, accepted)
     result = ApplyResult(faces_changed=len(changed), clusters_changed=changed_clusters,
                          unknown_face_ids=unknown, conflicting_clusters=conflicts)
     save_model(out / "identity-apply-result.json", result)
+    if (out / "identity-embedding.json").exists():
+        from .identity_candidates_v2 import emit
+        emit(out)
     return result

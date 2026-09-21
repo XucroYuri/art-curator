@@ -128,6 +128,14 @@ All spacing derives from 4px: `--space-1` 4px, `--space-2` 8px, `--space-3` 12px
 
 ### Character panel
 
+Suggestion status uses two text-labelled badge primitives: warning/warning-soft
+for `模型建议（未核实）`, success/success-soft for `已核实建议` (reference gate,
+not human confirmation). Both use caption type, `--space-2` padding, wrapping
+names and mono score/margin metrics. Bound margins display `≥`. Contradictions
+move model advice into a secondary native `details` with a danger-colour summary;
+the primary line never presents demoted model advice as recommended. Empty advice
+stays neutral. Colour is supplementary to the explicit labels and conflict text.
+
 The face naming popover enumerates up to five ranked, native candidate buttons,
 then `其他` and `新建角色`. Reuse elevated surfaces, caption/metric typography,
 `--space-2` gaps and `--space-3` padding. Each candidate shows cosine and signed

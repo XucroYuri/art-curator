@@ -159,14 +159,14 @@ def test_candidates_when_grouping_writes_sidecar(tmp_path: Path) -> None:
     options = importlib.import_module("artcurator.identity_schema").IdentityOptions()
     # When grouping reuses saved matrices.
     module.group(tmp_path, options)
-    document = importlib.import_module("artcurator.identity_candidates").CandidateDocument.model_validate_json(
+    document = importlib.import_module("artcurator.candidates_schema_v2").CandidateDocumentV2.model_validate_json(
         (tmp_path / "identity-candidates.json").read_bytes())
-    # Then every face is ranked, suggestions follow existing gates, and CSV matches JSON.
+    # Then v2 starts without curated memory; the legacy anchor CSV remains a separate view.
     assert [face.face_id for face in document.faces] == ["f_00000001", "f_00000002", "f_00000003"]
-    assert [face.suggested for face in document.faces] == ["A", "B", None]
-    assert [face.abstained for face in document.faces] == [False, False, True]
-    assert all(len(face.candidates) <= 5 for face in document.faces)
-    assert document.faces[0].candidates[0].character == "A"
+    assert [face.suggested for face in document.faces] == [None, None, None]
+    assert [face.abstained for face in document.faces] == [True, True, True]
+    assert all([c.name for c in face.candidates][-2:] == ["其他", "新建角色"] for face in document.faces)
+    assert document.version == 2.1
     assert document.faces[2].suggested is None
     with (tmp_path / "identity-candidates.csv").open(encoding="utf-8", newline="") as handle:
         rows = list(csv.DictReader(handle))

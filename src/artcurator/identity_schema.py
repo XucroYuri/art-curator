@@ -146,11 +146,14 @@ class Label(Record):
     image_sha16: ShortHash
     character: str | None = None
     action: Literal["confirm", "new", "ignore", "wrong_box"]
+    mark: Literal["baseline", "variant"] | None = Field(default=None, exclude_if=lambda value: value is None)
 
     @model_validator(mode="after")
     def named_confirmation(self) -> Self:
         if self.action in {"confirm", "new"} and not (self.character and self.character.strip()):
             raise ValueError("confirm/new requires a nonempty character")
+        if self.mark is not None and self.action not in {"confirm", "new"}:
+            raise ValueError("reference marks require a confirmation")
         return self
 
 

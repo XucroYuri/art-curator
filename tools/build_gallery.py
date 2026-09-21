@@ -167,6 +167,7 @@ class GalleryPayload(TypedDict):
     source: str
     identities: dict[str, JsonValue] | None
     characters: JsonValue | None
+    memory: dict[str, JsonValue] | None
     grouping: dict[str, JsonValue] | None
 
 
@@ -630,16 +631,21 @@ def load_identities(identities_path: Path) -> dict[str, JsonValue] | None:
     images = _normalize_identity_images(document.get("images"))
     faces = _normalize_identity_faces(document.get("faces"))
     candidate_document = _json_object(load_characters(identities_path.with_name("identity-candidates.json")))
-    if candidate_document.get("version") == 1:
-        candidate_rows = {
-            (_identity_string(item.get("face_id")), _identity_string(item.get("image_sha16"))): item
-            for item in (_json_object(value) for value in _json_list(candidate_document.get("faces")))
-        }
-        for face in faces:
-            evidence = candidate_rows.get((_identity_string(face.get("face_id")),
-                                           _identity_string(face.get("image_sha16"))))
-            if evidence is not None:
-                face["candidate_evidence"] = evidence
+    candidate_sources = _json_object(candidate_document.get("sources"))
+    candidate_rows = {
+        (_identity_string(item.get("face_id")), _identity_string(item.get("image_sha16"))): item
+        for item in (_json_object(value) for value in _json_list(candidate_document.get("faces")))
+    }
+    for face in faces:
+        evidence = candidate_rows.get(
+            (_identity_string(face.get("face_id")), _identity_string(face.get("image_sha16")))
+        )
+        if evidence is not None:
+            if "version" not in evidence and candidate_document.get("version") is not None:
+                evidence["version"] = candidate_document["version"]
+            if candidate_sources and "sources" not in evidence:
+                evidence["sources"] = candidate_sources
+            face["candidate_evidence"] = evidence
     clusters = _normalize_identity_clusters(document.get("clusters"))
     document["version"] = _identity_integer(document.get("version"), 1)
     document["detector"] = detector
@@ -664,6 +670,39 @@ def load_characters(characters_path: Path) -> JsonValue | None:
         raise GalleryInputError(f"cannot read {characters_path}: {exc}") from exc
     except json.JSONDecodeError as exc:
         raise GalleryInputError(f"invalid JSON in {characters_path}: {exc}") from exc
+
+
+def load_character_memory(memory_path: Path) -> dict[str, JsonValue] | None:
+    """Load the optional v1 character-memory sidecar without blocking old reports."""
+    if not memory_path.exists():
+        return None
+    try:
+        raw: JsonValue = json.loads(memory_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    if not isinstance(raw, dict):
+        return None
+    document = dict(raw)
+    characters: list[JsonValue] = []
+    for raw_character in _json_list(document.get("characters")):
+        character = _json_object(raw_character)
+        character["name"] = _identity_string(character.get("name"))
+        character["origin"] = _identity_string(character.get("origin"), "unknown")
+        character["aliases"] = _identity_string_list(character.get("aliases"))
+        character["baseline_faces"] = _identity_string_list(character.get("baseline_faces"))
+        character["assigned_faces"] = _identity_string_list(character.get("assigned_faces"))
+        variants: list[JsonValue] = []
+        for raw_variant in _json_list(character.get("variant_faces")):
+            variant = _json_object(raw_variant)
+            variant["face_id"] = _identity_string(variant.get("face_id"))
+            variant["note"] = _identity_string(variant.get("note"))
+            variants.append(variant)
+        character["variant_faces"] = variants
+        character["attribute_profile"] = _json_object(character.get("attribute_profile"))
+        character["updated_at"] = _identity_string(character.get("updated_at"))
+        characters.append(character)
+    document["characters"] = characters
+    return document
 
 
 def _read_grouping_csv(path: Path) -> list[dict[str, str]]:
@@ -822,6 +861,7 @@ def build_payload(
         "source": str((out_dir / "scores.csv").resolve()),
         "identities": load_identities(out_dir / "identities.json"),
         "characters": load_characters(out_dir / "characters.json"),
+        "memory": load_character_memory(out_dir / "character-memory.json"),
         "grouping": load_character_grouping(out_dir),
     }
 
@@ -1001,6 +1041,7 @@ def compact_payload(payload: GalleryPayload) -> dict[str, JsonValue]:
         "o": payload["source"],
         "y": payload["identities"],
         "q": payload["characters"],
+        "m": payload["memory"],
         "r": compact_grouping(grouping) if grouping is not None else None,
     }
 
@@ -1584,7 +1625,10 @@ decodePayload().then((compact)=>boot(compact,start)).catch((error)=>fatal(error 
 '''
 
 HTML_TEMPLATE = HTML_TEMPLATE.replace(
-    "__CANDIDATE_PICKER_JS__", Path(__file__).with_name("gallery_candidates.js").read_text(encoding="utf-8")
+    "__CANDIDATE_PICKER_JS__", "\n".join(
+        Path(__file__).with_name(name).read_text(encoding="utf-8")
+        for name in ("gallery_suggestions.js", "gallery_candidates.js")
+    )
 ).replace("</style>", Path(__file__).with_name("gallery_candidates.css").read_text(encoding="utf-8") + "</style>")
 
 

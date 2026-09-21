@@ -1,35 +1,50 @@
 {
-  "version": 1,
+  "version": 2.1,
+  "sources": {
+    "model": {"name": "wd-eva02-large-tagger-v3", "license": "Apache-2.0", "closed_set_size": 2751},
+    "memory": {"path": "character-memory.json", "version": 1}
+  },
   "faces": [
     {
-      "face_id": "f_00000001",
-      "image_sha16": "0000000000000001",
+      "face_id": "f_00000001", "image_sha16": "0000000000000001",
       "candidates": [
-        {"character": "人物甲", "score": 0.91, "margin_vs_runner_up": 0.12, "source": "anchor"},
-        {"character": "人物乙", "score": 0.79, "margin_vs_runner_up": -0.12, "source": "anchor"}
+        {"name": "人物甲", "source": "model", "score": 0.99},
+        {"name": "人物乙", "source": "model", "score": 0.57},
+        {"name": "普通人物", "source": "bucket"}, {"name": "新角色设计", "source": "bucket"},
+        {"name": "无法确定", "source": "bucket"}, {"name": "其他", "source": "bucket"},
+        {"name": "新建角色", "source": "action"}
       ],
-      "suggested": "人物甲",
-      "abstained": false
+      "suggested": null, "suggested_verified": null, "abstained": true,
+      "suggested_model": {"name": "人物甲", "display": "人物甲", "score": 0.99, "margin_vs_runner_up": 0.42, "margin_basis": "observed", "gate": "wd-score-margin-v1", "verified": false},
+      "model_demoted": false, "disagreements": []
     },
     {
-      "face_id": "f_00000002",
-      "image_sha16": "0000000000000001",
+      "face_id": "f_00000002", "image_sha16": "0000000000000001",
       "candidates": [
-        {"character": "人物乙", "score": 0.64, "margin_vs_runner_up": 0.03, "source": "anchor"},
-        {"character": "人物甲", "score": 0.61, "margin_vs_runner_up": -0.03, "source": "anchor"}
+        {"name": "人物甲", "source": "model", "score": 0.98},
+        {"name": "人物乙", "source": "memory", "score": 0.97},
+        {"name": "普通人物", "source": "bucket"}, {"name": "新角色设计", "source": "bucket"},
+        {"name": "无法确定", "source": "bucket"}, {"name": "其他", "source": "bucket"},
+        {"name": "新建角色", "source": "action"}
       ],
-      "suggested": null,
-      "abstained": true
+      "suggested": {"name": "人物乙", "source": "memory", "margin_vs_runner_up": 0.30},
+      "suggested_verified": {"name": "人物乙", "source": "memory", "margin_vs_runner_up": 0.30},
+      "abstained": false,
+      "suggested_model": {"name": "人物甲", "display": "人物甲", "score": 0.98, "margin_vs_runner_up": 0.63, "margin_basis": "runner-up-upper-bound-0.35", "gate": "wd-score-margin-v1", "verified": false},
+      "model_demoted": true,
+      "disagreements": [{"model_name": "人物甲", "evidence_name": "人物乙", "source": "memory", "score": 0.97, "reason": "visual-evidence-disagrees"}]
     },
     {
-      "face_id": "f_00000003",
-      "image_sha16": "0000000000000002",
+      "face_id": "f_00000003", "image_sha16": "0000000000000002",
       "candidates": [
-        {"character": "人物甲", "score": 0.55, "margin_vs_runner_up": 0.04, "source": "anchor"},
-        {"character": "人物乙", "score": 0.51, "margin_vs_runner_up": -0.04, "source": "anchor"}
+        {"name": "人物甲", "source": "model", "score": 0.55},
+        {"name": "人物乙", "source": "model", "score": 0.51},
+        {"name": "普通人物", "source": "bucket"}, {"name": "新角色设计", "source": "bucket"},
+        {"name": "无法确定", "source": "bucket"}, {"name": "其他", "source": "bucket"},
+        {"name": "新建角色", "source": "action"}
       ],
-      "suggested": null,
-      "abstained": true
+      "suggested": null, "suggested_verified": null, "suggested_model": null,
+      "abstained": true, "model_demoted": false, "disagreements": []
     }
   ]
 }

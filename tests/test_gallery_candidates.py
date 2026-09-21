@@ -38,7 +38,7 @@ def test_picker_when_studio_lists_ranked_choices() -> None:
     template = build_gallery.HTML_TEMPLATE
     # When inspecting the face naming popover contract.
     # Then ranked choices, honesty, keyboard map and journal fields are present.
-    assert "候选仅含已建档角色；其他角色需先建立参考" in template
+    assert "renderSuggestionTiers(evidence)" in template
     assert 'make("other", "其他")' in template
     assert 'make("full", "新建角色")' in template
     assert 'make("ignore", "不是")' in template
@@ -81,3 +81,87 @@ def test_candidates_when_compact_payload_keeps_evidence(tmp_path: Path) -> None:
     decoded = json.loads(gzip.decompress(base64.b64decode(encoded)).decode("utf-8"))
     # Then optional evidence survives the Python/browser boundary.
     assert decoded["y"]["faces"][0]["candidate_evidence"]["candidates"] == [candidate]
+
+
+def test_candidates_v2_when_sources_and_memory_sidecars_exist(tmp_path: Path) -> None:
+    # Given v2 candidate provenance plus a v1 character-memory document.
+    face = {"face_id": "f_v2", "image_sha16": "sha-v2"}
+    candidate_document = {
+        "version": 2.1,
+        "sources": {
+            "model": {"name": "WD tagger", "license": "Apache-2.0", "closed_set": 2751},
+            "memory": {"name": "character-memory", "version": 1},
+        },
+        "faces": [
+            {
+                **face,
+                "candidates": [
+                    {"name": "人物甲", "display": "人物甲", "source": "model", "score_model": 0.91},
+                    {"name": "人物乙", "display": "人物乙", "source": "memory", "score_memory": 0.82},
+                    {"name": "其他", "display": "其他", "source": "bucket"},
+                    {"name": "新建角色", "display": "新建角色", "source": "action"},
+                ],
+                "suggested": {"name": "人物甲", "display": "人物甲"},
+                "suggested_verified": {"name": "人物甲", "display": "人物甲"},
+                "suggested_model": {"name": "人物乙", "display": "人物乙", "score": .99,
+                    "margin_vs_runner_up": .64, "verified": False, "gate": "wd-score-margin-v1"},
+                "model_demoted": True,
+                "disagreements": [{"model_name": "人物乙", "evidence_name": "人物甲", "source": "memory"}],
+                "abstained": False,
+                "attributes": {
+                    "source": "wd-tagger",
+                    "hair_color": "black",
+                    "hair_style": "long hair",
+                    "tags": [{"tag": "portrait", "score": 0.88}],
+                },
+            }
+        ],
+    }
+    (tmp_path / "identities.json").write_text(json.dumps({"faces": [face]}), encoding="utf-8")
+    (tmp_path / "identity-candidates.json").write_text(json.dumps(candidate_document), encoding="utf-8")
+    memory_document = {
+        "characters": [
+            {
+                "name": "人物甲",
+                "origin": "model",
+                "aliases": [],
+                "baseline_faces": ["f_v2"],
+                "variant_faces": [{"face_id": "f_v2", "note": "side profile"}],
+                "assigned_faces": ["f_v2"],
+                "attribute_profile": {},
+                "updated_at": "2026-09-21T00:00:00Z",
+            }
+        ]
+    }
+    (tmp_path / "character-memory.json").write_text(json.dumps(memory_document), encoding="utf-8")
+
+    # When identity and gallery payloads are loaded.
+    identities = build_gallery.load_identities(tmp_path / "identities.json")
+    payload = build_gallery.build_payload(tmp_path, (), ())
+
+    # Then root provenance, face evidence, and memory remain available to the browser.
+    assert identities is not None
+    evidence = identities["faces"][0]["candidate_evidence"]
+    assert evidence["version"] == 2.1
+    assert evidence["suggested_model"]["verified"] is False
+    assert evidence["model_demoted"] is True
+    assert evidence["suggested_verified"] == evidence["suggested"]
+    assert evidence["disagreements"][0]["evidence_name"] == "人物甲"
+    assert evidence["sources"]["model"]["license"] == "Apache-2.0"
+    assert evidence["attributes"]["hair_color"] == "black"
+    assert payload["memory"] == memory_document
+    assert build_gallery.compact_payload(payload)["m"] == memory_document
+
+
+def test_picker_v2_surface_contains_sections_marks_and_memory_contract() -> None:
+    # Given the generated single-file studio template.
+    template = build_gallery.HTML_TEMPLATE
+
+    # When inspecting the v2 curation surface.
+    # Then both candidate provenance and client-side memory operations are embedded.
+    for label in ("模型枚举", "我的命名", "普通人物", "新角色设计", "无法确定"):
+        assert label in template
+    for marker in ("baseline", "variant", "标为基准参考形象", "标为变体参考", "character-memory.json"):
+        assert marker in template
+    for operation in ("重命名", "合并到", "删除", "导出", "导入"):
+        assert operation in template

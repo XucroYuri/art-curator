@@ -78,7 +78,8 @@ def group(out: Path, options: IdentityOptions) -> GroupDocument:
                             abstained=Abstained(face_count=len(abstained), cluster_groups=cluster_groups))
     export(out, result, rows)
     candidates = CandidateDocument(provenance=p, thresholds=gates, faces=candidate_faces)
-    save_model(out / "identity-candidates.json", candidates)
     write_candidates_csv(out / "identity-candidates.csv", candidates)
+    from .identity_candidates_v2 import emit
+    emit(out, gates)
     report(out, result, anchors)
     return result
