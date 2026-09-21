@@ -27,7 +27,7 @@ def previews(settings: Settings) -> PreviewResult:
     """Read inventory without updates; publish JPEGs and coordinator resource metadata."""
     started = time.perf_counter()
     manifest = (settings.out / "manifest.sqlite").resolve()
-    with sqlite3.connect(f"{manifest.as_uri()}?mode=ro", uri=True) as connection:
+    with sqlite3.connect(db.readonly_uri(manifest), uri=True) as connection:
         rows = [db.Row.model_validate_json(item[0]) for item in connection.execute(
             "SELECT payload FROM images ORDER BY position")]
     hashes: dict[str, db.Row] = {}

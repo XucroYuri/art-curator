@@ -19,7 +19,7 @@ Baseline inspected: 2026-09-20. These specifications encode the supplied archite
 | [030-UX](030-UX.md) | Human decisions and offline review |
 | [040-QUALITY-GATES](040-QUALITY-GATES.md) | Nine gates, fixtures and worked requirement |
 | [050-ROADMAP](050-ROADMAP.md) | Dependencies and graduation |
-| [Album vision](features/FR-ALBUM-VISION.md) | Governing product definition, proposed mapping/provenance invariants, open-world taxonomy and G1–G7 dependencies |
+| [Album vision](features/FR-ALBUM-VISION.md) | Governing product definition, approved INV-P, open-world taxonomy and G1–G7 dependencies |
 | [Album ingestion](features/FR-ALBUM-INGEST.md) | Read-only eight-stage orchestration, incremental resume, throughput/storage budgets and action costs |
 | [Album mode negotiation](features/FR-ALBUM-NEGOTIATE.md) | Measured cluster/folder report, working-mode consent, inheritance and Chinese honesty copy |
 | [Virtual album mapping](features/FR-ALBUM-MAP.md) | Mapping schema, first-pass tiers, batch undo, cluster naming/promotion and optional physical export |
@@ -29,8 +29,10 @@ Baseline inspected: 2026-09-20. These specifications encode the supplied archite
 | [Semantic search spike](features/FR-SEMANTIC-SEARCH.md) | Query-only Chinese search; WeMM vs SigLIP-crop preregistration |
 | [Curation protocol](features/FR-CURATION-PROTOCOL.md) | Content-bound human decisions |
 | [Interop](features/FR-INTEROP.md) | Explicit loss-aware exchange |
+| [Alias reconciliation](features/FR-ALIAS-RECONCILIATION.md) | Human-confirmed reference-name and WD-tag alias proposals |
 | [ADR-0001](adr/ADR-0001-isolated-scorer-environments.md), [ADR-0002](adr/ADR-0002-dry-run-first-moves.md), [ADR-0003](adr/ADR-0003-columnar-gzip-review.md) | Retrospective decisions, not new certification |
 | [ADR-0004](adr/ADR-0004-gpu-fp32-admission-criterion.md) | Scoped CUDA FP32 admission with unchanged primary budgets |
+| [ADR-0005](adr/ADR-0005-measured-context-assisted-grouping.md) | Narrow measured context-assisted grouping exception; approves INV-P |
 | [FEATURE](templates/FEATURE.md), [ADR](templates/ADR.md), [BENCHMARK](templates/BENCHMARK.md), [CERTIFICATION](templates/CERTIFICATION.md), [ADVERSARIAL-REVIEW](templates/ADVERSARIAL-REVIEW.md), [RELEASE-EVIDENCE](templates/RELEASE-EVIDENCE.md) | Authoring forms |
 
 ## Requirement grammar and evidence convention

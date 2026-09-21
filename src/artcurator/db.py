@@ -15,6 +15,16 @@ COLUMNS: Final = (
 )
 
 
+def readonly_uri(path: Path) -> str:
+    """SQLite file URI for ordinary or Win32 extended paths (which are not URI authorities)."""
+    text = str(path.resolve())
+    if text.startswith("\\\\?\\UNC\\"):
+        text = "\\\\" + text[8:]
+    elif text.startswith("\\\\?\\"):
+        text = text[4:]
+    return Path(text).as_uri() + "?mode=ro"
+
+
 class Row(BaseModel):
     """Mutable accumulation of completed pipeline stages; validated at disk boundaries."""
     model_config = ConfigDict(allow_inf_nan=False)

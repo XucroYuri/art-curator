@@ -14,10 +14,12 @@ def main() -> None:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
     parser = argparse.ArgumentParser(description=__doc__)
+    from .ingest_cli import COMMANDS, add_arguments, handle
+    add_arguments(parser)
     parser.add_argument("command", choices=["scan", "score", "cluster", "report", "run-all", "previews",
                         "identity", "identity-detect", "identity-embed", "identity-cluster", "identity-report",
                          "identity-apply", "identity-benchmark", "identity-anchor", "identity-group",
-                         "identity-tag", "identity-candidates", "identity-alias", "character-memory"])
+                          "identity-tag", "identity-candidates", "identity-alias", "character-memory", *COMMANDS])
     parser.add_argument("--memory-op", choices=["rename", "merge", "delete", "import", "export", "list"])
     parser.add_argument("--alias-op", choices=["propose", "apply"])
     parser.add_argument("--alias-file", type=Path)
@@ -35,6 +37,9 @@ def main() -> None:
     parser.add_argument("--pass", dest="only", choices=["siglip", "aes_v25", "topiq_iaa", "topiq_nr", "qrealign", "hpsv3", "nsfw_prob"])
     parser.add_argument("--max-new", type=int, default=0, help="HPSv3 new-content budget; 0 means unlimited")
     args = parser.parse_args()
+    if args.command in COMMANDS:
+        handle(args, parser)
+        return
     if args.command == "identity-anchor" and not args.from_folders:
         parser.error("identity-anchor requires --from-folders")
     if args.from_folders and args.command != "identity-anchor":

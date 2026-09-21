@@ -93,9 +93,9 @@ def inspect(path: Path, root: Path) -> db.Row:
                   phash=str(imagehash.phash(image, hash_size=16)), mode=mode)
 
 
-def scan(settings: Settings, limit: int | None) -> list[db.Row]:
+def scan(settings: Settings, limit: int | None, *, paths: list[Path] | None = None) -> list[db.Row]:
     started = time.perf_counter()
-    paths = image_paths(settings.input)
+    paths = image_paths(settings.input) if paths is None else paths
     rows = []
     rejected = []
     budget = ByteBudget(min(Budgets.current().host_bytes // 4, 512 * 1024**2))

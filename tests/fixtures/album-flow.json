@@ -1,0 +1,9 @@
+{
+  "fixture": "ALBUM-FLOW-v1",
+  "description": "Synthetic RGB rectangles only; generated in each test's isolated source directory.",
+  "images": [
+    {"name": "folder-a/red.png", "size": [48, 32], "color": [220, 20, 20]},
+    {"name": "folder-b/blue.png", "size": [32, 48], "color": [20, 20, 220]},
+    {"name": "folder-a/red-copy.png", "copy": "folder-a/red.png"}
+  ]
+}

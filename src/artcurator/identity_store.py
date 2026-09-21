@@ -14,7 +14,7 @@ import numpy as np
 from numpy.typing import NDArray
 from pydantic import BaseModel
 
-from .db import Row
+from .db import Row, readonly_uri
 from .identity_schema import IdentityDocument, Provenance
 
 
@@ -47,7 +47,7 @@ def save_array(path: Path, values: NDArray) -> None:
 
 
 def manifest(out: Path) -> list[Row]:
-    connection = sqlite3.connect((out / "manifest.sqlite").resolve().as_uri() + "?mode=ro", uri=True)
+    connection = sqlite3.connect(readonly_uri(out / "manifest.sqlite"), uri=True)
     try:
         rows = [Row.model_validate_json(r[0]) for r in connection.execute(
             "SELECT payload FROM images ORDER BY position")]

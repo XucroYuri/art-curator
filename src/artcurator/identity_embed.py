@@ -12,6 +12,8 @@ from typing import assert_never
 import numpy as np
 from PIL import Image
 
+from .db import readonly_uri
+
 from .identity_profiles import PREPROCESS, ExecutionProfile, certify_model, embedding_namespace, execution_profile
 from .identity_schema import IdentityOptions, ModelInfo
 from .identity_store import (
@@ -31,7 +33,9 @@ class CropEmbedder:
 def local_snapshot(outputs: Path, repo: str, revision: str) -> Path:
     """Resolve only the same immutable model across legacy/shared output caches."""
     suffix = f"cache/huggingface/hub/models--{repo.replace('/', '--')}/snapshots/{revision}"
-    for candidate in sorted(outputs.glob(f"*/{suffix}")):
+    from .config import ROOT
+    candidates = {*outputs.glob(f"*/{suffix}"), *(ROOT / "out").glob(f"*/{suffix}")}
+    for candidate in sorted(candidates):
         if (candidate / "preprocessor_config.json").is_file() and (
             (candidate / "model.safetensors").is_file() or (candidate / "model.safetensors.index.json").is_file()
         ):
@@ -45,7 +49,7 @@ def load_embedder(out: Path, options: IdentityOptions) -> CropEmbedder:
         case "siglip":
             import torch
             from transformers import SiglipImageProcessor, SiglipVisionModel
-            connection = sqlite3.connect((out / "manifest.sqlite").resolve().as_uri() + "?mode=ro", uri=True)
+            connection = sqlite3.connect(readonly_uri(out / "manifest.sqlite"), uri=True)
             try:
                 found = connection.execute("SELECT value FROM meta WHERE key='model_siglip'").fetchone()
             finally:
