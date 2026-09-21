@@ -1,5 +1,6 @@
 """Argparse command boundary and local-only pipeline orchestration."""
 import argparse
+import json
 import logging
 import sys
 import time
@@ -16,8 +17,10 @@ def main() -> None:
     parser.add_argument("command", choices=["scan", "score", "cluster", "report", "run-all", "previews",
                         "identity", "identity-detect", "identity-embed", "identity-cluster", "identity-report",
                          "identity-apply", "identity-benchmark", "identity-anchor", "identity-group",
-                         "identity-tag", "identity-candidates", "character-memory"])
+                         "identity-tag", "identity-candidates", "identity-alias", "character-memory"])
     parser.add_argument("--memory-op", choices=["rename", "merge", "delete", "import", "export", "list"])
+    parser.add_argument("--alias-op", choices=["propose", "apply"])
+    parser.add_argument("--alias-file", type=Path)
     parser.add_argument("--name", default="")
     parser.add_argument("--target", default="")
     parser.add_argument("--memory-file", type=Path)
@@ -69,6 +72,22 @@ def main() -> None:
                 from .identity_store import stage
                 with stage(settings.out, "identity-candidates"):
                     emit(settings.out)
+            case "identity-alias":
+                from .alias_candidates import emit_alias_candidates
+                from .character_memory import apply_alias_decisions
+                match args.alias_op:
+                    case "propose":
+                        proposed = emit_alias_candidates(settings.out)
+                        print(json.dumps({"artifact": "alias-candidates.json", "banks": len(proposed.banks)}))
+                    case "apply":
+                        if args.alias_file is None:
+                            parser.error("identity-alias --alias-op apply requires --alias-file")
+                        if not args.alias_file.exists():
+                            parser.error(f"alias decisions file not found: {args.alias_file}")
+                        memory = apply_alias_decisions(settings.out, args.alias_file)
+                        print(json.dumps({"characters": len(memory.characters)}))
+                    case _:
+                        parser.error("identity-alias requires --alias-op propose|apply")
             case "character-memory":
                 from .memory_curation import curate, export_memory, import_memory
                 from .character_memory import load_memory

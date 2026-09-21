@@ -5,6 +5,7 @@ function renderSuggestionTiers(evidence) {
   const verified = evidence?.suggested_verified ?? evidence?.suggested;
   const model = evidence?.suggested_model;
   const demoted = Boolean(evidence?.model_demoted || evidence?.disagreements?.length);
+  const unresolved = evidence?.disagreements?.some((item) => item.reason === "reference-namespace-unresolved");
   const badge = (tier, text) => {
     const node = document.createElement("p");
     node.className = `candidate-note suggestion-badge suggestion-${tier}`;
@@ -15,7 +16,7 @@ function renderSuggestionTiers(evidence) {
   if (verifiedName) {
     container.append(badge("verified", `已核实建议：${verifiedName} · 参考/记忆门禁通过，仍需人工确认`));
   } else if (!model || demoted) {
-    container.append(badge("empty", demoted ? "证据冲突 · 暂不推荐模型结果，请人工选择" : "暂无建议 · 仍可人工选择"));
+    container.append(badge("empty", unresolved ? "参考命名空间待核对 · 不是已证实认错" : demoted ? "证据冲突 · 暂不推荐模型结果，请人工选择" : "暂无建议 · 仍可人工选择"));
   }
   if (model) {
     const score = Number(model.score).toFixed(3);
@@ -27,7 +28,7 @@ function renderSuggestionTiers(evidence) {
       const details = document.createElement("details");
       details.className = "suggestion-conflict";
       const summary = document.createElement("summary");
-      summary.textContent = "模型建议已降级 · 与参考/记忆证据不一致";
+      summary.textContent = unresolved ? "模型建议已降级 · 请先在「别名核对」确认命名空间" : "模型建议已降级 · 与参考/记忆证据不一致";
       details.append(summary, modelBadge);
       for (const conflict of evidence.disagreements || []) {
         const line = document.createElement("p");

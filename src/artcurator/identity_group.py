@@ -12,6 +12,7 @@ from .identity_group_math import decide, without_crop
 from .identity_group_schema import (Abstained, Anchor, CharacterGroup, ClusterGroup, Decision, GroupDocument,
                                     GroupProvenance, Thresholds)
 from .identity_labels import load_registry
+from .character_memory import load_memory
 from .identity_schema import IdentityOptions, Record
 from .identity_store import (digest, file_digest, load_document, load_provenance,
                              load_vectors, save_model)
@@ -44,7 +45,8 @@ def group(out: Path, options: IdentityOptions) -> GroupDocument:
     rows = ExportRows(faces=[FaceExport(face=f, filename=filenames[f.image_sha16], decision=d)
                              for f, d in zip(document.faces, decisions, strict=True)], filenames=filenames)
     characters = []
-    for name in sorted({a.character for a in anchors.anchors} | set(bank.labels)):
+    aliases = {alias: char.name for char in load_memory(out).characters for alias in [char.name, *char.aliases]}
+    for name in sorted({aliases.get(a.character, a.character) for a in anchors.anchors} | set(bank.labels)):
         matched = [row for row in rows.faces if row.decision.character == name]
         images = sorted({row.face.image_sha16 for row in matched})
         similarities = [row.decision.sim for row in matched if row.decision.sim is not None]

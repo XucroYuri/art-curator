@@ -1,0 +1,47 @@
+{
+  "date": "2026-09-21",
+  "method": "Playwright Chromium, single-file galleries served over loopback HTTP",
+  "fixture": "ALIAS-SYN-v1 plus synthetic layout stress records",
+  "viewports": [
+    {"width": 1280, "height": 900, "dialog_client": 918, "dialog_scroll": 918},
+    {"width": 768, "height": 900, "dialog_client": 734, "dialog_scroll": 734},
+    {"width": 375, "height": 900, "dialog_client": 341, "dialog_scroll": 341}
+  ],
+  "synthetic_screenshots": [
+    "docs/assets/alias-1280.png",
+    "docs/assets/alias-768.png",
+    "docs/assets/alias-375.png",
+    "docs/assets/alias-confirmed-375.png",
+    "docs/assets/alias-rejected-375.png",
+    "docs/assets/alias-bottom-375.png"
+  ],
+  "private_gallery_observations": [
+    {"corpus": "pilot", "pairs": 21, "viewports": [1280, 768, 375]},
+    {"corpus": "review", "pairs": 48, "viewports": [1280, 768, 375]},
+    {"corpus": "similarity", "pairs": 18, "viewports": [1280, 768, 375]}
+  ],
+  "keyboard": {
+    "enter_confirms": true,
+    "tab_then_space_rejects": true,
+    "escape_restores_trigger_focus": true,
+    "focus_remains_in_dialog": true,
+    "rejection_survives_reload": true
+  },
+  "browser_exports": "out/alias-synthetic/browser-confirmed.json and browser-rejected.json",
+  "export_apply_evidence": "specs/evidence/alias-browser-apply.json",
+  "console_errors_final": 0,
+  "external_requests": 0,
+  "external_script_or_stylesheet_elements": 0,
+  "independent_reviews": {
+    "design_integrity": "REVISE: minor shortcut suppression and documentation feedback; schema/token/offline checks corroborated",
+    "visual_cjk": "REVISE: reviewer model cannot decode images; no independent visual approval",
+    "known_product_limit": "Browser shortcuts are suppressed while alias dialog is open; tested Tab/Enter/Space/Escape remain operable"
+  },
+  "initial_fixture_issue": "Three 404s from inherited demo media references; harness now uses explicit placeholder-only identity metadata. Final rebuilt fixture has zero errors.",
+  "limitations": [
+    "Real aliases were not confirmed or rejected by the executor.",
+    "Direct file navigation, Lighthouse, screen-reader and cross-browser qualification not performed.",
+    "Native dialog has no new animation; no animation performance claim.",
+    "Independent review results are recorded separately in the documentation note."
+  ]
+}

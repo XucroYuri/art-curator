@@ -6,6 +6,7 @@ from .identity_labels import apply_labels, load_registry
 from .identity_schema import Label, LabelEnvelope
 from .identity_store import load_document, load_provenance, save_model, stage
 from .memory_schema import Character, Memory, timestamp
+from .alias_schema import AliasError
 
 
 def combine(left: Character, right: Character) -> Character:
@@ -13,9 +14,16 @@ def combine(left: Character, right: Character) -> Character:
     variants = {v.face_id: v for v in [*left.variant_faces, *right.variant_faces]}
     baseline = sorted(set(left.baseline_faces + right.baseline_faces))
     profile = {key: dict(value) for key, value in left.attribute_profile.items()}
+    decisions = {record.wd_tag: record for record in left.alias_decisions}
+    for record in right.alias_decisions:
+        previous = decisions.get(record.wd_tag)
+        if previous and previous.decision != record.decision:
+            raise AliasError("conflicting alias decisions; resolve explicitly before merge/import")
+        decisions.setdefault(record.wd_tag, record)
     for key, values in right.attribute_profile.items():
         profile.setdefault(key, {}).update(values)
     return left.model_copy(update={
+        "alias_decisions": list(decisions.values()),
         "aliases": sorted((set(left.aliases + right.aliases + [right.name])) - {left.name}),
         "baseline_faces": baseline, "variant_faces": [variants[k] for k in sorted(variants) if k not in baseline],
         "assigned_faces": sorted(set(left.assigned_faces + right.assigned_faces)),

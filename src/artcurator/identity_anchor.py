@@ -10,6 +10,7 @@ from numpy.typing import NDArray
 from PIL import Image
 
 from .config import Settings
+from .character_memory import load_memory
 from .identity_anchor_sources import collect
 from .identity_detector import load_detector
 from .identity_embed import load_embedder
@@ -92,6 +93,9 @@ def effective_references(out: Path, anchors: AnchorDocument, matrix: NDArray) ->
             crop_sha256=provenance.crops[face.face_id], bbox=face.bbox, det_score=face.det_score,
             phash="", event_id=event.event_id))
         values.append(vector)
+    aliases = {alias: char.name for char in load_memory(out).characters for alias in [char.name, *char.aliases]}
+    references = [reference.model_copy(update={"character": aliases.get(reference.character, reference.character)})
+                  for reference in references]
     labels_by_crop = defaultdict(set)
     for reference in references:
         labels_by_crop[reference.crop_sha256].add(reference.character)

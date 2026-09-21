@@ -5,6 +5,7 @@ from typing import Literal, Self
 from pydantic import Field, model_validator
 
 from .identity_schema import FaceId, Record
+from .alias_schema import AliasError, AliasRecord
 
 
 def timestamp() -> str:
@@ -20,6 +21,7 @@ class Character(Record):
     name: str = Field(min_length=1, pattern=r"^[^|\r\n]+$")
     origin: Literal["model", "user", "mixed"] = "user"
     aliases: list[str] = Field(default_factory=list)
+    alias_decisions: list[AliasRecord] = Field(default_factory=list)
     baseline_faces: list[FaceId] = Field(default_factory=list)
     variant_faces: list[Variant] = Field(default_factory=list)
     assigned_faces: list[FaceId] = Field(default_factory=list)
@@ -32,7 +34,7 @@ class Character(Record):
 
 
 class Memory(Record):
-    version: Literal[1] = 1
+    version: Literal[1, 2] = 2
     characters: list[Character] = Field(default_factory=list)
 
     @model_validator(mode="after")
@@ -42,6 +44,12 @@ class Memory(Record):
             raise ValueError("memory names and aliases must be unique and nonempty")
         owners: set[str] = set()
         for char in self.characters:
+            tags = [record.wd_tag for record in char.alias_decisions]
+            if len(tags) != len(set(tags)):
+                raise AliasError("duplicate alias decisions")
+            for record in char.alias_decisions:
+                if (record.wd_tag in [char.name, *char.aliases]) != (record.decision == "confirmed"):
+                    raise AliasError("alias decision contradicts namespace")
             if owners & char.face_ids:
                 raise ValueError("memory face assigned to multiple characters")
             owners.update(char.face_ids)

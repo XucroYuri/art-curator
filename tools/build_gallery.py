@@ -657,6 +657,7 @@ def load_identities(identities_path: Path) -> dict[str, JsonValue] | None:
     document["image_count"] = _identity_integer(document.get("image_count"), len(images))
     document["face_count"] = _identity_integer(document.get("face_count"), len(faces))
     document["cluster_count"] = _identity_integer(document.get("cluster_count"), len(clusters))
+    document["alias_reconciliation"] = load_characters(identities_path.with_name("alias-candidates.json"))
     return document
 
 
@@ -1627,7 +1628,7 @@ decodePayload().then((compact)=>boot(compact,start)).catch((error)=>fatal(error 
 HTML_TEMPLATE = HTML_TEMPLATE.replace(
     "__CANDIDATE_PICKER_JS__", "\n".join(
         Path(__file__).with_name(name).read_text(encoding="utf-8")
-        for name in ("gallery_suggestions.js", "gallery_candidates.js")
+        for name in ("gallery_suggestions.js", "gallery_candidates.js", "gallery_aliases.js")
     )
 ).replace("</style>", Path(__file__).with_name("gallery_candidates.css").read_text(encoding="utf-8") + "</style>")
 

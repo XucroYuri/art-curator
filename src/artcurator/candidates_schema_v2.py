@@ -45,12 +45,12 @@ class Disagreement(Record):
     evidence_name: str
     source: Literal["memory", "reference", "confirmed"]
     score: float = Field(ge=-1, le=1)
-    reason: Literal["visual-evidence-disagrees"] = "visual-evidence-disagrees"
+    reason: Literal["visual-evidence-disagrees", "reference-namespace-unresolved"] = "visual-evidence-disagrees"
 
 
 class MemorySource(Record):
     path: Literal["character-memory.json"] = "character-memory.json"
-    version: Literal[1] = 1
+    version: Literal[1, 2] = 2
 
 
 class Sources(Record):

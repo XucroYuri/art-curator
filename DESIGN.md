@@ -169,6 +169,33 @@ Skip is session-only; `不是` retains the existing face-ignore semantics.
 - Grouping is an experimental, uncalibrated retrieval proposal; it is not identity verification or an accuracy claim.
 - Thresholds show `min_sim` and `min_margin` from the grouping artifact. Folder names are human-supplied labels; per-image decisions use pixels only. Source-image rights remain user-supplied and unverified.
 
+### Alias reconciliation review
+
+- **Persona / task**: a keyboard-first curator reconciles human reference names
+  with opaque WD tags without mistaking model support for identity verification.
+- **Structure**: `别名核对` opens a native modal dialog with a pinned heading,
+  explicit export/apply instructions, and one named vertical scroll owner. Bank
+  sections contain existing double-ring memory cards and native confirm/reject
+  buttons. Direct reference-image support and weak visual cohorts are separate.
+- **Evidence**: rank, co-occurrence/denominator, top-1 count, min/p25/median/p75/max;
+  text explicitly discloses compact censoring, small samples and weak retrieval.
+  Missing direct evidence is `—`, never zero-confidence or fabricated support.
+- **States**: unconfirmed, browser-pending confirmed/rejected, memory-applied
+  confirmed/rejected, empty bank, storage error. Warning tokens for proposals,
+  success for an explicit alias confirmation (not identity verification), danger
+  for rejection; each has a text label. No score-dependent default selection.
+- **Accessibility**: native Tab/Shift+Tab focus containment, Enter/Space activation,
+  Escape close, focus restore, polite live result. Gallery shortcuts are isolated.
+  Long CJK names and WD tags wrap; controls are at least `--space-10` high.
+- **Layout**: width `min(100% - 2 * --space-4, 2 * --character-drawer-width)`;
+  cards stack at every viewport, with wrapping metric text and actions. Reuse
+  body/caption/mono type, `--space-2/3/4/5`, elevated surfaces and existing shadows.
+- **Persistence**: stable corpus/profile localStorage key; export explicit decisions
+  for local API application. No automatic changes to the visible model suggestions.
+  Browser storage is not a backup. Existing memory import/export remains separate.
+- **Motion**: native dialog opening without additional animation; reuse existing
+  focus/hover feedback. Reduced-motion does not lose any information.
+
 ### Character decision journal
 
 - **Structure**: append-only localStorage events keyed by the corpus fingerprint, with import/export controls in the existing journal modal.

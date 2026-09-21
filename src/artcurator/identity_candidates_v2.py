@@ -69,6 +69,8 @@ def emit(out: Path, gates: Thresholds | None = None) -> CandidateDocumentV2:
         raise ValueError("WD evidence corpus mismatch")
     tagged = {face.face_id: face for face in wd.faces} if wd else {}
     aliases = {alias: char.name for char in memory.characters for alias in [char.name, *char.aliases]}
+    wd_names = {tag.tag for row in tagged.values() for tag in row.evidence.characters}
+    resolved_references = {char.name for char in memory.characters if char.aliases or char.name in wd_names}
     faces: list[FaceOptions] = []
     for face, vector in zip(document.faces, vectors, strict=True):
         evidence = tagged.get(face.face_id)
@@ -95,11 +97,13 @@ def emit(out: Path, gates: Thresholds | None = None) -> CandidateDocumentV2:
             ref_names, _, ref_scores = similarities(vector, without_crop(reference_bank, provenance.crops[face.face_id]))
             reference = [Option(name=aliases.get(name, name), source="memory", score=float(score))
                          for name, score in zip(ref_names, ref_scores, strict=True)]
-            conflicts.extend(disagreement(model_suggestion, reference, "reference"))
+            reference_conflicts = disagreement(model_suggestion, reference, "reference")
+            conflicts.extend(conflict.model_copy(update={"reason": "reference-namespace-unresolved"})
+                if conflict.evidence_name not in resolved_references else conflict for conflict in reference_conflicts)
         confirmed = registry.references.get(face.face_id)
         if confirmed:
             conflicts.extend(disagreement(model_suggestion,
-                [Option(name=confirmed, source="memory", score=1)], "confirmed"))
+                [Option(name=aliases.get(confirmed, confirmed), source="memory", score=1)], "confirmed"))
         faces.append(FaceOptions(face_id=face.face_id, image_sha16=face.image_sha16,
             candidates=merge_options(model, retrieved), suggested=suggested, abstained=suggested is None,
             suggested_verified=suggested, suggested_model=model_suggestion,
@@ -107,4 +111,6 @@ def emit(out: Path, gates: Thresholds | None = None) -> CandidateDocumentV2:
             attributes=evidence.evidence.attributes if evidence else Attributes()))
     result = CandidateDocumentV2(faces=faces)
     save_model(out / "identity-candidates.json", result)
+    from .alias_candidates import emit_alias_candidates
+    emit_alias_candidates(out)
     return result

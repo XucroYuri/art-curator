@@ -8,11 +8,11 @@ from .memory_schema import Character, Memory, Variant, timestamp
 
 def load_memory(out: Path) -> Memory:
     path = out / "character-memory.json"
-    return Memory.model_validate_json(path.read_bytes()) if path.exists() else Memory()
+    return Memory.model_validate_json(path.read_bytes()).model_copy(update={"version": 2}) if path.exists() else Memory()
 
 
 def save_memory(out: Path, memory: Memory) -> None:
-    validated = Memory.model_validate(memory.model_dump())
+    validated = Memory.model_validate(memory.model_dump()).model_copy(update={"version": 2})
     valid = set(load_provenance(out).crops)
     if any(not char.face_ids <= valid for char in validated.characters):
         raise ValueError("memory contains faces outside this corpus")
@@ -80,3 +80,9 @@ def curate(out: Path, operation: str, name: str, target: str = "") -> Memory:
     """Public curation facade; the service also updates assignment journals."""
     from .memory_curation import curate as execute
     return execute(out, operation, name, target)
+
+
+def apply_alias_decisions(out: Path, path: Path) -> Memory:
+    """Apply an explicit studio alias envelope under the identity stage lock."""
+    from .alias_reconciliation import apply_decisions
+    return apply_decisions(out, path)
