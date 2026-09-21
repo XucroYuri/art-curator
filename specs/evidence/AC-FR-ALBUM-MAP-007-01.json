@@ -1,15 +1,80 @@
 {
   "schema_version": "album-ac-receipt-v1",
   "ac_id": "AC-FR-ALBUM-MAP-007-01",
-  "verdict": "inconclusive",
-  "implementation_verdict": "inconclusive",
-  "method": "synthetic regression tests plus implementation/spec audit",
-  "fixture": "ALBUM-MAP-v1 scoped recipe; see run inventory hashes",
-  "comparator": "exact state/receipt contract of the named executed regression, not the entire owning AC",
-  "passed_test_names": [],
-  "limitations": [
-    "G6 separately authorized physical-export integration remains open"
+  "verdict": "partial",
+  "implementation_verdict": "partial",
+  "requirement": "FR-ALBUM-MAP-007",
+  "method": "TDD synthetic filesystem/SQLite tests, actual CLI subprocesses, injected move cutpoints and real Windows byte-range locking",
+  "fixture": "ALBUM-MAP-v1 plus MOVE-SYN-v1; pytest temp directories only",
+  "comparator": "Exact plan/count/lineage contracts, zero unauthorized moves or overwrite, preserved verified copies, partial inverse preserving later edits",
+  "fixture_content_sha256": {
+    "synthetic-0": "dae67da4e16569a875626fbcd81c26b389173bf687059bf27cdd67e8e1dc5081",
+    "synthetic-1": "8a83d94d44b74afe4f81305048bf6e5b3f5f5ba22a2947652fdcf5b83290fc8c",
+    "synthetic CLI bytes": "777b1d349c91ba1bb212cb560408fdad027f1d9762d58c0a96812cf60db55060"
+  },
+  "test_modules": [
+    "tests/test_album_archive.py",
+    "tests/test_album_archive_conflicts.py",
+    "tests/test_album_archive_policy.py",
+    "tests/test_album_archive_recovery.py",
+    "tests/test_album_archive_adversarial.py",
+    "tests/test_album_archive_cli.py"
   ],
-  "run_receipt": "album-mapping-run.json",
-  "g5_graduated": false
+  "clean_fixture_counts": {"targets": {"角色/fixture-character": 2}, "ready": 2, "excluded": 0, "blocking_conflicts": 0},
+  "separate_scenario_counts": {
+    "already_correct": 1,
+    "name_collision": 1,
+    "different_target": 1,
+    "missing": 1,
+    "unreadable": 1,
+    "path_length": 2,
+    "case_hazard_existing": 1,
+    "case_hazard_planned_directories": 2,
+    "cross_volume": 2,
+    "capacity": 2
+  },
+  "counts_note": "Separate scenarios, not additive; overlapping classes reported. Cross-volume/capacity are injected probes; Windows locked-file test uses an actual byte-range lock.",
+  "byte_identical_proof": {
+    "comparison": "complete fixture file set and per-file size, mtime_ns and SHA-256",
+    "cases": ["missing digest/token", "every blocking conflict scenario", "changed mapping", "changed source bytes", "changed source mtime", "tampered plan", "CLI unauthorized execution"],
+    "excludes": ["atime", "directory metadata", "ACLs", "alternate streams", "post-copy interrupted runs"]
+  },
+  "verification": {
+    "full_suite": {"passed": 668, "failed": 0, "skipped": 0, "warnings": 1, "duration_seconds": 228.05},
+    "new_archive_cases": 58,
+    "command": "uv run --no-project --python .venv/Scripts/python.exe python -m pytest -q",
+    "working_directory": "project root: Tools/art-curator-pilot",
+    "compileall": "passed for all six changed production Python modules",
+    "warning": "Pre-existing sklearn HDBSCAN FutureWarning: default copy changes in 1.10",
+    "tdd_red": "Absent archive API: 9 and 13 initial failing cases; unsupported rename option: 2 failures; planned folder-case alias and empty-plan side effects: 2 failures. Final full suite green.",
+    "lsp": "unavailable: basedpyright not installed; prior installation decline respected",
+    "power_loss_qualified": false
+  },
+  "python_inventory": [
+    {"path": "src/artcurator/album_archive.py", "lines": 148, "nonblank_noncomment_lines": 133},
+    {"path": "src/artcurator/album_archive_schema.py", "lines": 105, "nonblank_noncomment_lines": 83},
+    {"path": "src/artcurator/album_archive_plan.py", "lines": 151, "nonblank_noncomment_lines": 136},
+    {"path": "src/artcurator/album_archive_ledger.py", "lines": 98, "nonblank_noncomment_lines": 80},
+    {"path": "src/artcurator/album_archive_transfer.py", "lines": 34, "nonblank_noncomment_lines": 28},
+    {"path": "src/artcurator/album_map_cli.py", "lines": 133, "nonblank_noncomment_lines": 126},
+    {"path": "tests/test_album_archive.py", "lines": 154, "nonblank_noncomment_lines": 117},
+    {"path": "tests/test_album_archive_conflicts.py", "lines": 110, "nonblank_noncomment_lines": 91},
+    {"path": "tests/test_album_archive_policy.py", "lines": 93, "nonblank_noncomment_lines": 76},
+    {"path": "tests/test_album_archive_recovery.py", "lines": 161, "nonblank_noncomment_lines": 139},
+    {"path": "tests/test_album_archive_adversarial.py", "lines": 117, "nonblank_noncomment_lines": 95},
+    {"path": "tests/test_album_archive_cli.py", "lines": 56, "nonblank_noncomment_lines": 49}
+  ],
+  "documentation": "docs/pipeline/album-archive.md",
+  "limitations": [
+    "Torn archive journals fail closed without automatic repair; uncommitted copies remain partial for manual review",
+    "No physical power-loss, hard process-kill, all-OS-cutpoint, or WAL durability certification",
+    "Cross-volume plans are explicitly blocked; no cross-volume execution qualification",
+    "No global export registry or automatic mapping-undo UI notice; archive-status requires the retained ledger path",
+    "Per-store and per-output locks do not fence independent stores or non-cooperating human writers",
+    "Capacity is an observation, not a reservation; arbitrary unsafe entity-ID encoding and metadata-stream preservation remain open",
+    "LSP/type-check gate unavailable"
+  ],
+  "real_library_accessed": false,
+  "g5_graduated": false,
+  "g6_production_graduated": false
 }

@@ -17,10 +17,14 @@ from .album_map_vectors import SavedVectors, Wall, representative_wall, saved_ve
 from .first_pass import execute as execute_first_pass, preview as preview_first_pass
 from .first_pass_schema import Preview as FirstPassPreview, Run as FirstPassRun
 from .first_pass_audit import Incident, freeze
+from .album_archive import derive as archive_plan, execute as archive_execute, undo as archive_undo
+from .album_archive_schema import Approval, ArchivePlan, ArchiveRequest
+from .album_archive import status as archive_status
 
 Operation = Literal["init", "snapshot", "prepare", "publish", "abort", "undo", "export", "restore", "stage", "confirm", "tray",
                      "pool", "discover", "recluster", "promote", "vectors", "wall",
-                     "first-pass-preview", "first-pass-execute", "first-pass-audit-error"]
+                     "first-pass-preview", "first-pass-execute", "first-pass-audit-error",
+                     "archive-plan", "archive-preview", "archive-execute", "archive-undo", "archive-status"]
 
 
 def add_arguments(parser: argparse.ArgumentParser) -> None:
@@ -32,6 +36,8 @@ def add_arguments(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--album-batch")
     parser.add_argument("--album-authorize")
     parser.add_argument("--first-pass-root", type=Path)
+    parser.add_argument("--archive-token")
+    parser.add_argument("--archive-ledger", type=Path)
 
 
 def handle(args: argparse.Namespace, parser: argparse.ArgumentParser) -> None:
@@ -48,6 +54,21 @@ def handle(args: argparse.Namespace, parser: argparse.ArgumentParser) -> None:
     payload = Path(args.album_file).read_bytes() if args.album_file is not None else b""
     with AlbumStore.open(path) as store:
         match operation:
+            case "archive-plan" | "archive-preview":
+                plan = archive_plan(store, ArchiveRequest.model_validate_json(payload))
+                print(plan.model_dump_json(indent=2))
+            case "archive-execute":
+                result = archive_execute(store, ArchivePlan.model_validate_json(payload),
+                    Approval(digest=args.album_authorize or "", token=args.archive_token or ""))
+                print(result.model_dump_json(indent=2))
+            case "archive-undo":
+                if args.archive_ledger is None:
+                    parser.error("archive-undo requires --archive-ledger; mapping undo is separate")
+                print(archive_undo(Path(args.archive_ledger)).model_dump_json(indent=2))
+            case "archive-status":
+                if args.archive_ledger is None:
+                    parser.error("archive-status requires --archive-ledger")
+                print(archive_status(store, Path(args.archive_ledger)).model_dump_json(indent=2))
             case "first-pass-audit-error":
                 print(freeze(store, Incident.model_validate_json(payload)).model_dump_json(indent=2))
             case "first-pass-preview" | "first-pass-execute":
