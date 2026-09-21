@@ -105,11 +105,30 @@ Resolved ordinary/original-design/non-character rows are excluded by default.
 IDs bind selected member data, options and profile; prior snapshot IDs are retained
 as supplied lineage. The default seed gate is ten distinct images.
 
-`promotion` supports one eligible cluster, typed entity selection, an explicit
-staged preview, one named reversible batch and no sibling-face attribution.
-Multi-cluster selection, explicit small-set manual naming, automatic lineage
-addition/split/merge analysis and full NEGOTIATE coherence qualification remain open.
-The seed gate alone is not an identity/coherence qualification.
+G3 extends this path (not a second discovery engine). `DiscoveryInput.previous`
+retains a full earlier proposal; content/crop overlap derives parents, additions,
+splits and merges. Current committed membership also supplies parents when no
+previous proposal is provided. Bare `previous_clusters` IDs remain legacy declared
+lineage hints, not measured overlap. Parameters/profile changes are explicit;
+`Pool.parameters_changed`, `reembedding_required` and the arithmetic comparison
+bound preview compatibility/cost. Re-embedding is never executed by this adapter.
+`include_resolved` is an explicit list of manifest legacy IDs, not a default expansion.
+
+`album_map_promotion.stage_discovery(snapshot, DiscoveryDecision)` stages either
+membership-only re-clustering (no entity) or promotion of one explicitly selected
+cluster to a typed entity. A selected subset must still satisfy the configurable
+distinct-image seed gate (default ten); smaller sets/noise remain manually nameable
+via cluster `name`. Replay recomputes the supplied proposal against the frozen
+root/inputs before staging. No sibling face or unrelated cluster is named.
+Both paths use one named, reversible G5 batch. Deferred notes/revisit fields and
+accepted relations survive. Noise remains unresolved with lineage-bearing membership;
+missing-vector items are retained without invented memberships.
+
+Representative data uses the existing medoid → LOO → farthest-point selector,
+one crop per distinct full image hash, cap twelve. `coherent_wall` measures the
+existing median .90/P10 .80 gates; it is separate from seed size and does not
+certify identity. Promotion is an explicit human decision, not an automatic
+coherence-based assignment. Held-out semantic qualification remains open.
 
 ## Additive contract versions
 
@@ -139,16 +158,19 @@ Implementation: `album_map_browser.py`; transport: `album_map_cli.py`.
    and SHA-256. Journal `faceLabels` and `clusterDecisions` are parsed without
    claiming that current state is complete history. Undone cluster entries are
    inactive. Legacy face confirm/new require unambiguous explicit typed entity
-   bindings; name commands require recorded selected `face_ids`. Unsupported
-   split/merge/outlier/exclusion commands leave the whole import pending.
+    bindings; name commands require recorded selected `face_ids`. G3 cluster
+    commands use the frozen-member semantics below. Incomplete legacy drafts
+    remain pending; current cluster membership is never guessed.
 3. Supply `Manifest{schema_version:"album-member-manifest-v1",members:[...]}`.
    Each member binds `legacy_id,image_id,subject_id,crop_id,profile`. Resolution
    uses this frozen manifest, never display names/current cluster membership.
 4. `stage_import(snapshot,envelope,manifest)` returns `StagedImport` with original
    envelope/manifest, complete before snapshot, proposed request, conflict IDs,
    zero source moves, and explicit incomplete-history status. It writes no mapping.
-   Request changes contain exact per-image/subject after-state. Duplicate identical
-   commands are collapsed. Its fingerprint is the confirmation token.
+    Request changes contain exact per-image/subject after-state. `cluster_plans`
+    contains child snapshots and label conflicts. Duplicate identical commands
+    are collapsed. Its fingerprint is the confirmation token. Prospective verified
+    fields in a preview are not authoritative until explicit confirmation commits it.
 5. `confirm_import(store,staged,staged.fingerprint())` applies via P/C and returns
    `album-mapping-execution-v1`. The operation ID is `browser:` + envelope digest.
    Persist the exact staged artifact for retries: restaging currently uses new
@@ -157,14 +179,51 @@ Implementation: `album_map_browser.py`; transport: `album_map_cli.py`.
    exported original and refresh from the receipt's revision, never mark a local
    draft committed on download. Undo uses the receipt batch ID.
 
-Supported explicit operations are `set_disposition` and `confirm_relation`, with
+Supported explicit operations are `set_disposition`, `confirm_relation`, and the
+planner's `cluster_membership`, with
 `members[]`, `scope=image|subject`, disposition, optional typed entity and notes.
 `set_disposition=assigned` is refused: a relation command is required. Full-hash
 confirmation is explicit at the preview boundary; no automatic reference support
-is inserted. Draft provenance/corpus authenticity, exclusion/support cascades,
-complete split/merge semantics, stale-consent/revocation gates and durable staging
-reconstruction require further work. This transport is experimental, not an
+is inserted. Draft provenance/corpus authenticity, reference-exclusion/support
+cascades, stale-consent/revocation gates and durable staging reconstruction
+require further work. This transport is experimental, not an
 enabled qualified server executor.
+
+### G3 `journal.clusterDecisions` semantics
+
+All active entries retain `cluster_id` as a legacy display locator; it is not
+authoritative identity. A `ClusterSnapshot` has `snapshot_id`, full manifest
+`members[]`, `parents[]`, and nullable `context_digest`. Use
+`ClusterSnapshot.create(members, parents, context_digest)`; the digest binds the
+sorted image/subject/crop/profile set, lineage and optional parameter context,
+not mutable display aliases. Discovery exports the compatible snapshot under
+each `ProposedCluster.snapshot`. Parent digests, manifest bindings and current
+membership are checked before staging. An initial imported snapshot may have no
+committed membership yet; it is an explicit frozen proposal, not inferred history.
+
+| action | Required input | Preview / committed effect |
+|---|---|---|
+| `name` | nonempty selected `face_ids`; explicit `entity_id` or uniquely typed `character` lookup in envelope `entities` | Confirm exactly those subjects, or image scope for images without subjects. Optional `parent_clusters` constrains selection to the frozen parent. Small/noise sets allowed. |
+| `split` | one `parent_clusters` snapshot; nonempty, disjoint `partitions` of legacy member IDs | Each partition plus a nonempty automatic remainder gets a new snapshot with the parent ID. No labels are inferred or removed. |
+| `merge` | at least two disjoint `parent_clusters` snapshots | Union gets a new snapshot with all parents. Different accepted entity IDs/types block staging with `merge-label-conflict`. Explicit `conflict_resolution:"defer"` instead preserves every accepted relation, defers the affected subjects and records conflict IDs. No majority overwrite or entity merge. |
+| `outlier`, `exclusion` | one parent and nonempty proper-subset `face_ids` | Selected members get an excluded child snapshot, remainder an active child; both retain parent lineage. This is **visual membership exclusion**, not rejection of existing identities/reference support or deletion. |
+
+`undone:true` contributes no command. Structural commands lacking frozen parents
+remain pending. Partial/overlapping/unknown partition membership is rejected.
+Every selected cluster membership lives on the subject (or subjectless image);
+the whole immutable plan and original journal are retained as artifacts. Historic
+snapshots remain readable through exported batch artifacts even after undo.
+`name` records `cluster-selected-members` rather than individual-inspection evidence.
+An explicit optional `role:"baseline"|"variant"` marks only the selected subjects;
+default is `depicts`. The same character cannot have both marks on one subject,
+including across image-level/nested relations. No marks or references are inferred
+from representative sampling. Legacy face-label `mark` is preserved explicitly.
+
+Each import uses one operation/batch ID, `browser:` plus envelope digest; nested
+changed decisions and new relations carry that ID and the human actor. A named
+batch is a single inverse action. Undo uses the original G5 before-images and
+after-token+digest ABA guard unchanged. The image-row conservative limitation
+above remains; G3 does not claim independent sibling-subject undo.
 
 ## CLI
 
@@ -182,7 +241,15 @@ requires `--album-manifest`; publish/abort/undo require `--album-batch`.
 `--album-authorize` is the exact request fingerprint for prepare, staged
 fingerprint for confirm, or export digest for explicit empty-store restore.
 Tray emits a request for separate prepare/confirm; it is not an implicit write.
-Discovery is currently a Python API, not a CLI subcommand.
+G3 adds `pool` / `discover` (JSON `DiscoveryInput`: cost preview / pure proposal),
+`recluster` / `promote` (JSON `DiscoveryDecision`: emit a `StagedImport`, never
+implicitly write), `vectors` (`SavedVectors{directory,manifest,options}`: reuse
+`identity_store.load_vectors` integrity/profile checks), and `wall`
+(`Wall{members:[VectorMember...]}`: representative data only).
+Use the existing `stage` command for `name/split/merge/outlier/exclusion` journals,
+then `confirm --album-authorize <staged fingerprint>`. Promotion requires an
+entity; membership-only re-cluster forbids it. All commands retain the existing
+`--album-db`, `--album-file` and JSON-stdout conventions. No UI was added.
 
 ## Final requirement verdicts and remaining gate
 
@@ -191,8 +258,8 @@ Discovery is currently a Python API, not a CLI subcommand.
 | MAP-001-01 | partial | Exchange/lineage/sibling binding regressions; full metric/verification/taxonomy matrix, typed view projections and nested causality incomplete. |
 | MAP-002-01 | inconclusive | G4 first-pass adapter not implemented here. |
 | MAP-003-01 | partial | ABA, partial/repeated/restarted inverse tests; nested-row undo and support cascades incomplete. |
-| MAP-004-01 | partial | Browser stage/confirm/replay/undo test; split/merge and G3 walkthrough incomplete. |
-| MAP-005-01 | partial | Ten-image analytic promotion/undo and missing-vector membership tests; richer selection/lineage/coherence incomplete. |
+| MAP-004-01 | partial | G3 backend naming/split/merge/exclusion, conflict deferral, typed names/marks and CLI walkthrough; no enabled client walkthrough or retrieval-memory lifecycle qualification. See album-cluster-audit.md. |
+| MAP-005-01 | partial | G3 frozen-pool/lineage, compatible-vector cost preview, selected promotion and inverse tests; no held-out identity/coherence qualification or enabled client flow. See album-cluster-audit.md. |
 | MAP-006-01 | partial | Archive and duplicate supplied trigger tests; clock scheduling, full state-cycle/filter tests incomplete. |
 | MAP-007-01 | inconclusive | G6 physical-export integration not implemented here. |
 | NFR-MAP-001-01 | partial | Eleven exception cutpoints, locking, tamper and prepared-parent refusal; fault classes and enrollment below remain open. |
@@ -229,3 +296,33 @@ G5 supplements use `.g5.json`.
 LSP diagnostics could not run: basedpyright is not installed and the existing
 installation decline was respected. No clean type-check claim is made. Python
 test execution is the available executable check, not a substitute for that gate.
+
+### Gate reconciliation — re-derived scoped receipts
+
+The failure observed above was a **concurrency collision with the parallel visual
+task, not a defect in this transport**: that task subsequently fixed
+`test_copy_when_embedded_is_data_not_module_literals`. Reconciliation runs from the
+project root on the same source tree all passed (503, 510, 524 and 531 collected
+cases as the parallel cluster task kept adding tests); the final one:
+
+**531 passed, 0 failed, 0 skipped, 1 pre-existing sklearn warning, 253.58 seconds**
+(531 collected cases). The mandatory zero-failure gate is met.
+
+The gate-blocked scoped receipts in this document's scope were re-derived from that
+run with `tools/album_mapping_evidence.py`; `album-mapping-run.json` now records the
+passing JUnit summary and post-run source digests. Only gate-blocked verdicts moved
+(`inconclusive` → the scoped verdict). Every receipt keeps its
+`implementation_verdict`, and anything partial or missing on its own merits stays
+non-pass:
+
+- INV-M-01 stays `inconclusive`: its implementation verdict is inconclusive and no
+  scoped regression exists (synthetic adapters perform no locator I/O).
+- MAP-002-01 and MAP-007-01 stay `inconclusive` (G4 first-pass and G6 physical-export
+  integration are not implemented here).
+- MAP-004-01 and MAP-005-01 are G3-owned and were deliberately not touched.
+  MAP-001-01, MAP-003-01 and MAP-006-01 likewise remain for their owning task; its
+  next green gate re-derivation moves them the same way.
+- G5 graduation, the seven-gap release manifest and the `.g5.json` non-graduating
+  notes are unchanged.
+
+No fixture, digest binding, implementation verdict or G2 receipt changed.

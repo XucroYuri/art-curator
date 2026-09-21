@@ -11,8 +11,12 @@ from .album_map_exchange import Export, Manifest, export_bundle, restore_bundle
 from .album_map_protocol import BatchRequest
 from .album_map_schema import MappingError
 from .album_map_tray import TrayAction, tray_request
+from .album_map_discovery import DiscoveryInput, preview_pool, recluster
+from .album_map_promotion import DiscoveryDecision, stage_discovery
+from .album_map_vectors import SavedVectors, Wall, representative_wall, saved_vectors
 
-Operation = Literal["init", "snapshot", "prepare", "publish", "abort", "undo", "export", "restore", "stage", "confirm", "tray"]
+Operation = Literal["init", "snapshot", "prepare", "publish", "abort", "undo", "export", "restore", "stage", "confirm", "tray",
+                    "pool", "discover", "recluster", "promote", "vectors", "wall"]
 
 
 def add_arguments(parser: argparse.ArgumentParser) -> None:
@@ -72,6 +76,19 @@ def handle(args: argparse.Namespace, parser: argparse.ArgumentParser) -> None:
                 print(confirm_import(store, staged, args.album_authorize or "").model_dump_json(indent=2))
             case "tray":
                 print(tray_request(store.snapshot(), TrayAction.model_validate_json(payload)).model_dump_json(indent=2))
+            case "pool" | "discover":
+                pool = preview_pool(store.snapshot(), DiscoveryInput.model_validate_json(payload))
+                result = pool if operation == "pool" else recluster(pool)
+                print(result.model_dump_json(indent=2))
+            case "recluster" | "promote":
+                decision = DiscoveryDecision.model_validate_json(payload)
+                if (operation == "promote") != (decision.entity is not None):
+                    raise MappingError("promotion-requires-entity-recluster-forbids-entity")
+                print(stage_discovery(store.snapshot(), decision).model_dump_json(indent=2))
+            case "vectors":
+                print(saved_vectors(SavedVectors.model_validate_json(payload)).model_dump_json(indent=2))
+            case "wall":
+                print(representative_wall(Wall.model_validate_json(payload)).model_dump_json(indent=2))
             case "init":
                 raise MappingError("initialization-already-dispatched")
             case unreachable:

@@ -1,17 +1,46 @@
 {
   "schema_version": "album-ac-receipt-v1",
   "ac_id": "AC-FR-ALBUM-MAP-004-01",
-  "verdict": "inconclusive",
+  "verdict": "partial",
   "implementation_verdict": "partial",
-  "method": "synthetic regression tests plus implementation/spec audit",
-  "fixture": "ALBUM-MAP-v1 scoped recipe; see run inventory hashes",
-  "comparator": "exact state/receipt contract of the named executed regression, not the entire owning AC",
-  "passed_test_names": [
-    "test_browser_draft_stages_then_commits_when_confirmed"
+  "method": "Synthetic SQLite naming/split/merge/exclusion staging, explicit confirmation, replay and inverse walkthrough; real CLI subprocess success/refusal scenarios",
+  "fixture": {
+    "id": "ALBUM-MAP-v1/G3-analytic-v1",
+    "recipe": "tests/test_album_clusters.py::seed: four full-hash images, two distinct crop/profile-bound subjects each, unavailable-evidence initialization; no real library paths",
+    "extensions": "Six typed namespaces; opposite baseline/variant marks; two conflicting confirmed character IDs; later sibling edit on one image"
+  },
+  "comparator": [
+    "Staging leaves committed records unchanged; only exact fingerprint confirmation publishes",
+    "One operation/batch ID stamps selected human relations; no sibling or unselected-member assignment",
+    "Split produces disjoint partition plus remainder with new snapshot IDs and parent lineage",
+    "Merge blocks conflicting labels or explicitly defers while preserving all accepted relations",
+    "Outlier/exclusion change visual memberships only, not identity rejection or source bytes",
+    "All five operations restore exact eligible before-state through one persistent inverse; repeat returns the same receipt",
+    "Later sibling edit conservatively conflicts its image while another image is restored"
   ],
+  "evidence_artifacts": [
+    "../../docs/pipeline/album-cluster-audit.md",
+    "../../docs/pipeline/album-mapping.md",
+    "../../tests/test_album_clusters.py",
+    "../../tests/test_album_cluster_conflicts.py",
+    "../../tests/test_album_g3_cli.py",
+    "../../tests/test_album_vectors.py"
+  ],
+  "pytest": {
+    "command": "uv run --no-sync python -m pytest -q",
+    "cwd": "project root",
+    "passed": 537,
+    "failures": 0,
+    "warnings": 1,
+    "seconds": 302.30
+  },
   "limitations": [
-    "Split/merge and client walkthrough remain open"
+    "No UI/client producer changes or enabled visual walkthrough; incomplete legacy drafts require explicit frozen-parent enrichment",
+    "Single-image-row undo granularity retained: independent sibling edits conflict conservatively",
+    "No automatic retrieval-memory support insertion or support-cascade qualification; visual exclusion does not retract existing references",
+    "LSP unavailable: basedpyright not installed, prior installation decline respected",
+    "Synthetic behavioral evidence is not identity precision or power-loss qualification"
   ],
-  "run_receipt": "album-mapping-run.json",
-  "g5_graduated": false
+  "g5_graduated": false,
+  "g3_product_graduated": false
 }

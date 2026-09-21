@@ -68,6 +68,12 @@ class Hypothesis(Model):
     evidence_refs: tuple[Hash, ...] = Field(min_length=1)
 
 
+class ClusterMembership(Model):
+    snapshot_id: Hash
+    parents: tuple[Hash, ...] = ()
+    excluded: bool = False
+
+
 class DecisionFields(Model):
     disposition: Disposition
     source: Literal["model", "memory", "anchors", "inherited", "human"]
@@ -85,6 +91,7 @@ class DecisionFields(Model):
     updated_at: AwareDatetime
     batch_id: Identifier
     operation_id: Identifier
+    cluster_membership: ClusterMembership | None = Field(default=None, exclude_if=lambda value: value is None)
 
     @model_validator(mode="after")
     def human_verification(self) -> Self:
@@ -110,6 +117,16 @@ class Subject(DecisionFields):
     crop_id: Hash
     detection_profile: Hash
     relations: tuple[Relation, ...] = ()
+
+    @model_validator(mode="after")
+    def exclusive_marks(self) -> Self:
+        marks: dict[str, set[str]] = {}
+        for relation in self.relations:
+            if relation.entity_type == "character" and relation.role in {"baseline", "variant"}:
+                marks.setdefault(relation.entity_id, set()).add(relation.role)
+        if any(len(roles) > 1 for roles in marks.values()):
+            raise MappingError("baseline-variant-exclusive")
+        return self
 
 
 class Occurrence(Model):
@@ -142,6 +159,12 @@ class MappingRecord(DecisionFields):
             raise MappingError("relation-binding")
         if any(r.subject_id != s.subject_id for s in self.subjects for r in s.relations):
             raise MappingError("relation-owner")
+        marks: dict[tuple[str | None, str], set[str]] = {}
+        for relation in relations:
+            if relation.entity_type == "character" and relation.role in {"baseline", "variant"}:
+                marks.setdefault((relation.subject_id, relation.entity_id), set()).add(relation.role)
+        if any(len(roles) > 1 for roles in marks.values()):
+            raise MappingError("baseline-variant-exclusive")
         if any(o.observed_hash != self.image_id for o in self.occurrences):
             raise MappingError("occurrence-binding")
         if self.subjects and self.disposition != summarize(tuple(s.disposition for s in self.subjects)):

@@ -1,17 +1,48 @@
 {
   "schema_version": "album-ac-receipt-v1",
   "ac_id": "AC-FR-ALBUM-MAP-005-01",
-  "verdict": "inconclusive",
+  "verdict": "partial",
   "implementation_verdict": "partial",
-  "method": "synthetic regression tests plus implementation/spec audit",
-  "fixture": "ALBUM-MAP-v1 scoped recipe; see run inventory hashes",
-  "comparator": "exact state/receipt contract of the named executed regression, not the entire owning AC",
-  "passed_test_names": [
-    "test_unknown_pool_freezes_and_promotes_when_seed_has_ten_images"
+  "method": "Analytic saved-vector pool growth, parameter/profile compatibility, lineage, selected-cluster promotion and membership-only publication/reversal tests",
+  "fixture": {
+    "id": "ALBUM-MAP-v1/G3-discovery-analytic-v1",
+    "recipe": "Full SHA-256-shaped synthetic content IDs with vectors (1,0), (0,1), (-1,0), missing vectors; DBSCAN eps .15/.16/1.1; 9/10/11-image seed boundaries; every disposition",
+    "saved_payload": "tests/test_album_vectors.py: real float16 [3,4] NPY, digest/order/profile ledger, explicit full image/crop manifest",
+    "confusables_scope": "Analytic boundary/conflict scenarios only; no separately consented held-out ALBUM-CONFUSABLE-v1 corpus executed"
+  },
+  "comparator": [
+    "Default pool contains only hypothesis/deferred/unknown-foreign/pending unresolved targets; missing vectors retained",
+    "Wrong crop binding rejected; changed semantic profile quotes re-embedding-required members and blocks clustering",
+    "Growth and parameter changes produce new frozen snapshots; parent overlap and committed memberships preserve lineage",
+    "Representative wall reuses existing full-hash tie-breaking algorithm with twelve-image cap",
+    "Seed eligibility counts distinct images with default threshold ten; smaller selected promotion refused",
+    "One selected cluster among multiple seeds promotes in one batch; unrelated cluster/noise/missing-vector rows unchanged",
+    "Membership-only re-clustering and promotion undo restore exact eligible before-state; notes survive"
   ],
+  "evidence_artifacts": [
+    "../../docs/pipeline/album-cluster-audit.md",
+    "../../tests/test_album_discovery.py",
+    "../../tests/test_album_discovery_lineage.py",
+    "../../tests/test_album_promotion.py",
+    "../../tests/test_album_pool_boundaries.py",
+    "../../tests/test_album_vectors.py"
+  ],
+  "pytest": {
+    "command": "uv run --no-sync python -m pytest -q",
+    "cwd": "project root",
+    "passed": 537,
+    "failures": 0,
+    "warnings": 1,
+    "seconds": 302.30
+  },
   "limitations": [
-    "Richer selection/lineage/coherence qualification remains open"
+    "No held-out identity/coherence or precision qualification; coherent_wall is measurement, not verification",
+    "Cost is an arithmetic pair-comparison bound and explicit re-embedding count, not measured time or price",
+    "No scheduled discovery or enabled client flow; CLI/local backend only",
+    "Single-image-row conservative undo limitation remains",
+    "LSP unavailable: basedpyright not installed, prior installation decline respected",
+    "Existing G5 authority enrollment, memory/support cascades and physical-power-loss gates remain open"
   ],
-  "run_receipt": "album-mapping-run.json",
-  "g5_graduated": false
+  "g5_graduated": false,
+  "g3_product_graduated": false
 }
