@@ -1,0 +1,2863 @@
+{
+  "schema_version": "album-negotiation-v1",
+  "report_digest": "20eff71e69ed63df5e0e238eaaa8b6ec9bdafd0a7a2bd42cc5d2a647f50d9164",
+  "snapshot_digest": "51e128416c91870eeeb50a0112416935151167494ac7496777858f0267246feb",
+  "profile_digest": "31fe8126bbf654eb85402f6e1c331c453345b43d814fb8bd89f4d72597f2462f",
+  "analysis_profile_digest": "1782409587e7965ccda28b37ee7a9e74a33801d9f170e37eb493e18b296e1d47",
+  "seal_digest": "7be23842f2c92562670154d73640409d03754365bb703481fc6c02a4587c792a",
+  "g1_report_ref": "negotiation-g1.json",
+  "labels": {
+    "labels": [],
+    "targets": {},
+    "target_types": {}
+  },
+  "labels_digest": "c4ec4e63a83d94520a990fbc9598fb0465319946c20d3a010209cbcb127baff9",
+  "global_evidence": {
+    "files": 160,
+    "unique_images": 160,
+    "faces": 160,
+    "processed_images": 160,
+    "unavailable_occurrences": 0,
+    "decode_failed_images": 0,
+    "scope": "SYNTHETIC UI fixture · analytic values, not corpus measurements",
+    "whole_image_denominator": 0,
+    "whole_image_unknown": null,
+    "whole_image_conflict": null,
+    "crop_candidate_denominator": 0,
+    "crop_unknown": {
+      "numerator": null,
+      "denominator": 0,
+      "value": null,
+      "interval": null,
+      "method": "unavailable",
+      "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+    },
+    "crop_conflict": {
+      "numerator": null,
+      "denominator": 0,
+      "value": null,
+      "interval": null,
+      "method": "unavailable",
+      "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+    },
+    "missing_vocabulary": "Unknown: G1 supplies no corpus-wide vocabulary coverage measurement",
+    "unavailable_signals": [
+      "vocabulary",
+      "reference-support"
+    ],
+    "model_profiles": [
+      "analytic-ui-fixture-v1"
+    ],
+    "costs": []
+  },
+  "folders": [
+    {
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f",
+      "path": "同场景长目录名称／角色尚未核实",
+      "population_ids": [
+        "afb814fb2bbf9c826923dbe54e485a24fe4a73e541fa16f0cb8d4fb8ba4d3173",
+        "7fe87675a87425313c97b65bad55e218a0d9fd411dc766e88763ce64ba7ecbf0",
+        "1f3aba503a442fdeafac3161b9c9372929437a0f7f34b9bd85db7a8d90c338aa",
+        "64a5c0375f6765f6b418c802cceeaf3d6f8040b8c6e2b73af1628bf4397a0fa4",
+        "b43a8a65ff2b20ae1bdb1b9c59b7694ed7bcff81d5a4605f6b54d0f594096f79",
+        "92ffa7b029afe52d2bf9c19d9197bfee4c2a6a5924dab9c8978b589d5a3a3956",
+        "f768c7de4c322ff070e6e8bab91d5c551b8cc62b148ee1bf06266d291b8e47b2",
+        "8d63386f9b051d945376fd6fdf540043e31b23f0670fa6fb7187c145b528e21b",
+        "726d22244528e303f6cb0f002b435cb3c8c13dffe47eb2232d7cf76b90e2e118",
+        "05e62aec876f851a036a1ace4720d805a733f5a8e1f46913fd9bba2eda0eb050",
+        "aabfe0f89fd15aaa385c52229d0d8816ef0d2fbd054c461022ef877f710e47ab",
+        "e6562f5f5a8c7a113327797e5fa55b4fd98ea6f0fe1e54a137d6d423fda46326",
+        "dcf0e7551e7aa7be36257fcac8b3e6e4bfc233e48d3972a0253b4574730b6d4a",
+        "2589e71cb40869d39dd4bbf6bff1f2f7df2d05b0ae297c0405a1941a5f57a2a9",
+        "92a90b4180ce708723b8d904c092effb4f9e3850d8b473d29bf76420e8801e9d",
+        "17ba823c5026dc6ecbabbfcea2243992a7574022fff84db435558dc27c818dc2",
+        "b161b901b74eefde907e5e24a12f70c111fe1711f0455404e018c2b465b6c105",
+        "da64fe8dd7387f0b37813b190e97f73c7508d6db3bd6f22cfe2d61aae0db3d74",
+        "2cfcb1de8415f9df6c16b46c2b49a0795b128d96bce00c76c43d0a5592b48822",
+        "4741b38efb5bfeba3e7b123b0198e0454177f8bcf9a2389676cdcde32b77e200",
+        "208959461e4e6b80388d0458b161ec7d437e769a734ca721fff686dcac8aefaa",
+        "5a092980caf5e693430a3cb33ea9b0c5c86071475329ca23852044310f6c1b5c",
+        "09df5f51db03271f992ed91e8321ebe06f8c58b41f9a2a3a351e1b84d103f64c",
+        "59b20202cd89ad83ea6424dc3cb842141b57b3ecb249522ac7330d56bfc79f6c",
+        "e59cd1c21bba636a423f2837104432d9708b32cd1aef027d4fcfba8e0eb5278e",
+        "cbb0130ab830623141fdf9500c13a182a6c210cfa16261c4c129f46694b6e0c2",
+        "6dcd82315478b449456ca033a6d69fcb7c1296a94257f58d13754fe469664ae5",
+        "440aad3535db7074fb836fbebbf495f475d21549162491323e5c3393c081c399",
+        "459774cac29be79be46731ebb3c7ae49c51ae6c6157d5b01bdd9c220365f2bc2",
+        "f053741a31243917a7a91bb0e5ae2f91293b7db3f43b078b24ec1bb8a4530b6f",
+        "1843b99f8f270928e6d01ffce1e4d152254ab2111545cc3978a7b927c7a5631d",
+        "a3d738709ebc457ce0bd1b56326b539eda853a06d6c5748dd9ae7d74243ccb51",
+        "a0a26547eedc2415d78fceb43be3766c60f4941993c982c9fc91719ad2a56e90",
+        "bf58b74860490814760e3dadbc728f1e6e7d8e978a5827125e7eb3f17d24670c",
+        "d59ddc452a98db9d67372cdf6fb8dfc2528a3e9f5ebba2baa5fa4b0e7b48f37c",
+        "3ec78912611f01e02886fbffafc865887c4909ce7eb5cfc046f434e6663de46f",
+        "3ab6832165779beb09aa58bbf646b015c47c66726491f4f6857b3ed89705e3ae",
+        "4ace507074c52d412f0ad8168b0e3ada28e68475405cd5193482ea7f8384fcce",
+        "533c0512a1b910b32aef8abac95b82c3e634e74601f3218d2351649cc6306969",
+        "ecbcca49a0f2fe1c727cfe32bea4708300901e7f90ef9d6198596a937fc33d45"
+      ],
+      "population_digest": "1d26b65459845153021a1c9169830a37ad7a0904a03a19bb272b97fd4f8e04ee",
+      "sample_ids": [
+        "afb814fb2bbf9c826923dbe54e485a24fe4a73e541fa16f0cb8d4fb8ba4d3173",
+        "7fe87675a87425313c97b65bad55e218a0d9fd411dc766e88763ce64ba7ecbf0",
+        "1f3aba503a442fdeafac3161b9c9372929437a0f7f34b9bd85db7a8d90c338aa",
+        "64a5c0375f6765f6b418c802cceeaf3d6f8040b8c6e2b73af1628bf4397a0fa4",
+        "b43a8a65ff2b20ae1bdb1b9c59b7694ed7bcff81d5a4605f6b54d0f594096f79",
+        "92ffa7b029afe52d2bf9c19d9197bfee4c2a6a5924dab9c8978b589d5a3a3956",
+        "f768c7de4c322ff070e6e8bab91d5c551b8cc62b148ee1bf06266d291b8e47b2",
+        "8d63386f9b051d945376fd6fdf540043e31b23f0670fa6fb7187c145b528e21b",
+        "726d22244528e303f6cb0f002b435cb3c8c13dffe47eb2232d7cf76b90e2e118",
+        "05e62aec876f851a036a1ace4720d805a733f5a8e1f46913fd9bba2eda0eb050",
+        "aabfe0f89fd15aaa385c52229d0d8816ef0d2fbd054c461022ef877f710e47ab",
+        "e6562f5f5a8c7a113327797e5fa55b4fd98ea6f0fe1e54a137d6d423fda46326",
+        "dcf0e7551e7aa7be36257fcac8b3e6e4bfc233e48d3972a0253b4574730b6d4a",
+        "2589e71cb40869d39dd4bbf6bff1f2f7df2d05b0ae297c0405a1941a5f57a2a9",
+        "92a90b4180ce708723b8d904c092effb4f9e3850d8b473d29bf76420e8801e9d",
+        "17ba823c5026dc6ecbabbfcea2243992a7574022fff84db435558dc27c818dc2",
+        "b161b901b74eefde907e5e24a12f70c111fe1711f0455404e018c2b465b6c105",
+        "da64fe8dd7387f0b37813b190e97f73c7508d6db3bd6f22cfe2d61aae0db3d74",
+        "2cfcb1de8415f9df6c16b46c2b49a0795b128d96bce00c76c43d0a5592b48822",
+        "4741b38efb5bfeba3e7b123b0198e0454177f8bcf9a2389676cdcde32b77e200",
+        "208959461e4e6b80388d0458b161ec7d437e769a734ca721fff686dcac8aefaa",
+        "5a092980caf5e693430a3cb33ea9b0c5c86071475329ca23852044310f6c1b5c",
+        "09df5f51db03271f992ed91e8321ebe06f8c58b41f9a2a3a351e1b84d103f64c",
+        "59b20202cd89ad83ea6424dc3cb842141b57b3ecb249522ac7330d56bfc79f6c",
+        "e59cd1c21bba636a423f2837104432d9708b32cd1aef027d4fcfba8e0eb5278e",
+        "cbb0130ab830623141fdf9500c13a182a6c210cfa16261c4c129f46694b6e0c2",
+        "6dcd82315478b449456ca033a6d69fcb7c1296a94257f58d13754fe469664ae5",
+        "440aad3535db7074fb836fbebbf495f475d21549162491323e5c3393c081c399",
+        "459774cac29be79be46731ebb3c7ae49c51ae6c6157d5b01bdd9c220365f2bc2",
+        "f053741a31243917a7a91bb0e5ae2f91293b7db3f43b078b24ec1bb8a4530b6f",
+        "1843b99f8f270928e6d01ffce1e4d152254ab2111545cc3978a7b927c7a5631d",
+        "a3d738709ebc457ce0bd1b56326b539eda853a06d6c5748dd9ae7d74243ccb51",
+        "a0a26547eedc2415d78fceb43be3766c60f4941993c982c9fc91719ad2a56e90",
+        "bf58b74860490814760e3dadbc728f1e6e7d8e978a5827125e7eb3f17d24670c",
+        "d59ddc452a98db9d67372cdf6fb8dfc2528a3e9f5ebba2baa5fa4b0e7b48f37c",
+        "3ec78912611f01e02886fbffafc865887c4909ce7eb5cfc046f434e6663de46f",
+        "3ab6832165779beb09aa58bbf646b015c47c66726491f4f6857b3ed89705e3ae",
+        "4ace507074c52d412f0ad8168b0e3ada28e68475405cd5193482ea7f8384fcce",
+        "533c0512a1b910b32aef8abac95b82c3e634e74601f3218d2351649cc6306969",
+        "ecbcca49a0f2fe1c727cfe32bea4708300901e7f90ef9d6198596a937fc33d45"
+      ],
+      "sample_digest": "1d26b65459845153021a1c9169830a37ad7a0904a03a19bb272b97fd4f8e04ee",
+      "seed": 20260921,
+      "design": "seeded simple random sampling without replacement, sorted full hashes, up to 100",
+      "population": 40,
+      "sample": 40,
+      "occurrences": 40,
+      "duplicates": 0,
+      "unavailable_occurrences": 0,
+      "coverage": 1,
+      "vector_profile": "analytic-ui-fixture-v1",
+      "representation": "synthetic-whole-image",
+      "coherence": {
+        "denominator": 40,
+        "valid": 40,
+        "missing": 0,
+        "median": 0.94,
+        "p10": 0.9,
+        "scores": [
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94
+        ],
+        "method": "L2-normalized non-self leave-one-out centroid cosine; linear quantiles",
+        "limits": "Scene/style similarity can dominate; not identity purity; no population CI."
+      },
+      "purity": {
+        "numerator": null,
+        "denominator": 40,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "purity_identity": null,
+      "independent_labels": 0,
+      "unresolved_labels": 40,
+      "target": null,
+      "target_purity": {
+        "numerator": null,
+        "denominator": 40,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "weak_agreement": {
+        "numerator": null,
+        "denominator": 40,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "unresolved_proxy_D": {
+        "numerator": null,
+        "denominator": 40,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "unknown_U": {
+        "numerator": null,
+        "denominator": 40,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "conflict_C": {
+        "numerator": null,
+        "denominator": 40,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "model_coverage": null,
+      "artist_agreement": {
+        "numerator": null,
+        "denominator": 40,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "regimes": {
+        "profile": "folder-regime-v1",
+        "features": {
+          "valid_images": 40,
+          "eligible_faces": 40,
+          "V": 0.94,
+          "F": 0.9,
+          "K": 1,
+          "Q": 0.1,
+          "A": null,
+          "artist_labels": 0,
+          "entities": 0
+        },
+        "detectors": [
+          {
+            "regime": "session-set",
+            "gates": [
+              {
+                "feature": "valid_images",
+                "value": 40,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": true
+              },
+              {
+                "feature": "V",
+                "value": 0.94,
+                "operator": ">=",
+                "threshold": 0.9,
+                "passed": true
+              },
+              {
+                "feature": "F",
+                "value": 0.9,
+                "operator": ">=",
+                "threshold": 0.8,
+                "passed": true
+              },
+              {
+                "feature": "eligible_faces",
+                "value": 40,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": true
+              }
+            ],
+            "status": "pass",
+            "consequence": "Inspect one coherent set; session does not imply identity."
+          },
+          {
+            "regime": "mixed-pile",
+            "gates": [
+              {
+                "feature": "valid_images",
+                "value": 40,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": true
+              },
+              {
+                "feature": "V",
+                "value": 0.94,
+                "operator": "<",
+                "threshold": 0.8,
+                "passed": false
+              },
+              {
+                "feature": "F",
+                "value": 0.9,
+                "operator": "<",
+                "threshold": 0.5,
+                "passed": false
+              },
+              {
+                "feature": "K",
+                "value": 1,
+                "operator": ">=",
+                "threshold": 3.0,
+                "passed": false
+              }
+            ],
+            "status": "fail",
+            "consequence": "Cluster-first review; no automatic character inheritance."
+          },
+          {
+            "regime": "scenario/documentary",
+            "gates": [
+              {
+                "feature": "valid_images",
+                "value": 40,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": true
+              },
+              {
+                "feature": "V",
+                "value": 0.94,
+                "operator": ">=",
+                "threshold": 0.85,
+                "passed": true
+              },
+              {
+                "feature": "Q",
+                "value": 0.1,
+                "operator": ">=",
+                "threshold": 0.5,
+                "passed": false
+              },
+              {
+                "feature": "F",
+                "value": 0.9,
+                "operator": "<",
+                "threshold": 0.8,
+                "passed": false
+              }
+            ],
+            "status": "fail",
+            "consequence": "Scene organization; no no-person conclusion."
+          },
+          {
+            "regime": "artist-portfolio",
+            "gates": [
+              {
+                "feature": "valid_images",
+                "value": 40,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": true
+              },
+              {
+                "feature": "A",
+                "value": null,
+                "operator": ">=",
+                "threshold": 0.8,
+                "passed": null
+              },
+              {
+                "feature": "artist_labels",
+                "value": 0,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": false
+              },
+              {
+                "feature": "entities",
+                "value": 0,
+                "operator": ">=",
+                "threshold": 3.0,
+                "passed": false
+              }
+            ],
+            "status": "unavailable",
+            "consequence": "Artist axis independent of character; visual style cannot certify artist."
+          }
+        ],
+        "passing": [
+          "session-set"
+        ],
+        "status": "recommended",
+        "confidence": null,
+        "limits": "heuristic/unvalidated; thresholds are engineering policy, not measured accuracy optima"
+      },
+      "coherence_admitted": true,
+      "identity_prior_admitted": false,
+      "identity_recommendation": false,
+      "context_enabled": false,
+      "manual_collection_available": true,
+      "thresholds": "ADR: valid>=30, Vmedian>=0.90, p10>=0.80; identity labels>=30 and lower>=0.90",
+      "limitations": [
+        "Labels must be independently human supplied; attestations are not externally audited.",
+        "Exact duplicates removed; near-duplicate dependence is unestablished.",
+        "No whole-image vector means V-dependent regimes unavailable; crop coherence is not V.",
+        "No-face is detector missingness, not non-character truth.",
+        "Missing target/vocabulary coverage means D and weak agreement unavailable.",
+        "Measured admission is not contextual-use authorization; G2 enables no grouping."
+      ]
+    },
+    {
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9",
+      "path": "混合素材／不同角色与背景",
+      "population_ids": [
+        "7d6e4ccb6114f08cefdb3303d127fff1c9437da2f1e49314a39a2bee9fdca9c4",
+        "500070994380b8023bf0bfe3abacdeb011bde75973fe039463dd39823e61019f",
+        "9979ea90ab09630151288eab421329cbaf86315882c5f3273ca992ec0b5d1045",
+        "651edf9140a751c873ad034c5f1acbd458cf7007c1c16eee66f90a3860e26f20",
+        "37eb51768052ed909a3dab582fce943a49fb9d5ee12e171063958392353f5cb2",
+        "7e6e78d8f87b2506c8acd4205cde10d7476f27826c01f8081088d4b86d089f86",
+        "0acf2de8cc229f29e651c58afceed7f9a2c7ed865d7d124ac4f93f764734bbb4",
+        "dad649f61a0ce4dce91bbb01aad2e0e51af73ef8c4d21271b5dfb231efbc3d19",
+        "9d27664dd115c92489ba0b950c07044ffb5528d5d3e04e78b61bfdcad91d7ea2",
+        "4a076b66d99edcf1b23af06612973acdac778dcd7db43252028c7a74f62389d2",
+        "f01aa9d5bc693e00193377b1af29f24bf2b563544799b1f7a56b9c3353ffa814",
+        "5651f8f44181c2097a72570d0bc0cd8a5783af63ff53cac6f06d532afeae9ce3",
+        "1b526ed2a3c4c84c3009045cdbee4d8a2f568c5eda8c2f21a877d59eeca681d0",
+        "3db1211e930a9185f41b9bbc224acad39f9055cdc077f8a5a4adbe41f6e4fd8f",
+        "ee3473736d112bfd52aeceebcc451dab07aa0e2ffc145f67ea1c247490da800d",
+        "d160de1d77a757a60285f69b73941191c80f32b5b48ebceee5f79a681a7789ec",
+        "5a37e6fc261ea25681b25649d8f40a5fe6567f3a7d601782235d4381f9508841",
+        "d4a989e104b45147576d28066841c0f2e9df228cbd374085b940a3b19e96ad12",
+        "54c0f3233a4b0210f1ee999c1e853dcaba65e22c705e121f05a5c72de0fd91aa",
+        "77d61d60f63ae478d6b761f8c56669537db85c011e5b20628c11d6ee1b623b21",
+        "b558589e76460caee95dbb54450135a2bdc5e974c48c8ff685ddd749f3b33f2c",
+        "a85ca547619f4ef9e9d26d1a928bdcf65b41074fd1e4673b92681cef6d19f246",
+        "28c276a8b4f04a29e63e319f651c34c802defd8b839f900f80be3886aa0a936f",
+        "bdf9b122528372fd9882f4c991c75ed2873ef47b0cd56559f1c530a771a518d0",
+        "4995bc5f852556dfe487d10ab9c377ac6d36e6a7f293a537a3b9c554e462f4e4",
+        "1d9691b4a86dedfacac3620ced911f3590ee2e2e9dfa63373ec655256108bc00",
+        "7bd576417d8849b5b6b19874564ccb5b58efb6a059ee840eda429c499ce04ea0",
+        "a4dcb2e6e910340c0dd40fb04b7adab4b74b19b2eb46106769c75605f1699b2f",
+        "56a5edbc9eed400449c4987f632c1069d83fb9086629c5c931326522bf7263fc",
+        "ad85b1e616e04b2cc97abc40ba9a5b88d66b180a80ed1906afc716bbf68f23b0",
+        "fe67e42d285710f3f81bc2882587c0ef978c89ca0cf9cd40ae607a86cb780b2e",
+        "c3fcf7d6d54e5333f9b68b28f39bb850702d148226a3ed322b7c6947d0262d3e",
+        "a03ce352f7e688486a70fb838af723a3163038f2c6042aeb86f6d8a4ac808adc",
+        "4ca06c46aa87074a1060df9cbd9635d0d8fd8fa15769da4351ef804eaaed59e0",
+        "96728c0876f06141e77fbe0f8c862d886a7fbd3f9f04f1a6a511de70205cce86",
+        "f9ddfd7b2eb870c352ff9de46852cf006e350afbf2bb4826d7e84c48ca9b9bb1",
+        "3e4d70972f9f90a0f82c88428615070caa2c256bc5a2f74b9c20715caf421124",
+        "8d0f237d0b8f9e4bf8c925f2904a44e96d7ffa97caf4c0db3780a5e01fc318b6",
+        "a5fe7c3bb79b3e08a26743654504a9f2239d2bf53c2aee5547e876419c0e0334",
+        "d15485c9ac3c7a77bf4549fd540f640f1e46cd701fcc761353747944b367e6d0"
+      ],
+      "population_digest": "76cac44a0f61a31f06938a0c14b45fe984789b9f797e951bc096a21d339056aa",
+      "sample_ids": [
+        "7d6e4ccb6114f08cefdb3303d127fff1c9437da2f1e49314a39a2bee9fdca9c4",
+        "500070994380b8023bf0bfe3abacdeb011bde75973fe039463dd39823e61019f",
+        "9979ea90ab09630151288eab421329cbaf86315882c5f3273ca992ec0b5d1045",
+        "651edf9140a751c873ad034c5f1acbd458cf7007c1c16eee66f90a3860e26f20",
+        "37eb51768052ed909a3dab582fce943a49fb9d5ee12e171063958392353f5cb2",
+        "7e6e78d8f87b2506c8acd4205cde10d7476f27826c01f8081088d4b86d089f86",
+        "0acf2de8cc229f29e651c58afceed7f9a2c7ed865d7d124ac4f93f764734bbb4",
+        "dad649f61a0ce4dce91bbb01aad2e0e51af73ef8c4d21271b5dfb231efbc3d19",
+        "9d27664dd115c92489ba0b950c07044ffb5528d5d3e04e78b61bfdcad91d7ea2",
+        "4a076b66d99edcf1b23af06612973acdac778dcd7db43252028c7a74f62389d2",
+        "f01aa9d5bc693e00193377b1af29f24bf2b563544799b1f7a56b9c3353ffa814",
+        "5651f8f44181c2097a72570d0bc0cd8a5783af63ff53cac6f06d532afeae9ce3",
+        "1b526ed2a3c4c84c3009045cdbee4d8a2f568c5eda8c2f21a877d59eeca681d0",
+        "3db1211e930a9185f41b9bbc224acad39f9055cdc077f8a5a4adbe41f6e4fd8f",
+        "ee3473736d112bfd52aeceebcc451dab07aa0e2ffc145f67ea1c247490da800d",
+        "d160de1d77a757a60285f69b73941191c80f32b5b48ebceee5f79a681a7789ec",
+        "5a37e6fc261ea25681b25649d8f40a5fe6567f3a7d601782235d4381f9508841",
+        "d4a989e104b45147576d28066841c0f2e9df228cbd374085b940a3b19e96ad12",
+        "54c0f3233a4b0210f1ee999c1e853dcaba65e22c705e121f05a5c72de0fd91aa",
+        "77d61d60f63ae478d6b761f8c56669537db85c011e5b20628c11d6ee1b623b21",
+        "b558589e76460caee95dbb54450135a2bdc5e974c48c8ff685ddd749f3b33f2c",
+        "a85ca547619f4ef9e9d26d1a928bdcf65b41074fd1e4673b92681cef6d19f246",
+        "28c276a8b4f04a29e63e319f651c34c802defd8b839f900f80be3886aa0a936f",
+        "bdf9b122528372fd9882f4c991c75ed2873ef47b0cd56559f1c530a771a518d0",
+        "4995bc5f852556dfe487d10ab9c377ac6d36e6a7f293a537a3b9c554e462f4e4",
+        "1d9691b4a86dedfacac3620ced911f3590ee2e2e9dfa63373ec655256108bc00",
+        "7bd576417d8849b5b6b19874564ccb5b58efb6a059ee840eda429c499ce04ea0",
+        "a4dcb2e6e910340c0dd40fb04b7adab4b74b19b2eb46106769c75605f1699b2f",
+        "56a5edbc9eed400449c4987f632c1069d83fb9086629c5c931326522bf7263fc",
+        "ad85b1e616e04b2cc97abc40ba9a5b88d66b180a80ed1906afc716bbf68f23b0",
+        "fe67e42d285710f3f81bc2882587c0ef978c89ca0cf9cd40ae607a86cb780b2e",
+        "c3fcf7d6d54e5333f9b68b28f39bb850702d148226a3ed322b7c6947d0262d3e",
+        "a03ce352f7e688486a70fb838af723a3163038f2c6042aeb86f6d8a4ac808adc",
+        "4ca06c46aa87074a1060df9cbd9635d0d8fd8fa15769da4351ef804eaaed59e0",
+        "96728c0876f06141e77fbe0f8c862d886a7fbd3f9f04f1a6a511de70205cce86",
+        "f9ddfd7b2eb870c352ff9de46852cf006e350afbf2bb4826d7e84c48ca9b9bb1",
+        "3e4d70972f9f90a0f82c88428615070caa2c256bc5a2f74b9c20715caf421124",
+        "8d0f237d0b8f9e4bf8c925f2904a44e96d7ffa97caf4c0db3780a5e01fc318b6",
+        "a5fe7c3bb79b3e08a26743654504a9f2239d2bf53c2aee5547e876419c0e0334",
+        "d15485c9ac3c7a77bf4549fd540f640f1e46cd701fcc761353747944b367e6d0"
+      ],
+      "sample_digest": "76cac44a0f61a31f06938a0c14b45fe984789b9f797e951bc096a21d339056aa",
+      "seed": 20260921,
+      "design": "seeded simple random sampling without replacement, sorted full hashes, up to 100",
+      "population": 40,
+      "sample": 40,
+      "occurrences": 40,
+      "duplicates": 0,
+      "unavailable_occurrences": 0,
+      "coverage": 1,
+      "vector_profile": "analytic-ui-fixture-v1",
+      "representation": "synthetic-whole-image",
+      "coherence": {
+        "denominator": 40,
+        "valid": 40,
+        "missing": 0,
+        "median": 0.7,
+        "p10": 0.66,
+        "scores": [
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7
+        ],
+        "method": "L2-normalized non-self leave-one-out centroid cosine; linear quantiles",
+        "limits": "Scene/style similarity can dominate; not identity purity; no population CI."
+      },
+      "purity": {
+        "numerator": null,
+        "denominator": 40,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "purity_identity": null,
+      "independent_labels": 0,
+      "unresolved_labels": 40,
+      "target": null,
+      "target_purity": {
+        "numerator": null,
+        "denominator": 40,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "weak_agreement": {
+        "numerator": null,
+        "denominator": 40,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "unresolved_proxy_D": {
+        "numerator": null,
+        "denominator": 40,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "unknown_U": {
+        "numerator": null,
+        "denominator": 40,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "conflict_C": {
+        "numerator": null,
+        "denominator": 40,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "model_coverage": null,
+      "artist_agreement": {
+        "numerator": null,
+        "denominator": 40,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "regimes": {
+        "profile": "folder-regime-v1",
+        "features": {
+          "valid_images": 40,
+          "eligible_faces": 40,
+          "V": 0.7,
+          "F": 0.4,
+          "K": 4,
+          "Q": 0.2,
+          "A": null,
+          "artist_labels": 0,
+          "entities": 0
+        },
+        "detectors": [
+          {
+            "regime": "session-set",
+            "gates": [
+              {
+                "feature": "valid_images",
+                "value": 40,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": true
+              },
+              {
+                "feature": "V",
+                "value": 0.7,
+                "operator": ">=",
+                "threshold": 0.9,
+                "passed": false
+              },
+              {
+                "feature": "F",
+                "value": 0.4,
+                "operator": ">=",
+                "threshold": 0.8,
+                "passed": false
+              },
+              {
+                "feature": "eligible_faces",
+                "value": 40,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": true
+              }
+            ],
+            "status": "fail",
+            "consequence": "Inspect one coherent set; session does not imply identity."
+          },
+          {
+            "regime": "mixed-pile",
+            "gates": [
+              {
+                "feature": "valid_images",
+                "value": 40,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": true
+              },
+              {
+                "feature": "V",
+                "value": 0.7,
+                "operator": "<",
+                "threshold": 0.8,
+                "passed": true
+              },
+              {
+                "feature": "F",
+                "value": 0.4,
+                "operator": "<",
+                "threshold": 0.5,
+                "passed": true
+              },
+              {
+                "feature": "K",
+                "value": 4,
+                "operator": ">=",
+                "threshold": 3.0,
+                "passed": true
+              }
+            ],
+            "status": "pass",
+            "consequence": "Cluster-first review; no automatic character inheritance."
+          },
+          {
+            "regime": "scenario/documentary",
+            "gates": [
+              {
+                "feature": "valid_images",
+                "value": 40,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": true
+              },
+              {
+                "feature": "V",
+                "value": 0.7,
+                "operator": ">=",
+                "threshold": 0.85,
+                "passed": false
+              },
+              {
+                "feature": "Q",
+                "value": 0.2,
+                "operator": ">=",
+                "threshold": 0.5,
+                "passed": false
+              },
+              {
+                "feature": "F",
+                "value": 0.4,
+                "operator": "<",
+                "threshold": 0.8,
+                "passed": true
+              }
+            ],
+            "status": "fail",
+            "consequence": "Scene organization; no no-person conclusion."
+          },
+          {
+            "regime": "artist-portfolio",
+            "gates": [
+              {
+                "feature": "valid_images",
+                "value": 40,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": true
+              },
+              {
+                "feature": "A",
+                "value": null,
+                "operator": ">=",
+                "threshold": 0.8,
+                "passed": null
+              },
+              {
+                "feature": "artist_labels",
+                "value": 0,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": false
+              },
+              {
+                "feature": "entities",
+                "value": 0,
+                "operator": ">=",
+                "threshold": 3.0,
+                "passed": false
+              }
+            ],
+            "status": "unavailable",
+            "consequence": "Artist axis independent of character; visual style cannot certify artist."
+          }
+        ],
+        "passing": [
+          "mixed-pile"
+        ],
+        "status": "recommended",
+        "confidence": null,
+        "limits": "heuristic/unvalidated; thresholds are engineering policy, not measured accuracy optima"
+      },
+      "coherence_admitted": false,
+      "identity_prior_admitted": false,
+      "identity_recommendation": false,
+      "context_enabled": false,
+      "manual_collection_available": true,
+      "thresholds": "ADR: valid>=30, Vmedian>=0.90, p10>=0.80; identity labels>=30 and lower>=0.90",
+      "limitations": [
+        "Labels must be independently human supplied; attestations are not externally audited.",
+        "Exact duplicates removed; near-duplicate dependence is unestablished.",
+        "No whole-image vector means V-dependent regimes unavailable; crop coherence is not V.",
+        "No-face is detector missingness, not non-character truth.",
+        "Missing target/vocabulary coverage means D and weak agreement unavailable.",
+        "Measured admission is not contextual-use authorization; G2 enables no grouping."
+      ]
+    },
+    {
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935",
+      "path": "场景记录／不推断无人物",
+      "population_ids": [
+        "0e85e0469d38d60e99841373e627f1e42da05ebab5e20c1d7142e9ea4a1c65ea",
+        "adef0380127c0a79c3f929ab81e0d2c6b4de32558b954b52aeba150247efbd50",
+        "1614b21e71548043794f7822fd076e2ea9e3492a584185804fc87b388e486a81",
+        "462021eb15882b4ef8a692fe3d1fbad1fa919e04b49455934654036d38de25ae",
+        "30d43cf57e15758ee3fa8b54d65feee570aa24327e97aa4a2bfc778acfb5965c",
+        "62dfa3b101cb4604b8e415eca2e56ab2384f87b0031e7fc9f0c6fd368816c2f2",
+        "8332329eaff9f2ce5588fc48176f5229035b0a25319a1dde440ed1b47559fbb0",
+        "3fab31c613ef7dcdfe61159b4d506fde7753a3ee8d9dbd1409ccbce8d82f46c8",
+        "860e2891f43a0696b0d949998ed4fbe3b71bbc0999b7c99460510bb95aabbb0f",
+        "da5b74f6ccc5bc0498618433600bb1d0b39c05a2407402425fd832c4f7c6cb86",
+        "cdae16f506d22f6353e52884180c09ff692c71bd214b9f5f8501647257828a3e",
+        "fcb4063743ed5a0b204988fa09054871758b3908418e00606bc17bf5b7fec831",
+        "40eac6329e32a66b209c03981c66f8f24d7484b371354460f554a71d839db432",
+        "6e1fef5b32dded7627c822208422722d62da7a8f5a2dc630de6ed0963c657b06",
+        "70ef0e2327fbf1718c1c799469db7bba8188efe2c12b6723db86a715ebadcd9a",
+        "0fa084faafaa40756e78e0ca24ab5cacb713d4a59ed86014f129dfbd1ed0c05e",
+        "e586b6033c87588fc44bbc8eac2204602986171b3562af0429d266c1f158240d",
+        "6ab77cac778909f95edd5387f7c9dc09cb4338ee5da60d04e1004ab5bb6da98a",
+        "e28d9536eea0092e4f644e878c10e85dff2774595ba5e9d15075516dce95365e",
+        "23ffca82642b4a8be1a0e417f19915663aa1ac9be96c16050d3af0dd2fb4eab0",
+        "63362efecb5304b0673ef1e11ba5817d8fe6aa7414d97509403d461ddc65079b",
+        "31aa8b51cbb158b1889b7da45062b8382174f8d5a4b531da695b6a0200fa1bab",
+        "3c2a77fe7125f3db548e25f3e571e694eec278ef4534d1c50cc3bd821dc96abf",
+        "3b68e73c612ee1063092aec5b9505f529225f3d0bea01ac831c868bbd324ba67",
+        "f9b47eb50fbc31ffba7380e0050ce7e980fef0ee6253b2ecec3316cd35f493ee",
+        "89bbc36fed0f6202cb12197236cf5d2c7688f8e7bd4814ecaee921599c225c1b",
+        "155baa82c8f90fa80326c68411f5db624683f44dd95fcbf43564844b7d6d5352",
+        "4b4cdbf2854125ed7917cd5f9db183c87f9dea1fd3e5ce461719fa120d3a8eb4",
+        "f29cf6faeb91cfc9ab4a8463e255cf9c0bb3631ad983f27b98942ef902f4e1e2",
+        "8ae6fd48c4f94267ae849555147cf8af2a6ee83d1c4b8a352b9972d01be491bc",
+        "48987fe92bc163ec603c9c5c3a6c7fe7086d607a0317a210a4371974f0acd156",
+        "0328c77e200ad8cbd972ef3d782827d5c9b2f438896186eefb9d4a3df53f3e28",
+        "b6e74f1993c45dba92d7f0aad121ef90e86bb58873ab467d2000ef5f2f314314",
+        "8ba33688a40bca488fa7fd2690fd621ded8248cbcc7626bde3fc89c73f2b6162",
+        "946fa2792e73f518b4a3de28837ce018799f1dc03d898cf37ef59606abe1d35e",
+        "14770c5a88c589fab7602b6c7f11cb49cb4b865b6264ef371fba34022b8bc9c9",
+        "da66675fa7256ab821bfb32edf71b157188a53397c416becedacb04f11f9c7ce",
+        "364caa0b64c2fec919bd5d44b63942595d54e492ec5741d51a92218ebe5efca8",
+        "a527e9821d1bab140ab81294f6e2ddc3b034b7b81b0d1d448dbd80557b963959",
+        "1d829e98dacd251a5af7cd1989ce21cf030686ce957ad4c2c55fa44eac079c73"
+      ],
+      "population_digest": "6d1f4ac10db541d31806a7c967c60d20b2f6528238e03a799763b36bcd986e86",
+      "sample_ids": [
+        "0e85e0469d38d60e99841373e627f1e42da05ebab5e20c1d7142e9ea4a1c65ea",
+        "adef0380127c0a79c3f929ab81e0d2c6b4de32558b954b52aeba150247efbd50",
+        "1614b21e71548043794f7822fd076e2ea9e3492a584185804fc87b388e486a81",
+        "462021eb15882b4ef8a692fe3d1fbad1fa919e04b49455934654036d38de25ae",
+        "30d43cf57e15758ee3fa8b54d65feee570aa24327e97aa4a2bfc778acfb5965c",
+        "62dfa3b101cb4604b8e415eca2e56ab2384f87b0031e7fc9f0c6fd368816c2f2",
+        "8332329eaff9f2ce5588fc48176f5229035b0a25319a1dde440ed1b47559fbb0",
+        "3fab31c613ef7dcdfe61159b4d506fde7753a3ee8d9dbd1409ccbce8d82f46c8",
+        "860e2891f43a0696b0d949998ed4fbe3b71bbc0999b7c99460510bb95aabbb0f",
+        "da5b74f6ccc5bc0498618433600bb1d0b39c05a2407402425fd832c4f7c6cb86",
+        "cdae16f506d22f6353e52884180c09ff692c71bd214b9f5f8501647257828a3e",
+        "fcb4063743ed5a0b204988fa09054871758b3908418e00606bc17bf5b7fec831",
+        "40eac6329e32a66b209c03981c66f8f24d7484b371354460f554a71d839db432",
+        "6e1fef5b32dded7627c822208422722d62da7a8f5a2dc630de6ed0963c657b06",
+        "70ef0e2327fbf1718c1c799469db7bba8188efe2c12b6723db86a715ebadcd9a",
+        "0fa084faafaa40756e78e0ca24ab5cacb713d4a59ed86014f129dfbd1ed0c05e",
+        "e586b6033c87588fc44bbc8eac2204602986171b3562af0429d266c1f158240d",
+        "6ab77cac778909f95edd5387f7c9dc09cb4338ee5da60d04e1004ab5bb6da98a",
+        "e28d9536eea0092e4f644e878c10e85dff2774595ba5e9d15075516dce95365e",
+        "23ffca82642b4a8be1a0e417f19915663aa1ac9be96c16050d3af0dd2fb4eab0",
+        "63362efecb5304b0673ef1e11ba5817d8fe6aa7414d97509403d461ddc65079b",
+        "31aa8b51cbb158b1889b7da45062b8382174f8d5a4b531da695b6a0200fa1bab",
+        "3c2a77fe7125f3db548e25f3e571e694eec278ef4534d1c50cc3bd821dc96abf",
+        "3b68e73c612ee1063092aec5b9505f529225f3d0bea01ac831c868bbd324ba67",
+        "f9b47eb50fbc31ffba7380e0050ce7e980fef0ee6253b2ecec3316cd35f493ee",
+        "89bbc36fed0f6202cb12197236cf5d2c7688f8e7bd4814ecaee921599c225c1b",
+        "155baa82c8f90fa80326c68411f5db624683f44dd95fcbf43564844b7d6d5352",
+        "4b4cdbf2854125ed7917cd5f9db183c87f9dea1fd3e5ce461719fa120d3a8eb4",
+        "f29cf6faeb91cfc9ab4a8463e255cf9c0bb3631ad983f27b98942ef902f4e1e2",
+        "8ae6fd48c4f94267ae849555147cf8af2a6ee83d1c4b8a352b9972d01be491bc",
+        "48987fe92bc163ec603c9c5c3a6c7fe7086d607a0317a210a4371974f0acd156",
+        "0328c77e200ad8cbd972ef3d782827d5c9b2f438896186eefb9d4a3df53f3e28",
+        "b6e74f1993c45dba92d7f0aad121ef90e86bb58873ab467d2000ef5f2f314314",
+        "8ba33688a40bca488fa7fd2690fd621ded8248cbcc7626bde3fc89c73f2b6162",
+        "946fa2792e73f518b4a3de28837ce018799f1dc03d898cf37ef59606abe1d35e",
+        "14770c5a88c589fab7602b6c7f11cb49cb4b865b6264ef371fba34022b8bc9c9",
+        "da66675fa7256ab821bfb32edf71b157188a53397c416becedacb04f11f9c7ce",
+        "364caa0b64c2fec919bd5d44b63942595d54e492ec5741d51a92218ebe5efca8",
+        "a527e9821d1bab140ab81294f6e2ddc3b034b7b81b0d1d448dbd80557b963959",
+        "1d829e98dacd251a5af7cd1989ce21cf030686ce957ad4c2c55fa44eac079c73"
+      ],
+      "sample_digest": "6d1f4ac10db541d31806a7c967c60d20b2f6528238e03a799763b36bcd986e86",
+      "seed": 20260921,
+      "design": "seeded simple random sampling without replacement, sorted full hashes, up to 100",
+      "population": 40,
+      "sample": 40,
+      "occurrences": 40,
+      "duplicates": 0,
+      "unavailable_occurrences": 0,
+      "coverage": 1,
+      "vector_profile": "analytic-ui-fixture-v1",
+      "representation": "synthetic-whole-image",
+      "coherence": {
+        "denominator": 40,
+        "valid": 40,
+        "missing": 0,
+        "median": 0.87,
+        "p10": 0.83,
+        "scores": [
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87,
+          0.87
+        ],
+        "method": "L2-normalized non-self leave-one-out centroid cosine; linear quantiles",
+        "limits": "Scene/style similarity can dominate; not identity purity; no population CI."
+      },
+      "purity": {
+        "numerator": null,
+        "denominator": 40,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "purity_identity": null,
+      "independent_labels": 0,
+      "unresolved_labels": 40,
+      "target": null,
+      "target_purity": {
+        "numerator": null,
+        "denominator": 40,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "weak_agreement": {
+        "numerator": null,
+        "denominator": 40,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "unresolved_proxy_D": {
+        "numerator": null,
+        "denominator": 40,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "unknown_U": {
+        "numerator": null,
+        "denominator": 40,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "conflict_C": {
+        "numerator": null,
+        "denominator": 40,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "model_coverage": null,
+      "artist_agreement": {
+        "numerator": null,
+        "denominator": 40,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "regimes": {
+        "profile": "folder-regime-v1",
+        "features": {
+          "valid_images": 40,
+          "eligible_faces": 40,
+          "V": 0.87,
+          "F": 0.6,
+          "K": 2,
+          "Q": 0.7,
+          "A": null,
+          "artist_labels": 0,
+          "entities": 0
+        },
+        "detectors": [
+          {
+            "regime": "session-set",
+            "gates": [
+              {
+                "feature": "valid_images",
+                "value": 40,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": true
+              },
+              {
+                "feature": "V",
+                "value": 0.87,
+                "operator": ">=",
+                "threshold": 0.9,
+                "passed": false
+              },
+              {
+                "feature": "F",
+                "value": 0.6,
+                "operator": ">=",
+                "threshold": 0.8,
+                "passed": false
+              },
+              {
+                "feature": "eligible_faces",
+                "value": 40,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": true
+              }
+            ],
+            "status": "fail",
+            "consequence": "Inspect one coherent set; session does not imply identity."
+          },
+          {
+            "regime": "mixed-pile",
+            "gates": [
+              {
+                "feature": "valid_images",
+                "value": 40,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": true
+              },
+              {
+                "feature": "V",
+                "value": 0.87,
+                "operator": "<",
+                "threshold": 0.8,
+                "passed": false
+              },
+              {
+                "feature": "F",
+                "value": 0.6,
+                "operator": "<",
+                "threshold": 0.5,
+                "passed": false
+              },
+              {
+                "feature": "K",
+                "value": 2,
+                "operator": ">=",
+                "threshold": 3.0,
+                "passed": false
+              }
+            ],
+            "status": "fail",
+            "consequence": "Cluster-first review; no automatic character inheritance."
+          },
+          {
+            "regime": "scenario/documentary",
+            "gates": [
+              {
+                "feature": "valid_images",
+                "value": 40,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": true
+              },
+              {
+                "feature": "V",
+                "value": 0.87,
+                "operator": ">=",
+                "threshold": 0.85,
+                "passed": true
+              },
+              {
+                "feature": "Q",
+                "value": 0.7,
+                "operator": ">=",
+                "threshold": 0.5,
+                "passed": true
+              },
+              {
+                "feature": "F",
+                "value": 0.6,
+                "operator": "<",
+                "threshold": 0.8,
+                "passed": true
+              }
+            ],
+            "status": "pass",
+            "consequence": "Scene organization; no no-person conclusion."
+          },
+          {
+            "regime": "artist-portfolio",
+            "gates": [
+              {
+                "feature": "valid_images",
+                "value": 40,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": true
+              },
+              {
+                "feature": "A",
+                "value": null,
+                "operator": ">=",
+                "threshold": 0.8,
+                "passed": null
+              },
+              {
+                "feature": "artist_labels",
+                "value": 0,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": false
+              },
+              {
+                "feature": "entities",
+                "value": 0,
+                "operator": ">=",
+                "threshold": 3.0,
+                "passed": false
+              }
+            ],
+            "status": "unavailable",
+            "consequence": "Artist axis independent of character; visual style cannot certify artist."
+          }
+        ],
+        "passing": [
+          "scenario/documentary"
+        ],
+        "status": "recommended",
+        "confidence": null,
+        "limits": "heuristic/unvalidated; thresholds are engineering policy, not measured accuracy optima"
+      },
+      "coherence_admitted": false,
+      "identity_prior_admitted": false,
+      "identity_recommendation": false,
+      "context_enabled": false,
+      "manual_collection_available": true,
+      "thresholds": "ADR: valid>=30, Vmedian>=0.90, p10>=0.80; identity labels>=30 and lower>=0.90",
+      "limitations": [
+        "Labels must be independently human supplied; attestations are not externally audited.",
+        "Exact duplicates removed; near-duplicate dependence is unestablished.",
+        "No whole-image vector means V-dependent regimes unavailable; crop coherence is not V.",
+        "No-face is detector missingness, not non-character truth.",
+        "Missing target/vocabulary coverage means D and weak agreement unavailable.",
+        "Measured admission is not contextual-use authorization; G2 enables no grouping."
+      ]
+    },
+    {
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff",
+      "path": "作者作品集／人工作者标签",
+      "population_ids": [
+        "3db7c66efedeb5124ae5da54cea7c5797cd8e5449c6931abdedd62376ca9f0cb",
+        "4cef7e283016454d78baab8f46ac50e475beca2cc975285eeb8fb7692c15b8b9",
+        "5ca938f47f23587f6dd125bfda8b51bf9d3f585c6ed1b1d8a1cc13e3d9afcf70",
+        "fc2c6f57ae7535ad541cb23d5bd58f5d525cfd563fb813efc0d9ae9b602b5ab0",
+        "3f51c72e64c0e370e62a9724d837dd0d90f32bd9f996ed8d12a0f2104cf9510e",
+        "da10ba73b2cd8d463558dc6174d091b93a741d8b02e4b981cfaab11b5cac9db3",
+        "0bb84c5290e61b40f461eaf9b95dd013973036c56094dd64299ec61611ea601c",
+        "1d2eab7489de5603a48159d55894c1b1a726508d08c3a7c3eade5b375d183a97",
+        "b30d2a00bd466e9c47083f2108b71128b46a163f3511599db00a321a3684020e",
+        "37fccedaeb8a3302e22430a1485de211faa161a532298cca048e4acb406e8b31",
+        "ddbd273b40a277270e318ee91ecd5b3c90f1b89eda15b59c7207101618fae43d",
+        "1cab4ae35df8e1b0aea8fb589e12aaaee293a607b4b17e65842ab3f9cff61d9d",
+        "d98bc7f2437bd91fe39f6015ba05bfa46e9d228a817daf88bed577eaf5db8752",
+        "cc1f97145480d5db5fb67eef676019125be709ac90ae01184a33b0972b8a7bdd",
+        "499f2a9221b1fd76ff4ea9f27d275f6fe87021699273bc0e3e66f227b3aede44",
+        "e79fc85def2d8ac07a946cc8e1df575f344cc75ace198c723f0158927952e850",
+        "8004d3ef7c3a4abb7fb19e8d5683b0dbd8b6aab7babe11ae2124d3ce2b2b6bb6",
+        "7dd04b23eb267edd2df3d8d7c684a96762b0d00016dfc1b4061ebd04a4b6f05b",
+        "3604ce048a84fc79675bf439f70c0b3b1693dfd898b2444e83fd35f05d467c77",
+        "0aa88f8b81c068c15299eae1a723d0765693f0285d071ab7dc75567a95fbd363",
+        "5ad37b8324379bae805434bbd1fa4d2f8ab9af9278b521fdc34d2ea6d11a8553",
+        "d70f2d991afd37afebf3979af526c0caa49c1da5a40c8acdd0a88869ea60827c",
+        "d4b9562a21808fbbc66990d68ceb4e2e2bd360d622a342e0f4e6cb37b310d7bf",
+        "659885695e658413fdd60640c927a621974cea22a1136fe33d2cd445eccda1d1",
+        "26f43ba4bf1410611f0bc7840e3b60c0ba749b38e92ef56219b6857a5aa8f2e0",
+        "0c95538b0dbe2dd853bf1d46b563e637067e518c3bb517c64c92bf1c3f74bf46",
+        "2272b03651e529b972f7f4fb84b46767a309ff0c1066320d826b5f08ab4e3513",
+        "0b739112bb9fd0eab4a0e982ac5f250591596f36e0d52eaa8ccf7389aafd5f8e",
+        "cd4dce999dce91d44ca5ec723122d3b15fbd5a612d623bd7464e763916d966a8",
+        "7501197926ed0084a4d9c6ba83326af95028e6032180b59f61fae8c3cb67bfed",
+        "eee3322068978ea83d8ef780ab3f5f3b5e57e67cad71e2e5651f32816da4f093",
+        "0b941d2f3ac9821270154d72c64cc9bd8ad5665d638d5d10cec92451b6656a3c",
+        "fa14cddb99926c06a7397dcd732460bfbe03b1ea59c7dcfa7e1eecf6cbb0b748",
+        "418e929d7fbf60a258fffd3e94efaad17e29cf0d0b892d8dd56b50cce1f19880",
+        "811fb8ab9774a1269612804af34aa92e342a1f68647348b5200719b3fa883eba",
+        "e5a8e4fecc95de7ac0880b2b867918153865c0c5b16f939d58515de6151a5351",
+        "0dad67c518e9eaabebf6d74ab2865d4b155f426fa86ef9d8aa12ae32428c0808",
+        "9e226149fce3053a0793f908ed79a15ad55307ec82fd53576d2f2ff82a230bd1",
+        "a5456f3a7204f5d84102ee81ca1e0e97b33ee62da426775ebdc87507a166abce",
+        "dd5b18eb1d98115cee8f7415d59b7c2775ecb5afdaf60d4cf8446216f06a19b2"
+      ],
+      "population_digest": "05d44addf9ccb54705337a1352f098534d4a8de16358a6a33f1cec6764cd8af2",
+      "sample_ids": [
+        "3db7c66efedeb5124ae5da54cea7c5797cd8e5449c6931abdedd62376ca9f0cb",
+        "4cef7e283016454d78baab8f46ac50e475beca2cc975285eeb8fb7692c15b8b9",
+        "5ca938f47f23587f6dd125bfda8b51bf9d3f585c6ed1b1d8a1cc13e3d9afcf70",
+        "fc2c6f57ae7535ad541cb23d5bd58f5d525cfd563fb813efc0d9ae9b602b5ab0",
+        "3f51c72e64c0e370e62a9724d837dd0d90f32bd9f996ed8d12a0f2104cf9510e",
+        "da10ba73b2cd8d463558dc6174d091b93a741d8b02e4b981cfaab11b5cac9db3",
+        "0bb84c5290e61b40f461eaf9b95dd013973036c56094dd64299ec61611ea601c",
+        "1d2eab7489de5603a48159d55894c1b1a726508d08c3a7c3eade5b375d183a97",
+        "b30d2a00bd466e9c47083f2108b71128b46a163f3511599db00a321a3684020e",
+        "37fccedaeb8a3302e22430a1485de211faa161a532298cca048e4acb406e8b31",
+        "ddbd273b40a277270e318ee91ecd5b3c90f1b89eda15b59c7207101618fae43d",
+        "1cab4ae35df8e1b0aea8fb589e12aaaee293a607b4b17e65842ab3f9cff61d9d",
+        "d98bc7f2437bd91fe39f6015ba05bfa46e9d228a817daf88bed577eaf5db8752",
+        "cc1f97145480d5db5fb67eef676019125be709ac90ae01184a33b0972b8a7bdd",
+        "499f2a9221b1fd76ff4ea9f27d275f6fe87021699273bc0e3e66f227b3aede44",
+        "e79fc85def2d8ac07a946cc8e1df575f344cc75ace198c723f0158927952e850",
+        "8004d3ef7c3a4abb7fb19e8d5683b0dbd8b6aab7babe11ae2124d3ce2b2b6bb6",
+        "7dd04b23eb267edd2df3d8d7c684a96762b0d00016dfc1b4061ebd04a4b6f05b",
+        "3604ce048a84fc79675bf439f70c0b3b1693dfd898b2444e83fd35f05d467c77",
+        "0aa88f8b81c068c15299eae1a723d0765693f0285d071ab7dc75567a95fbd363",
+        "5ad37b8324379bae805434bbd1fa4d2f8ab9af9278b521fdc34d2ea6d11a8553",
+        "d70f2d991afd37afebf3979af526c0caa49c1da5a40c8acdd0a88869ea60827c",
+        "d4b9562a21808fbbc66990d68ceb4e2e2bd360d622a342e0f4e6cb37b310d7bf",
+        "659885695e658413fdd60640c927a621974cea22a1136fe33d2cd445eccda1d1",
+        "26f43ba4bf1410611f0bc7840e3b60c0ba749b38e92ef56219b6857a5aa8f2e0",
+        "0c95538b0dbe2dd853bf1d46b563e637067e518c3bb517c64c92bf1c3f74bf46",
+        "2272b03651e529b972f7f4fb84b46767a309ff0c1066320d826b5f08ab4e3513",
+        "0b739112bb9fd0eab4a0e982ac5f250591596f36e0d52eaa8ccf7389aafd5f8e",
+        "cd4dce999dce91d44ca5ec723122d3b15fbd5a612d623bd7464e763916d966a8",
+        "7501197926ed0084a4d9c6ba83326af95028e6032180b59f61fae8c3cb67bfed",
+        "eee3322068978ea83d8ef780ab3f5f3b5e57e67cad71e2e5651f32816da4f093",
+        "0b941d2f3ac9821270154d72c64cc9bd8ad5665d638d5d10cec92451b6656a3c",
+        "fa14cddb99926c06a7397dcd732460bfbe03b1ea59c7dcfa7e1eecf6cbb0b748",
+        "418e929d7fbf60a258fffd3e94efaad17e29cf0d0b892d8dd56b50cce1f19880",
+        "811fb8ab9774a1269612804af34aa92e342a1f68647348b5200719b3fa883eba",
+        "e5a8e4fecc95de7ac0880b2b867918153865c0c5b16f939d58515de6151a5351",
+        "0dad67c518e9eaabebf6d74ab2865d4b155f426fa86ef9d8aa12ae32428c0808",
+        "9e226149fce3053a0793f908ed79a15ad55307ec82fd53576d2f2ff82a230bd1",
+        "a5456f3a7204f5d84102ee81ca1e0e97b33ee62da426775ebdc87507a166abce",
+        "dd5b18eb1d98115cee8f7415d59b7c2775ecb5afdaf60d4cf8446216f06a19b2"
+      ],
+      "sample_digest": "05d44addf9ccb54705337a1352f098534d4a8de16358a6a33f1cec6764cd8af2",
+      "seed": 20260921,
+      "design": "seeded simple random sampling without replacement, sorted full hashes, up to 100",
+      "population": 40,
+      "sample": 40,
+      "occurrences": 40,
+      "duplicates": 0,
+      "unavailable_occurrences": 0,
+      "coverage": 1,
+      "vector_profile": "analytic-ui-fixture-v1",
+      "representation": "synthetic-whole-image",
+      "coherence": {
+        "denominator": 40,
+        "valid": 40,
+        "missing": 0,
+        "median": 0.7,
+        "p10": 0.66,
+        "scores": [
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7
+        ],
+        "method": "L2-normalized non-self leave-one-out centroid cosine; linear quantiles",
+        "limits": "Scene/style similarity can dominate; not identity purity; no population CI."
+      },
+      "purity": {
+        "numerator": null,
+        "denominator": 40,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "purity_identity": null,
+      "independent_labels": 0,
+      "unresolved_labels": 40,
+      "target": null,
+      "target_purity": {
+        "numerator": null,
+        "denominator": 40,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "weak_agreement": {
+        "numerator": null,
+        "denominator": 40,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "unresolved_proxy_D": {
+        "numerator": null,
+        "denominator": 40,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "unknown_U": {
+        "numerator": null,
+        "denominator": 40,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "conflict_C": {
+        "numerator": null,
+        "denominator": 40,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "model_coverage": null,
+      "artist_agreement": {
+        "numerator": 36,
+        "denominator": 40,
+        "value": 0.9,
+        "interval": null,
+        "method": "census-exact",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "regimes": {
+        "profile": "folder-regime-v1",
+        "features": {
+          "valid_images": 40,
+          "eligible_faces": 40,
+          "V": 0.7,
+          "F": 0.6,
+          "K": 2,
+          "Q": 0.2,
+          "A": 0.9,
+          "artist_labels": 40,
+          "entities": 4
+        },
+        "detectors": [
+          {
+            "regime": "session-set",
+            "gates": [
+              {
+                "feature": "valid_images",
+                "value": 40,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": true
+              },
+              {
+                "feature": "V",
+                "value": 0.7,
+                "operator": ">=",
+                "threshold": 0.9,
+                "passed": false
+              },
+              {
+                "feature": "F",
+                "value": 0.6,
+                "operator": ">=",
+                "threshold": 0.8,
+                "passed": false
+              },
+              {
+                "feature": "eligible_faces",
+                "value": 40,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": true
+              }
+            ],
+            "status": "fail",
+            "consequence": "Inspect one coherent set; session does not imply identity."
+          },
+          {
+            "regime": "mixed-pile",
+            "gates": [
+              {
+                "feature": "valid_images",
+                "value": 40,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": true
+              },
+              {
+                "feature": "V",
+                "value": 0.7,
+                "operator": "<",
+                "threshold": 0.8,
+                "passed": true
+              },
+              {
+                "feature": "F",
+                "value": 0.6,
+                "operator": "<",
+                "threshold": 0.5,
+                "passed": false
+              },
+              {
+                "feature": "K",
+                "value": 2,
+                "operator": ">=",
+                "threshold": 3.0,
+                "passed": false
+              }
+            ],
+            "status": "fail",
+            "consequence": "Cluster-first review; no automatic character inheritance."
+          },
+          {
+            "regime": "scenario/documentary",
+            "gates": [
+              {
+                "feature": "valid_images",
+                "value": 40,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": true
+              },
+              {
+                "feature": "V",
+                "value": 0.7,
+                "operator": ">=",
+                "threshold": 0.85,
+                "passed": false
+              },
+              {
+                "feature": "Q",
+                "value": 0.2,
+                "operator": ">=",
+                "threshold": 0.5,
+                "passed": false
+              },
+              {
+                "feature": "F",
+                "value": 0.6,
+                "operator": "<",
+                "threshold": 0.8,
+                "passed": true
+              }
+            ],
+            "status": "fail",
+            "consequence": "Scene organization; no no-person conclusion."
+          },
+          {
+            "regime": "artist-portfolio",
+            "gates": [
+              {
+                "feature": "valid_images",
+                "value": 40,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": true
+              },
+              {
+                "feature": "A",
+                "value": 0.9,
+                "operator": ">=",
+                "threshold": 0.8,
+                "passed": true
+              },
+              {
+                "feature": "artist_labels",
+                "value": 40,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": true
+              },
+              {
+                "feature": "entities",
+                "value": 4,
+                "operator": ">=",
+                "threshold": 3.0,
+                "passed": true
+              }
+            ],
+            "status": "pass",
+            "consequence": "Artist axis independent of character; visual style cannot certify artist."
+          }
+        ],
+        "passing": [
+          "artist-portfolio"
+        ],
+        "status": "recommended",
+        "confidence": null,
+        "limits": "heuristic/unvalidated; thresholds are engineering policy, not measured accuracy optima"
+      },
+      "coherence_admitted": false,
+      "identity_prior_admitted": false,
+      "identity_recommendation": false,
+      "context_enabled": false,
+      "manual_collection_available": true,
+      "thresholds": "ADR: valid>=30, Vmedian>=0.90, p10>=0.80; identity labels>=30 and lower>=0.90",
+      "limitations": [
+        "Labels must be independently human supplied; attestations are not externally audited.",
+        "Exact duplicates removed; near-duplicate dependence is unestablished.",
+        "No whole-image vector means V-dependent regimes unavailable; crop coherence is not V.",
+        "No-face is detector missingness, not non-character truth.",
+        "Missing target/vocabulary coverage means D and weak agreement unavailable.",
+        "Measured admission is not contextual-use authorization; G2 enables no grouping."
+      ]
+    }
+  ],
+  "clusters": [
+    {
+      "cluster_id": 1,
+      "member_digest": "87341abbdcfdd9e966f73678b0b5e1d0861a2a67577b5f9165d24535e9749627",
+      "image_ids": [
+        "afb814fb2bbf9c826923dbe54e485a24fe4a73e541fa16f0cb8d4fb8ba4d3173",
+        "7fe87675a87425313c97b65bad55e218a0d9fd411dc766e88763ce64ba7ecbf0",
+        "1f3aba503a442fdeafac3161b9c9372929437a0f7f34b9bd85db7a8d90c338aa",
+        "64a5c0375f6765f6b418c802cceeaf3d6f8040b8c6e2b73af1628bf4397a0fa4",
+        "b43a8a65ff2b20ae1bdb1b9c59b7694ed7bcff81d5a4605f6b54d0f594096f79",
+        "92ffa7b029afe52d2bf9c19d9197bfee4c2a6a5924dab9c8978b589d5a3a3956",
+        "f768c7de4c322ff070e6e8bab91d5c551b8cc62b148ee1bf06266d291b8e47b2",
+        "8d63386f9b051d945376fd6fdf540043e31b23f0670fa6fb7187c145b528e21b",
+        "726d22244528e303f6cb0f002b435cb3c8c13dffe47eb2232d7cf76b90e2e118",
+        "05e62aec876f851a036a1ace4720d805a733f5a8e1f46913fd9bba2eda0eb050",
+        "aabfe0f89fd15aaa385c52229d0d8816ef0d2fbd054c461022ef877f710e47ab",
+        "e6562f5f5a8c7a113327797e5fa55b4fd98ea6f0fe1e54a137d6d423fda46326"
+      ],
+      "face_ids": [
+        "synthetic-face-0",
+        "synthetic-face-1",
+        "synthetic-face-2",
+        "synthetic-face-3",
+        "synthetic-face-4",
+        "synthetic-face-5",
+        "synthetic-face-6",
+        "synthetic-face-7",
+        "synthetic-face-8",
+        "synthetic-face-9",
+        "synthetic-face-10",
+        "synthetic-face-11"
+      ],
+      "unique_images": 12,
+      "faces": 12,
+      "outlier_fraction": 0,
+      "coherence": {
+        "denominator": 12,
+        "valid": 12,
+        "missing": 0,
+        "median": 0.94,
+        "p10": 0.9,
+        "scores": [
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94,
+          0.94
+        ],
+        "method": "L2-normalized non-self leave-one-out centroid cosine; linear quantiles",
+        "limits": "Scene/style similarity can dominate; not identity purity; no population CI."
+      },
+      "eligible": true,
+      "eligibility_reasons": [],
+      "representation": "synthetic-face-crop",
+      "representatives": [
+        {
+          "image_id": "afb814fb2bbf9c826923dbe54e485a24fe4a73e541fa16f0cb8d4fb8ba4d3173",
+          "face_id": "synthetic-face-0",
+          "image_ref": "negotiation-synthetic-0.png",
+          "crop_ref": null
+        },
+        {
+          "image_id": "7fe87675a87425313c97b65bad55e218a0d9fd411dc766e88763ce64ba7ecbf0",
+          "face_id": "synthetic-face-1",
+          "image_ref": "negotiation-synthetic-1.png",
+          "crop_ref": null
+        },
+        {
+          "image_id": "1f3aba503a442fdeafac3161b9c9372929437a0f7f34b9bd85db7a8d90c338aa",
+          "face_id": "synthetic-face-2",
+          "image_ref": "negotiation-synthetic-2.png",
+          "crop_ref": null
+        },
+        {
+          "image_id": "64a5c0375f6765f6b418c802cceeaf3d6f8040b8c6e2b73af1628bf4397a0fa4",
+          "face_id": "synthetic-face-3",
+          "image_ref": "negotiation-synthetic-3.png",
+          "crop_ref": null
+        },
+        {
+          "image_id": "b43a8a65ff2b20ae1bdb1b9c59b7694ed7bcff81d5a4605f6b54d0f594096f79",
+          "face_id": "synthetic-face-4",
+          "image_ref": "negotiation-synthetic-4.png",
+          "crop_ref": null
+        },
+        {
+          "image_id": "92ffa7b029afe52d2bf9c19d9197bfee4c2a6a5924dab9c8978b589d5a3a3956",
+          "face_id": "synthetic-face-5",
+          "image_ref": "negotiation-synthetic-5.png",
+          "crop_ref": null
+        },
+        {
+          "image_id": "f768c7de4c322ff070e6e8bab91d5c551b8cc62b148ee1bf06266d291b8e47b2",
+          "face_id": "synthetic-face-6",
+          "image_ref": "negotiation-synthetic-6.png",
+          "crop_ref": null
+        },
+        {
+          "image_id": "8d63386f9b051d945376fd6fdf540043e31b23f0670fa6fb7187c145b528e21b",
+          "face_id": "synthetic-face-7",
+          "image_ref": "negotiation-synthetic-7.png",
+          "crop_ref": null
+        },
+        {
+          "image_id": "726d22244528e303f6cb0f002b435cb3c8c13dffe47eb2232d7cf76b90e2e118",
+          "face_id": "synthetic-face-8",
+          "image_ref": "negotiation-synthetic-8.png",
+          "crop_ref": null
+        },
+        {
+          "image_id": "05e62aec876f851a036a1ace4720d805a733f5a8e1f46913fd9bba2eda0eb050",
+          "face_id": "synthetic-face-9",
+          "image_ref": "negotiation-synthetic-9.png",
+          "crop_ref": null
+        },
+        {
+          "image_id": "aabfe0f89fd15aaa385c52229d0d8816ef0d2fbd054c461022ef877f710e47ab",
+          "face_id": "synthetic-face-10",
+          "image_ref": "negotiation-synthetic-10.png",
+          "crop_ref": null
+        },
+        {
+          "image_id": "e6562f5f5a8c7a113327797e5fa55b4fd98ea6f0fe1e54a137d6d423fda46326",
+          "face_id": "synthetic-face-11",
+          "image_ref": "negotiation-synthetic-11.png",
+          "crop_ref": null
+        }
+      ],
+      "candidates": [
+        {
+          "name": "演示候选 A（合成证据，未核实）",
+          "source": "model",
+          "score": 0.93,
+          "margin_vs_runner_up": 0.18,
+          "verified": false
+        }
+      ],
+      "names": [],
+      "source_concentration": 1,
+      "source_concentration_basis": "12/12 synthetic images from one folder; not identity purity",
+      "reference_support_ref": null,
+      "profile": "analytic-ui-fixture-v1"
+    }
+  ],
+  "eligible_cluster_ids": [
+    1
+  ],
+  "remaining_cluster_ids": [],
+  "all_clusters_route": "#/clusters",
+  "members": [
+    {
+      "image_id": "afb814fb2bbf9c826923dbe54e485a24fe4a73e541fa16f0cb8d4fb8ba4d3173",
+      "occurrence_id": "6aeffa4292a919a5c5eb47413fbbdef3b8ce9550d0a2392cd8206eb75d248c77",
+      "path": "同场景长目录名称／角色尚未核实/0.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "7fe87675a87425313c97b65bad55e218a0d9fd411dc766e88763ce64ba7ecbf0",
+      "occurrence_id": "a44674237db97a5beb54cf5d5b44d7a08ae082c9b6d3cd5d6111e0a6a20c243b",
+      "path": "同场景长目录名称／角色尚未核实/1.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "1f3aba503a442fdeafac3161b9c9372929437a0f7f34b9bd85db7a8d90c338aa",
+      "occurrence_id": "045f3d0df1d15ef067853c07bbf47c28b476520ea67354eb2b373507e69a38bd",
+      "path": "同场景长目录名称／角色尚未核实/2.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "64a5c0375f6765f6b418c802cceeaf3d6f8040b8c6e2b73af1628bf4397a0fa4",
+      "occurrence_id": "92d7d97ddc1b204376d9841cdb43c132bd4f2e1cb8734753a23e7506ac7590dc",
+      "path": "同场景长目录名称／角色尚未核实/3.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "b43a8a65ff2b20ae1bdb1b9c59b7694ed7bcff81d5a4605f6b54d0f594096f79",
+      "occurrence_id": "c007b93aea44a825d416ef99c057b6642e4292028f8cdc916910e3190406a032",
+      "path": "同场景长目录名称／角色尚未核实/4.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "92ffa7b029afe52d2bf9c19d9197bfee4c2a6a5924dab9c8978b589d5a3a3956",
+      "occurrence_id": "9e4d8570cb2a13a82c75bc9687586440d43e3269e0b10c3f9e3367d71f0a3dea",
+      "path": "同场景长目录名称／角色尚未核实/5.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "f768c7de4c322ff070e6e8bab91d5c551b8cc62b148ee1bf06266d291b8e47b2",
+      "occurrence_id": "eccb8d45ca658eebb232cac8c9c30f55bf8a8715afaf94e21b549ad745874f38",
+      "path": "同场景长目录名称／角色尚未核实/6.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "8d63386f9b051d945376fd6fdf540043e31b23f0670fa6fb7187c145b528e21b",
+      "occurrence_id": "467aa260f8990f657902cff907eda7bab665276d1ae189ddf1e14f52356cb908",
+      "path": "同场景长目录名称／角色尚未核实/7.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "726d22244528e303f6cb0f002b435cb3c8c13dffe47eb2232d7cf76b90e2e118",
+      "occurrence_id": "c9088440068b5aa77d7cc61a1b8e1e108daaaefc4b5fb00990d05fe38e1b019b",
+      "path": "同场景长目录名称／角色尚未核实/8.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "05e62aec876f851a036a1ace4720d805a733f5a8e1f46913fd9bba2eda0eb050",
+      "occurrence_id": "a34ce95ca6e803b3b9718d40fb2bc35f5034e3be01f2cefdca837a3b2549cccb",
+      "path": "同场景长目录名称／角色尚未核实/9.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "aabfe0f89fd15aaa385c52229d0d8816ef0d2fbd054c461022ef877f710e47ab",
+      "occurrence_id": "040e1c45cf50e1012f817370299db01a34da5cf17f328c32fde39504428c8994",
+      "path": "同场景长目录名称／角色尚未核实/10.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "e6562f5f5a8c7a113327797e5fa55b4fd98ea6f0fe1e54a137d6d423fda46326",
+      "occurrence_id": "8d758f2f7bb684b600aa156be5adff457b8670bddf9fee0f0e528d9dc58b2583",
+      "path": "同场景长目录名称／角色尚未核实/11.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "dcf0e7551e7aa7be36257fcac8b3e6e4bfc233e48d3972a0253b4574730b6d4a",
+      "occurrence_id": "8aa9b1458dcd5ef7ce4353d330b21d0818e1cf433af45cdd86e3c5a2068508a9",
+      "path": "同场景长目录名称／角色尚未核实/12.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "2589e71cb40869d39dd4bbf6bff1f2f7df2d05b0ae297c0405a1941a5f57a2a9",
+      "occurrence_id": "a49d9da887e99025a275376b292a68ec6ebff8ab124e8753e6977f9ab1814bab",
+      "path": "同场景长目录名称／角色尚未核实/13.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "92a90b4180ce708723b8d904c092effb4f9e3850d8b473d29bf76420e8801e9d",
+      "occurrence_id": "a9abdc5dd42d961f772a1a58968839d68676abdaaaed4cdc2d2183291b05486f",
+      "path": "同场景长目录名称／角色尚未核实/14.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "17ba823c5026dc6ecbabbfcea2243992a7574022fff84db435558dc27c818dc2",
+      "occurrence_id": "c1bf0ce8bac713c00910c8a936ee7199f93d2df6265f1a01f17b6f17db754f5f",
+      "path": "同场景长目录名称／角色尚未核实/15.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "b161b901b74eefde907e5e24a12f70c111fe1711f0455404e018c2b465b6c105",
+      "occurrence_id": "f7896d4470f0ed03ed7d10a9164c919fca10bb4d446ede4458f1e8d190e81766",
+      "path": "同场景长目录名称／角色尚未核实/16.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "da64fe8dd7387f0b37813b190e97f73c7508d6db3bd6f22cfe2d61aae0db3d74",
+      "occurrence_id": "3246a4470408000028b0aa40161c6a611f474f6929f4dd6d22312dbef3db5d9f",
+      "path": "同场景长目录名称／角色尚未核实/17.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "2cfcb1de8415f9df6c16b46c2b49a0795b128d96bce00c76c43d0a5592b48822",
+      "occurrence_id": "ecbafbeaafaac4e3217147776dc1ce8e51643d58bf67cfe8fbdd858376c7e9be",
+      "path": "同场景长目录名称／角色尚未核实/18.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "4741b38efb5bfeba3e7b123b0198e0454177f8bcf9a2389676cdcde32b77e200",
+      "occurrence_id": "3cf4633ae1c0126cb68af05ab776f3ce5248f98464ccd3a189bd80265cf30f88",
+      "path": "同场景长目录名称／角色尚未核实/19.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "208959461e4e6b80388d0458b161ec7d437e769a734ca721fff686dcac8aefaa",
+      "occurrence_id": "4a32fe0fa6bfb20f2f1181a7a22b33a072453e657bd495a1fea6bc35a028abb5",
+      "path": "同场景长目录名称／角色尚未核实/20.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "5a092980caf5e693430a3cb33ea9b0c5c86071475329ca23852044310f6c1b5c",
+      "occurrence_id": "8db3376f4b227da7ebf9be22b5063ec6b47c45b0072746d91b9ce9c03e9f4a3d",
+      "path": "同场景长目录名称／角色尚未核实/21.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "09df5f51db03271f992ed91e8321ebe06f8c58b41f9a2a3a351e1b84d103f64c",
+      "occurrence_id": "f84eb1b5ed498223c089833e70408806a4dbaa780dda3bcf06e53d96a29e1635",
+      "path": "同场景长目录名称／角色尚未核实/22.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "59b20202cd89ad83ea6424dc3cb842141b57b3ecb249522ac7330d56bfc79f6c",
+      "occurrence_id": "330e3559d722e864572edcc023f729238c9a2f99328518138a7b5154efebf712",
+      "path": "同场景长目录名称／角色尚未核实/23.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "e59cd1c21bba636a423f2837104432d9708b32cd1aef027d4fcfba8e0eb5278e",
+      "occurrence_id": "fa60b6b050e840de4dedf14491f43ae92518502d1feaaf470d0a1a8bc507b93a",
+      "path": "同场景长目录名称／角色尚未核实/24.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "cbb0130ab830623141fdf9500c13a182a6c210cfa16261c4c129f46694b6e0c2",
+      "occurrence_id": "4a7b20fd599246fdba05426586e112cb257ef9e5c2211b3cdf8f88c29a979298",
+      "path": "同场景长目录名称／角色尚未核实/25.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "6dcd82315478b449456ca033a6d69fcb7c1296a94257f58d13754fe469664ae5",
+      "occurrence_id": "4c3bd6058c418010d0819146522f6a661f209f2b7a116ef004c5882ff024d925",
+      "path": "同场景长目录名称／角色尚未核实/26.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "440aad3535db7074fb836fbebbf495f475d21549162491323e5c3393c081c399",
+      "occurrence_id": "7c1a0ae5fea92b61fe62fb4596e501525e15f88d3e7a592188b7c5e6df82aa6f",
+      "path": "同场景长目录名称／角色尚未核实/27.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "459774cac29be79be46731ebb3c7ae49c51ae6c6157d5b01bdd9c220365f2bc2",
+      "occurrence_id": "46308c02a43e566aef1e928a13911180fa54208ed21562d53590b42b35db7ee9",
+      "path": "同场景长目录名称／角色尚未核实/28.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "f053741a31243917a7a91bb0e5ae2f91293b7db3f43b078b24ec1bb8a4530b6f",
+      "occurrence_id": "114ab0d2625a488df8872bdf2ea87e87fd7b394c4d48b6b4f0201f3d9e0ff622",
+      "path": "同场景长目录名称／角色尚未核实/29.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "1843b99f8f270928e6d01ffce1e4d152254ab2111545cc3978a7b927c7a5631d",
+      "occurrence_id": "b3f2979220fd1c7a8fc4a9d9236fe769dd68cd8c9eff0cdc799bd45d3ea61b45",
+      "path": "同场景长目录名称／角色尚未核实/30.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "a3d738709ebc457ce0bd1b56326b539eda853a06d6c5748dd9ae7d74243ccb51",
+      "occurrence_id": "0c21475b4659422a372cb17df61d9329c8af72bc1fe41c833879cfddfd10a358",
+      "path": "同场景长目录名称／角色尚未核实/31.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "a0a26547eedc2415d78fceb43be3766c60f4941993c982c9fc91719ad2a56e90",
+      "occurrence_id": "17e74f505cbea14b9aff8a555707598c16ecf45469c08820636739151c5d225b",
+      "path": "同场景长目录名称／角色尚未核实/32.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "bf58b74860490814760e3dadbc728f1e6e7d8e978a5827125e7eb3f17d24670c",
+      "occurrence_id": "f1bdb6f5008189e6ed5a7ab1fd30755ff261dcf380a8942afd0e9fdbec584e43",
+      "path": "同场景长目录名称／角色尚未核实/33.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "d59ddc452a98db9d67372cdf6fb8dfc2528a3e9f5ebba2baa5fa4b0e7b48f37c",
+      "occurrence_id": "7e69de2ac857096c784c6dfa20eaf6b335c603543887ac6521479e079a9e1dae",
+      "path": "同场景长目录名称／角色尚未核实/34.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "3ec78912611f01e02886fbffafc865887c4909ce7eb5cfc046f434e6663de46f",
+      "occurrence_id": "75c7a2523085cdfd8a120e97f0f21ae8d60f61bf6ce8853a14efea348cf5909f",
+      "path": "同场景长目录名称／角色尚未核实/35.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "3ab6832165779beb09aa58bbf646b015c47c66726491f4f6857b3ed89705e3ae",
+      "occurrence_id": "e7fc091bfed05fea41a7750b6cf5eb576ccd09a5a4ad3d2639d17b2e91531676",
+      "path": "同场景长目录名称／角色尚未核实/36.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "4ace507074c52d412f0ad8168b0e3ada28e68475405cd5193482ea7f8384fcce",
+      "occurrence_id": "37903d9654a9c429823c9b49d806225ed80180f64758831aa8eabffaa5c22a9b",
+      "path": "同场景长目录名称／角色尚未核实/37.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "533c0512a1b910b32aef8abac95b82c3e634e74601f3218d2351649cc6306969",
+      "occurrence_id": "5287a70d866ebae48892bb8534b2b65cf5c97faa17907c804027f32ec7089a33",
+      "path": "同场景长目录名称／角色尚未核实/38.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "ecbcca49a0f2fe1c727cfe32bea4708300901e7f90ef9d6198596a937fc33d45",
+      "occurrence_id": "7378a99783209c1544a6343f7340d1109fb815821b1d1c0f32f9e607be6eaf5e",
+      "path": "同场景长目录名称／角色尚未核实/39.png",
+      "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f"
+    },
+    {
+      "image_id": "7d6e4ccb6114f08cefdb3303d127fff1c9437da2f1e49314a39a2bee9fdca9c4",
+      "occurrence_id": "27d5b36d0d0caec05877f427d77ca9524f707ad7d9fac5ea1432b85650dc6061",
+      "path": "混合素材／不同角色与背景/0.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "500070994380b8023bf0bfe3abacdeb011bde75973fe039463dd39823e61019f",
+      "occurrence_id": "a3df8ba9d25c3e02b685a988aea101b6c07a50055e58f377789ab3d1f1e74933",
+      "path": "混合素材／不同角色与背景/1.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "9979ea90ab09630151288eab421329cbaf86315882c5f3273ca992ec0b5d1045",
+      "occurrence_id": "a22d5642bf1e3eda27746af45b9a250efc2fc1ebd684c003be4f8edf740a3045",
+      "path": "混合素材／不同角色与背景/2.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "651edf9140a751c873ad034c5f1acbd458cf7007c1c16eee66f90a3860e26f20",
+      "occurrence_id": "3e1c24e566722316c84e573a25d8d81d4807f40acc948a826d16af02115ad5eb",
+      "path": "混合素材／不同角色与背景/3.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "37eb51768052ed909a3dab582fce943a49fb9d5ee12e171063958392353f5cb2",
+      "occurrence_id": "7f871c5cea296e4cd95023a7a39327483a33fa52c66a049c21594ce91d4f81c5",
+      "path": "混合素材／不同角色与背景/4.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "7e6e78d8f87b2506c8acd4205cde10d7476f27826c01f8081088d4b86d089f86",
+      "occurrence_id": "fd4cae477584970ba15c9e3514b2d13261c4aa805dc79a2ec20707351ce81233",
+      "path": "混合素材／不同角色与背景/5.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "0acf2de8cc229f29e651c58afceed7f9a2c7ed865d7d124ac4f93f764734bbb4",
+      "occurrence_id": "4552d2dfedf1332155acdbd64d8253c8dff6bb3ce95d491a46b65d0e52e63804",
+      "path": "混合素材／不同角色与背景/6.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "dad649f61a0ce4dce91bbb01aad2e0e51af73ef8c4d21271b5dfb231efbc3d19",
+      "occurrence_id": "28d556f2c503c164884f6fd89374df50c57d05aa378e013e70d756c5366beb31",
+      "path": "混合素材／不同角色与背景/7.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "9d27664dd115c92489ba0b950c07044ffb5528d5d3e04e78b61bfdcad91d7ea2",
+      "occurrence_id": "af45744272ded4af5d0459c245fef7544b39be5526e1aca37f511e476b038fb2",
+      "path": "混合素材／不同角色与背景/8.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "4a076b66d99edcf1b23af06612973acdac778dcd7db43252028c7a74f62389d2",
+      "occurrence_id": "85760236b627c3f400147d3f3915156d72b4d9523eb98e904e032a3ea117f22b",
+      "path": "混合素材／不同角色与背景/9.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "f01aa9d5bc693e00193377b1af29f24bf2b563544799b1f7a56b9c3353ffa814",
+      "occurrence_id": "d38cafadb26526f7cd99d8aaa06455d6b37e342ebbf278e216c4b5d96019b681",
+      "path": "混合素材／不同角色与背景/10.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "5651f8f44181c2097a72570d0bc0cd8a5783af63ff53cac6f06d532afeae9ce3",
+      "occurrence_id": "44b8c3a3a1b2e41da282818472a10cb2e041d0b113c2ad4ff2a67a4cdad037c4",
+      "path": "混合素材／不同角色与背景/11.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "1b526ed2a3c4c84c3009045cdbee4d8a2f568c5eda8c2f21a877d59eeca681d0",
+      "occurrence_id": "ad02ff871e644d169fa7a2b88475f5aacd473e72b965e18e40b4ff8dd34d0a72",
+      "path": "混合素材／不同角色与背景/12.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "3db1211e930a9185f41b9bbc224acad39f9055cdc077f8a5a4adbe41f6e4fd8f",
+      "occurrence_id": "882582f5260bc62a41154922d621e6aa1cde370149edef2e4d10d802032c7157",
+      "path": "混合素材／不同角色与背景/13.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "ee3473736d112bfd52aeceebcc451dab07aa0e2ffc145f67ea1c247490da800d",
+      "occurrence_id": "72d529c763d974dc7b0e161d2607c4fb361721bf43ae34aab2562fc88beb331d",
+      "path": "混合素材／不同角色与背景/14.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "d160de1d77a757a60285f69b73941191c80f32b5b48ebceee5f79a681a7789ec",
+      "occurrence_id": "c4d0b586769fc7869aac34673716d684edc5e1d13ed11379ae34a0e3d0919dc6",
+      "path": "混合素材／不同角色与背景/15.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "5a37e6fc261ea25681b25649d8f40a5fe6567f3a7d601782235d4381f9508841",
+      "occurrence_id": "cb402cce84d01bd326b402111fba8d74db556ada0d7d2d8762a2391b34a481e5",
+      "path": "混合素材／不同角色与背景/16.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "d4a989e104b45147576d28066841c0f2e9df228cbd374085b940a3b19e96ad12",
+      "occurrence_id": "0cdc67f71fdcec209f8c307022d78e18afb9f3c97b4595834f6ff1339d669c73",
+      "path": "混合素材／不同角色与背景/17.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "54c0f3233a4b0210f1ee999c1e853dcaba65e22c705e121f05a5c72de0fd91aa",
+      "occurrence_id": "492bb3a57487b4dbca94c852e73bd8a3ec5dd985fd38be5bffe6447b984338fb",
+      "path": "混合素材／不同角色与背景/18.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "77d61d60f63ae478d6b761f8c56669537db85c011e5b20628c11d6ee1b623b21",
+      "occurrence_id": "23debf07011b7d94035236e310b2495b00f7b5b40504b6d7ec6ac195f68804a7",
+      "path": "混合素材／不同角色与背景/19.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "b558589e76460caee95dbb54450135a2bdc5e974c48c8ff685ddd749f3b33f2c",
+      "occurrence_id": "3828808b4dfb6bfde5a928f8fbad9e121544ed945067e621d7c06bc6b91294ec",
+      "path": "混合素材／不同角色与背景/20.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "a85ca547619f4ef9e9d26d1a928bdcf65b41074fd1e4673b92681cef6d19f246",
+      "occurrence_id": "6e70ecb7ffebab79df02e6c11aba93aca51e89f53dbfdbcfa6e857a318900cdb",
+      "path": "混合素材／不同角色与背景/21.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "28c276a8b4f04a29e63e319f651c34c802defd8b839f900f80be3886aa0a936f",
+      "occurrence_id": "9e35a6768d08cf67a330e9e9a7ba066249513f2529116f9454fd75b5d9fe6f3b",
+      "path": "混合素材／不同角色与背景/22.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "bdf9b122528372fd9882f4c991c75ed2873ef47b0cd56559f1c530a771a518d0",
+      "occurrence_id": "555c002688f1c59791fac433c18c1dbab4b31209d1c563d778fb5d6ddea92d88",
+      "path": "混合素材／不同角色与背景/23.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "4995bc5f852556dfe487d10ab9c377ac6d36e6a7f293a537a3b9c554e462f4e4",
+      "occurrence_id": "6dae7d9dc15f702a93f95b47b4743f612ce5103548f79617a3b212313331a8d5",
+      "path": "混合素材／不同角色与背景/24.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "1d9691b4a86dedfacac3620ced911f3590ee2e2e9dfa63373ec655256108bc00",
+      "occurrence_id": "b55fb0f95382d5eb71528238e303ddb502d73c2a0112a5a7f88337ff3c225aa6",
+      "path": "混合素材／不同角色与背景/25.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "7bd576417d8849b5b6b19874564ccb5b58efb6a059ee840eda429c499ce04ea0",
+      "occurrence_id": "b086c09870b4690015ecf145395bf1a1382782ca5b803b4d60eae6bbec121b6e",
+      "path": "混合素材／不同角色与背景/26.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "a4dcb2e6e910340c0dd40fb04b7adab4b74b19b2eb46106769c75605f1699b2f",
+      "occurrence_id": "03714441d82482a1249c24575adb021068e8be1c2a123b06e78eea95dba17fc2",
+      "path": "混合素材／不同角色与背景/27.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "56a5edbc9eed400449c4987f632c1069d83fb9086629c5c931326522bf7263fc",
+      "occurrence_id": "6828322332369c8c839e257431b802b65c3bed61cc5eddaa211e47cab1b51d9c",
+      "path": "混合素材／不同角色与背景/28.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "ad85b1e616e04b2cc97abc40ba9a5b88d66b180a80ed1906afc716bbf68f23b0",
+      "occurrence_id": "e029183f1b95c39921bf6241858f146f3b7752d1a4b861f8dd12fb9e5b7ff997",
+      "path": "混合素材／不同角色与背景/29.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "fe67e42d285710f3f81bc2882587c0ef978c89ca0cf9cd40ae607a86cb780b2e",
+      "occurrence_id": "0bdcc334dcb80c80579d2d2919d38b7e612053f38f6c87bfe6220118985f4ef6",
+      "path": "混合素材／不同角色与背景/30.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "c3fcf7d6d54e5333f9b68b28f39bb850702d148226a3ed322b7c6947d0262d3e",
+      "occurrence_id": "5e000e2a071fef200f151fc1f04f8089af720bed0eef243d351f6a1ef6f569ac",
+      "path": "混合素材／不同角色与背景/31.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "a03ce352f7e688486a70fb838af723a3163038f2c6042aeb86f6d8a4ac808adc",
+      "occurrence_id": "fc25465b1aa8addc311e4a59a37e0957b369cd4258d2fe9c2a047bd7bc24b5f1",
+      "path": "混合素材／不同角色与背景/32.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "4ca06c46aa87074a1060df9cbd9635d0d8fd8fa15769da4351ef804eaaed59e0",
+      "occurrence_id": "fc9c35169b74d3a44049da890545664befaf3a48341eee9cd2ea10325c32d02f",
+      "path": "混合素材／不同角色与背景/33.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "96728c0876f06141e77fbe0f8c862d886a7fbd3f9f04f1a6a511de70205cce86",
+      "occurrence_id": "008c78f5599c3b684ad6e0b54257c97cd643bdd1c1264dc8c85e6af01266ad68",
+      "path": "混合素材／不同角色与背景/34.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "f9ddfd7b2eb870c352ff9de46852cf006e350afbf2bb4826d7e84c48ca9b9bb1",
+      "occurrence_id": "b45458c1007c63358cb7a510f65a40644bb8501fa181c37578cc8d2b24fe7662",
+      "path": "混合素材／不同角色与背景/35.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "3e4d70972f9f90a0f82c88428615070caa2c256bc5a2f74b9c20715caf421124",
+      "occurrence_id": "308a6822137a0ef79a3175214b41aa2ac7f5a24ea9fb54f0f6a2626f8af56bab",
+      "path": "混合素材／不同角色与背景/36.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "8d0f237d0b8f9e4bf8c925f2904a44e96d7ffa97caf4c0db3780a5e01fc318b6",
+      "occurrence_id": "340753b59953680289114d79ae0673adb7b452e0119b0ccde6de79a1f82d8d7e",
+      "path": "混合素材／不同角色与背景/37.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "a5fe7c3bb79b3e08a26743654504a9f2239d2bf53c2aee5547e876419c0e0334",
+      "occurrence_id": "42216e7be02f514bc7885696af387c87705d872064d8e3864819a3d9fef58171",
+      "path": "混合素材／不同角色与背景/38.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "d15485c9ac3c7a77bf4549fd540f640f1e46cd701fcc761353747944b367e6d0",
+      "occurrence_id": "e5346c69959cae42231d20bf61903c8e58fb8d77628d31a470697a7b808ded09",
+      "path": "混合素材／不同角色与背景/39.png",
+      "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9"
+    },
+    {
+      "image_id": "0e85e0469d38d60e99841373e627f1e42da05ebab5e20c1d7142e9ea4a1c65ea",
+      "occurrence_id": "f8c3a3fecf48314c17419fd2f3fcebb7b63e6816f0aa39d8874add7167d3762f",
+      "path": "场景记录／不推断无人物/0.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "adef0380127c0a79c3f929ab81e0d2c6b4de32558b954b52aeba150247efbd50",
+      "occurrence_id": "d97057a451868ce77cf03e39f83f80ba045371bc9258ca201c5097b8e785be91",
+      "path": "场景记录／不推断无人物/1.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "1614b21e71548043794f7822fd076e2ea9e3492a584185804fc87b388e486a81",
+      "occurrence_id": "c064766ce2af20f54660d506d490d1cf79b5c0b0b8326a32d6f3a6fe386f1733",
+      "path": "场景记录／不推断无人物/2.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "462021eb15882b4ef8a692fe3d1fbad1fa919e04b49455934654036d38de25ae",
+      "occurrence_id": "314b3907100365472f7a83c73b79d138db0b7be91871b852b86a5cbefd15bea5",
+      "path": "场景记录／不推断无人物/3.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "30d43cf57e15758ee3fa8b54d65feee570aa24327e97aa4a2bfc778acfb5965c",
+      "occurrence_id": "8e86633ed132559dfb7d3c419bace71fc3ce7928067b3a5d255d20838caa7ec9",
+      "path": "场景记录／不推断无人物/4.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "62dfa3b101cb4604b8e415eca2e56ab2384f87b0031e7fc9f0c6fd368816c2f2",
+      "occurrence_id": "0aa2447daa57fedf1caf9f4b457d05569f537574f0a8a50d66542f6e7ae2d8f1",
+      "path": "场景记录／不推断无人物/5.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "8332329eaff9f2ce5588fc48176f5229035b0a25319a1dde440ed1b47559fbb0",
+      "occurrence_id": "fcc6d22325b7b24bdc09c2e0596aea5af3b76889fc5a63aa12538750de0bc2c0",
+      "path": "场景记录／不推断无人物/6.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "3fab31c613ef7dcdfe61159b4d506fde7753a3ee8d9dbd1409ccbce8d82f46c8",
+      "occurrence_id": "db9c2cce13477dc6b4041ed6d2657a403d04541637dc8b1b9d5efca7cb5af389",
+      "path": "场景记录／不推断无人物/7.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "860e2891f43a0696b0d949998ed4fbe3b71bbc0999b7c99460510bb95aabbb0f",
+      "occurrence_id": "7b39bd238db83a764edbad182f37233fe94f8cebd6fa3b4c66d76aaf434bce0f",
+      "path": "场景记录／不推断无人物/8.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "da5b74f6ccc5bc0498618433600bb1d0b39c05a2407402425fd832c4f7c6cb86",
+      "occurrence_id": "7d17c3a870510c7431abcc93f0d2bdb335a8beabdace01b9789e8850f96f6284",
+      "path": "场景记录／不推断无人物/9.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "cdae16f506d22f6353e52884180c09ff692c71bd214b9f5f8501647257828a3e",
+      "occurrence_id": "6de52679ed090b5de0c42443187cb2e8015f7ce32a9b424d247b52bba007ae6e",
+      "path": "场景记录／不推断无人物/10.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "fcb4063743ed5a0b204988fa09054871758b3908418e00606bc17bf5b7fec831",
+      "occurrence_id": "792f691e0a2ec5034bb70d19bce1da06e710767189932c29722955f1c0374f49",
+      "path": "场景记录／不推断无人物/11.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "40eac6329e32a66b209c03981c66f8f24d7484b371354460f554a71d839db432",
+      "occurrence_id": "c5a8582320cc829e54bf8601dde345ddd27c6bf38c69ae1c6de270ce1677bc16",
+      "path": "场景记录／不推断无人物/12.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "6e1fef5b32dded7627c822208422722d62da7a8f5a2dc630de6ed0963c657b06",
+      "occurrence_id": "b30f59b5999ecaa625a86919b287c6978d874abcb69e56d4a9a4a12378aa0f06",
+      "path": "场景记录／不推断无人物/13.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "70ef0e2327fbf1718c1c799469db7bba8188efe2c12b6723db86a715ebadcd9a",
+      "occurrence_id": "7cb24b54a577085815d88ed4c5b812079625d14ef6a0fa175960fa2d25b085e7",
+      "path": "场景记录／不推断无人物/14.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "0fa084faafaa40756e78e0ca24ab5cacb713d4a59ed86014f129dfbd1ed0c05e",
+      "occurrence_id": "f4c19b63f4cb5a58a62eaebdafaf437d22b08e2baeb9b63fa55e811e7840e653",
+      "path": "场景记录／不推断无人物/15.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "e586b6033c87588fc44bbc8eac2204602986171b3562af0429d266c1f158240d",
+      "occurrence_id": "05eb8bbaf097cb0cc77175ee2b5d6191b25db743b88072b2fc896db1dfa9532b",
+      "path": "场景记录／不推断无人物/16.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "6ab77cac778909f95edd5387f7c9dc09cb4338ee5da60d04e1004ab5bb6da98a",
+      "occurrence_id": "1f0fceaa21b0cfebc8257ca49dd82f97c690426aaaa77bad96df3020aa8c8898",
+      "path": "场景记录／不推断无人物/17.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "e28d9536eea0092e4f644e878c10e85dff2774595ba5e9d15075516dce95365e",
+      "occurrence_id": "bae47d41b9f0fea3563aabfac15e92bd95df957af127d023bde80c7764a3cf82",
+      "path": "场景记录／不推断无人物/18.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "23ffca82642b4a8be1a0e417f19915663aa1ac9be96c16050d3af0dd2fb4eab0",
+      "occurrence_id": "4124a3bffeb580f868c338aa61d0d0f9597ff427288f700e717efde4952f68ee",
+      "path": "场景记录／不推断无人物/19.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "63362efecb5304b0673ef1e11ba5817d8fe6aa7414d97509403d461ddc65079b",
+      "occurrence_id": "c9a874023e51a00e74be9d9bd124251a4b1ff2a6c7bd01d411ef164cfc7e5bbb",
+      "path": "场景记录／不推断无人物/20.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "31aa8b51cbb158b1889b7da45062b8382174f8d5a4b531da695b6a0200fa1bab",
+      "occurrence_id": "3123eb811ceb79c150f592e8e57b2d7c2a5e2d8365bb7efc2737b8a6870f9c87",
+      "path": "场景记录／不推断无人物/21.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "3c2a77fe7125f3db548e25f3e571e694eec278ef4534d1c50cc3bd821dc96abf",
+      "occurrence_id": "277f5400addbf1e53925e5c00d4ebccc636c7a0244e7ed29f74fc4b594b55a6b",
+      "path": "场景记录／不推断无人物/22.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "3b68e73c612ee1063092aec5b9505f529225f3d0bea01ac831c868bbd324ba67",
+      "occurrence_id": "46836b1820706ded73a682b17f0704d7626542ab94b2533c1482be82402e2ee6",
+      "path": "场景记录／不推断无人物/23.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "f9b47eb50fbc31ffba7380e0050ce7e980fef0ee6253b2ecec3316cd35f493ee",
+      "occurrence_id": "ea2aa688d013c725127d23559e515ab59599e3089273484a394363877e61645f",
+      "path": "场景记录／不推断无人物/24.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "89bbc36fed0f6202cb12197236cf5d2c7688f8e7bd4814ecaee921599c225c1b",
+      "occurrence_id": "94ef9c50dadac2d61be962c858299ca87207aa8da8668e1e682e252d145ee462",
+      "path": "场景记录／不推断无人物/25.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "155baa82c8f90fa80326c68411f5db624683f44dd95fcbf43564844b7d6d5352",
+      "occurrence_id": "80f7ec5a56cdbab8515931bf9c58bb51dfc72285fa46c73ea471dec30c770916",
+      "path": "场景记录／不推断无人物/26.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "4b4cdbf2854125ed7917cd5f9db183c87f9dea1fd3e5ce461719fa120d3a8eb4",
+      "occurrence_id": "70fd9c203e56bbf6ccc72e35f10e3ba98fe2b0362fcca4b4b7a08ae334955ffb",
+      "path": "场景记录／不推断无人物/27.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "f29cf6faeb91cfc9ab4a8463e255cf9c0bb3631ad983f27b98942ef902f4e1e2",
+      "occurrence_id": "0921d7f228d276d8de0fd0c966b9139f48d6a907f0ea363a4cb23060cecd50de",
+      "path": "场景记录／不推断无人物/28.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "8ae6fd48c4f94267ae849555147cf8af2a6ee83d1c4b8a352b9972d01be491bc",
+      "occurrence_id": "2c25f95dd5a57928d728dd3a6d700d647b1787109f5e3ce454f7cb29a66abebd",
+      "path": "场景记录／不推断无人物/29.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "48987fe92bc163ec603c9c5c3a6c7fe7086d607a0317a210a4371974f0acd156",
+      "occurrence_id": "65f450f7e6081f6399e8d85c18a4b9df034e6c73662cfb68b95b53c51db5f8f0",
+      "path": "场景记录／不推断无人物/30.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "0328c77e200ad8cbd972ef3d782827d5c9b2f438896186eefb9d4a3df53f3e28",
+      "occurrence_id": "80ab93d5a11b6e65ddedd67d3617d4ad25dcc3272ad3b66300c25b27458c8280",
+      "path": "场景记录／不推断无人物/31.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "b6e74f1993c45dba92d7f0aad121ef90e86bb58873ab467d2000ef5f2f314314",
+      "occurrence_id": "69f25e359cc1dfa072835c8bf5a8e6b6c968a12ca9c923774b5328a9197f3a8b",
+      "path": "场景记录／不推断无人物/32.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "8ba33688a40bca488fa7fd2690fd621ded8248cbcc7626bde3fc89c73f2b6162",
+      "occurrence_id": "1fe0e5b755e10516c2f1a8fd91461f20183d993b95efdfddec8020e586f0cc9d",
+      "path": "场景记录／不推断无人物/33.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "946fa2792e73f518b4a3de28837ce018799f1dc03d898cf37ef59606abe1d35e",
+      "occurrence_id": "7e995e5fdd5d12c013d1516bd9f5565b74cf54985c9331b23417a69d492e6088",
+      "path": "场景记录／不推断无人物/34.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "14770c5a88c589fab7602b6c7f11cb49cb4b865b6264ef371fba34022b8bc9c9",
+      "occurrence_id": "e65c0feba94dfc3ded040afea8529bcb262d5a9610774fa8bd6c8e5b24e12381",
+      "path": "场景记录／不推断无人物/35.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "da66675fa7256ab821bfb32edf71b157188a53397c416becedacb04f11f9c7ce",
+      "occurrence_id": "4426f5412ae761454369010b429db9e6f97025c677b5190ba1d9643e65e4b7c6",
+      "path": "场景记录／不推断无人物/36.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "364caa0b64c2fec919bd5d44b63942595d54e492ec5741d51a92218ebe5efca8",
+      "occurrence_id": "3b42902c78b929dc20a9d8b293c16fc53aae81b9d398fd7925ccf8c7d5532ccd",
+      "path": "场景记录／不推断无人物/37.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "a527e9821d1bab140ab81294f6e2ddc3b034b7b81b0d1d448dbd80557b963959",
+      "occurrence_id": "71e879223f2066ac33f7f6d9f4242e51958ed5ee096567d909669bc95858f451",
+      "path": "场景记录／不推断无人物/38.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "1d829e98dacd251a5af7cd1989ce21cf030686ce957ad4c2c55fa44eac079c73",
+      "occurrence_id": "b52c229eb8f0fdd8e2979fe8d301acc81a31115b791cd2e66988fa13d544816c",
+      "path": "场景记录／不推断无人物/39.png",
+      "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935"
+    },
+    {
+      "image_id": "3db7c66efedeb5124ae5da54cea7c5797cd8e5449c6931abdedd62376ca9f0cb",
+      "occurrence_id": "ad1462997f2f1d450d0e78413b3a853e7c46ebef28a87d71ef4e15d28c58e225",
+      "path": "作者作品集／人工作者标签/0.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "4cef7e283016454d78baab8f46ac50e475beca2cc975285eeb8fb7692c15b8b9",
+      "occurrence_id": "005afa01af0ad86d203a261797aeb59eef43c6ca580b48df83cece2343ce30c0",
+      "path": "作者作品集／人工作者标签/1.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "5ca938f47f23587f6dd125bfda8b51bf9d3f585c6ed1b1d8a1cc13e3d9afcf70",
+      "occurrence_id": "68b4e759571a4510f39488cd976cc3d89e00f32413c1ada725cedf0c63ae07c2",
+      "path": "作者作品集／人工作者标签/2.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "fc2c6f57ae7535ad541cb23d5bd58f5d525cfd563fb813efc0d9ae9b602b5ab0",
+      "occurrence_id": "8cc7d288a290ae7813e3b5c98ada4bc2369f296b6f204fbb787208956437c8c4",
+      "path": "作者作品集／人工作者标签/3.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "3f51c72e64c0e370e62a9724d837dd0d90f32bd9f996ed8d12a0f2104cf9510e",
+      "occurrence_id": "666b47c9b08b12ea3e7b8b9eec93738100cc3b979c3157b1590de361401716cd",
+      "path": "作者作品集／人工作者标签/4.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "da10ba73b2cd8d463558dc6174d091b93a741d8b02e4b981cfaab11b5cac9db3",
+      "occurrence_id": "24df059788b4b0a3a96e9d7c61e9a955cc4937a75fa0d7c11e67272cc8e80a37",
+      "path": "作者作品集／人工作者标签/5.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "0bb84c5290e61b40f461eaf9b95dd013973036c56094dd64299ec61611ea601c",
+      "occurrence_id": "f9094ab4f3e57cd9e7130cf95cc604270d55d1feba7d8a6c853d964d2daa079c",
+      "path": "作者作品集／人工作者标签/6.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "1d2eab7489de5603a48159d55894c1b1a726508d08c3a7c3eade5b375d183a97",
+      "occurrence_id": "52a37ceee9f57fbc6350e270183c6541290fdf35925214eb4db3c87455465f74",
+      "path": "作者作品集／人工作者标签/7.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "b30d2a00bd466e9c47083f2108b71128b46a163f3511599db00a321a3684020e",
+      "occurrence_id": "4bdc6a9134fc16c6eab30041376e5cb9ad291893b6e1b676c28d1ea786066a06",
+      "path": "作者作品集／人工作者标签/8.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "37fccedaeb8a3302e22430a1485de211faa161a532298cca048e4acb406e8b31",
+      "occurrence_id": "e6b5203e5260bbbbf4a31e759e4fb3b6b303c6a74329cb76b13d8ae54356dc9f",
+      "path": "作者作品集／人工作者标签/9.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "ddbd273b40a277270e318ee91ecd5b3c90f1b89eda15b59c7207101618fae43d",
+      "occurrence_id": "6e31b0555c472b0d1e3f9fd6028abc5d617d839defc8f539187a51b0d1381400",
+      "path": "作者作品集／人工作者标签/10.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "1cab4ae35df8e1b0aea8fb589e12aaaee293a607b4b17e65842ab3f9cff61d9d",
+      "occurrence_id": "6778e97c1e1c97e6e67260bdf0c57bcb1922e4dd2c8aefdbc0995b6f3e28b3b7",
+      "path": "作者作品集／人工作者标签/11.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "d98bc7f2437bd91fe39f6015ba05bfa46e9d228a817daf88bed577eaf5db8752",
+      "occurrence_id": "d9482b938c2a434f8330dde827bc11f47ac9b6ab0dd2cc9bb1f14e218f8df3f1",
+      "path": "作者作品集／人工作者标签/12.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "cc1f97145480d5db5fb67eef676019125be709ac90ae01184a33b0972b8a7bdd",
+      "occurrence_id": "7a7f9bd731b0a42e19f85d8f57e1de4a07770a0edf5053399dfe0b3036c0ea3e",
+      "path": "作者作品集／人工作者标签/13.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "499f2a9221b1fd76ff4ea9f27d275f6fe87021699273bc0e3e66f227b3aede44",
+      "occurrence_id": "a064cb0aee9cbf5c0cd1cd05d8f7d8412ca9adb70f6f49df9a0a5601a59f54d5",
+      "path": "作者作品集／人工作者标签/14.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "e79fc85def2d8ac07a946cc8e1df575f344cc75ace198c723f0158927952e850",
+      "occurrence_id": "4a21c2e53d425c06246ed6b37b87c156a568aa0bc0a8b6bb9a390fdb646d3773",
+      "path": "作者作品集／人工作者标签/15.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "8004d3ef7c3a4abb7fb19e8d5683b0dbd8b6aab7babe11ae2124d3ce2b2b6bb6",
+      "occurrence_id": "1ed826a2a855406e365041f190c91f3aaf2e779950d22d2aeb61b9932f472bf3",
+      "path": "作者作品集／人工作者标签/16.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "7dd04b23eb267edd2df3d8d7c684a96762b0d00016dfc1b4061ebd04a4b6f05b",
+      "occurrence_id": "6fdf30b60de73972ebb59efcb228ef314c53c41941b046478be21e60f43c5e67",
+      "path": "作者作品集／人工作者标签/17.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "3604ce048a84fc79675bf439f70c0b3b1693dfd898b2444e83fd35f05d467c77",
+      "occurrence_id": "d1331ff04a11599f953423e6c6a3cccf523a42a4c948d1dc6cdaf5e7a004a379",
+      "path": "作者作品集／人工作者标签/18.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "0aa88f8b81c068c15299eae1a723d0765693f0285d071ab7dc75567a95fbd363",
+      "occurrence_id": "5e8b942e58c275809c1dc0d958e9da63f3ff871a46b5edbb42c0b73858fcc5c1",
+      "path": "作者作品集／人工作者标签/19.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "5ad37b8324379bae805434bbd1fa4d2f8ab9af9278b521fdc34d2ea6d11a8553",
+      "occurrence_id": "17294a9b2dae47311e81307d03119f48d4a563d13b935cac9978fd3a29bc2e18",
+      "path": "作者作品集／人工作者标签/20.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "d70f2d991afd37afebf3979af526c0caa49c1da5a40c8acdd0a88869ea60827c",
+      "occurrence_id": "01cc0a6782d36b813ab272b2f349ac93a830aa798b8f08e11cc065e0f117abaa",
+      "path": "作者作品集／人工作者标签/21.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "d4b9562a21808fbbc66990d68ceb4e2e2bd360d622a342e0f4e6cb37b310d7bf",
+      "occurrence_id": "18625045aded08e68392e9e4e65261ef2a6a6e349b17f74fac87743549124eb4",
+      "path": "作者作品集／人工作者标签/22.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "659885695e658413fdd60640c927a621974cea22a1136fe33d2cd445eccda1d1",
+      "occurrence_id": "e245a8e30c9e6bd11e64d66512cd74994edd563af946a8798b9389e561ce9752",
+      "path": "作者作品集／人工作者标签/23.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "26f43ba4bf1410611f0bc7840e3b60c0ba749b38e92ef56219b6857a5aa8f2e0",
+      "occurrence_id": "05fa12c9e4396d3b751d3f480dd2f8e49bbdd6a4f7e22e443c60c7255bf3165c",
+      "path": "作者作品集／人工作者标签/24.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "0c95538b0dbe2dd853bf1d46b563e637067e518c3bb517c64c92bf1c3f74bf46",
+      "occurrence_id": "4c772be5a01cea770566b0e0f88779af2c4dbf6fc80302054d7c5ead62ed826a",
+      "path": "作者作品集／人工作者标签/25.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "2272b03651e529b972f7f4fb84b46767a309ff0c1066320d826b5f08ab4e3513",
+      "occurrence_id": "54e3ab48031541c0bef7a8052acb9173bccbe5c294b37c176530e791b1f8569d",
+      "path": "作者作品集／人工作者标签/26.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "0b739112bb9fd0eab4a0e982ac5f250591596f36e0d52eaa8ccf7389aafd5f8e",
+      "occurrence_id": "fad1a95a8e0d952ce705e4a25c677419c590dee005477fb68cf23db646b41995",
+      "path": "作者作品集／人工作者标签/27.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "cd4dce999dce91d44ca5ec723122d3b15fbd5a612d623bd7464e763916d966a8",
+      "occurrence_id": "a0eb4b6844ef97fe4acf57aaa937e8fd42a4a647b45fd2003c74ecd9ab8ec464",
+      "path": "作者作品集／人工作者标签/28.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "7501197926ed0084a4d9c6ba83326af95028e6032180b59f61fae8c3cb67bfed",
+      "occurrence_id": "4b094d72390769e4c72d41a61808344232869edda580f27d67a03f8c982575a8",
+      "path": "作者作品集／人工作者标签/29.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "eee3322068978ea83d8ef780ab3f5f3b5e57e67cad71e2e5651f32816da4f093",
+      "occurrence_id": "3c07ef1d31963e9853f0e84073efe6abf0cf5fcf7e846a82423202f719442780",
+      "path": "作者作品集／人工作者标签/30.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "0b941d2f3ac9821270154d72c64cc9bd8ad5665d638d5d10cec92451b6656a3c",
+      "occurrence_id": "417bb32e8ea0768c9945b40127f1d419b92f7181a538a79e881d0a90e96e2d71",
+      "path": "作者作品集／人工作者标签/31.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "fa14cddb99926c06a7397dcd732460bfbe03b1ea59c7dcfa7e1eecf6cbb0b748",
+      "occurrence_id": "43a05fc3add32935b3cf3dc07a2f0864a1fd7bbfe82ba32df0e9667ba6ab7912",
+      "path": "作者作品集／人工作者标签/32.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "418e929d7fbf60a258fffd3e94efaad17e29cf0d0b892d8dd56b50cce1f19880",
+      "occurrence_id": "486c5fbc7e26af16082b62a0c11df6bfec478fa19e9d5bf0af1c42e776e39e11",
+      "path": "作者作品集／人工作者标签/33.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "811fb8ab9774a1269612804af34aa92e342a1f68647348b5200719b3fa883eba",
+      "occurrence_id": "3c0dd1e6d0410e6ceafbe14c6909e01bbe596ef26875f278aaa3d529d80d4f16",
+      "path": "作者作品集／人工作者标签/34.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "e5a8e4fecc95de7ac0880b2b867918153865c0c5b16f939d58515de6151a5351",
+      "occurrence_id": "1d5b72d8c34b7fe148aff65b7b43aabe212c11e462f5720588041bb8d8009390",
+      "path": "作者作品集／人工作者标签/35.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "0dad67c518e9eaabebf6d74ab2865d4b155f426fa86ef9d8aa12ae32428c0808",
+      "occurrence_id": "61a65c8ada889075fb065a31e707052f9c5881fb8bde2194faeb99a95ab11708",
+      "path": "作者作品集／人工作者标签/36.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "9e226149fce3053a0793f908ed79a15ad55307ec82fd53576d2f2ff82a230bd1",
+      "occurrence_id": "f2199e4be87043bc75714dfa877423b215d8dec2b843bfd8440d19b7843773fa",
+      "path": "作者作品集／人工作者标签/37.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "a5456f3a7204f5d84102ee81ca1e0e97b33ee62da426775ebdc87507a166abce",
+      "occurrence_id": "a902ab50d3115a0d7e2d63e120c84b1c3dcbb1bbd94ff8a1da5025a3fdeee969",
+      "path": "作者作品集／人工作者标签/38.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    },
+    {
+      "image_id": "dd5b18eb1d98115cee8f7415d59b7c2775ecb5afdaf60d4cf8446216f06a19b2",
+      "occurrence_id": "7f00b1e137fe923d583f81f63b72614956fe06d0f55d9845a1ee325058c0eca1",
+      "path": "作者作品集／人工作者标签/39.png",
+      "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff"
+    }
+  ],
+  "prediction": {
+    "auto": null,
+    "review": null,
+    "none": null,
+    "audit": null,
+    "changed": null,
+    "reason": "Unknown: G4 policy not implemented; no mapping changes in G2.",
+    "estimate": true
+  },
+  "recommendations": {
+    "eligible_clusters": 1,
+    "covered_images": 12,
+    "valid_images": 160,
+    "cluster_coverage": 0.075,
+    "identity_folder_coverage": null,
+    "highlight_human_first": false,
+    "highlight_inheritance": false,
+    "thresholds": "clusters>=3 and coverage>=0.20; eligible identity folders coverage>=0.50",
+    "selects_for_user": false
+  },
+  "presentation": {
+    "locale": "zh-CN",
+    "templates": {
+      "ingest_prompt": "这批图片希望怎样整理？分析后会再次请你确认，不会自动移动原文件。",
+      "coherent_clusters": "发现 {count} 个视觉较一致的分组，共 {images} 张图片。分组不等于同一角色，请先确认名称或拆分。",
+      "measured_evidence": "测量依据：{method}；样本 {sample}/{population}；证据覆盖 {coverage}；置信说明：{confidence}。",
+      "purity_missing": "没有独立人工标签，无法确认身份纯度；以下仅为视觉一致性或弱标签符合率。",
+      "inheritance_warning": "继承目录只是弱先验，不代表角色已核实；会标记为“继承”，可整批撤销。",
+      "auto_warning": "自动优先只建立满足门禁的虚拟映射；模型高分不等于身份正确，无参考建议仍需核实。",
+      "model_tier": "模型建议（未核实）",
+      "reference_tier": "已核实建议仅表示通过参考/记忆门禁，不表示人工确认或准确率认证。",
+      "conflict": "模型建议与参考或人工证据冲突，已降级为待审，不会自动归入该角色。",
+      "confirmation": "将新增或修改 {changed} 张图片的虚拟映射，{review} 张待审，{none} 张保留未解决；原文件不变。",
+      "commit_action": "确认并建立虚拟映射",
+      "dismiss": "暂不决定",
+      "undo": "撤销本批映射",
+      "g2_boundary": "本阶段仅记录同意，不建立虚拟映射；首轮执行尚未实现。"
+    },
+    "text": {
+      "ingest_prompt": "这批图片希望怎样整理？分析后会再次请你确认，不会自动移动原文件。",
+      "purity_missing": "没有独立人工标签，无法确认身份纯度；以下仅为视觉一致性或弱标签符合率。",
+      "inheritance_warning": "继承目录只是弱先验，不代表角色已核实；会标记为“继承”，可整批撤销。",
+      "auto_warning": "自动优先只建立满足门禁的虚拟映射；模型高分不等于身份正确，无参考建议仍需核实。",
+      "model_tier": "模型建议（未核实）",
+      "reference_tier": "已核实建议仅表示通过参考/记忆门禁，不表示人工确认或准确率认证。",
+      "conflict": "模型建议与参考或人工证据冲突，已降级为待审，不会自动归入该角色。",
+      "commit_action": "确认并建立虚拟映射",
+      "dismiss": "暂不决定",
+      "undo": "撤销本批映射",
+      "g2_boundary": "本阶段仅记录同意，不建立虚拟映射；首轮执行尚未实现。",
+      "coherent_clusters": "发现 1 个视觉较一致的分组，共 12 张图片。分组不等于同一角色，请先确认名称或拆分。",
+      "confirmation": "将新增或修改 未知 张图片的虚拟映射，未知 张待审，未知 张保留未解决；原文件不变。"
+    },
+    "modes": [
+      {
+        "id": "human-first",
+        "label": "人审优先",
+        "consequences": [
+          "representative-wall",
+          "await-cluster-typed-name-confirmation",
+          "machine-assignments-remain-proposals",
+          "manual-batch-naming-available"
+        ],
+        "available": true
+      },
+      {
+        "id": "auto-first",
+        "label": "自动优先",
+        "consequences": [
+          "MAP-002-gated-only",
+          "verified-false",
+          "audit-5%-review-none-lanes",
+          "no-reference-free-WD-identity-assignment"
+        ],
+        "available": true
+      },
+      {
+        "id": "inherit-only",
+        "label": "仅继承目录",
+        "consequences": [
+          "selected-directories-as-unverified-virtual-collections",
+          "no-AI-first-pass-or-post-confirmation-recognition",
+          "analysis-inspectable",
+          "later-recognition-requires-new-consent"
+        ],
+        "available": true
+      }
+    ],
+    "scopes": [
+      {
+        "id": "all",
+        "label": "全继承",
+        "consequences": [
+          "freeze-all-snapshot-directory-IDs-and-selected-types",
+          "undetermined-stays-undetermined"
+        ],
+        "available": true
+      },
+      {
+        "id": "selected",
+        "label": "逐目录勾选",
+        "consequences": [
+          "freeze-checked-directory-IDs-types-descendant-policy",
+          "exclude-future-files"
+        ],
+        "available": true
+      },
+      {
+        "id": "none",
+        "label": "不继承",
+        "consequences": [
+          "source-tree-browsing-only",
+          "zero-inherited-relations",
+          "zero-context-assisted-grouping"
+        ],
+        "available": true
+      }
+    ],
+    "default_mode": "human-first",
+    "default_scope": "none",
+    "affirmative_required": true,
+    "mapping_action_available": false,
+    "folder_text": {
+      "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f": "测量依据：L2-normalized non-self leave-one-out centroid cosine; linear quantiles；样本 40/40；证据覆盖 40/40 有效向量；置信说明：synthetic UI fixture · heuristic/unvalidated。",
+      "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9": "测量依据：L2-normalized non-self leave-one-out centroid cosine; linear quantiles；样本 40/40；证据覆盖 40/40 有效向量；置信说明：synthetic UI fixture · heuristic/unvalidated。",
+      "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935": "测量依据：L2-normalized non-self leave-one-out centroid cosine; linear quantiles；样本 40/40；证据覆盖 40/40 有效向量；置信说明：synthetic UI fixture · heuristic/unvalidated。",
+      "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff": "测量依据：L2-normalized non-self leave-one-out centroid cosine; linear quantiles；样本 40/40；证据覆盖 40/40 有效向量；置信说明：synthetic UI fixture · heuristic/unvalidated。"
+    }
+  },
+  "limitations": [
+    "SYNTHETIC-UI-FIXTURE: analytic values, not measured model performance; never apply",
+    "heuristic-unvalidated-not-identity-accuracy",
+    "G1-whole-image-vectors-unavailable-crop-evidence-separate",
+    "human-label-independence-is-an-attestation",
+    "context-disabled-G2-does-not-implement-grouping",
+    "G4-G5-mapping-execution-unavailable-no-source-writes",
+    "cost-and-tier-estimates-unavailable-not-zero"
+  ]
+}

@@ -58,6 +58,8 @@ def test_compact_payload_is_columnar_and_gzip_decodable(tmp_path: Path) -> None:
     # Then it has short-key column arrays, no row-object array, and a stable fingerprint.
     assert decoded["v"] == 4
     assert decoded["n"] == 1
+    assert decoded["ng"] is None
+    assert decoded["na"] == {}
     assert "rows" not in decoded
     assert decoded["c"]["s"] == ["sha-one"]
     assert decoded["c"]["qr"] == [0.875]
@@ -312,3 +314,4 @@ def test_build_payload_hides_grouping_when_artifact_is_absent(tmp_path: Path) ->
 
     # Then the new view remains absent rather than showing an empty panel.
     assert payload["grouping"] is None
+    assert payload["negotiation"] is None

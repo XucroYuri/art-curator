@@ -1,0 +1,358 @@
+{
+  "widths": [
+    {
+      "width": 520,
+      "visible": 520,
+      "scroll": 520,
+      "regionVisible": 505,
+      "regionScroll": 505,
+      "clipping": []
+    },
+    {
+      "width": 900,
+      "visible": 900,
+      "scroll": 900,
+      "regionVisible": 885,
+      "regionScroll": 885,
+      "clipping": []
+    },
+    {
+      "width": 1440,
+      "visible": 1440,
+      "scroll": 1440,
+      "regionVisible": 1425,
+      "regionScroll": 1425,
+      "clipping": []
+    }
+  ],
+  "screenshots": [
+    "width-520.png",
+    "choices-520.png",
+    "regimes-520.png",
+    "confirmation-520.png",
+    "width-900.png",
+    "choices-900.png",
+    "regimes-900.png",
+    "confirmation-900.png",
+    "width-1440.png",
+    "choices-1440.png",
+    "regimes-1440.png",
+    "confirmation-1440.png",
+    "keyboard-focus.png",
+    "exported.png",
+    "dismissed.png",
+    "stale.png",
+    "capability-disabled.png",
+    "unavailable-evidence.png",
+    "invalid-report.png"
+  ],
+  "decisions": [
+    {
+      "actor": "local:review-studio",
+      "operation_id": "9972b87e-e9d1-44d1-8b1a-2452708072fd",
+      "affirmative": true,
+      "report_digest": "20eff71e69ed63df5e0e238eaaa8b6ec9bdafd0a7a2bd42cc5d2a647f50d9164",
+      "snapshot_digest": "51e128416c91870eeeb50a0112416935151167494ac7496777858f0267246feb",
+      "profile_digest": "31fe8126bbf654eb85402f6e1c331c453345b43d814fb8bd89f4d72597f2462f",
+      "mode": "human-first",
+      "inheritance": "all",
+      "folders": [
+        {
+          "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f",
+          "relation_type": "work",
+          "descendants": "direct-only"
+        },
+        {
+          "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9",
+          "relation_type": "undetermined",
+          "descendants": "current-snapshot"
+        },
+        {
+          "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935",
+          "relation_type": "undetermined",
+          "descendants": "current-snapshot"
+        },
+        {
+          "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff",
+          "relation_type": "undetermined",
+          "descendants": "current-snapshot"
+        }
+      ],
+      "threshold_overrides": [],
+      "cost_ceiling_seconds": 0,
+      "acknowledged": [
+        "SYNTHETIC-UI-FIXTURE: analytic values, not measured model performance; never apply",
+        "heuristic-unvalidated-not-identity-accuracy",
+        "G1-whole-image-vectors-unavailable-crop-evidence-separate",
+        "human-label-independence-is-an-attestation",
+        "context-disabled-G2-does-not-implement-grouping",
+        "G4-G5-mapping-execution-unavailable-no-source-writes",
+        "cost-and-tier-estimates-unavailable-not-zero"
+      ]
+    },
+    {
+      "actor": "local:review-studio",
+      "operation_id": "fa2ca471-4eb6-4d3d-93d1-f3662a2a5865",
+      "affirmative": true,
+      "report_digest": "20eff71e69ed63df5e0e238eaaa8b6ec9bdafd0a7a2bd42cc5d2a647f50d9164",
+      "snapshot_digest": "51e128416c91870eeeb50a0112416935151167494ac7496777858f0267246feb",
+      "profile_digest": "31fe8126bbf654eb85402f6e1c331c453345b43d814fb8bd89f4d72597f2462f",
+      "mode": "human-first",
+      "inheritance": "selected",
+      "folders": [
+        {
+          "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f",
+          "relation_type": "work",
+          "descendants": "direct-only"
+        }
+      ],
+      "threshold_overrides": [],
+      "cost_ceiling_seconds": 0,
+      "acknowledged": [
+        "SYNTHETIC-UI-FIXTURE: analytic values, not measured model performance; never apply",
+        "heuristic-unvalidated-not-identity-accuracy",
+        "G1-whole-image-vectors-unavailable-crop-evidence-separate",
+        "human-label-independence-is-an-attestation",
+        "context-disabled-G2-does-not-implement-grouping",
+        "G4-G5-mapping-execution-unavailable-no-source-writes",
+        "cost-and-tier-estimates-unavailable-not-zero"
+      ]
+    },
+    {
+      "actor": "local:review-studio",
+      "operation_id": "d4a88a68-822d-4c72-853a-2c9076608ae8",
+      "affirmative": true,
+      "report_digest": "20eff71e69ed63df5e0e238eaaa8b6ec9bdafd0a7a2bd42cc5d2a647f50d9164",
+      "snapshot_digest": "51e128416c91870eeeb50a0112416935151167494ac7496777858f0267246feb",
+      "profile_digest": "31fe8126bbf654eb85402f6e1c331c453345b43d814fb8bd89f4d72597f2462f",
+      "mode": "human-first",
+      "inheritance": "none",
+      "folders": [],
+      "threshold_overrides": [],
+      "cost_ceiling_seconds": 0,
+      "acknowledged": [
+        "SYNTHETIC-UI-FIXTURE: analytic values, not measured model performance; never apply",
+        "heuristic-unvalidated-not-identity-accuracy",
+        "G1-whole-image-vectors-unavailable-crop-evidence-separate",
+        "human-label-independence-is-an-attestation",
+        "context-disabled-G2-does-not-implement-grouping",
+        "G4-G5-mapping-execution-unavailable-no-source-writes",
+        "cost-and-tier-estimates-unavailable-not-zero"
+      ]
+    },
+    {
+      "actor": "local:review-studio",
+      "operation_id": "2838d77d-d853-47f5-95e8-7f97d915bdf6",
+      "affirmative": true,
+      "report_digest": "20eff71e69ed63df5e0e238eaaa8b6ec9bdafd0a7a2bd42cc5d2a647f50d9164",
+      "snapshot_digest": "51e128416c91870eeeb50a0112416935151167494ac7496777858f0267246feb",
+      "profile_digest": "31fe8126bbf654eb85402f6e1c331c453345b43d814fb8bd89f4d72597f2462f",
+      "mode": "auto-first",
+      "inheritance": "all",
+      "folders": [
+        {
+          "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f",
+          "relation_type": "work",
+          "descendants": "direct-only"
+        },
+        {
+          "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9",
+          "relation_type": "undetermined",
+          "descendants": "current-snapshot"
+        },
+        {
+          "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935",
+          "relation_type": "undetermined",
+          "descendants": "current-snapshot"
+        },
+        {
+          "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff",
+          "relation_type": "undetermined",
+          "descendants": "current-snapshot"
+        }
+      ],
+      "threshold_overrides": [],
+      "cost_ceiling_seconds": 0,
+      "acknowledged": [
+        "SYNTHETIC-UI-FIXTURE: analytic values, not measured model performance; never apply",
+        "heuristic-unvalidated-not-identity-accuracy",
+        "G1-whole-image-vectors-unavailable-crop-evidence-separate",
+        "human-label-independence-is-an-attestation",
+        "context-disabled-G2-does-not-implement-grouping",
+        "G4-G5-mapping-execution-unavailable-no-source-writes",
+        "cost-and-tier-estimates-unavailable-not-zero"
+      ]
+    },
+    {
+      "actor": "local:review-studio",
+      "operation_id": "a1194b09-817d-4068-8039-7372e364b03b",
+      "affirmative": true,
+      "report_digest": "20eff71e69ed63df5e0e238eaaa8b6ec9bdafd0a7a2bd42cc5d2a647f50d9164",
+      "snapshot_digest": "51e128416c91870eeeb50a0112416935151167494ac7496777858f0267246feb",
+      "profile_digest": "31fe8126bbf654eb85402f6e1c331c453345b43d814fb8bd89f4d72597f2462f",
+      "mode": "auto-first",
+      "inheritance": "selected",
+      "folders": [
+        {
+          "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f",
+          "relation_type": "work",
+          "descendants": "direct-only"
+        }
+      ],
+      "threshold_overrides": [],
+      "cost_ceiling_seconds": 0,
+      "acknowledged": [
+        "SYNTHETIC-UI-FIXTURE: analytic values, not measured model performance; never apply",
+        "heuristic-unvalidated-not-identity-accuracy",
+        "G1-whole-image-vectors-unavailable-crop-evidence-separate",
+        "human-label-independence-is-an-attestation",
+        "context-disabled-G2-does-not-implement-grouping",
+        "G4-G5-mapping-execution-unavailable-no-source-writes",
+        "cost-and-tier-estimates-unavailable-not-zero"
+      ]
+    },
+    {
+      "actor": "local:review-studio",
+      "operation_id": "ec4ff28c-e803-4c34-9692-43d48b7f09d5",
+      "affirmative": true,
+      "report_digest": "20eff71e69ed63df5e0e238eaaa8b6ec9bdafd0a7a2bd42cc5d2a647f50d9164",
+      "snapshot_digest": "51e128416c91870eeeb50a0112416935151167494ac7496777858f0267246feb",
+      "profile_digest": "31fe8126bbf654eb85402f6e1c331c453345b43d814fb8bd89f4d72597f2462f",
+      "mode": "auto-first",
+      "inheritance": "none",
+      "folders": [],
+      "threshold_overrides": [],
+      "cost_ceiling_seconds": 0,
+      "acknowledged": [
+        "SYNTHETIC-UI-FIXTURE: analytic values, not measured model performance; never apply",
+        "heuristic-unvalidated-not-identity-accuracy",
+        "G1-whole-image-vectors-unavailable-crop-evidence-separate",
+        "human-label-independence-is-an-attestation",
+        "context-disabled-G2-does-not-implement-grouping",
+        "G4-G5-mapping-execution-unavailable-no-source-writes",
+        "cost-and-tier-estimates-unavailable-not-zero"
+      ]
+    },
+    {
+      "actor": "local:review-studio",
+      "operation_id": "b6cabdc4-2113-427e-bf2e-452e5fc0accd",
+      "affirmative": true,
+      "report_digest": "20eff71e69ed63df5e0e238eaaa8b6ec9bdafd0a7a2bd42cc5d2a647f50d9164",
+      "snapshot_digest": "51e128416c91870eeeb50a0112416935151167494ac7496777858f0267246feb",
+      "profile_digest": "31fe8126bbf654eb85402f6e1c331c453345b43d814fb8bd89f4d72597f2462f",
+      "mode": "inherit-only",
+      "inheritance": "all",
+      "folders": [
+        {
+          "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f",
+          "relation_type": "work",
+          "descendants": "direct-only"
+        },
+        {
+          "folder_id": "81a18a7cb40de6a64866e9c5be1425e793c07137c3df3d420c448880cdd1d8f9",
+          "relation_type": "undetermined",
+          "descendants": "current-snapshot"
+        },
+        {
+          "folder_id": "c7cdf41d9b4df4b0349aeba2cbba2946b19fe16a02380f1a99e2aa997ca1c935",
+          "relation_type": "undetermined",
+          "descendants": "current-snapshot"
+        },
+        {
+          "folder_id": "a138182821ea014e2c67fdb0bfd2d7f310eb631b579a723010e9d12896966eff",
+          "relation_type": "undetermined",
+          "descendants": "current-snapshot"
+        }
+      ],
+      "threshold_overrides": [],
+      "cost_ceiling_seconds": 0,
+      "acknowledged": [
+        "SYNTHETIC-UI-FIXTURE: analytic values, not measured model performance; never apply",
+        "heuristic-unvalidated-not-identity-accuracy",
+        "G1-whole-image-vectors-unavailable-crop-evidence-separate",
+        "human-label-independence-is-an-attestation",
+        "context-disabled-G2-does-not-implement-grouping",
+        "G4-G5-mapping-execution-unavailable-no-source-writes",
+        "cost-and-tier-estimates-unavailable-not-zero"
+      ]
+    },
+    {
+      "actor": "local:review-studio",
+      "operation_id": "9e20e02e-e44a-402b-b567-663a0bd66b7b",
+      "affirmative": true,
+      "report_digest": "20eff71e69ed63df5e0e238eaaa8b6ec9bdafd0a7a2bd42cc5d2a647f50d9164",
+      "snapshot_digest": "51e128416c91870eeeb50a0112416935151167494ac7496777858f0267246feb",
+      "profile_digest": "31fe8126bbf654eb85402f6e1c331c453345b43d814fb8bd89f4d72597f2462f",
+      "mode": "inherit-only",
+      "inheritance": "selected",
+      "folders": [
+        {
+          "folder_id": "b2a708a474f49b476adf33eb54078f202425f4f0e432e84ae32dec50df5bb15f",
+          "relation_type": "work",
+          "descendants": "direct-only"
+        }
+      ],
+      "threshold_overrides": [],
+      "cost_ceiling_seconds": 0,
+      "acknowledged": [
+        "SYNTHETIC-UI-FIXTURE: analytic values, not measured model performance; never apply",
+        "heuristic-unvalidated-not-identity-accuracy",
+        "G1-whole-image-vectors-unavailable-crop-evidence-separate",
+        "human-label-independence-is-an-attestation",
+        "context-disabled-G2-does-not-implement-grouping",
+        "G4-G5-mapping-execution-unavailable-no-source-writes",
+        "cost-and-tier-estimates-unavailable-not-zero"
+      ]
+    },
+    {
+      "actor": "local:review-studio",
+      "operation_id": "40ea7df9-e26e-4ecb-946d-815e98f5e9fd",
+      "affirmative": true,
+      "report_digest": "20eff71e69ed63df5e0e238eaaa8b6ec9bdafd0a7a2bd42cc5d2a647f50d9164",
+      "snapshot_digest": "51e128416c91870eeeb50a0112416935151167494ac7496777858f0267246feb",
+      "profile_digest": "31fe8126bbf654eb85402f6e1c331c453345b43d814fb8bd89f4d72597f2462f",
+      "mode": "inherit-only",
+      "inheritance": "none",
+      "folders": [],
+      "threshold_overrides": [],
+      "cost_ceiling_seconds": 0,
+      "acknowledged": [
+        "SYNTHETIC-UI-FIXTURE: analytic values, not measured model performance; never apply",
+        "heuristic-unvalidated-not-identity-accuracy",
+        "G1-whole-image-vectors-unavailable-crop-evidence-separate",
+        "human-label-independence-is-an-attestation",
+        "context-disabled-G2-does-not-implement-grouping",
+        "G4-G5-mapping-execution-unavailable-no-source-writes",
+        "cost-and-tier-estimates-unavailable-not-zero"
+      ]
+    }
+  ],
+  "keyboard": [
+    "ArrowRight / End: studio → table → negotiation; no mouse within flow",
+    "Tab / Space / native arrows: auto-first, selected folder, work, direct-only, acknowledgement; Enter downloads exact Decision",
+    "Escape clears affirmative and local preview, gives non-consent; already downloaded files cannot be recalled",
+    "Tab exits the last negotiation control to BODY; no focus trap"
+  ],
+  "checks": [
+    "stale lock; same digest refused; new report clears selection/affirmative and cannot reuse old assets",
+    "authoritative bound copy; unavailable vs census distinction; hostile strings remain text",
+    "unbound copy fails closed"
+  ],
+  "requests": [
+    "http://127.0.0.1:8876/gallery.html",
+    "http://127.0.0.1:8876/previews/0000000000000001.jpg",
+    "http://127.0.0.1:8876/thumbs/0000000000000001.jpg",
+    "http://127.0.0.1:8876/gallery.html",
+    "http://127.0.0.1:8876/previews/0000000000000001.jpg",
+    "http://127.0.0.1:8876/thumbs/0000000000000001.jpg",
+    "http://127.0.0.1:8876/gallery.html",
+    "http://127.0.0.1:8876/previews/0000000000000001.jpg",
+    "http://127.0.0.1:8876/thumbs/0000000000000001.jpg",
+    "http://127.0.0.1:8876/gallery.html",
+    "http://127.0.0.1:8876/previews/0000000000000001.jpg",
+    "http://127.0.0.1:8876/thumbs/0000000000000001.jpg"
+  ],
+  "errors": [],
+  "externalRequests": [],
+  "result": "PASS"
+}

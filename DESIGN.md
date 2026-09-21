@@ -246,6 +246,32 @@ Skip is session-only; `不是` retains the existing face-ignore semantics.
 - **Accessibility**: dialog-like labelling, focus-visible controls, image alt text from filename.
 - **Motion**: 200ms opacity/scale; reduced motion disables the scale.
 
+### Mode negotiation
+
+- **Persona / task**: a keyboard-only curator inspects frozen measurements before
+  explicitly exporting a snapshot-bound Decision. Export is not application or a receipt.
+- **Structure**: a fourth mode, with one vertical scroll owner; numbered evidence,
+  directory, choice and export sections. Reuse memory cards, warning badges, native
+  details, body/caption/mono type, double-ring surfaces and existing spacing tokens.
+  An evidence/choice two-column layout at 1440px stacks below that breakpoint.
+- **Evidence primitives**: wrapping definition lists, representative thumbnail strips
+  (three `--space-10` units square), detector gate rows and consequence lists.
+  Unknown values retain their reasons, methods and limits; no inferred confidence.
+- **Choices**: native radio fieldsets, folder checkboxes and typed relation selects;
+  explicit acknowledgement checkbox is never preselected. All consequences precede
+  export. Disabled mapping and reserved undo remain visibly labelled with G2/G5 limits.
+- **States**: waiting, dismissed (not consent), stale (export blocked until a different
+  report is loaded and acknowledged), exported locally (not applied), invalid report.
+  No persistence of affirmative consent; no timeout or automatic completion.
+- **Accessibility**: Tab/Shift+Tab leave the region normally, arrows operate native
+  radios/selects and the mode tablist, Enter/Space activate, Escape dismisses without
+  export. No modal or focus trap. Live status, labelled controls, existing focus ring.
+  Long CJK copy and hashes wrap at 520/900/1440px; no fixed-height copy containers.
+- **Motion**: no new animation; existing native control feedback only.
+- **Boundary**: offline snapshots cannot observe external corpus changes; currentness
+  is checked by the CLI, not asserted by this UI. Manually invalidating a report or
+  loading a newer one clears acknowledgement. No mapping or undo implementation.
+
 ## 6. Motion & Interaction
 
 | Type | Duration | Easing | Usage |
