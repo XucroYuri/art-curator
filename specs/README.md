@@ -33,6 +33,7 @@ Baseline inspected: 2026-09-20. These specifications encode the supplied archite
 | [ADR-0001](adr/ADR-0001-isolated-scorer-environments.md), [ADR-0002](adr/ADR-0002-dry-run-first-moves.md), [ADR-0003](adr/ADR-0003-columnar-gzip-review.md) | Retrospective decisions, not new certification |
 | [ADR-0004](adr/ADR-0004-gpu-fp32-admission-criterion.md) | Scoped CUDA FP32 admission with unchanged primary budgets |
 | [ADR-0005](adr/ADR-0005-measured-context-assisted-grouping.md) | Narrow measured context-assisted grouping exception; approves INV-P |
+| [ADR-0006](adr/ADR-0006-transactional-album-mapping.md) | **proposed** transactional album mapping backend; pending maintainer acceptance |
 | [FEATURE](templates/FEATURE.md), [ADR](templates/ADR.md), [BENCHMARK](templates/BENCHMARK.md), [CERTIFICATION](templates/CERTIFICATION.md), [ADVERSARIAL-REVIEW](templates/ADVERSARIAL-REVIEW.md), [RELEASE-EVIDENCE](templates/RELEASE-EVIDENCE.md) | Authoring forms |
 
 ## Requirement grammar and evidence convention
