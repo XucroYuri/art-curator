@@ -11,6 +11,13 @@ prompts, EXIF, or embedded generation metadata. Paths select dataset roles and l
 files; hashes identify content, break ties and select deterministic audit samples.
 Names remain available for human search, but never become model features.
 
+An approved but **not-yet-implemented** context-assisted grouping layer (ADR-0005)
+is the sole narrow exception: only explicitly selected folder/session membership may
+act as a measured, consent-bound weak prior in its own versioned proposal layer, never
+as a model input or score, and visual contradiction always wins. The delivered
+pipeline described here is the pure-vision one above; manual folder organization
+remains available regardless, and no contextual grouping ships today.
+
 **Human decisions stay in charge.** Model proposals are not deletion commands,
 identity verification, or a safety certificate.
 

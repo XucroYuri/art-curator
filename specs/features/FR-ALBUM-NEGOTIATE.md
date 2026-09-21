@@ -85,8 +85,10 @@ Scope: S: folder-regime-v1 / E: saved local evidence / T0–T4. Status: proposed
 - Display confidence as `heuristic/unvalidated` plus measured proportion intervals
   where applicable; calibrated regime confidence needs a held-out labelled fixture
   and a preregistered profile. Paths can locate folders and display user declarations;
-  timestamps/name patterns do not enter raw visual math. Contextual grouping remains
-  gated by the constitutional amendment; regime detection alone grants no consent.
+  timestamps/name patterns do not enter raw visual math. Contextual grouping is
+  governed by ADR-0005 and the INV-2/INV-P amendments, and stays inactive unless its
+  measured admission conditions pass. Consent alone does not authorize use, and regime
+  detection grants neither measurement nor consent.
 - AC-FR-ALBUM-NEGOTIATE-002-01: Method: analytic detector boundary and missingness replay; fixture: ALBUM-FOLDER-v1; comparator: exact table outcomes including ties/overlap/unavailable, zero unsupported artist or identity claims, unchanged raw scores under path rename; evidence `evidence/AC-FR-ALBUM-NEGOTIATE-002-01.json`.
 
 ### FR-ALBUM-NEGOTIATE-003 — Explicit mode and inheritance consent

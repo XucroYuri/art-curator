@@ -129,6 +129,15 @@ decision function accepts vectors and reference crop identities only; query path
 are display/lookup data. The mandatory test moves a synthetic image into a misleading
 character-named directory, decodes/crops it again and compares decisions and scores.
 
+This record covers the unchanged **context-free** component, so relocation invariance
+still holds exactly as before. The ADR-0005 context-assisted grouping layer is
+separate, approved but not implemented, and does not alter this behavior. That layer
+may let only explicit folder/session membership act as a measured, consent-bound weak
+prior in its own versioned proposal; it never becomes a model feature and never
+changes these vectors, raw scores or context-free decisions, and visual contradiction
+always vetoes it. Nothing here authorizes query path, folder or session membership in
+the pixel-only grouping math above.
+
 - AC-NFR-GROUP-001-01: GROUP-SYN-v1 rename/move paired visual test, exact crop bytes
   and decisions, equal similarity/margin; evidence
   `evidence/AC-NFR-GROUP-001-01.json`. Gate: zero assignment changes.

@@ -2,7 +2,7 @@
 > 相册以浏览、智能分类、人工反馈三层构成；虚拟映射优先于物理移动。
 > 未知是常态，目录继承是可撤销弱先验，不能冒充身份真值。
 > 本总纲约束后续开发，不宣称现有流水线已完成产品或质量认证。
-> 来源参与分组须先解决与现行纯视觉宪章的冲突；默认仍保持纯视觉。
+> 来源参与分组的宪章例外已获批准，受 ADR-0005 严格约束；默认仍保持纯视觉。
 
 # Album master specification: vision and authority
 
@@ -11,7 +11,7 @@ This family is the product-level governing specification for subsequent album wo
 [INGEST](FR-ALBUM-INGEST.md) owns orchestration/resources;
 [NEGOTIATE](FR-ALBUM-NEGOTIATE.md) owns evidence and consent;
 [MAP](FR-ALBUM-MAP.md) owns disposition and reversal.
-All records are proposed, not implemented or verified claims. Supporting tables
+All records except approved INV-P are proposed, not implemented or verified claims. Supporting tables
 inherit their enclosing record. Evidence paths are future release-bundle paths,
 not artifacts created by this documentation change. Lifecycle follows NFR-SPEC-001.
 
@@ -59,13 +59,12 @@ Scope: S:* / E:* / T0–T4. Status: proposed.
   including mapping/provenance constraints → album product contracts → component
   implementation choices → usefulness → throughput → convenience. No lower rule
   waives a higher rule; unresolved contradictions fail closed.
-- INV-M and INV-P below are proposed constitutional entries, not a stealth edit to
-  000-CONSTITUTION. INV-M adds constraints compatible with INV-3. INV-P would permit
-  a narrowly recorded provenance-aware grouping layer, conflicting with INV-2's
-  current grouping prohibition. Until an explicit constitutional amendment and ADR
-  are accepted, provenance can be measured/displayed and explicitly inherited as
-  human-directed album organization, but cannot influence algorithmic grouping.
-- Even after amendment, canonical visual tensors, raw model scores and pure-vision
+- INV-M remains a proposed constitutional entry compatible with INV-3. INV-P is
+  approved, governed by [ADR-0005](../adr/ADR-0005-measured-context-assisted-grouping.md)
+  and the explicit INV-2 amendment in 000-CONSTITUTION. Provenance may influence
+  algorithmic grouping only under all ADR-0005 conditions; measurement/display and
+  explicit human-directed inheritance remain available without that permission.
+- Under the approved amendment, canonical visual tensors, raw model scores and pure-vision
   reference retrieval remain path-invariant; contextual grouping is a separate
   versioned proposal with both contextual and context-free results retained.
 - AC-FR-ALBUM-VISION-001-01: Method: static change-manifest review; fixture: ALBUM-CONTRACT-v1; comparator: every change linked to an owner record and zero contextual grouping enabled before amendment approval; evidence `evidence/AC-FR-ALBUM-VISION-001-01.json`.
@@ -82,7 +81,7 @@ Scope: S:* / E:* / T0–T4. Status: proposed constitutional addition.
 ### INV-P — Provenance as measured weak evidence
 When folder or session provenance is proposed as grouping evidence, the system shall require measured coherence or purity, explicit consent, recorded use and reversible inheritance without silently treating context as identity truth.
 
-Scope: S:* / E:* / T0–T4. Status: proposed constitutional amendment, activation gated by FR-ALBUM-VISION-001.
+Scope: S:* / E:* / T0–T4. Status: approved constitutional amendment, governed by [ADR-0005](../adr/ADR-0005-measured-context-assisted-grouping.md) and amended INV-2; not an implementation or verification claim.
 - Record sampling basis, denominator, missingness, confidence method/limits,
   measurement/profile/snapshot digests, selected folders and actual affected rows.
   No measurement means no contextual grouping permission. Weak consistency is not
@@ -165,7 +164,7 @@ Scope: S:* / E:* / T0–T4. Status: proposed.
 | Gap | Owning requirements | Dependencies / qualification boundary |
 |---|---|---|
 | G1 ingest orchestration | FR-ALBUM-INGEST-001–003; NFR-ALBUM-INGEST-001–004 | Existing scan/identity/cache workers; G5 persistence; G7 durable job capability |
-| G2 mode negotiation | FR-ALBUM-NEGOTIATE-001–004 | G1 analysis; INV-P amendment for contextual grouping, not for display/manual inheritance |
+| G2 mode negotiation | FR-ALBUM-NEGOTIATE-001–004 | G1 analysis; approved INV-P / ADR-0005 conditions for contextual grouping, not for display/manual inheritance |
 | G3 cluster naming | FR-ALBUM-MAP-004/005 | Existing identity clusters and human journal; G5 batch undo; G2 consent |
 | G4 first-pass policy | FR-ALBUM-MAP-002/003 | G2 consent, G5 mapping; in-flight FR-CANDIDATES-008/009 zero-reference tiers and demotion; no reference means no auto identity |
 | G5 virtual album model | FR-ALBUM-MAP-001/006; NFR-ALBUM-MAP-001 | Full hashes, profile registry, human/memory lineage; authoritative publication/recovery gate |
@@ -208,7 +207,7 @@ or labels make qualification inconclusive; this document supplies no invented ha
 | ALBUM-CONFUSABLE-v1 | Synthetic score/visual disagreement boundary cases plus separately consented held-out hard negatives; includes generic high-score cross-character pattern |
 | ALBUM-PERF-v1 | Frozen 1,580-file stratified slice and 26,876-file workload shape, file/face counts separate, cold/warm runs, recorded hardware/storage/runtime; private content digests at execution |
 
-Open decisions: constitutional amendment approval; labelled precision/coverage budgets;
+Open decisions: labelled precision/coverage budgets;
 client selection; durable mapping backend; fixture digests; unmeasured stage budgets.
 These are explicit release gates, not reasons to fabricate certification or delay
 the documentation contract. Model/weight/image rights remain independently gated.
