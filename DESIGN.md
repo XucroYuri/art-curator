@@ -272,6 +272,32 @@ Skip is session-only; `不是` retains the existing face-ignore semantics.
   is checked by the CLI, not asserted by this UI. Manually invalidating a report or
   loading a newer one clears acknowledgement. No mapping or undo implementation.
 
+### Cluster naming surface
+
+- **Persona / task**: a keyboard-first curator inspects a backend representative
+  wall, selects frozen subjects, and exports a reversible batch draft, never applies it.
+- **Structure**: sibling `簇命名` mode; reuse negotiation scroll owner, cards,
+  definition lists, thumbnail strips, warning badges and native fieldsets. At
+  1440px the wall and operation editor sit side by side; at 900/520px they stack.
+- **Controls**: labelled cluster/action/type/entity selects, member checkboxes,
+  one partition selector per member (remainder/A/B), merge-parent checkboxes,
+  explicit conflict deferral, preview, unchecked export acknowledgement and downloads.
+- **States**: unavailable input, selected members, invalid remainder, merge conflict,
+  proposed deferral, frozen deferred subjects, 9/10 distinct-image promotion gate,
+  previewed draft and exported-but-not-applied. Deferred is warning/text, never success.
+- **Semantics**: visual exclusion is not identity rejection, reference deletion or
+  source-file deletion. Siblings/future members receive no implied assignment.
+  Only CLI confirmation creates authoritative human/verified relations.
+- **Accessibility**: no focus trap; native Tab/arrows/Space/Enter, visible existing
+  focus ring, polite status, Escape cancels preview. Input changes clear consent.
+  CJK labels and hashes wrap; no fixed-height prose; controls use `--space-10`.
+- **Motion/tokens**: no new animation or visual tokens; negotiation primitives
+  carry existing spacing, type, radius and double-ring surface contracts.
+- **Boundary/debt**: local preview is not authoritative staging; CLI checks freshness.
+  Promotion uses the separate documented `promote` staging path, not a fabricated
+  browser journal action. Browser apply/undo, entity merge, retrieval-support
+  retraction and re-embedding are visibly unavailable.
+
 ## 6. Motion & Interaction
 
 | Type | Duration | Easing | Usage |

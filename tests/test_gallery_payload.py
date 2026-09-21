@@ -60,6 +60,7 @@ def test_compact_payload_is_columnar_and_gzip_decodable(tmp_path: Path) -> None:
     assert decoded["n"] == 1
     assert decoded["ng"] is None
     assert decoded["na"] == {}
+    assert decoded["cl"] is None
     assert "rows" not in decoded
     assert decoded["c"]["s"] == ["sha-one"]
     assert decoded["c"]["qr"] == [0.875]

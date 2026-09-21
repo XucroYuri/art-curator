@@ -1,0 +1,466 @@
+{
+  "discovery": {
+    "schema_version": "album-discovery-v1",
+    "pool": {
+      "schema_version": "album-unknown-pool-v1",
+      "root": {
+        "library_id": "synthetic-cluster-library",
+        "revision": 1,
+        "root_digest": "ef811d610adad26a73f9438c415e4a22e6a883bfb6237a26d4627ad6aba6a166"
+      },
+      "inputs": {
+        "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "options": {
+          "detector": "anime_face_detection",
+          "variant": "n",
+          "embedder": "siglip",
+          "device": "auto",
+          "precision": "float32",
+          "batch_size": 16,
+          "cluster": "dbscan",
+          "min_cluster_size": 3,
+          "min_face_px": 24,
+          "det_threshold": 0.3,
+          "nms_threshold": 0.5,
+          "eps": 0.15,
+          "threads": 4,
+          "target_character": null,
+          "ccip_license_accepted": false,
+          "anchor_faces_per_character": 64,
+          "anchor_det_score": 0.7,
+          "anchor_phash_distance": 4,
+          "anchor_exclude_folders": [],
+          "anchor_min_sim": null,
+          "anchor_min_margin": null
+        },
+        "vectors": [
+          {
+            "legacy_id": "member-00",
+            "image_id": "73ee1efbb60ddb2e3342c5f9534a10f7ba136aa18a2ef9ac1e8877d69cf41aca",
+            "subject_id": "member-00",
+            "crop_id": "6461a37651cb9db1482cf7fd276cf2e34099f498ff546835eebb6ba49881d947",
+            "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "vector": [
+              1,
+              0
+            ]
+          },
+          {
+            "legacy_id": "member-01",
+            "image_id": "0e33b3e66d00561657b0a7dbec43f25cb348a1c2ce8b4e39801c0f01cc82928a",
+            "subject_id": "member-01",
+            "crop_id": "161b392fd0cbc7602cecaaeb14ad3f932aa1c06ab1a7140f704fe7bbb493e958",
+            "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "vector": [
+              1,
+              0
+            ]
+          },
+          {
+            "legacy_id": "member-02",
+            "image_id": "6f352207e022fc10738e9e8643df569943a5a55beb5771dd87f4431b7dd54558",
+            "subject_id": "member-02",
+            "crop_id": "e511c0492b8528b8a4981f2ab18f75ce874c4fe648c21105732159cc1a391b79",
+            "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "vector": [
+              1,
+              0
+            ]
+          },
+          {
+            "legacy_id": "member-03",
+            "image_id": "ffd66a3f6e52bd5f3e478b02b44150d5e69a68aeec3c14b4d86e699af74dc435",
+            "subject_id": "member-03",
+            "crop_id": "702bd17f7e67703b042967bd7cebb8ef5881abd976e19cb9d665ef5021ca7ea4",
+            "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "vector": [
+              1,
+              0
+            ]
+          },
+          {
+            "legacy_id": "member-04",
+            "image_id": "94431da03b6e0ca77c9d5ef4e3191febd053729d0bd924d82e3380793533a239",
+            "subject_id": "member-04",
+            "crop_id": "08bd1feb3d2a4bbd9fe4081c6939359e1c8d73a9f13525558debc7d92cba52af",
+            "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "vector": [
+              1,
+              0
+            ]
+          },
+          {
+            "legacy_id": "member-05",
+            "image_id": "0ab5fe25c478f22638ab663a38ec4f978ed31747e537b59a22e3bed39329830b",
+            "subject_id": "member-05",
+            "crop_id": "6209c170ab701f5d83004941e7109c1a1ddaac57ddc10f19cd16a55992b3c8ad",
+            "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "vector": [
+              1,
+              0
+            ]
+          },
+          {
+            "legacy_id": "member-06",
+            "image_id": "382e89464d366c32468827e79013633f0464e22d4775432e51c2386453ec3335",
+            "subject_id": "member-06",
+            "crop_id": "6014538f84b639178702f365ac4ea616b40283ad2728dd9fa028e56c44357195",
+            "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "vector": [
+              1,
+              0
+            ]
+          },
+          {
+            "legacy_id": "member-07",
+            "image_id": "5e3b68d49d3b9fac52cec96b0e1dea3ee1884f6d1e7d57cf732ad6f556cdb8d3",
+            "subject_id": "member-07",
+            "crop_id": "6acaa649859d9df41971cb1a3f767c2e5c4f65ec097f12afb7842473497f86fd",
+            "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "vector": [
+              1,
+              0
+            ]
+          },
+          {
+            "legacy_id": "member-08",
+            "image_id": "0dd742726d0cbb09e8191fba0c4fbb9db6c8e6101c0320f77689c981a2cc8d10",
+            "subject_id": "member-08",
+            "crop_id": "10c08eb81a54006c9f9dfaa930e358057c091cfb2e34771d4261bb1b3e585e3a",
+            "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "vector": [
+              1,
+              0
+            ]
+          },
+          {
+            "legacy_id": "member-09",
+            "image_id": "a5c3abf3ad333fbb6a4ead76538c459f07b584435cbe156caa3bede447efad4c",
+            "subject_id": "member-09",
+            "crop_id": "d7a24245048d81c89c1b95f3e7a549006cc0d9fb95f7a9cf0333bc42901eb531",
+            "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "vector": [
+              1,
+              0
+            ]
+          },
+          {
+            "legacy_id": "member-10",
+            "image_id": "e0dec3cb644dc361ee796b257e14dacf309073a07ff6884d49e3df1d224e6310",
+            "subject_id": "member-10",
+            "crop_id": "ddac797e398d1e76e6e374ac08872aaf4ad3e01f7e81a7331e05c6df1b6ea59f",
+            "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "vector": [
+              0,
+              1
+            ]
+          },
+          {
+            "legacy_id": "member-11",
+            "image_id": "d8116f58a62be4050e846e8a0d92deefb724d10668f6b6d221b4a47125c5080c",
+            "subject_id": "member-11",
+            "crop_id": "d1d87b29742025e8d98025cfc3943e7b1266143922290eeac31e87a706ad2e7e",
+            "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "vector": [
+              0,
+              1
+            ]
+          }
+        ],
+        "previous_clusters": [],
+        "minimum_seed_images": 10,
+        "previous": null,
+        "include_resolved": []
+      },
+      "members": [
+        {
+          "legacy_id": "member-05",
+          "image_id": "0ab5fe25c478f22638ab663a38ec4f978ed31747e537b59a22e3bed39329830b",
+          "subject_id": "member-05",
+          "crop_id": "6209c170ab701f5d83004941e7109c1a1ddaac57ddc10f19cd16a55992b3c8ad",
+          "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "vector": [
+            1,
+            0
+          ]
+        },
+        {
+          "legacy_id": "member-08",
+          "image_id": "0dd742726d0cbb09e8191fba0c4fbb9db6c8e6101c0320f77689c981a2cc8d10",
+          "subject_id": "member-08",
+          "crop_id": "10c08eb81a54006c9f9dfaa930e358057c091cfb2e34771d4261bb1b3e585e3a",
+          "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "vector": [
+            1,
+            0
+          ]
+        },
+        {
+          "legacy_id": "member-01",
+          "image_id": "0e33b3e66d00561657b0a7dbec43f25cb348a1c2ce8b4e39801c0f01cc82928a",
+          "subject_id": "member-01",
+          "crop_id": "161b392fd0cbc7602cecaaeb14ad3f932aa1c06ab1a7140f704fe7bbb493e958",
+          "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "vector": [
+            1,
+            0
+          ]
+        },
+        {
+          "legacy_id": "member-06",
+          "image_id": "382e89464d366c32468827e79013633f0464e22d4775432e51c2386453ec3335",
+          "subject_id": "member-06",
+          "crop_id": "6014538f84b639178702f365ac4ea616b40283ad2728dd9fa028e56c44357195",
+          "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "vector": [
+            1,
+            0
+          ]
+        },
+        {
+          "legacy_id": "member-07",
+          "image_id": "5e3b68d49d3b9fac52cec96b0e1dea3ee1884f6d1e7d57cf732ad6f556cdb8d3",
+          "subject_id": "member-07",
+          "crop_id": "6acaa649859d9df41971cb1a3f767c2e5c4f65ec097f12afb7842473497f86fd",
+          "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "vector": [
+            1,
+            0
+          ]
+        },
+        {
+          "legacy_id": "member-02",
+          "image_id": "6f352207e022fc10738e9e8643df569943a5a55beb5771dd87f4431b7dd54558",
+          "subject_id": "member-02",
+          "crop_id": "e511c0492b8528b8a4981f2ab18f75ce874c4fe648c21105732159cc1a391b79",
+          "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "vector": [
+            1,
+            0
+          ]
+        },
+        {
+          "legacy_id": "member-00",
+          "image_id": "73ee1efbb60ddb2e3342c5f9534a10f7ba136aa18a2ef9ac1e8877d69cf41aca",
+          "subject_id": "member-00",
+          "crop_id": "6461a37651cb9db1482cf7fd276cf2e34099f498ff546835eebb6ba49881d947",
+          "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "vector": [
+            1,
+            0
+          ]
+        },
+        {
+          "legacy_id": "member-04",
+          "image_id": "94431da03b6e0ca77c9d5ef4e3191febd053729d0bd924d82e3380793533a239",
+          "subject_id": "member-04",
+          "crop_id": "08bd1feb3d2a4bbd9fe4081c6939359e1c8d73a9f13525558debc7d92cba52af",
+          "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "vector": [
+            1,
+            0
+          ]
+        },
+        {
+          "legacy_id": "member-09",
+          "image_id": "a5c3abf3ad333fbb6a4ead76538c459f07b584435cbe156caa3bede447efad4c",
+          "subject_id": "member-09",
+          "crop_id": "d7a24245048d81c89c1b95f3e7a549006cc0d9fb95f7a9cf0333bc42901eb531",
+          "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "vector": [
+            1,
+            0
+          ]
+        },
+        {
+          "legacy_id": "member-03",
+          "image_id": "ffd66a3f6e52bd5f3e478b02b44150d5e69a68aeec3c14b4d86e699af74dc435",
+          "subject_id": "member-03",
+          "crop_id": "702bd17f7e67703b042967bd7cebb8ef5881abd976e19cb9d665ef5021ca7ea4",
+          "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "vector": [
+            1,
+            0
+          ]
+        }
+      ],
+      "unresolved_without_vectors": [
+        "sibling-0",
+        "sibling-1",
+        "sibling-10",
+        "sibling-11",
+        "sibling-2",
+        "sibling-3",
+        "sibling-4",
+        "sibling-5",
+        "sibling-6",
+        "sibling-7",
+        "sibling-8",
+        "sibling-9"
+      ],
+      "member_digest": "370ab05ccad5efe477a8092ebfb2ab55710aeae286995debc322a5378bf23e08",
+      "pair_comparison_upper_bound": 100,
+      "reembedding_authorized": false,
+      "parameters_changed": false,
+      "reembedding_required": [],
+      "cost_basis": "arithmetic-upper-bound-not-measured-time",
+      "prior_memberships": []
+    },
+    "clusters": [
+      {
+        "cluster_id": "e7f55d42b2b5b3ef95009d8c84f7ad779fe2cdeb5368674f1500535a1a6935ab",
+        "members": [
+          "member-05",
+          "member-08",
+          "member-01",
+          "member-06",
+          "member-07",
+          "member-02",
+          "member-00",
+          "member-04",
+          "member-09",
+          "member-03"
+        ],
+        "representatives": [
+          "member-05",
+          "member-08",
+          "member-01",
+          "member-06",
+          "member-07",
+          "member-02",
+          "member-00",
+          "member-04",
+          "member-09",
+          "member-03"
+        ],
+        "seed_eligible": true,
+        "parents": [],
+        "coherent_wall": true,
+        "snapshot": {
+          "snapshot_id": "e7f55d42b2b5b3ef95009d8c84f7ad779fe2cdeb5368674f1500535a1a6935ab",
+          "members": [
+            {
+              "legacy_id": "member-05",
+              "image_id": "0ab5fe25c478f22638ab663a38ec4f978ed31747e537b59a22e3bed39329830b",
+              "subject_id": "member-05",
+              "crop_id": "6209c170ab701f5d83004941e7109c1a1ddaac57ddc10f19cd16a55992b3c8ad",
+              "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+            },
+            {
+              "legacy_id": "member-08",
+              "image_id": "0dd742726d0cbb09e8191fba0c4fbb9db6c8e6101c0320f77689c981a2cc8d10",
+              "subject_id": "member-08",
+              "crop_id": "10c08eb81a54006c9f9dfaa930e358057c091cfb2e34771d4261bb1b3e585e3a",
+              "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+            },
+            {
+              "legacy_id": "member-01",
+              "image_id": "0e33b3e66d00561657b0a7dbec43f25cb348a1c2ce8b4e39801c0f01cc82928a",
+              "subject_id": "member-01",
+              "crop_id": "161b392fd0cbc7602cecaaeb14ad3f932aa1c06ab1a7140f704fe7bbb493e958",
+              "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+            },
+            {
+              "legacy_id": "member-06",
+              "image_id": "382e89464d366c32468827e79013633f0464e22d4775432e51c2386453ec3335",
+              "subject_id": "member-06",
+              "crop_id": "6014538f84b639178702f365ac4ea616b40283ad2728dd9fa028e56c44357195",
+              "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+            },
+            {
+              "legacy_id": "member-07",
+              "image_id": "5e3b68d49d3b9fac52cec96b0e1dea3ee1884f6d1e7d57cf732ad6f556cdb8d3",
+              "subject_id": "member-07",
+              "crop_id": "6acaa649859d9df41971cb1a3f767c2e5c4f65ec097f12afb7842473497f86fd",
+              "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+            },
+            {
+              "legacy_id": "member-02",
+              "image_id": "6f352207e022fc10738e9e8643df569943a5a55beb5771dd87f4431b7dd54558",
+              "subject_id": "member-02",
+              "crop_id": "e511c0492b8528b8a4981f2ab18f75ce874c4fe648c21105732159cc1a391b79",
+              "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+            },
+            {
+              "legacy_id": "member-00",
+              "image_id": "73ee1efbb60ddb2e3342c5f9534a10f7ba136aa18a2ef9ac1e8877d69cf41aca",
+              "subject_id": "member-00",
+              "crop_id": "6461a37651cb9db1482cf7fd276cf2e34099f498ff546835eebb6ba49881d947",
+              "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+            },
+            {
+              "legacy_id": "member-04",
+              "image_id": "94431da03b6e0ca77c9d5ef4e3191febd053729d0bd924d82e3380793533a239",
+              "subject_id": "member-04",
+              "crop_id": "08bd1feb3d2a4bbd9fe4081c6939359e1c8d73a9f13525558debc7d92cba52af",
+              "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+            },
+            {
+              "legacy_id": "member-09",
+              "image_id": "a5c3abf3ad333fbb6a4ead76538c459f07b584435cbe156caa3bede447efad4c",
+              "subject_id": "member-09",
+              "crop_id": "d7a24245048d81c89c1b95f3e7a549006cc0d9fb95f7a9cf0333bc42901eb531",
+              "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+            },
+            {
+              "legacy_id": "member-03",
+              "image_id": "ffd66a3f6e52bd5f3e478b02b44150d5e69a68aeec3c14b4d86e699af74dc435",
+              "subject_id": "member-03",
+              "crop_id": "702bd17f7e67703b042967bd7cebb8ef5881abd976e19cb9d665ef5021ca7ea4",
+              "profile": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+            }
+          ],
+          "parents": [],
+          "context_digest": "72e257e322437c8a26190705fe310e3d4c36e3a70ce087dc863f15a2accbe208"
+        }
+      }
+    ],
+    "noise": [
+      "sibling-0",
+      "sibling-1",
+      "sibling-10",
+      "sibling-11",
+      "sibling-2",
+      "sibling-3",
+      "sibling-4",
+      "sibling-5",
+      "sibling-6",
+      "sibling-7",
+      "sibling-8",
+      "sibling-9"
+    ],
+    "additions": [
+      "member-05",
+      "member-08",
+      "member-01",
+      "member-06",
+      "member-07",
+      "member-02",
+      "member-00",
+      "member-04",
+      "member-09",
+      "member-03"
+    ],
+    "splits": [],
+    "merges": []
+  },
+  "actor": "local:review-studio",
+  "cluster_id": "e7f55d42b2b5b3ef95009d8c84f7ad779fe2cdeb5368674f1500535a1a6935ab",
+  "entity": {
+    "entity_id": "8b027204-d7f3-46e7-950a-7322d0cbcd90",
+    "entity_type": "work",
+    "name": "十张合成图的晋升名称"
+  },
+  "selected_members": [
+    "member-05",
+    "member-08",
+    "member-01",
+    "member-06",
+    "member-07",
+    "member-02",
+    "member-00",
+    "member-04",
+    "member-09",
+    "member-03"
+  ]
+}

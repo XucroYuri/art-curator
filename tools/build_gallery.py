@@ -171,6 +171,7 @@ class GalleryPayload(TypedDict):
     grouping: dict[str, JsonValue] | None
     negotiation: dict[str, JsonValue] | None
     negotiation_assets: dict[str, JsonValue]
+    clusters: dict[str, JsonValue] | None
 
 
 @dataclass(frozen=True, slots=True)
@@ -881,6 +882,23 @@ def negotiation_assets(out_dir: Path, report: dict[str, JsonValue] | None) -> di
     return assets
 
 
+def load_cluster_payload(out_dir: Path) -> dict[str, JsonValue] | None:
+    """Load the presentation wrapper without changing backend wire artifacts."""
+    path = out_dir / "cluster-payload.json"
+    if not path.exists():
+        return None
+    try:
+        value: JsonValue = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        raise GalleryInputError(f"cannot read cluster payload: {path}") from error
+    match value:
+        case {"schema_version": "gallery-clusters-v1", "manifest": dict(),
+              "parent": dict(), "clusters": list(), "subjects": dict(), "assets": dict()}:
+            return value
+        case _:
+            raise GalleryInputError(f"unsupported cluster payload: {path}")
+
+
 def build_payload(
     out_dir: Path,
     rows: Sequence[ScoreRow],
@@ -903,6 +921,7 @@ def build_payload(
         "grouping": load_character_grouping(out_dir),
         "negotiation": report,
         "negotiation_assets": negotiation_assets(out_dir, report),
+        "clusters": load_cluster_payload(out_dir),
     }
 
 
@@ -1085,6 +1104,7 @@ def compact_payload(payload: GalleryPayload) -> dict[str, JsonValue]:
         "r": compact_grouping(grouping) if grouping is not None else None,
         "ng": payload["negotiation"],
         "na": payload["negotiation_assets"],
+        "cl": payload["clusters"],
     }
 
 
@@ -1533,7 +1553,7 @@ decodePayload().then((compact)=>boot(compact,start)).catch((error)=>fatal(error 
    const csvCell=(value)=>`"${String(value??"").replaceAll('"','""')}"`;function exportJson(){download(`image-review-${fingerprint}.json`,JSON.stringify({version:1,fingerprint,title:document.getElementById("brand-title")?.textContent||"",exported_at:new Date().toISOString(),decisions:journal.decisions,entries:journal.entries},null,2),"application/json");}function exportCsv(){const header=["sha16","filename","action","manual_decision","proposed_tier","timestamp"];const lines=[header.map(csvCell).join(",")];journal.entries.forEach((entry)=>lines.push([entry.sha16,entry.filename,entry.action,entry.manual_decision,entry.proposed_tier,entry.timestamp].map(csvCell).join(",")));download(`image-review-${fingerprint}.csv`,lines.join("\r\n"),"text/csv;charset=utf-8");}function exportCharacterLabels(){download("character_labels.json",JSON.stringify(characterLabelsPayload(),null,2),"application/json");setText("journal-import-status","人物标签已导出");}function importCharacterLabels(file){if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const parsed=JSON.parse(String(reader.result||""));if(!parsed||typeof parsed!=="object"||parsed.version!==1||parsed.source!=="review-studio"||String(parsed.corpus_fingerprint)!==fingerprint||!Array.isArray(parsed.labels))throw new Error("标签文件与当前语料不匹配");let imported=0;parsed.labels.forEach((raw)=>{if(!raw||typeof raw!=="object"||!LABEL_ACTIONS.has(raw.action))return;const face=faceById.get(String(raw.face_id||""));if(!face)return;const label={face_id:face.face_id,image_sha16:String(raw.image_sha16||face.image_sha16||""),character:String(raw.character||""),action:raw.action};journal.faceLabels[face.face_id]=label;if(label.character)knownNames.add(label.character);imported+=1;});journal.entries.push({kind:"face",action:"import",count:imported,timestamp:new Date().toISOString()});saveJournal();renderFaceOverlay();renderCharacterPanel();renderJournalPreview();renderJournalExport();setText("journal-import-status",`已导入 ${imported} 张人脸标签`);}catch(error){setText("journal-import-status",error instanceof Error?error.message:"标签文件无法读取");}};reader.onerror=()=>setText("journal-import-status","标签文件无法读取");reader.readAsText(file,"utf-8");}function undoRecentCharacter(){for(let index=journal.faceHistory.length-1;index>=0;index-=1){const entry=journal.faceHistory[index];if(!entry.undone){if(undoFaceLabel(entry.face_id)){setText("journal-import-status","已撤销最近人物动作");return;}}}setText("journal-import-status","暂无可撤销的人物动作");}
   function schedulePrefetch(){const position=currentIndex();if(position<0)return;const generation=++prefetch.generation;prefetch.queue=[];prefetch.handles.forEach((image)=>{image.onload=null;image.onerror=null;image.src="";});prefetch.handles.clear();for(let distance=1;distance<=PREFETCH_K;distance+=1){[position+distance,position-distance].forEach((order)=>{if(order>=0&&order<state.visible.length){assetCandidates(rows[state.visible[order]]).forEach((source)=>prefetch.queue.push({source,generation}));}});}const pump=()=>{if(generation!==prefetch.generation)return;while(prefetch.active.size<PREFETCH_CONCURRENCY&&prefetch.queue.length){const item=prefetch.queue.shift();if(!item||item.generation!==generation)continue;const image=new Image();prefetch.active.add(image);prefetch.handles.add(image);const done=()=>{prefetch.active.delete(image);prefetch.handles.delete(image);pump();};image.onload=async()=>{if(typeof image.decode==="function"){try{await image.decode();}catch(_error){}}done();};image.onerror=done;image.src=item.source;}};pump();const idle=window.requestIdleCallback||((callback)=>window.setTimeout(callback,120));idle(()=>warmViewport(generation),{timeout:500});}
   function warmViewport(generation){if(generation!==prefetch.generation)return;const scroll=els("table-scroll");const center=Math.floor(Math.max(0,scroll.scrollTop-44)/88);for(let offset=-8;offset<=8;offset+=1){const index=state.visible[center+offset];if(index!==undefined)assetCandidates(rows[index]).slice(-1).forEach((source)=>{const image=new Image();image.decoding="async";image.src=source;});}}
-   function setMode(mode){state.mode=mode;const studio=mode==="studio";const table=mode==="table";const grouping=mode==="grouping"&&groupingEnabled;els("studio-view").hidden=!studio;els("table-view").hidden=!table;els("character-grouping-view").hidden=!grouping;els("studio-mode").setAttribute("aria-pressed",String(studio));els("studio-mode").setAttribute("aria-selected",String(studio));els("table-mode").setAttribute("aria-pressed",String(table));els("table-mode").setAttribute("aria-selected",String(table));els("grouping-mode").setAttribute("aria-pressed",String(grouping));els("grouping-mode").setAttribute("aria-selected",String(grouping));if(els("negotiation-view")){els("negotiation-view").hidden=mode!=="negotiation";els("negotiation-mode").setAttribute("aria-selected",String(mode==="negotiation"));els("negotiation-mode").setAttribute("aria-pressed",String(mode==="negotiation"));document.body.classList.toggle("negotiating",mode==="negotiation");}if(table)scheduleTableRender();else if(studio)renderStudio();else if(grouping)renderGroupingView();}
+   function setMode(mode){state.mode=mode;const studio=mode==="studio";const table=mode==="table";const grouping=mode==="grouping"&&groupingEnabled;els("studio-view").hidden=!studio;els("table-view").hidden=!table;els("character-grouping-view").hidden=!grouping;els("studio-mode").setAttribute("aria-pressed",String(studio));els("studio-mode").setAttribute("aria-selected",String(studio));els("table-mode").setAttribute("aria-pressed",String(table));els("table-mode").setAttribute("aria-selected",String(table));els("grouping-mode").setAttribute("aria-pressed",String(grouping));els("grouping-mode").setAttribute("aria-selected",String(grouping));for(const name of ["negotiation","clusters"]){if(els(name+"-view")){els(name+"-view").hidden=mode!==name;els(name+"-mode").setAttribute("aria-selected",String(mode===name));els(name+"-mode").setAttribute("aria-pressed",String(mode===name));}}document.body.classList.toggle("negotiating",["negotiation","clusters"].includes(mode));if(table)scheduleTableRender();else if(studio)renderStudio();else if(grouping)renderGroupingView();}
    function clearFilters(){state.search="";state.tier=null;state.flags.clear();state.onlyUnreviewed=false;state.groupCharacter=null;els("search-input").value="";els("only-unreviewed").checked=false;refreshView();}
   function toggleFullscreen(){if(document.fullscreenElement){document.exitFullscreen?.();}else els("preview-stage").requestFullscreen?.();}
   function handleTableClick(event){const target=event.target instanceof Element?event.target.closest("[data-action],.sort-button,.active-filter,.clear-button"):null;if(!target)return;if(target.classList.contains("sort-button")){const field=target.dataset.sort||"consensus_z";if(state.sortField===field)state.sortDirection*=-1;else{state.sortField=field;state.sortDirection=field==="consensus_z"?-1:1;}refreshView();return;}const action=target.dataset.action;const index=Number(target.dataset.index);if(action==="preview"){jumpToIndex(index);return;}if(action==="open"){jumpToIndex(index);return;}if(action==="family"){openFamily(target.dataset.family||"");return;}if(action==="family-jump"||action==="spotlight-jump"){jumpToIndex(index);closeFamily();return;}if(action&&action.startsWith("copy:")){copyText(target.dataset.value||"",target);return;}if(target.dataset.clear){const clear=target.dataset.clear;if(clear==="all")clearFilters();else if(clear==="search"){state.search="";els("search-input").value="";refreshView();}else if(clear==="tier"){state.tier=null;refreshView();}else if(clear==="unreviewed"){state.onlyUnreviewed=false;els("only-unreviewed").checked=false;refreshView();}else if(clear.startsWith("flag:")){state.flags.delete(clear.slice(5));refreshView();}}}
@@ -1642,7 +1662,7 @@ decodePayload().then((compact)=>boot(compact,start)).catch((error)=>fatal(error 
    }
 
     function handleKey(event){
-      if(state.mode==="negotiation")return;
+  if(["negotiation","clusters"].includes(state.mode))return;
       if(handleCandidateKey(event))return;
       if(event.key==="Tab"&&els("face-popover").hidden&&!(event.target instanceof Element&&event.target.closest("[data-face-id]")))return;
      const tag=event.target instanceof HTMLElement?event.target.tagName.toLowerCase():"";if(event.key==="Escape"){if(!els("face-popover").hidden){closeFacePopover();return;}if(!els("cluster-name-modal").hidden){closeClusterNameModal();return;}if(!els("help-modal").hidden)closeModal("help-modal");else if(!els("journal-modal").hidden)closeModal("journal-modal");else if(!els("legend-modal").hidden)closeModal("legend-modal");else if(!els("lightbox").hidden)closeModal("lightbox");else if(!els("family-panel").hidden)closeFamily();else if(!els("character-panel").hidden)closeCharacterPanel();return;}if(tag==="input"||tag==="textarea"||tag==="select"||event.target?.isContentEditable)return;if(event.key==="?"){event.preventDefault();openModal("help-modal");return;}if(state.mode!=="studio")return;if(identityEnabled&&event.key==="Tab"&&els("face-popover").hidden){event.preventDefault();cycleFaces(event.shiftKey?-1:1);return;}if(identityEnabled&&event.key.toLowerCase()==="n"){const face=facesForRow(currentRow()).find((item)=>!faceDecision(item));if(face){event.preventDefault();openFacePopover(face.face_id);}return;}if(event.key==="ArrowLeft"||event.key.toLowerCase()==="j"){event.preventDefault();navigate(-1);return;}if(event.key==="ArrowRight"||event.key.toLowerCase()==="k"){event.preventDefault();navigate(1);return;}if(event.key==="1"){event.preventDefault();rapidImageDecision("queue");return;}if(event.key==="2"){event.preventDefault();rapidImageDecision("archive");return;}if(event.key==="3"){event.preventDefault();rapidImageDecision("skip");return;}const legacy=actionDefs.find((item)=>item.key===event.key);if(legacy&&legacy.key!=="1"&&legacy.key!=="2"&&legacy.key!=="3"){event.preventDefault();actionForCurrent(legacy.id);return;}if(event.key.toLowerCase()==="u"){event.preventDefault();rapidUndo();return;}if(event.key===" "){event.preventDefault();toggleZoom();return;}if(event.key.toLowerCase()==="f"){event.preventDefault();toggleFullscreen();}
@@ -1670,10 +1690,11 @@ decodePayload().then((compact)=>boot(compact,start)).catch((error)=>fatal(error 
 HTML_TEMPLATE = HTML_TEMPLATE.replace(
     "__CANDIDATE_PICKER_JS__", "\n".join(
         Path(__file__).with_name(name).read_text(encoding="utf-8")
-        for name in ("gallery_suggestions.js", "gallery_candidates.js", "gallery_aliases.js", "gallery_negotiation_report.js", "gallery_negotiation.js")
+        for name in ("gallery_suggestions.js", "gallery_candidates.js", "gallery_aliases.js", "gallery_negotiation_report.js", "gallery_negotiation.js", "gallery_clusters_wire.js", "gallery_clusters.js")
     )
 ).replace("</style>", Path(__file__).with_name("gallery_candidates.css").read_text(encoding="utf-8") + "</style>")
 HTML_TEMPLATE = HTML_TEMPLATE.replace("</style>", Path(__file__).with_name("gallery_negotiation.css").read_text(encoding="utf-8") + "</style>")
+HTML_TEMPLATE = HTML_TEMPLATE.replace("</style>", Path(__file__).with_name("gallery_clusters.css").read_text(encoding="utf-8") + "</style>")
 
 
 if __name__ == "__main__":

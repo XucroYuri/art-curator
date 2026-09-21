@@ -1,0 +1,87 @@
+{
+  "widths": [
+    {
+      "width": 520,
+      "visible": 520,
+      "scroll": 520,
+      "regionVisible": 505,
+      "regionScroll": 505,
+      "clipping": []
+    },
+    {
+      "width": 900,
+      "visible": 900,
+      "scroll": 900,
+      "regionVisible": 885,
+      "regionScroll": 885,
+      "clipping": []
+    },
+    {
+      "width": 1440,
+      "visible": 1440,
+      "scroll": 1440,
+      "regionVisible": 1425,
+      "regionScroll": 1425,
+      "clipping": []
+    }
+  ],
+  "screenshots": [
+    "keyboard-focus",
+    "width-520",
+    "editor-520",
+    "width-900",
+    "editor-900",
+    "width-1440",
+    "editor-1440",
+    "deferred",
+    "merge-conflict",
+    "merge-deferred",
+    "promotion-9",
+    "promotion-10",
+    "split",
+    "outlier",
+    "exclusion",
+    "capability-unavailable"
+  ],
+  "keyboard": [
+    "Tab to studio tab; End opens clusters; native select arrows choose artist; type name; Space selects member; Enter previews; Space acknowledges; Enter downloads; Tab exits region."
+  ],
+  "checks": [
+    "Explicit acknowledgement required; focus visible; no focus trap; keyboard export is not applied.",
+    "Conflicting accepted work/character IDs block merge until explicit defer; preview retains accepted relations.",
+    "Promotion gate: exactly nine selected refuses, exactly ten enables; exports DiscoveryDecision, not BrowserEnvelope.",
+    "Split A/B plus remainder; outlier/exclusion are visual only; input edits and Escape invalidate acknowledgement; unsupported capabilities disabled."
+  ],
+  "requests": [
+    "http://127.0.0.1:8877/gallery.html",
+    "http://127.0.0.1:8877/previews/0000000000000001.jpg",
+    "http://127.0.0.1:8877/thumbs/0000000000000001.jpg",
+    "http://127.0.0.1:8877/gallery.html",
+    "http://127.0.0.1:8877/previews/0000000000000001.jpg",
+    "http://127.0.0.1:8877/thumbs/0000000000000001.jpg",
+    "http://127.0.0.1:8877/gallery.html",
+    "http://127.0.0.1:8877/previews/0000000000000001.jpg",
+    "http://127.0.0.1:8877/thumbs/0000000000000001.jpg",
+    "http://127.0.0.1:8877/gallery.html",
+    "http://127.0.0.1:8877/previews/0000000000000001.jpg",
+    "http://127.0.0.1:8877/thumbs/0000000000000001.jpg",
+    "http://127.0.0.1:8877/gallery.html",
+    "http://127.0.0.1:8877/previews/0000000000000001.jpg",
+    "http://127.0.0.1:8877/thumbs/0000000000000001.jpg",
+    "http://127.0.0.1:8877/gallery.html",
+    "http://127.0.0.1:8877/previews/0000000000000001.jpg",
+    "http://127.0.0.1:8877/thumbs/0000000000000001.jpg",
+    "http://127.0.0.1:8877/gallery.html",
+    "http://127.0.0.1:8877/previews/0000000000000001.jpg",
+    "http://127.0.0.1:8877/thumbs/0000000000000001.jpg",
+    "http://127.0.0.1:8877/gallery.html",
+    "http://127.0.0.1:8877/previews/0000000000000001.jpg",
+    "http://127.0.0.1:8877/thumbs/0000000000000001.jpg",
+    "http://127.0.0.1:8877/gallery.html",
+    "http://127.0.0.1:8877/previews/0000000000000001.jpg",
+    "http://127.0.0.1:8877/thumbs/0000000000000001.jpg"
+  ],
+  "errors": [],
+  "externalRequests": [],
+  "independentVisualApproval": false
+}

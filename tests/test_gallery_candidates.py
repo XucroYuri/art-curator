@@ -81,7 +81,7 @@ def test_candidates_when_compact_payload_keeps_evidence(tmp_path: Path) -> None:
     decoded = json.loads(gzip.decompress(base64.b64decode(encoded)).decode("utf-8"))
     # Then optional evidence survives the Python/browser boundary.
     assert decoded["y"]["faces"][0]["candidate_evidence"]["candidates"] == [candidate]
-    assert {"ng", "na"} <= decoded.keys()
+    assert {"ng", "na", "cl"} <= decoded.keys()
     assert decoded["ng"] is None
 
 

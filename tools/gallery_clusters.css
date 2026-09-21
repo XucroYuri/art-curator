@@ -1,0 +1,8 @@
+.cluster-members{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,calc(6 * var(--space-10))),1fr));gap:var(--space-2)}
+.cluster-members .neg-option{margin:0}.cluster-members select{display:block;width:100%;margin-top:var(--space-2)}
+.cluster-fields{display:grid;gap:var(--space-3)}.cluster-fields>label{display:grid;gap:var(--space-2)}
+.cluster-fields select,.cluster-fields input:not([type=checkbox]){width:100%}
+.cluster-wall{display:grid;gap:var(--space-4);align-content:start}
+.cluster-wall .neg-thumbs figure{width:calc(3 * var(--space-10))}
+#cl-preview:empty{display:none}#cl-preview{margin-block:var(--space-4)}
+.cl-deferred{color:var(--color-warning);background:var(--color-warning-soft);padding:var(--space-2);border-radius:var(--radius-control)}
