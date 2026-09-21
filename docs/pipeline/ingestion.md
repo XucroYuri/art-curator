@@ -2,9 +2,10 @@
 
 Governing contract: `specs/features/FR-ALBUM-INGEST.md`. No normative requirement
 or AC was changed. This implementation is **not certification of all seven ACs**.
-It implements read-only G1 through PROPOSE. CONFIRM, FIRST-PASS, REVIEW and ARCHIVE
-raise explicit `NotImplementedError` guards; no consent, mapping or human decision
-is synthesized. Negotiation/inheritance in G2 remains unavailable, not guessed.
+It implements read-only G1 through PROPOSE, plus G2 mode negotiation (measured
+report and explicit snapshot-bound consent; see [mode-negotiation.md](mode-negotiation.md)).
+FIRST-PASS, REVIEW and ARCHIVE still raise explicit `NotImplementedError` guards; no
+mapping or human decision is synthesized, and consent records authority only.
 
 ## Commands
 
@@ -24,7 +25,7 @@ Run from the repository root using the existing uv-created environment:
 # Reuse an explicitly selected incumbent profile/reference bundle, read-only.
 .venv\Scripts\python.exe -m artcurator.cli ingest --config config.example.local.yaml --corpus demo --ingest-profile-from out\saved-profile --wd-provider CUDAExecutionProvider
 
-# This fails explicitly; it does not approve or archive anything.
+# This prints the measured G2 report and parks at CONFIRM; it approves nothing.
 .venv\Scripts\python.exe -m artcurator.cli ingest-advance --corpus demo --ingest-target CONFIRM
 ```
 
@@ -149,7 +150,8 @@ qualification or p95/host/board peak claim is made.
 4. The Python source-write audit hook is not a native-code or hostile concurrent
    filesystem sandbox. Full hashes detect source mutation before evidence use.
 5. Missing evidence is a partial proposal requiring manual review. Folder purity,
-   coherence, consent, inheritance selection and mapping publication belong to G2–G6.
+   coherence and consent are measured/recorded by G2; mapping publication and batch
+   undo belong to G4–G6.
 
 These gaps are disclosed in reports/receipts rather than weakening any FR/NFR/AC
 text. In particular, a completed G1 job is not a claim that all ingestion ACs pass.

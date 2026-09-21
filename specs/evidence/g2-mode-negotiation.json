@@ -1,0 +1,101 @@
+{
+  "id": "g2-mode-negotiation",
+  "status": "partial",
+  "fixture": "ALBUM-FLOW-v1 synthetic inventory-only",
+  "fixture_recipe_sha256": "c61e073fb5986e69882828bcccf56c8265cf78d3e099654301026575cb2b4d00",
+  "generated_at": "2026-09-21T11:38:33.512076+00:00",
+  "ac_verdicts": {
+    "AC-FR-ALBUM-NEGOTIATE-001-01": "partial",
+    "AC-FR-ALBUM-NEGOTIATE-002-01": "partial",
+    "AC-FR-ALBUM-NEGOTIATE-003-01": "partial",
+    "AC-FR-ALBUM-NEGOTIATE-004-01": "partial"
+  },
+  "adr_0005_conditions": {
+    "measured-admission-reported-before-consent": {
+      "status": "pass-scoped",
+      "evidence": [
+        "tools/negotiation_evidence.py",
+        "tests/test_negotiation_folders.py",
+        "tests/test_negotiation_adr.py"
+      ]
+    },
+    "snapshot-bound-affirmative-consent": {
+      "status": "pass-scoped",
+      "evidence": [
+        "tests/test_negotiation_adr.py",
+        "tests/test_negotiation_consent.py",
+        "tests/test_negotiation_flow.py"
+      ]
+    },
+    "consent-alone-does-not-authorize-use": {
+      "status": "pass-scoped",
+      "evidence": [
+        "receipt.context_enabled=false; receipt.mapping_mutations=0; G4 execution remains guarded"
+      ]
+    },
+    "residue-free-retraction": {
+      "status": "pass-scoped",
+      "evidence": [
+        "revisions tree identical after retraction; history revoked-only; stale evidence retraction tested"
+      ]
+    },
+    "weak-prior-loses-to-visual-contradiction": {
+      "status": "inconclusive",
+      "evidence": [
+        "contextual grouping layer is not implemented (context_enabled=false); no use can be admitted or vetoed yet"
+      ]
+    },
+    "manual-human-path-always-available": {
+      "status": "partial",
+      "evidence": [
+        "manual_collection_available=true recorded; no rendered action (G5)"
+      ]
+    },
+    "identity-oriented-prior-minima": {
+      "status": "partial",
+      "evidence": [
+        "analytic >=30 labels and Wilson lower >=0.90 tests; no labelled fixture run"
+      ]
+    }
+  },
+  "guards": {
+    "first_pass_review_archive": [
+      "FIRST-PASS",
+      "REVIEW",
+      "ARCHIVE"
+    ],
+    "context_enabled": false,
+    "mapping_mutations": 0
+  },
+  "source_integrity": {
+    "method": "size + full SHA-256 before/after each ingest run, including the added member",
+    "identical_after_initial_run": true,
+    "identical_after_delta_run": true
+  },
+  "consequence_tokens": [
+    "G4-execution-guarded",
+    "MAP-002-gated-only",
+    "analysis-inspectable",
+    "audit-5%-review-none-lanes",
+    "await-cluster-typed-name-confirmation",
+    "browse-only-not-classification",
+    "context-disabled",
+    "exclude-future-files",
+    "freeze-all-snapshot-directory-IDs-and-selected-types",
+    "freeze-checked-directory-IDs-types-descendant-policy",
+    "later-recognition-requires-new-consent",
+    "machine-assignments-remain-proposals",
+    "manual-batch-naming-available",
+    "no-AI-first-pass-or-post-confirmation-recognition",
+    "no-reference-free-WD-identity-assignment",
+    "no-source-writes",
+    "representative-wall",
+    "selected-directories-as-unverified-virtual-collections",
+    "source-tree-browsing-only",
+    "undetermined-stays-undetermined",
+    "verified-false",
+    "zero-context-assisted-grouping",
+    "zero-inherited-relations"
+  ],
+  "reproduction": "python tools/negotiation_evidence.py; python -m pytest tests/test_negotiation_*.py"
+}

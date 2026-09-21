@@ -1,0 +1,19 @@
+{
+  "id": "AC-FR-ALBUM-NEGOTIATE-002-01",
+  "status": "partial",
+  "method": "analytic detector boundary/missingness tests plus fixture folder measurement",
+  "fixture": "ALBUM-FLOW-v1 synthetic inventory-only (two rectangles + one duplicate)",
+  "fixture_recipe_sha256": "c61e073fb5986e69882828bcccf56c8265cf78d3e099654301026575cb2b4d00",
+  "comparator": "exact tie/overlap/unavailable table outcomes; no invented probability; path rename changes no measured value",
+  "limitations": [
+    "no independently labelled regime fixture; artist-portfolio needs human artist labels; thresholds are engineering policy, not calibrated optima"
+  ],
+  "generated_at": "2026-09-21T11:38:33.510076+00:00",
+  "reproduction": "python tools/negotiation_evidence.py; python -m pytest tests/test_negotiation_*.py",
+  "scope_note": "generator assertions plus named pytest coverage; not full AC certification",
+  "folder_regimes": {
+    ".": "insufficient-evidence",
+    "folder-a": "insufficient-evidence",
+    "folder-b": "insufficient-evidence"
+  }
+}

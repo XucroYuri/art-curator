@@ -1,0 +1,24 @@
+{
+  "id": "AC-FR-ALBUM-NEGOTIATE-001-01",
+  "status": "partial",
+  "method": "real sealed inventory-only report plus analytic cluster/metrics tests",
+  "fixture": "ALBUM-FLOW-v1 synthetic inventory-only (two rectangles + one duplicate)",
+  "fixture_recipe_sha256": "c61e073fb5986e69882828bcccf56c8265cf78d3e099654301026575cb2b4d00",
+  "comparator": "mandatory fields/denominators present; zero unlabelled purity; boundary eligibility and representative exactness reproduce analytically; unavailable never zero",
+  "limitations": [
+    "no labelled ALBUM-FOLDER-v1/ALBUM-CONFUSABLE-v1 population run; no whole-image denominators; cluster quality uncalibrated"
+  ],
+  "generated_at": "2026-09-21T11:38:33.510076+00:00",
+  "reproduction": "python tools/negotiation_evidence.py; python -m pytest tests/test_negotiation_*.py",
+  "scope_note": "generator assertions plus named pytest coverage; not full AC certification",
+  "report_digest": "e0f3c5ef9b63b95739bfcf70904dedd5577b59918a5f8c0772a2e644f7766c6f",
+  "snapshot_digest": "9fcaeae4fd26934439594504e58f22dd3b4b445d800c6b8af0274a1e3e13f285",
+  "no_label_report_digest": "b740305de192c78809c972e8069138eb60f665b81ff9fadf4da1666eee0bf70f",
+  "purity_available_folders": [
+    "folder-a"
+  ],
+  "purity_unavailable_folders": [
+    ".",
+    "folder-b"
+  ]
+}

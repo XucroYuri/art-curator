@@ -6,6 +6,7 @@ from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field
 
 from .config import Settings
+from .negotiation_consent import NegotiationState
 
 
 class Stage(StrEnum):
@@ -36,10 +37,11 @@ class FutureStageError(NotImplementedError):
 def transition(source: str, target: str) -> Stage:
     """Validate a logical barrier, never interpret a future stage as a no-op."""
     before, after = Stage(source), Stage(target)
-    if after in {Stage.CONFIRM, Stage.FIRST_PASS, Stage.REVIEW, Stage.ARCHIVE}:
+    if after in {Stage.FIRST_PASS, Stage.REVIEW, Stage.ARCHIVE}:
         raise FutureStageError(after)
     allowed = {(Stage.IDLE, Stage.INGEST), (Stage.INGEST, Stage.ANALYZE),
-               (Stage.ANALYZE, Stage.PROPOSE), (Stage.PROPOSE, Stage.INGEST)}
+               (Stage.ANALYZE, Stage.PROPOSE), (Stage.PROPOSE, Stage.INGEST),
+               (Stage.PROPOSE, Stage.CONFIRM)}
     if (before, after) not in allowed:
         raise IngestError(f"invalid transition: {before} -> {after}")
     return after
@@ -180,6 +182,7 @@ class Job(Frozen):
     profile_digest: str
     progress: Progress = Progress()
     receipts: tuple[Receipt, ...] = ()
+    negotiation: NegotiationState | None = None
 
 
 class Heartbeat(Frozen):

@@ -184,6 +184,9 @@ embeds local paths, so do not publish a generated production gallery.
 - `pipeline_receipt.py`: verify those outputs' score hashes and preview assets.
 - `conservative_receipt.py`: derive local run intervals and image inventory
   evidence for `out/library` and `out/review`. It expects a report-completion log.
+- `negotiation_evidence.py`: regenerate the G2 report/consent evidence receipts in
+  `specs/evidence/` from the synthetic ALBUM-FLOW-v1 recipe. It reads no real library
+  and prints the written receipt paths.
 - `python -m artcurator.receipt`: record versions and run intervals for `out/library`.
 
 Helpers require local outputs; no captured production receipts ship here. Review

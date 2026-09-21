@@ -24,7 +24,11 @@ def test_background_when_client_exits_owner_finishes(corpus: Settings) -> None:
     # When: launcher exits; wait on the actual owner OS process, not on a browser/session.
     client = subprocess.run([sys.executable, "-m", "artcurator.cli", "ingest", "--input", str(corpus.input),
         "--corpus", name, "--inventory-only", "--reserve-gib", "0"], cwd=ROOT,
-        capture_output=True, text=True, check=True, timeout=20)
+        capture_output=True, text=True, encoding="utf-8", check=True, timeout=20)
+    assert client.stdout, (
+        f"expected JSON pid on launcher stdout after client exit; "
+        f"got {client.stdout!r} stderr={client.stderr!r}"
+    )
     pid = json.loads(client.stdout)["pid"]
     try:
         psutil.Process(pid).wait(timeout=60)
@@ -35,10 +39,14 @@ def test_background_when_client_exits_owner_finishes(corpus: Settings) -> None:
     assert job.progress.status == "complete", (root / "owner.log").read_text()
     assert snapshot(corpus.input) == before
     status = subprocess.run([sys.executable, "-m", "artcurator.cli", "ingest-status", "--corpus", name],
-                            cwd=ROOT, capture_output=True, text=True, check=True, timeout=20)
+                            cwd=ROOT, capture_output=True, text=True, encoding="utf-8", check=True, timeout=20)
+    assert status.stdout, (
+        f"expected JSON status on stdout; got {status.stdout!r} stderr={status.stderr!r}"
+    )
     assert json.loads(status.stdout)["stage"] == "PROPOSE"
     guarded = subprocess.run([sys.executable, "-m", "artcurator.cli", "ingest-advance", "--corpus", name,
-                              "--ingest-target", "CONFIRM"], cwd=ROOT, capture_output=True, timeout=20)
+                              "--ingest-target", "FIRST-PASS"], cwd=ROOT, capture_output=True,
+                             text=True, encoding="utf-8", timeout=20)
     assert guarded.returncode != 0
 
 

@@ -1,0 +1,127 @@
+{
+  "id": "AC-FR-ALBUM-NEGOTIATE-003-01",
+  "status": "partial",
+  "method": "all nine mode/scope combinations, replay, dismissal, stale snapshot and future-file refusal",
+  "fixture": "ALBUM-FLOW-v1 synthetic inventory-only (two rectangles + one duplicate)",
+  "fixture_recipe_sha256": "c61e073fb5986e69882828bcccf56c8265cf78d3e099654301026575cb2b4d00",
+  "comparator": "exact recorded consequences; zero pre-consent mutations; one receipt per confirmation; new member and stale digest fail closed",
+  "limitations": [
+    "no rendered client prompt/dismissal; predicted tier counts and cost enforcement unavailable; inheritance effects recorded, not materialized (G5)"
+  ],
+  "generated_at": "2026-09-21T11:38:33.511077+00:00",
+  "reproduction": "python tools/negotiation_evidence.py; python -m pytest tests/test_negotiation_*.py",
+  "scope_note": "generator assertions plus named pytest coverage; not full AC certification",
+  "combos": {
+    "human-first+all": [
+      "representative-wall",
+      "await-cluster-typed-name-confirmation",
+      "machine-assignments-remain-proposals",
+      "manual-batch-naming-available",
+      "freeze-all-snapshot-directory-IDs-and-selected-types",
+      "undetermined-stays-undetermined",
+      "context-disabled",
+      "G4-execution-guarded",
+      "no-source-writes"
+    ],
+    "human-first+selected": [
+      "representative-wall",
+      "await-cluster-typed-name-confirmation",
+      "machine-assignments-remain-proposals",
+      "manual-batch-naming-available",
+      "freeze-checked-directory-IDs-types-descendant-policy",
+      "exclude-future-files",
+      "context-disabled",
+      "G4-execution-guarded",
+      "no-source-writes"
+    ],
+    "human-first+none": [
+      "representative-wall",
+      "await-cluster-typed-name-confirmation",
+      "machine-assignments-remain-proposals",
+      "manual-batch-naming-available",
+      "source-tree-browsing-only",
+      "zero-inherited-relations",
+      "zero-context-assisted-grouping",
+      "context-disabled",
+      "G4-execution-guarded",
+      "no-source-writes"
+    ],
+    "auto-first+all": [
+      "MAP-002-gated-only",
+      "verified-false",
+      "audit-5%-review-none-lanes",
+      "no-reference-free-WD-identity-assignment",
+      "freeze-all-snapshot-directory-IDs-and-selected-types",
+      "undetermined-stays-undetermined",
+      "context-disabled",
+      "G4-execution-guarded",
+      "no-source-writes"
+    ],
+    "auto-first+selected": [
+      "MAP-002-gated-only",
+      "verified-false",
+      "audit-5%-review-none-lanes",
+      "no-reference-free-WD-identity-assignment",
+      "freeze-checked-directory-IDs-types-descendant-policy",
+      "exclude-future-files",
+      "context-disabled",
+      "G4-execution-guarded",
+      "no-source-writes"
+    ],
+    "auto-first+none": [
+      "MAP-002-gated-only",
+      "verified-false",
+      "audit-5%-review-none-lanes",
+      "no-reference-free-WD-identity-assignment",
+      "source-tree-browsing-only",
+      "zero-inherited-relations",
+      "zero-context-assisted-grouping",
+      "context-disabled",
+      "G4-execution-guarded",
+      "no-source-writes"
+    ],
+    "inherit-only+all": [
+      "selected-directories-as-unverified-virtual-collections",
+      "no-AI-first-pass-or-post-confirmation-recognition",
+      "analysis-inspectable",
+      "later-recognition-requires-new-consent",
+      "freeze-all-snapshot-directory-IDs-and-selected-types",
+      "undetermined-stays-undetermined",
+      "context-disabled",
+      "G4-execution-guarded",
+      "no-source-writes"
+    ],
+    "inherit-only+selected": [
+      "selected-directories-as-unverified-virtual-collections",
+      "no-AI-first-pass-or-post-confirmation-recognition",
+      "analysis-inspectable",
+      "later-recognition-requires-new-consent",
+      "freeze-checked-directory-IDs-types-descendant-policy",
+      "exclude-future-files",
+      "context-disabled",
+      "G4-execution-guarded",
+      "no-source-writes"
+    ],
+    "inherit-only+none": [
+      "selected-directories-as-unverified-virtual-collections",
+      "no-AI-first-pass-or-post-confirmation-recognition",
+      "analysis-inspectable",
+      "later-recognition-requires-new-consent",
+      "source-tree-browsing-only",
+      "zero-inherited-relations",
+      "zero-context-assisted-grouping",
+      "context-disabled",
+      "G4-execution-guarded",
+      "no-source-writes",
+      "browse-only-not-classification"
+    ]
+  },
+  "stale_refused": true,
+  "revoked_refused": true,
+  "guarded": [
+    "FIRST-PASS",
+    "REVIEW",
+    "ARCHIVE"
+  ],
+  "receipt_id": "b78301713bcc57ad57951728ffd62c2869f1cf6334e8a9a05fc3c91894bf747c"
+}

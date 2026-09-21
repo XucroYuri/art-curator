@@ -134,6 +134,28 @@ def test_admission_when_quota_exhausted_does_not_scan(corpus: Settings) -> None:
     assert not (corpus.out / "revisions").exists()
 
 
+def test_retained_bytes_when_temp_file_vanishes_still_counts_the_rest(tmp_path: Path,
+                                                                      monkeypatch: pytest.MonkeyPatch) -> None:
+    # Given: a heartbeat temp file that disappears between directory listing and stat.
+    storage = importlib.import_module("artcurator.ingest_storage")
+    (tmp_path / "keep.bin").write_bytes(b"x" * 5)
+    (tmp_path / "progress.json.tmp").write_bytes(b"y" * 7)
+    real_is_file, real_stat = Path.is_file, Path.stat
+    monkeypatch.setattr(Path, "is_file",
+                        lambda self: True if self.name.endswith(".tmp") else real_is_file(self))
+
+    def vanished(self, **kwargs):
+        if self.name.endswith(".tmp"):
+            raise FileNotFoundError(self)
+        return real_stat(self, **kwargs)
+
+    monkeypatch.setattr(Path, "stat", vanished)
+    # When
+    total = storage.retained_bytes(tmp_path)
+    # Then: the race is skipped, never a crash or a wrong total.
+    assert total == 5
+
+
 def test_pause_when_requested_saves_exact_checkpoint(corpus: Settings) -> None:
     # Given
     module = runner()

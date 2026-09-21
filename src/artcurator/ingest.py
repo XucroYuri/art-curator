@@ -97,7 +97,7 @@ def _pipeline(runtime: Runtime, inventory: Inventory, launch: Launch) -> None:
     propose(settings.out, inventory, runtime.job)
     admit(settings.out, 0, options)
     runtime.save(runtime.job.progress.model_copy(update={"status": "complete", "queued": 0,
-        "running": 0, "next_action": "read analysis-report.json; CONFIRM requires G2-G6",
+        "running": 0, "next_action": "ingest-negotiate: measured report and explicit CONFIRM",
         "heartbeat": time.time()}))
 
 
@@ -114,6 +114,7 @@ def run(settings: Settings, options: Options | None = None, *,
         if prior and prior.root.resolve() != settings.input.resolve():
             raise IngestError("output already belongs to a different source root")
         job = Job(job_id=uuid.uuid4().hex, root=settings.input.resolve(), profile_digest="pending-admission",
+                  negotiation=prior.negotiation if prior else None,
                   progress=Progress(status="running", heartbeat=time.time(), next_action="discover"))
         runtime = Runtime(settings.out, job, execute)
         runtime.previous = prior
@@ -125,7 +126,9 @@ def run(settings: Settings, options: Options | None = None, *,
                 runtime.job = runtime.job.model_copy(update={"profile_digest": profile})
             previous_path = settings.out / "revisions" / prior.revision / "inventory.json" if prior else None
             previous = Inventory.model_validate_json(previous_path.read_bytes()) if previous_path and previous_path.exists() else None
-            if prior and previous and prior.progress.status != "complete" and prior.profile_digest == profile:
+            if (prior and previous and prior.progress.status != "complete"
+                    and prior.progress.stage not in {Stage.CONFIRM, Stage.FIRST_PASS}
+                    and prior.profile_digest == profile):
                 inventory = previous
                 verify_sources(settings.input, inventory.occurrences)
             else:

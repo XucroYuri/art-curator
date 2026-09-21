@@ -1,0 +1,19 @@
+{
+  "id": "AC-FR-ALBUM-NEGOTIATE-004-01",
+  "status": "partial",
+  "method": "string snapshot of required literals and bound counts on the measured report",
+  "fixture": "ALBUM-FLOW-v1 synthetic inventory-only (two rectangles + one duplicate)",
+  "fixture_recipe_sha256": "c61e073fb5986e69882828bcccf56c8265cf78d3e099654301026575cb2b4d00",
+  "comparator": "all applicable literals exact; zero unresolved placeholders; unavailable renders 未知; defaults are human-first/none with mapping_action_available=false",
+  "limitations": [
+    "no rendered client/DOM snapshot; no 520/900/1440 width or keyboard-only verification; owned by the visual task (FR-ALBUM-NEGOTIATE-004-01 remains unverified client-side)"
+  ],
+  "generated_at": "2026-09-21T11:38:33.511077+00:00",
+  "reproduction": "python tools/negotiation_evidence.py; python -m pytest tests/test_negotiation_*.py",
+  "scope_note": "generator assertions plus named pytest coverage; not full AC certification",
+  "presentation_sha256": "7f82cf4d294482a7f8a954ea8d7ad9214ea3bb55c889cbd30bb2456c8c9aef7c",
+  "locales": [
+    "zh-CN"
+  ],
+  "visual_verification": "not performed"
+}

@@ -1,0 +1,1413 @@
+{
+  "schema_version": "album-negotiation-v1",
+  "report_digest": "2fc28427936ecbacb0726738d4210b9cfca038011e4a973d5e48481b4ebda9bc",
+  "snapshot_digest": "9fcaeae4fd26934439594504e58f22dd3b4b445d800c6b8af0274a1e3e13f285",
+  "profile_digest": "e3ff8e773b07247e52385f7129b781639bc14b837ed25aa37f5dfeca0f6d4568",
+  "analysis_profile_digest": "0172dc096116b068c3ebfd4cc5a1c95c05f5d8a70fc74534a3e80b90d5b903a6",
+  "seal_digest": "0f3f99bf08cf46106720637ee62185a1e7659d3b2b9b38a8ad72519097d0536e",
+  "g1_report_ref": "revisions/9fcaeae4fd26934439594504e58f22dd3b4b445d800c6b8af0274a1e3e13f285/analysis-report.json",
+  "labels": {
+    "snapshot_digest": "9fcaeae4fd26934439594504e58f22dd3b4b445d800c6b8af0274a1e3e13f285",
+    "labels": [
+      {
+        "image_id": "923066a586623693aa80d890a3c898f5a96c74a5afa09695615efb7e7f3f54c8",
+        "identity": "示例角色",
+        "artist": null,
+        "entity": null,
+        "actor": "local:example",
+        "evidence_ref": "human:example",
+        "independent": true
+      }
+    ],
+    "targets": {
+      "3b59305589f06146ffe9333ddeeb6c661781d2d644f4f421e0a8aea0ace03813": "示例角色"
+    },
+    "target_types": {
+      "3b59305589f06146ffe9333ddeeb6c661781d2d644f4f421e0a8aea0ace03813": "character"
+    }
+  },
+  "labels_digest": "fa98bff300f2fc6aefc4ad1e1bb5543d6c103ae32c83eae0bead7b515213d884",
+  "global_evidence": {
+    "files": 3,
+    "unique_images": 2,
+    "faces": null,
+    "processed_images": 2,
+    "unavailable_occurrences": 0,
+    "decode_failed_images": 0,
+    "scope": "G1 census inventory; per-folder prospective SRS capped at 100",
+    "whole_image_denominator": 0,
+    "whole_image_unknown": null,
+    "whole_image_conflict": null,
+    "crop_candidate_denominator": 0,
+    "crop_unknown": {
+      "numerator": null,
+      "denominator": 0,
+      "value": null,
+      "interval": null,
+      "method": "unavailable",
+      "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+    },
+    "crop_conflict": {
+      "numerator": null,
+      "denominator": 0,
+      "value": null,
+      "interval": null,
+      "method": "unavailable",
+      "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+    },
+    "missing_vocabulary": "Unknown: G1 supplies no corpus-wide vocabulary coverage measurement",
+    "unavailable_signals": [
+      "detect",
+      "embed",
+      "cluster",
+      "anchors",
+      "group",
+      "tag",
+      "candidates"
+    ],
+    "model_profiles": [
+      "0172dc096116b068c3ebfd4cc5a1c95c05f5d8a70fc74534a3e80b90d5b903a6"
+    ],
+    "costs": [
+      {
+        "operation_id": "ee29848871b3b5999700f8f129820c215e11f5f65e3dafc235579669f8f77d32",
+        "job_id": "2d44175f33924fc4a47e0216f97e7c41",
+        "revision": "9fcaeae4fd26934439594504e58f22dd3b4b445d800c6b8af0274a1e3e13f285",
+        "parent_revision": null,
+        "stage": "IDLE",
+        "action": "inventory-validation",
+        "input_digest": "9fcaeae4fd26934439594504e58f22dd3b4b445d800c6b8af0274a1e3e13f285",
+        "profile_digest": "0172dc096116b068c3ebfd4cc5a1c95c05f5d8a70fc74534a3e80b90d5b903a6",
+        "artifacts": [],
+        "outcome": "completed",
+        "reason": "",
+        "items": 3,
+        "unit": "files",
+        "cache_hits": 0,
+        "fresh_inference_items": 0,
+        "estimated_wall_seconds": null,
+        "wall_seconds": 0.11000000000058208,
+        "cpu_seconds": null,
+        "cpu_boundary": "coordinator process only, excludes subprocess CPU",
+        "gpu_active_seconds": null,
+        "load_seconds": null,
+        "compute_seconds": null,
+        "io_seconds": null,
+        "read_bytes": 399,
+        "read_bytes_boundary": "source payload bytes scheduled, not a physical IO counter",
+        "write_bytes": 0,
+        "write_bytes_boundary": "net derived size growth, excludes overwritten/repeated writes",
+        "retained_bytes": 0,
+        "temporary_bytes": null,
+        "peak_host_bytes": null,
+        "peak_vram_bytes": null,
+        "external_requests": 0,
+        "service_charge": 0.0,
+        "unmeasured_reason": "stage adapters do not expose load/compute/IO/GPU/peak meters",
+        "commit_state": "committed"
+      },
+      {
+        "operation_id": "21e411349a5134e704816e253e1e1945dd57e26ea94a63f6f9896f8a2f890a90",
+        "job_id": "2d44175f33924fc4a47e0216f97e7c41",
+        "revision": "9fcaeae4fd26934439594504e58f22dd3b4b445d800c6b8af0274a1e3e13f285",
+        "parent_revision": null,
+        "stage": "INGEST",
+        "action": "scan",
+        "input_digest": "21e411349a5134e704816e253e1e1945dd57e26ea94a63f6f9896f8a2f890a90",
+        "profile_digest": "0172dc096116b068c3ebfd4cc5a1c95c05f5d8a70fc74534a3e80b90d5b903a6",
+        "artifacts": [
+          {
+            "path": "scan/ddb69f03ed5480132676c49784d5f5c68f8bd7b084e83b1c0fdd3beae3811edf/rows.json",
+            "sha256": "c45b4cdf3bb4e53a808e5d9b53e14d8373038b93d2ed84849e04d96533af8d51",
+            "size": 2158
+          },
+          {
+            "path": "scan/ddb69f03ed5480132676c49784d5f5c68f8bd7b084e83b1c0fdd3beae3811edf/scan-rejected.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "size": 2
+          },
+          {
+            "path": "scan/ddb69f03ed5480132676c49784d5f5c68f8bd7b084e83b1c0fdd3beae3811edf/thumbs/923066a586623693aa80d890a3c898f5a96c74a5afa09695615efb7e7f3f54c8.jpg",
+            "sha256": "1cc9c0cbf102c0aaa21ab1348a4185caf1bb5f70c976fe337dff9097cf5d4f5f",
+            "size": 654
+          },
+          {
+            "path": "scan/ddb69f03ed5480132676c49784d5f5c68f8bd7b084e83b1c0fdd3beae3811edf/thumbs/9df27354e75480dde74f0f3eebabfb048e7212b45d52ade8eb06119e1b046272.jpg",
+            "sha256": "e02a689234e007937416bf8cdc7df1baa179e482269431fa8bad82929ce4e2f3",
+            "size": 653
+          },
+          {
+            "path": "scan/ddb69f03ed5480132676c49784d5f5c68f8bd7b084e83b1c0fdd3beae3811edf/previews/923066a586623693aa80d890a3c898f5a96c74a5afa09695615efb7e7f3f54c8.jpg",
+            "sha256": "9b41f8636b934197e3b6d5fc994124288894261fbcbb5ab986788b15eb20d611",
+            "size": 654
+          },
+          {
+            "path": "scan/ddb69f03ed5480132676c49784d5f5c68f8bd7b084e83b1c0fdd3beae3811edf/previews/9df27354e75480dde74f0f3eebabfb048e7212b45d52ade8eb06119e1b046272.jpg",
+            "sha256": "fb859b5ce2d0de80d764e2b7712c1ad3325260b0edd990ba4acfe765882e456a",
+            "size": 654
+          }
+        ],
+        "outcome": "completed",
+        "reason": "",
+        "items": 2,
+        "unit": "unique images",
+        "cache_hits": 0,
+        "fresh_inference_items": 0,
+        "estimated_wall_seconds": [
+          0.08298,
+          0.1
+        ],
+        "wall_seconds": 0.7113712999998825,
+        "cpu_seconds": 0.53125,
+        "cpu_boundary": "coordinator process only, excludes subprocess CPU",
+        "gpu_active_seconds": null,
+        "load_seconds": null,
+        "compute_seconds": null,
+        "io_seconds": null,
+        "read_bytes": 263,
+        "read_bytes_boundary": "source payload bytes scheduled, not a physical IO counter",
+        "write_bytes": 33554,
+        "write_bytes_boundary": "net derived size growth, excludes overwritten/repeated writes",
+        "retained_bytes": 40975,
+        "temporary_bytes": null,
+        "peak_host_bytes": null,
+        "peak_vram_bytes": null,
+        "external_requests": 0,
+        "service_charge": 0.0,
+        "unmeasured_reason": "stage adapters do not expose load/compute/IO/GPU/peak meters",
+        "commit_state": "committed"
+      },
+      {
+        "operation_id": "f92869bf2708d6550770420fb0339a89afda59973c963c884fa559b9074f3538",
+        "job_id": "2d44175f33924fc4a47e0216f97e7c41",
+        "revision": "9fcaeae4fd26934439594504e58f22dd3b4b445d800c6b8af0274a1e3e13f285",
+        "parent_revision": null,
+        "stage": "ANALYZE",
+        "action": "detect",
+        "input_digest": "f92869bf2708d6550770420fb0339a89afda59973c963c884fa559b9074f3538",
+        "profile_digest": "0172dc096116b068c3ebfd4cc5a1c95c05f5d8a70fc74534a3e80b90d5b903a6",
+        "artifacts": [],
+        "outcome": "unavailable",
+        "reason": "analysis explicitly not requested (inventory-only); manual review required",
+        "items": 2,
+        "unit": "unique images",
+        "cache_hits": 0,
+        "fresh_inference_items": 0,
+        "estimated_wall_seconds": [
+          0.118,
+          0.36
+        ],
+        "wall_seconds": 0.013125200002832571,
+        "cpu_seconds": 0.015625,
+        "cpu_boundary": "coordinator process only, excludes subprocess CPU",
+        "gpu_active_seconds": null,
+        "load_seconds": null,
+        "compute_seconds": null,
+        "io_seconds": null,
+        "read_bytes": 0,
+        "read_bytes_boundary": "source payload bytes scheduled, not a physical IO counter",
+        "write_bytes": 28,
+        "write_bytes_boundary": "net derived size growth, excludes overwritten/repeated writes",
+        "retained_bytes": 85017,
+        "temporary_bytes": null,
+        "peak_host_bytes": null,
+        "peak_vram_bytes": null,
+        "external_requests": 0,
+        "service_charge": 0.0,
+        "unmeasured_reason": "stage adapters do not expose load/compute/IO/GPU/peak meters",
+        "commit_state": "committed"
+      },
+      {
+        "operation_id": "fd4fb48225111d2cd6ff0a9b01fb3cc3939932358cbe08f7479e27545a911f17",
+        "job_id": "2d44175f33924fc4a47e0216f97e7c41",
+        "revision": "9fcaeae4fd26934439594504e58f22dd3b4b445d800c6b8af0274a1e3e13f285",
+        "parent_revision": null,
+        "stage": "ANALYZE",
+        "action": "embed",
+        "input_digest": "fd4fb48225111d2cd6ff0a9b01fb3cc3939932358cbe08f7479e27545a911f17",
+        "profile_digest": "0172dc096116b068c3ebfd4cc5a1c95c05f5d8a70fc74534a3e80b90d5b903a6",
+        "artifacts": [],
+        "outcome": "unavailable",
+        "reason": "analysis explicitly not requested (inventory-only); manual review required",
+        "items": 2,
+        "unit": "unique images",
+        "cache_hits": 0,
+        "fresh_inference_items": 0,
+        "estimated_wall_seconds": [
+          0.27,
+          0.32
+        ],
+        "wall_seconds": 0.011000399998010835,
+        "cpu_seconds": 0.015625,
+        "cpu_boundary": "coordinator process only, excludes subprocess CPU",
+        "gpu_active_seconds": null,
+        "load_seconds": null,
+        "compute_seconds": null,
+        "io_seconds": null,
+        "read_bytes": 0,
+        "read_bytes_boundary": "source payload bytes scheduled, not a physical IO counter",
+        "write_bytes": 0,
+        "write_bytes_boundary": "net derived size growth, excludes overwritten/repeated writes",
+        "retained_bytes": 88137,
+        "temporary_bytes": null,
+        "peak_host_bytes": null,
+        "peak_vram_bytes": null,
+        "external_requests": 0,
+        "service_charge": 0.0,
+        "unmeasured_reason": "stage adapters do not expose load/compute/IO/GPU/peak meters",
+        "commit_state": "committed"
+      },
+      {
+        "operation_id": "abfe7cdfcfa0e90064226f3b06ec93ae48062f350ddfc35e12df0778d5dce44d",
+        "job_id": "2d44175f33924fc4a47e0216f97e7c41",
+        "revision": "9fcaeae4fd26934439594504e58f22dd3b4b445d800c6b8af0274a1e3e13f285",
+        "parent_revision": null,
+        "stage": "ANALYZE",
+        "action": "cluster",
+        "input_digest": "abfe7cdfcfa0e90064226f3b06ec93ae48062f350ddfc35e12df0778d5dce44d",
+        "profile_digest": "0172dc096116b068c3ebfd4cc5a1c95c05f5d8a70fc74534a3e80b90d5b903a6",
+        "artifacts": [],
+        "outcome": "unavailable",
+        "reason": "analysis explicitly not requested (inventory-only); manual review required",
+        "items": 2,
+        "unit": "unique images",
+        "cache_hits": 0,
+        "fresh_inference_items": 0,
+        "estimated_wall_seconds": null,
+        "wall_seconds": 0.012708299997029826,
+        "cpu_seconds": 0.015625,
+        "cpu_boundary": "coordinator process only, excludes subprocess CPU",
+        "gpu_active_seconds": null,
+        "load_seconds": null,
+        "compute_seconds": null,
+        "io_seconds": null,
+        "read_bytes": 0,
+        "read_bytes_boundary": "source payload bytes scheduled, not a physical IO counter",
+        "write_bytes": 4,
+        "write_bytes_boundary": "net derived size growth, excludes overwritten/repeated writes",
+        "retained_bytes": 91257,
+        "temporary_bytes": null,
+        "peak_host_bytes": null,
+        "peak_vram_bytes": null,
+        "external_requests": 0,
+        "service_charge": 0.0,
+        "unmeasured_reason": "stage adapters do not expose load/compute/IO/GPU/peak meters",
+        "commit_state": "committed"
+      },
+      {
+        "operation_id": "018a40db573fdd0a633bc3924c8ea1f229bbd14a584a65be72143e1639ab9ff9",
+        "job_id": "2d44175f33924fc4a47e0216f97e7c41",
+        "revision": "9fcaeae4fd26934439594504e58f22dd3b4b445d800c6b8af0274a1e3e13f285",
+        "parent_revision": null,
+        "stage": "ANALYZE",
+        "action": "anchors",
+        "input_digest": "018a40db573fdd0a633bc3924c8ea1f229bbd14a584a65be72143e1639ab9ff9",
+        "profile_digest": "0172dc096116b068c3ebfd4cc5a1c95c05f5d8a70fc74534a3e80b90d5b903a6",
+        "artifacts": [],
+        "outcome": "unavailable",
+        "reason": "analysis explicitly not requested (inventory-only); manual review required",
+        "items": 2,
+        "unit": "unique images",
+        "cache_hits": 0,
+        "fresh_inference_items": 0,
+        "estimated_wall_seconds": null,
+        "wall_seconds": 0.01708630000211997,
+        "cpu_seconds": 0.0,
+        "cpu_boundary": "coordinator process only, excludes subprocess CPU",
+        "gpu_active_seconds": null,
+        "load_seconds": null,
+        "compute_seconds": null,
+        "io_seconds": null,
+        "read_bytes": 0,
+        "read_bytes_boundary": "source payload bytes scheduled, not a physical IO counter",
+        "write_bytes": 0,
+        "write_bytes_boundary": "net derived size growth, excludes overwritten/repeated writes",
+        "retained_bytes": 94323,
+        "temporary_bytes": null,
+        "peak_host_bytes": null,
+        "peak_vram_bytes": null,
+        "external_requests": 0,
+        "service_charge": 0.0,
+        "unmeasured_reason": "stage adapters do not expose load/compute/IO/GPU/peak meters",
+        "commit_state": "committed"
+      },
+      {
+        "operation_id": "c5538d1ad5b34ee6bbd569914ea6befd5cedc4577e7e692ce3fc6029ce267c43",
+        "job_id": "2d44175f33924fc4a47e0216f97e7c41",
+        "revision": "9fcaeae4fd26934439594504e58f22dd3b4b445d800c6b8af0274a1e3e13f285",
+        "parent_revision": null,
+        "stage": "ANALYZE",
+        "action": "group",
+        "input_digest": "c5538d1ad5b34ee6bbd569914ea6befd5cedc4577e7e692ce3fc6029ce267c43",
+        "profile_digest": "0172dc096116b068c3ebfd4cc5a1c95c05f5d8a70fc74534a3e80b90d5b903a6",
+        "artifacts": [],
+        "outcome": "unavailable",
+        "reason": "analysis explicitly not requested (inventory-only); manual review required",
+        "items": 2,
+        "unit": "unique images",
+        "cache_hits": 0,
+        "fresh_inference_items": 0,
+        "estimated_wall_seconds": null,
+        "wall_seconds": 0.012304600000788923,
+        "cpu_seconds": 0.015625,
+        "cpu_boundary": "coordinator process only, excludes subprocess CPU",
+        "gpu_active_seconds": null,
+        "load_seconds": null,
+        "compute_seconds": null,
+        "io_seconds": null,
+        "read_bytes": 0,
+        "read_bytes_boundary": "source payload bytes scheduled, not a physical IO counter",
+        "write_bytes": 0,
+        "write_bytes_boundary": "net derived size growth, excludes overwritten/repeated writes",
+        "retained_bytes": 97377,
+        "temporary_bytes": null,
+        "peak_host_bytes": null,
+        "peak_vram_bytes": null,
+        "external_requests": 0,
+        "service_charge": 0.0,
+        "unmeasured_reason": "stage adapters do not expose load/compute/IO/GPU/peak meters",
+        "commit_state": "committed"
+      },
+      {
+        "operation_id": "663b112cd6e83469a92e27946d148067ca35656ac69ad59b88cf4915009236d3",
+        "job_id": "2d44175f33924fc4a47e0216f97e7c41",
+        "revision": "9fcaeae4fd26934439594504e58f22dd3b4b445d800c6b8af0274a1e3e13f285",
+        "parent_revision": null,
+        "stage": "ANALYZE",
+        "action": "tag",
+        "input_digest": "663b112cd6e83469a92e27946d148067ca35656ac69ad59b88cf4915009236d3",
+        "profile_digest": "0172dc096116b068c3ebfd4cc5a1c95c05f5d8a70fc74534a3e80b90d5b903a6",
+        "artifacts": [],
+        "outcome": "unavailable",
+        "reason": "analysis explicitly not requested (inventory-only); manual review required",
+        "items": 2,
+        "unit": "unique images",
+        "cache_hits": 0,
+        "fresh_inference_items": 0,
+        "estimated_wall_seconds": [
+          6.6,
+          9.0
+        ],
+        "wall_seconds": 0.015540999997028848,
+        "cpu_seconds": 0.015625,
+        "cpu_boundary": "coordinator process only, excludes subprocess CPU",
+        "gpu_active_seconds": null,
+        "load_seconds": null,
+        "compute_seconds": null,
+        "io_seconds": null,
+        "read_bytes": 0,
+        "read_bytes_boundary": "source payload bytes scheduled, not a physical IO counter",
+        "write_bytes": 0,
+        "write_bytes_boundary": "net derived size growth, excludes overwritten/repeated writes",
+        "retained_bytes": 100435,
+        "temporary_bytes": null,
+        "peak_host_bytes": null,
+        "peak_vram_bytes": null,
+        "external_requests": 0,
+        "service_charge": 0.0,
+        "unmeasured_reason": "stage adapters do not expose load/compute/IO/GPU/peak meters",
+        "commit_state": "committed"
+      },
+      {
+        "operation_id": "9daa8ed5c33b25996340944747c1500636b0d910e54c5418cd9af8fe926a3ab4",
+        "job_id": "2d44175f33924fc4a47e0216f97e7c41",
+        "revision": "9fcaeae4fd26934439594504e58f22dd3b4b445d800c6b8af0274a1e3e13f285",
+        "parent_revision": null,
+        "stage": "ANALYZE",
+        "action": "candidates",
+        "input_digest": "9daa8ed5c33b25996340944747c1500636b0d910e54c5418cd9af8fe926a3ab4",
+        "profile_digest": "0172dc096116b068c3ebfd4cc5a1c95c05f5d8a70fc74534a3e80b90d5b903a6",
+        "artifacts": [],
+        "outcome": "unavailable",
+        "reason": "analysis explicitly not requested (inventory-only); manual review required",
+        "items": 2,
+        "unit": "unique images",
+        "cache_hits": 0,
+        "fresh_inference_items": 0,
+        "estimated_wall_seconds": null,
+        "wall_seconds": 0.011130999999295454,
+        "cpu_seconds": 0.0,
+        "cpu_boundary": "coordinator process only, excludes subprocess CPU",
+        "gpu_active_seconds": null,
+        "load_seconds": null,
+        "compute_seconds": null,
+        "io_seconds": null,
+        "read_bytes": 0,
+        "read_bytes_boundary": "source payload bytes scheduled, not a physical IO counter",
+        "write_bytes": 14,
+        "write_bytes_boundary": "net derived size growth, excludes overwritten/repeated writes",
+        "retained_bytes": 103561,
+        "temporary_bytes": null,
+        "peak_host_bytes": null,
+        "peak_vram_bytes": null,
+        "external_requests": 0,
+        "service_charge": 0.0,
+        "unmeasured_reason": "stage adapters do not expose load/compute/IO/GPU/peak meters",
+        "commit_state": "committed"
+      }
+    ]
+  },
+  "folders": [
+    {
+      "folder_id": "1a67523d00afc8fa8a159944b5296ec993c55e636493e5687b6192f63c33a8b7",
+      "path": ".",
+      "population_ids": [],
+      "population_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sample_ids": [],
+      "sample_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seed": 20260921,
+      "design": "seeded simple random sampling without replacement, sorted full hashes, up to 100",
+      "population": 0,
+      "sample": 0,
+      "occurrences": 0,
+      "duplicates": 0,
+      "unavailable_occurrences": 0,
+      "coverage": null,
+      "vector_profile": null,
+      "representation": "unavailable",
+      "coherence": {
+        "denominator": 0,
+        "valid": 0,
+        "missing": 0,
+        "median": null,
+        "p10": null,
+        "scores": [],
+        "method": "L2-normalized non-self leave-one-out centroid cosine; linear quantiles",
+        "limits": "Scene/style similarity can dominate; not identity purity; no population CI."
+      },
+      "purity": {
+        "numerator": null,
+        "denominator": 0,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "purity_identity": null,
+      "independent_labels": 0,
+      "unresolved_labels": 0,
+      "target": null,
+      "target_purity": {
+        "numerator": null,
+        "denominator": 0,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "weak_agreement": {
+        "numerator": null,
+        "denominator": 0,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "unresolved_proxy_D": {
+        "numerator": null,
+        "denominator": 0,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "unknown_U": {
+        "numerator": null,
+        "denominator": 0,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "conflict_C": {
+        "numerator": null,
+        "denominator": 0,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "model_coverage": null,
+      "artist_agreement": {
+        "numerator": null,
+        "denominator": 0,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "regimes": {
+        "profile": "folder-regime-v1",
+        "features": {
+          "valid_images": 0,
+          "eligible_faces": 0,
+          "V": null,
+          "F": null,
+          "K": null,
+          "Q": null,
+          "A": null,
+          "artist_labels": 0,
+          "entities": 0
+        },
+        "detectors": [
+          {
+            "regime": "session-set",
+            "gates": [
+              {
+                "feature": "valid_images",
+                "value": 0.0,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": false
+              },
+              {
+                "feature": "V",
+                "value": null,
+                "operator": ">=",
+                "threshold": 0.9,
+                "passed": null
+              },
+              {
+                "feature": "F",
+                "value": null,
+                "operator": ">=",
+                "threshold": 0.8,
+                "passed": null
+              },
+              {
+                "feature": "eligible_faces",
+                "value": 0.0,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": false
+              }
+            ],
+            "status": "unavailable",
+            "consequence": "Inspect one coherent set; session does not imply identity."
+          },
+          {
+            "regime": "mixed-pile",
+            "gates": [
+              {
+                "feature": "valid_images",
+                "value": 0.0,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": false
+              },
+              {
+                "feature": "V",
+                "value": null,
+                "operator": "<",
+                "threshold": 0.8,
+                "passed": null
+              },
+              {
+                "feature": "F",
+                "value": null,
+                "operator": "<",
+                "threshold": 0.5,
+                "passed": null
+              },
+              {
+                "feature": "K",
+                "value": null,
+                "operator": ">=",
+                "threshold": 3.0,
+                "passed": null
+              }
+            ],
+            "status": "unavailable",
+            "consequence": "Cluster-first review; no automatic character inheritance."
+          },
+          {
+            "regime": "scenario/documentary",
+            "gates": [
+              {
+                "feature": "valid_images",
+                "value": 0.0,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": false
+              },
+              {
+                "feature": "V",
+                "value": null,
+                "operator": ">=",
+                "threshold": 0.85,
+                "passed": null
+              },
+              {
+                "feature": "Q",
+                "value": null,
+                "operator": ">=",
+                "threshold": 0.5,
+                "passed": null
+              },
+              {
+                "feature": "F",
+                "value": null,
+                "operator": "<",
+                "threshold": 0.8,
+                "passed": null
+              }
+            ],
+            "status": "unavailable",
+            "consequence": "Scene organization; no no-person conclusion."
+          },
+          {
+            "regime": "artist-portfolio",
+            "gates": [
+              {
+                "feature": "valid_images",
+                "value": 0.0,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": false
+              },
+              {
+                "feature": "A",
+                "value": null,
+                "operator": ">=",
+                "threshold": 0.8,
+                "passed": null
+              },
+              {
+                "feature": "artist_labels",
+                "value": 0.0,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": false
+              },
+              {
+                "feature": "entities",
+                "value": 0.0,
+                "operator": ">=",
+                "threshold": 3.0,
+                "passed": false
+              }
+            ],
+            "status": "unavailable",
+            "consequence": "Artist axis independent of character; visual style cannot certify artist."
+          }
+        ],
+        "passing": [],
+        "status": "insufficient-evidence",
+        "confidence": null,
+        "limits": "heuristic/unvalidated; thresholds are engineering policy, not measured accuracy optima"
+      },
+      "coherence_admitted": false,
+      "identity_prior_admitted": false,
+      "identity_recommendation": false,
+      "context_enabled": false,
+      "manual_collection_available": true,
+      "thresholds": "ADR: valid>=30, Vmedian>=0.90, p10>=0.80; identity labels>=30 and lower>=0.90",
+      "limitations": [
+        "Labels must be independently human supplied; attestations are not externally audited.",
+        "Exact duplicates removed; near-duplicate dependence is unestablished.",
+        "No whole-image vector means V-dependent regimes unavailable; crop coherence is not V.",
+        "No-face is detector missingness, not non-character truth.",
+        "Missing target/vocabulary coverage means D and weak agreement unavailable.",
+        "Measured admission is not contextual-use authorization; G2 enables no grouping."
+      ]
+    },
+    {
+      "folder_id": "3b59305589f06146ffe9333ddeeb6c661781d2d644f4f421e0a8aea0ace03813",
+      "path": "folder-a",
+      "population_ids": [
+        "923066a586623693aa80d890a3c898f5a96c74a5afa09695615efb7e7f3f54c8"
+      ],
+      "population_digest": "f9919fe181b90817460e911e56576a3b2a2c56fbf7860bf7bfa336d1aeeccfa8",
+      "sample_ids": [
+        "923066a586623693aa80d890a3c898f5a96c74a5afa09695615efb7e7f3f54c8"
+      ],
+      "sample_digest": "f9919fe181b90817460e911e56576a3b2a2c56fbf7860bf7bfa336d1aeeccfa8",
+      "seed": 20260921,
+      "design": "seeded simple random sampling without replacement, sorted full hashes, up to 100",
+      "population": 1,
+      "sample": 1,
+      "occurrences": 2,
+      "duplicates": 1,
+      "unavailable_occurrences": 0,
+      "coverage": 1.0,
+      "vector_profile": null,
+      "representation": "unavailable",
+      "coherence": {
+        "denominator": 1,
+        "valid": 0,
+        "missing": 1,
+        "median": null,
+        "p10": null,
+        "scores": [
+          null
+        ],
+        "method": "L2-normalized non-self leave-one-out centroid cosine; linear quantiles",
+        "limits": "Scene/style similarity can dominate; not identity purity; no population CI."
+      },
+      "purity": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0,
+        "interval": null,
+        "method": "census-exact",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "purity_identity": "示例角色",
+      "independent_labels": 1,
+      "unresolved_labels": 0,
+      "target": "示例角色",
+      "target_purity": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0,
+        "interval": null,
+        "method": "census-exact",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "weak_agreement": {
+        "numerator": null,
+        "denominator": 1,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "unresolved_proxy_D": {
+        "numerator": null,
+        "denominator": 1,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "unknown_U": {
+        "numerator": null,
+        "denominator": 0,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "conflict_C": {
+        "numerator": null,
+        "denominator": 0,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "model_coverage": 0.0,
+      "artist_agreement": {
+        "numerator": null,
+        "denominator": 1,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "regimes": {
+        "profile": "folder-regime-v1",
+        "features": {
+          "valid_images": 0,
+          "eligible_faces": 0,
+          "V": null,
+          "F": null,
+          "K": null,
+          "Q": null,
+          "A": null,
+          "artist_labels": 0,
+          "entities": 0
+        },
+        "detectors": [
+          {
+            "regime": "session-set",
+            "gates": [
+              {
+                "feature": "valid_images",
+                "value": 0.0,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": false
+              },
+              {
+                "feature": "V",
+                "value": null,
+                "operator": ">=",
+                "threshold": 0.9,
+                "passed": null
+              },
+              {
+                "feature": "F",
+                "value": null,
+                "operator": ">=",
+                "threshold": 0.8,
+                "passed": null
+              },
+              {
+                "feature": "eligible_faces",
+                "value": 0.0,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": false
+              }
+            ],
+            "status": "unavailable",
+            "consequence": "Inspect one coherent set; session does not imply identity."
+          },
+          {
+            "regime": "mixed-pile",
+            "gates": [
+              {
+                "feature": "valid_images",
+                "value": 0.0,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": false
+              },
+              {
+                "feature": "V",
+                "value": null,
+                "operator": "<",
+                "threshold": 0.8,
+                "passed": null
+              },
+              {
+                "feature": "F",
+                "value": null,
+                "operator": "<",
+                "threshold": 0.5,
+                "passed": null
+              },
+              {
+                "feature": "K",
+                "value": null,
+                "operator": ">=",
+                "threshold": 3.0,
+                "passed": null
+              }
+            ],
+            "status": "unavailable",
+            "consequence": "Cluster-first review; no automatic character inheritance."
+          },
+          {
+            "regime": "scenario/documentary",
+            "gates": [
+              {
+                "feature": "valid_images",
+                "value": 0.0,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": false
+              },
+              {
+                "feature": "V",
+                "value": null,
+                "operator": ">=",
+                "threshold": 0.85,
+                "passed": null
+              },
+              {
+                "feature": "Q",
+                "value": null,
+                "operator": ">=",
+                "threshold": 0.5,
+                "passed": null
+              },
+              {
+                "feature": "F",
+                "value": null,
+                "operator": "<",
+                "threshold": 0.8,
+                "passed": null
+              }
+            ],
+            "status": "unavailable",
+            "consequence": "Scene organization; no no-person conclusion."
+          },
+          {
+            "regime": "artist-portfolio",
+            "gates": [
+              {
+                "feature": "valid_images",
+                "value": 0.0,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": false
+              },
+              {
+                "feature": "A",
+                "value": null,
+                "operator": ">=",
+                "threshold": 0.8,
+                "passed": null
+              },
+              {
+                "feature": "artist_labels",
+                "value": 0.0,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": false
+              },
+              {
+                "feature": "entities",
+                "value": 0.0,
+                "operator": ">=",
+                "threshold": 3.0,
+                "passed": false
+              }
+            ],
+            "status": "unavailable",
+            "consequence": "Artist axis independent of character; visual style cannot certify artist."
+          }
+        ],
+        "passing": [],
+        "status": "insufficient-evidence",
+        "confidence": null,
+        "limits": "heuristic/unvalidated; thresholds are engineering policy, not measured accuracy optima"
+      },
+      "coherence_admitted": false,
+      "identity_prior_admitted": false,
+      "identity_recommendation": false,
+      "context_enabled": false,
+      "manual_collection_available": true,
+      "thresholds": "ADR: valid>=30, Vmedian>=0.90, p10>=0.80; identity labels>=30 and lower>=0.90",
+      "limitations": [
+        "Labels must be independently human supplied; attestations are not externally audited.",
+        "Exact duplicates removed; near-duplicate dependence is unestablished.",
+        "No whole-image vector means V-dependent regimes unavailable; crop coherence is not V.",
+        "No-face is detector missingness, not non-character truth.",
+        "Missing target/vocabulary coverage means D and weak agreement unavailable.",
+        "Measured admission is not contextual-use authorization; G2 enables no grouping."
+      ]
+    },
+    {
+      "folder_id": "6bd098ec9edc0d179afa3cc2ab0362295c6defbd2b7d8b5a2a0d6f83ac4f867f",
+      "path": "folder-b",
+      "population_ids": [
+        "9df27354e75480dde74f0f3eebabfb048e7212b45d52ade8eb06119e1b046272"
+      ],
+      "population_digest": "9af5b07e9fbfddcd46fd6d54981528477764cc9d4e67bb4f3b237b6c4269a0de",
+      "sample_ids": [
+        "9df27354e75480dde74f0f3eebabfb048e7212b45d52ade8eb06119e1b046272"
+      ],
+      "sample_digest": "9af5b07e9fbfddcd46fd6d54981528477764cc9d4e67bb4f3b237b6c4269a0de",
+      "seed": 20260921,
+      "design": "seeded simple random sampling without replacement, sorted full hashes, up to 100",
+      "population": 1,
+      "sample": 1,
+      "occurrences": 1,
+      "duplicates": 0,
+      "unavailable_occurrences": 0,
+      "coverage": 1.0,
+      "vector_profile": null,
+      "representation": "unavailable",
+      "coherence": {
+        "denominator": 1,
+        "valid": 0,
+        "missing": 1,
+        "median": null,
+        "p10": null,
+        "scores": [
+          null
+        ],
+        "method": "L2-normalized non-self leave-one-out centroid cosine; linear quantiles",
+        "limits": "Scene/style similarity can dominate; not identity purity; no population CI."
+      },
+      "purity": {
+        "numerator": null,
+        "denominator": 1,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "purity_identity": null,
+      "independent_labels": 0,
+      "unresolved_labels": 1,
+      "target": null,
+      "target_purity": {
+        "numerator": null,
+        "denominator": 1,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "weak_agreement": {
+        "numerator": null,
+        "denominator": 1,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "unresolved_proxy_D": {
+        "numerator": null,
+        "denominator": 1,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "unknown_U": {
+        "numerator": null,
+        "denominator": 0,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "conflict_C": {
+        "numerator": null,
+        "denominator": 0,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "model_coverage": 0.0,
+      "artist_agreement": {
+        "numerator": null,
+        "denominator": 1,
+        "value": null,
+        "interval": null,
+        "method": "unavailable",
+        "limits": "Independence assumed; exact duplicates removed, near-duplicate dependence remains."
+      },
+      "regimes": {
+        "profile": "folder-regime-v1",
+        "features": {
+          "valid_images": 0,
+          "eligible_faces": 0,
+          "V": null,
+          "F": null,
+          "K": null,
+          "Q": null,
+          "A": null,
+          "artist_labels": 0,
+          "entities": 0
+        },
+        "detectors": [
+          {
+            "regime": "session-set",
+            "gates": [
+              {
+                "feature": "valid_images",
+                "value": 0.0,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": false
+              },
+              {
+                "feature": "V",
+                "value": null,
+                "operator": ">=",
+                "threshold": 0.9,
+                "passed": null
+              },
+              {
+                "feature": "F",
+                "value": null,
+                "operator": ">=",
+                "threshold": 0.8,
+                "passed": null
+              },
+              {
+                "feature": "eligible_faces",
+                "value": 0.0,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": false
+              }
+            ],
+            "status": "unavailable",
+            "consequence": "Inspect one coherent set; session does not imply identity."
+          },
+          {
+            "regime": "mixed-pile",
+            "gates": [
+              {
+                "feature": "valid_images",
+                "value": 0.0,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": false
+              },
+              {
+                "feature": "V",
+                "value": null,
+                "operator": "<",
+                "threshold": 0.8,
+                "passed": null
+              },
+              {
+                "feature": "F",
+                "value": null,
+                "operator": "<",
+                "threshold": 0.5,
+                "passed": null
+              },
+              {
+                "feature": "K",
+                "value": null,
+                "operator": ">=",
+                "threshold": 3.0,
+                "passed": null
+              }
+            ],
+            "status": "unavailable",
+            "consequence": "Cluster-first review; no automatic character inheritance."
+          },
+          {
+            "regime": "scenario/documentary",
+            "gates": [
+              {
+                "feature": "valid_images",
+                "value": 0.0,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": false
+              },
+              {
+                "feature": "V",
+                "value": null,
+                "operator": ">=",
+                "threshold": 0.85,
+                "passed": null
+              },
+              {
+                "feature": "Q",
+                "value": null,
+                "operator": ">=",
+                "threshold": 0.5,
+                "passed": null
+              },
+              {
+                "feature": "F",
+                "value": null,
+                "operator": "<",
+                "threshold": 0.8,
+                "passed": null
+              }
+            ],
+            "status": "unavailable",
+            "consequence": "Scene organization; no no-person conclusion."
+          },
+          {
+            "regime": "artist-portfolio",
+            "gates": [
+              {
+                "feature": "valid_images",
+                "value": 0.0,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": false
+              },
+              {
+                "feature": "A",
+                "value": null,
+                "operator": ">=",
+                "threshold": 0.8,
+                "passed": null
+              },
+              {
+                "feature": "artist_labels",
+                "value": 0.0,
+                "operator": ">=",
+                "threshold": 30.0,
+                "passed": false
+              },
+              {
+                "feature": "entities",
+                "value": 0.0,
+                "operator": ">=",
+                "threshold": 3.0,
+                "passed": false
+              }
+            ],
+            "status": "unavailable",
+            "consequence": "Artist axis independent of character; visual style cannot certify artist."
+          }
+        ],
+        "passing": [],
+        "status": "insufficient-evidence",
+        "confidence": null,
+        "limits": "heuristic/unvalidated; thresholds are engineering policy, not measured accuracy optima"
+      },
+      "coherence_admitted": false,
+      "identity_prior_admitted": false,
+      "identity_recommendation": false,
+      "context_enabled": false,
+      "manual_collection_available": true,
+      "thresholds": "ADR: valid>=30, Vmedian>=0.90, p10>=0.80; identity labels>=30 and lower>=0.90",
+      "limitations": [
+        "Labels must be independently human supplied; attestations are not externally audited.",
+        "Exact duplicates removed; near-duplicate dependence is unestablished.",
+        "No whole-image vector means V-dependent regimes unavailable; crop coherence is not V.",
+        "No-face is detector missingness, not non-character truth.",
+        "Missing target/vocabulary coverage means D and weak agreement unavailable.",
+        "Measured admission is not contextual-use authorization; G2 enables no grouping."
+      ]
+    }
+  ],
+  "clusters": [],
+  "eligible_cluster_ids": [],
+  "remaining_cluster_ids": [],
+  "all_clusters_route": "#/clusters",
+  "members": [
+    {
+      "image_id": "923066a586623693aa80d890a3c898f5a96c74a5afa09695615efb7e7f3f54c8",
+      "occurrence_id": "76dab7ce565da60f58dc2701f5718f2452e59aa92df57586a731761bb44fd63f",
+      "path": "folder-a/red-copy.png",
+      "folder_id": "3b59305589f06146ffe9333ddeeb6c661781d2d644f4f421e0a8aea0ace03813"
+    },
+    {
+      "image_id": "923066a586623693aa80d890a3c898f5a96c74a5afa09695615efb7e7f3f54c8",
+      "occurrence_id": "819daadf8194164a58f8e6a71b96dd173f71f40e3edd57a53c1be73a820f27f4",
+      "path": "folder-a/red.png",
+      "folder_id": "3b59305589f06146ffe9333ddeeb6c661781d2d644f4f421e0a8aea0ace03813"
+    },
+    {
+      "image_id": "9df27354e75480dde74f0f3eebabfb048e7212b45d52ade8eb06119e1b046272",
+      "occurrence_id": "88e1859b12bec6ed944860c1f93279b2c690269244da2e255cab92115d425fa1",
+      "path": "folder-b/blue.png",
+      "folder_id": "6bd098ec9edc0d179afa3cc2ab0362295c6defbd2b7d8b5a2a0d6f83ac4f867f"
+    }
+  ],
+  "prediction": {
+    "auto": null,
+    "review": null,
+    "none": null,
+    "audit": null,
+    "changed": null,
+    "reason": "Unknown: G4 policy not implemented; no mapping changes in G2.",
+    "estimate": true
+  },
+  "recommendations": {
+    "eligible_clusters": 0,
+    "covered_images": 0,
+    "valid_images": 0,
+    "cluster_coverage": null,
+    "identity_folder_coverage": null,
+    "highlight_human_first": false,
+    "highlight_inheritance": false,
+    "thresholds": "clusters>=3 and coverage>=0.20; eligible identity folders coverage>=0.50",
+    "selects_for_user": false
+  },
+  "presentation": {
+    "locale": "zh-CN",
+    "templates": {
+      "ingest_prompt": "这批图片希望怎样整理？分析后会再次请你确认，不会自动移动原文件。",
+      "coherent_clusters": "发现 {count} 个视觉较一致的分组，共 {images} 张图片。分组不等于同一角色，请先确认名称或拆分。",
+      "measured_evidence": "测量依据：{method}；样本 {sample}/{population}；证据覆盖 {coverage}；置信说明：{confidence}。",
+      "purity_missing": "没有独立人工标签，无法确认身份纯度；以下仅为视觉一致性或弱标签符合率。",
+      "inheritance_warning": "继承目录只是弱先验，不代表角色已核实；会标记为“继承”，可整批撤销。",
+      "auto_warning": "自动优先只建立满足门禁的虚拟映射；模型高分不等于身份正确，无参考建议仍需核实。",
+      "model_tier": "模型建议（未核实）",
+      "reference_tier": "已核实建议仅表示通过参考/记忆门禁，不表示人工确认或准确率认证。",
+      "conflict": "模型建议与参考或人工证据冲突，已降级为待审，不会自动归入该角色。",
+      "confirmation": "将新增或修改 {changed} 张图片的虚拟映射，{review} 张待审，{none} 张保留未解决；原文件不变。",
+      "commit_action": "确认并建立虚拟映射",
+      "dismiss": "暂不决定",
+      "undo": "撤销本批映射",
+      "g2_boundary": "本阶段仅记录同意，不建立虚拟映射；首轮执行尚未实现。"
+    },
+    "text": {
+      "ingest_prompt": "这批图片希望怎样整理？分析后会再次请你确认，不会自动移动原文件。",
+      "purity_missing": "没有独立人工标签，无法确认身份纯度；以下仅为视觉一致性或弱标签符合率。",
+      "inheritance_warning": "继承目录只是弱先验，不代表角色已核实；会标记为“继承”，可整批撤销。",
+      "auto_warning": "自动优先只建立满足门禁的虚拟映射；模型高分不等于身份正确，无参考建议仍需核实。",
+      "model_tier": "模型建议（未核实）",
+      "reference_tier": "已核实建议仅表示通过参考/记忆门禁，不表示人工确认或准确率认证。",
+      "conflict": "模型建议与参考或人工证据冲突，已降级为待审，不会自动归入该角色。",
+      "commit_action": "确认并建立虚拟映射",
+      "dismiss": "暂不决定",
+      "undo": "撤销本批映射",
+      "g2_boundary": "本阶段仅记录同意，不建立虚拟映射；首轮执行尚未实现。",
+      "coherent_clusters": "发现 0 个视觉较一致的分组，共 0 张图片。分组不等于同一角色，请先确认名称或拆分。",
+      "confirmation": "将新增或修改 未知 张图片的虚拟映射，未知 张待审，未知 张保留未解决；原文件不变。"
+    },
+    "modes": [
+      {
+        "id": "human-first",
+        "label": "人审优先",
+        "consequences": [
+          "representative-wall",
+          "await-cluster-typed-name-confirmation",
+          "machine-assignments-remain-proposals",
+          "manual-batch-naming-available"
+        ],
+        "available": true
+      },
+      {
+        "id": "auto-first",
+        "label": "自动优先",
+        "consequences": [
+          "MAP-002-gated-only",
+          "verified-false",
+          "audit-5%-review-none-lanes",
+          "no-reference-free-WD-identity-assignment"
+        ],
+        "available": true
+      },
+      {
+        "id": "inherit-only",
+        "label": "仅继承目录",
+        "consequences": [
+          "selected-directories-as-unverified-virtual-collections",
+          "no-AI-first-pass-or-post-confirmation-recognition",
+          "analysis-inspectable",
+          "later-recognition-requires-new-consent"
+        ],
+        "available": true
+      }
+    ],
+    "scopes": [
+      {
+        "id": "all",
+        "label": "全继承",
+        "consequences": [
+          "freeze-all-snapshot-directory-IDs-and-selected-types",
+          "undetermined-stays-undetermined"
+        ],
+        "available": true
+      },
+      {
+        "id": "selected",
+        "label": "逐目录勾选",
+        "consequences": [
+          "freeze-checked-directory-IDs-types-descendant-policy",
+          "exclude-future-files"
+        ],
+        "available": true
+      },
+      {
+        "id": "none",
+        "label": "不继承",
+        "consequences": [
+          "source-tree-browsing-only",
+          "zero-inherited-relations",
+          "zero-context-assisted-grouping"
+        ],
+        "available": true
+      }
+    ],
+    "default_mode": "human-first",
+    "default_scope": "none",
+    "affirmative_required": true,
+    "mapping_action_available": false,
+    "folder_text": {
+      "1a67523d00afc8fa8a159944b5296ec993c55e636493e5687b6192f63c33a8b7": "测量依据：L2-normalized non-self leave-one-out centroid cosine; linear quantiles；样本 0/0；证据覆盖 0/0 有效向量；置信说明：描述性视觉统计；非身份准确率。",
+      "3b59305589f06146ffe9333ddeeb6c661781d2d644f4f421e0a8aea0ace03813": "测量依据：L2-normalized non-self leave-one-out centroid cosine; linear quantiles；样本 1/1；证据覆盖 0/1 有效向量；置信说明：描述性视觉统计；非身份准确率。",
+      "6bd098ec9edc0d179afa3cc2ab0362295c6defbd2b7d8b5a2a0d6f83ac4f867f": "测量依据：L2-normalized non-self leave-one-out centroid cosine; linear quantiles；样本 1/1；证据覆盖 0/1 有效向量；置信说明：描述性视觉统计；非身份准确率。"
+    }
+  },
+  "limitations": [
+    "heuristic-unvalidated-not-identity-accuracy",
+    "G1-whole-image-vectors-unavailable-crop-evidence-separate",
+    "human-label-independence-is-an-attestation",
+    "context-disabled-G2-does-not-implement-grouping",
+    "G4-G5-mapping-execution-unavailable-no-source-writes",
+    "cost-and-tier-estimates-unavailable-not-zero"
+  ]
+}

@@ -34,7 +34,15 @@ def validate_paths(settings: Settings) -> None:
 
 
 def retained_bytes(root: Path) -> int:
-    return sum(p.stat().st_size for p in root.rglob("*") if p.is_file())
+    """Tolerate heartbeat/replacement temp files vanishing between listing and stat."""
+    total = 0
+    for path in root.rglob("*"):
+        try:
+            if path.is_file():
+                total += path.stat().st_size
+        except OSError:
+            continue
+    return total
 
 
 def admit(root: Path, reservation: int, options: Options) -> int:

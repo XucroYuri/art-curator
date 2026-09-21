@@ -13,7 +13,8 @@ from .ingest_schema import Heartbeat, Job, Options, transition
 from .ingest_storage import admit, lease, validate_paths
 
 COMMANDS = ("ingest", "ingest-run", "ingest-status", "ingest-pause", "ingest-resume",
-            "ingest-cancel", "ingest-advance")
+            "ingest-cancel", "ingest-advance", "ingest-negotiate", "ingest-confirm",
+            "ingest-dismiss", "ingest-retract")
 
 
 def add_arguments(parser: argparse.ArgumentParser) -> None:
@@ -24,6 +25,9 @@ def add_arguments(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--quota-gib", type=float, default=8)
     parser.add_argument("--reserve-gib", type=float, default=1)
     parser.add_argument("--ingest-target", choices=["CONFIRM", "FIRST-PASS", "REVIEW", "ARCHIVE"])
+    parser.add_argument("--decision", type=Path, help="Explicit snapshot-bound G2 decision JSON")
+    parser.add_argument("--negotiation-labels", type=Path, help="Independent human labels bound to snapshot")
+    parser.add_argument("--actor", help="Local human actor ID for consent withdrawal")
 
 
 def handle(args: argparse.Namespace, parser: argparse.ArgumentParser) -> None:
@@ -33,11 +37,14 @@ def handle(args: argparse.Namespace, parser: argparse.ArgumentParser) -> None:
     if not root.is_relative_to((ROOT / "out" / "ingest").resolve()):
         parser.error("ingestion artifacts must be under out/ingest/<corpus>")
     match args.command:
+        case "ingest-negotiate" | "ingest-confirm" | "ingest-dismiss" | "ingest-retract":
+            from .negotiation_cli import handle_negotiation
+            handle_negotiation(root, args, parser)
         case "ingest-status":
             job = Job.model_validate_json((root / "job.json").read_bytes())
             state = job.progress
             heartbeat_path = root / "progress.json"
-            if heartbeat_path.exists():
+            if heartbeat_path.exists() and state.status in {"running", "pausing"}:
                 heartbeat = Heartbeat.model_validate_json(heartbeat_path.read_bytes())
                 if heartbeat.job_id == job.job_id:
                     state = heartbeat.progress
@@ -53,14 +60,25 @@ def handle(args: argparse.Namespace, parser: argparse.ArgumentParser) -> None:
             if args.ingest_target is None:
                 parser.error("--ingest-target required")
             job = Job.model_validate_json((root / "job.json").read_bytes())
-            transition(job.progress.stage, args.ingest_target)
+            if args.ingest_target == "CONFIRM":
+                from .negotiation import prepare
+                print(prepare(root).model_dump_json(indent=2))
+            else:
+                transition(job.progress.stage, args.ingest_target)
         case "ingest-resume":
+            job = Job.model_validate_json((root / "job.json").read_bytes())
+            if job.progress.stage in {"CONFIRM", "FIRST-PASS"}:
+                from .negotiation import current
+                current(root)
+                print(job.progress.model_dump_json(indent=2))
+                return
             document = Launch.model_validate_json((root / "launch.json").read_bytes())
             validate_paths(document.settings)
             with lease(root):
                 control(root, "resume")
             print(json.dumps({"pid": launch(document), "out": str(root)}))
         case "ingest" | "ingest-run":
+            from .negotiation_copy import initial_prompt
             if args.input:
                 source = args.input.resolve()
                 settings = (load(args.config).model_copy(update={"input": source, "out": root})
@@ -76,10 +94,14 @@ def handle(args: argparse.Namespace, parser: argparse.ArgumentParser) -> None:
             validate_paths(settings)
             admit(root, 1024 * 1024, options)
             document = Launch(settings=settings, options=options)
+            root.mkdir(parents=True, exist_ok=True)
+            with lease(root):
+                save_model(root / "initial-intent.json", initial_prompt())
             if args.command == "ingest":
                 with lease(root):
                     pass
-                print(json.dumps({"pid": launch(document), "out": str(root)}))
+                print(json.dumps({"pid": launch(document), "out": str(root),
+                                  "intent": initial_prompt().model_dump()}, ensure_ascii=True))
             else:
                 import logging
                 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
