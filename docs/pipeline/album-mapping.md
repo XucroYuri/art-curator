@@ -303,25 +303,34 @@ The failure observed above was a **concurrency collision with the parallel visua
 task, not a defect in this transport**: that task subsequently fixed
 `test_copy_when_embedded_is_data_not_module_literals`. Reconciliation runs from the
 project root on the same source tree all passed (503, 510, 524 and 531 collected
-cases as the parallel cluster task kept adding tests); the final one:
+cases as the parallel cluster task kept adding tests); the owning task's follow-up
+re-derivation then ran:
 
-**531 passed, 0 failed, 0 skipped, 1 pre-existing sklearn warning, 253.58 seconds**
-(531 collected cases). The mandatory zero-failure gate is met.
+**668 passed, 0 failed, 0 skipped, 1 pre-existing sklearn warning, 223.03 seconds**
+(668 collected cases). The mandatory zero-failure gate is met.
 
-The gate-blocked scoped receipts in this document's scope were re-derived from that
-run with `tools/album_mapping_evidence.py`; `album-mapping-run.json` now records the
-passing JUnit summary and post-run source digests. Only gate-blocked verdicts moved
-(`inconclusive` → the scoped verdict). Every receipt keeps its
-`implementation_verdict`, and anything partial or missing on its own merits stays
-non-pass:
+The gate-blocked scoped receipts in this document's scope were re-derived from the
+passing runs with `tools/album_mapping_evidence.py`; `album-mapping-run.json` now
+records the latest passing JUnit summary and post-run source digests. Only
+gate-blocked verdicts moved (`inconclusive` → the scoped verdict). Every receipt
+keeps its `implementation_verdict`, and anything partial or missing on its own
+merits stays non-pass:
 
-- INV-M-01 stays `inconclusive`: its implementation verdict is inconclusive and no
-  scoped regression exists (synthetic adapters perform no locator I/O).
-- MAP-002-01 and MAP-007-01 stay `inconclusive` (G4 first-pass and G6 physical-export
-  integration are not implemented here).
-- MAP-004-01 and MAP-005-01 are G3-owned and were deliberately not touched.
-  MAP-001-01, MAP-003-01 and MAP-006-01 likewise remain for their owning task; its
-  next green gate re-derivation moves them the same way.
+- INV-M-01 stays `inconclusive` on its own merits: its implementation verdict is
+  inconclusive and no scoped regression exists. Synthetic adapters perform no
+  locator I/O, so the required all-eight-stage filesystem trace has not been run.
+- MAP-002-01 and MAP-007-01 no longer stay `inconclusive`. FR-ALBUM-MAP-002
+  (four-tier first-pass policy) and FR-ALBUM-MAP-007 (reversible physical archive
+  export) have since been implemented; both receipts now read `verdict: partial`
+  / `implementation_verdict: partial` — implemented but scoped-partial.
+- MAP-004-01 and MAP-005-01 are G3-owned and were deliberately not touched here.
+  MAP-001-01, MAP-003-01 and MAP-006-01, likewise left for their owning task, were
+  subsequently re-derived on the 668-case green gate: each moved `inconclusive` →
+  `partial` while keeping its `implementation_verdict: partial`. The recorded
+  reason is unchanged — the earlier blocker was a concurrency collision in the
+  parallel visual task's test file, since fixed — and none of the three is partial
+  on its own merits. The seven MAP receipts are therefore all `partial` /
+  `partial`; only INV-M-01 remains genuinely `inconclusive`.
 - G5 graduation, the seven-gap release manifest and the `.g5.json` non-graduating
   notes are unchanged.
 
