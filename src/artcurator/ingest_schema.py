@@ -31,7 +31,7 @@ class IngestError(ValueError):
 class FutureStageError(NotImplementedError):
     def __init__(self, stage: Stage) -> None:
         self.stage = stage
-        super().__init__(f"{stage} is not implemented: G1 stops at PROPOSE; G2-G6 required")
+        super().__init__(f"{stage} is not wired through ingest-advance; use the explicit downstream backend contract")
 
 
 def transition(source: str, target: str) -> Stage:
@@ -53,6 +53,7 @@ class Frozen(BaseModel):
 
 class Options(Frozen):
     analysis: bool = True
+    sample: int | None = Field(default=None, gt=0)
     profile_from: Path | None = None
     anchors_from_folders: bool = False
     scan_batch_size: int = Field(default=64, ge=1, le=256)
@@ -82,6 +83,7 @@ class Inventory(Frozen):
     revision: str
     parent_revision: str | None
     occurrences: tuple[Occurrence, ...]
+    selected_paths: tuple[str, ...] = ()
     added: tuple[str, ...] = ()
     changed: tuple[str, ...] = ()
     removed: tuple[str, ...] = ()

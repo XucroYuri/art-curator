@@ -4,8 +4,12 @@ Governing contract: `specs/features/FR-ALBUM-INGEST.md`. No normative requiremen
 or AC was changed. This implementation is **not certification of all seven ACs**.
 It implements read-only G1 through PROPOSE, plus G2 mode negotiation (measured
 report and explicit snapshot-bound consent; see [mode-negotiation.md](mode-negotiation.md)).
-FIRST-PASS, REVIEW and ARCHIVE still raise explicit `NotImplementedError` guards; no
-mapping or human decision is synthesized, and consent records authority only.
+FIRST-PASS, REVIEW and ARCHIVE still raise explicit `NotImplementedError` guards
+through `ingest-advance`; this is an orchestration boundary, not absence of the
+delivered G2–G6 backend contracts. Explicit `album-map` operations expose mapping,
+first-pass, review and archive contracts. No mapping or human decision is synthesized
+by G1, and consent records authority only. Generated reports list capabilities from
+the actual `ingest_cli.COMMANDS` and `album_map_cli.Operation` CLI contracts.
 
 ## Commands
 
@@ -22,6 +26,9 @@ Run from the repository root using the existing uv-created environment:
 # Foreground diagnostic, explicitly without model signals/downloads.
 .venv\Scripts\python.exe -m artcurator.cli ingest-run --input C:\synthetic-images --corpus diagnostic --inventory-only
 
+# Read a bounded sample directly from original locators, without staging copies.
+.venv\Scripts\python.exe -m artcurator.cli ingest-run --input C:\synthetic-images --corpus direct-sample --inventory-only --sample 2000
+
 # Reuse an explicitly selected incumbent profile/reference bundle, read-only.
 .venv\Scripts\python.exe -m artcurator.cli ingest --config config.example.local.yaml --corpus demo --ingest-profile-from out\saved-profile --wd-provider CUDAExecutionProvider
 
@@ -34,6 +41,51 @@ for a frozen interrupted snapshot: newly added files wait for the next ingestion
 Resume revalidates access and full hashes. Changed bytes at a frozen member fail
 closed rather than transferring decisions by filename. For changed-input recovery,
 start a separately named corpus output; do not delete evidence to force continuation.
+
+### Deterministic bounded selection
+
+`--sample N` selects the first N image **occurrences**, ordered by case-sensitive
+Unicode lexical comparison of POSIX-style relative paths, before source hashing or
+decoding. It is a reproducible prefix, **not a statistically representative sample**.
+Traversal lists candidate paths throughout the tree, but only selected file payloads
+are read. Fewer than N candidates selects all; duplicates count toward N. No source
+copy, move or write is involved. For `ingest`/`ingest-run`, `--limit N` is an alias;
+specifying both, nonpositive values or selection flags on resume is a usage error.
+
+`launch.json.options.sample` records the bound. Each sealed revision's
+`snapshot.json.selected_paths` records exactly which relative paths were selected;
+`occurrences` binds those paths to SHA256, size, mtime and status, and `job.json.root`
+records the original root. `selected_paths` excludes historical removed/deselected
+occurrences retained in the incremental ledger. Manifest absolute paths refer to
+original sources, never a staged replica. Resume reuses the frozen selection and
+revalidates its hashes, ignoring newly added files. A new invocation after completion
+reselects the prefix, records additions/changes/removals from the selected set and
+reuses unchanged content; a changed bound participates in profile identity.
+
+### Decode reservation backpressure
+
+The invariant is **0 <= reserved bytes = sum(active reservations) <= cap**.
+The FIFO queue predicate, admission increment, release decrement and notifications
+share one condition lock: there is no check-then-act gap. An individually admissible
+request waits for release instead of becoming an image rejection. FIFO prevents
+new small requests from starving an older large request. Reservations are not nested.
+Only negative/individually over-cap estimates are refused; over-cap images remain
+recorded per-item failures/deferrals, not a stage abort.
+
+Backpressure is bounded by `ordered_map`: at most `workers` active/waiting tasks and
+`2 * workers` submitted tasks, including results awaiting consumption. There is no
+per-reservation timeout that rejects admissible work due to contention. Instead the
+existing **24-hour whole-stage deadline** bounds a stalled stage; pause allows up to
+**240 seconds** for in-flight work before process-tree termination. Both bounds are
+typed options. A killed stage remains interrupted/failed, never a successful item
+deferral. Inline library callers must supply their own supervision if they require
+a wall-clock deadline. Admission caps and storage policy are unchanged.
+
+`scan-rejected.json` retains inspect/thumbnail failures. `previews-rejected.json`
+records deferred original paths and full hashes; `previews-timing.json.deferred`
+records their count. Scan action reasons include scan-rejected and preview-deferred
+counts, included in G1 report costs, with the rejection/timing artifacts in its
+commit. All-oversized scan batches also continue to a partial proposal.
 
 `--quota-gib` defaults to 8 and `--reserve-gib` to 1. `--ingest-folder-anchors` is
 an explicit opt-in to the existing folder-labelled reference builder; it is not
@@ -58,7 +110,7 @@ All job artifacts are local/gitignored under `out/ingest/<corpus>/`:
 | `commits/<operation-digest>.json` | Stage barrier with input/profile/member binding and full artifact hashes |
 | `content/<full-sha256>.json` | Validated per-content scan result, including decode failures |
 | `scan/<batch-digest>/` | Existing scan/thumbnail/preview outputs for delta microbatches |
-| `revisions/<full-digest>/snapshot.json` | Frozen discovered occurrence snapshot |
+| `revisions/<full-digest>/snapshot.json` | Frozen occurrence snapshot plus exact `selected_paths` |
 | `revisions/<full-digest>/inventory.json` | Added/changed/removed occurrences; decoded/failed status |
 | `revisions/<full-digest>/barrier-*.json` | IDLE, INGEST, ANALYZE and PROPOSE input/output barriers |
 | `revisions/<full-digest>/analysis-report.{json,md}` | Partial-evidence report, representatives, folder counts, estimates |
@@ -155,3 +207,23 @@ qualification or p95/host/board peak claim is made.
 
 These gaps are disclosed in reports/receipts rather than weakening any FR/NFR/AC
 text. In particular, a completed G1 job is not a claim that all ingestion ACs pass.
+
+## Open storage finding: retained inventory then analysis
+
+The 2026-09-22 real-library rehearsal measured **625,289,585 derived bytes** for
+2,000 images. Its full-library inventory projection is **8,383,257,466 bytes
+(7.81 GiB)** against the unchanged **8,589,934,592-byte (8 GiB)** budget.
+Sample revision thumbnails/previews alone occupy **301,558,139 bytes**.
+Enabling analysis changes the profile/revision (`ingest_profile.profile_digest`),
+and revision assembly copies those assets again (`ingest_catalog.assemble`).
+Retaining inventory and adding analysis therefore projects at least
+**12,426,247,436 bytes (11.57 GiB)**, before inference outputs and extra metadata.
+
+This is an open amplification finding, **not fixed here**. A follow-up decision must
+choose retention/asset-sharing or a different operational workflow before that
+two-step full-library run. Neither the quota nor retention policy has been changed.
+This lower bound does not prove a fresh inference-first run exceeds 8 GiB. The
+folder-balanced sample's extrapolation uncertainty is unquantified; source staging
+bytes, allocator overhead, transient writes and inference outputs are excluded.
+Evidence remains unchanged in `out/real-library-20260922/REPORT.md` and
+`budget-stop.json`; no acceptance receipt was rewritten.

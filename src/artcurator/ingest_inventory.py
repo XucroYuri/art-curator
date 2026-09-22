@@ -8,10 +8,12 @@ from .ingest_schema import Inventory, Occurrence
 from .scan import image_paths
 
 
-def discover(root: Path, notify: Callable[[int], None]) -> tuple[Occurrence, ...]:
+def discover(root: Path, notify: Callable[[int], None], sample: int | None = None) -> tuple[Occurrence, ...]:
+    """Select the case-sensitive POSIX-relative lexical prefix before reading bytes."""
     records: list[Occurrence] = []
     seen: set[str] = set()
-    for index, path in enumerate(image_paths(root)):
+    paths = sorted(image_paths(root), key=lambda path: path.relative_to(root).as_posix())
+    for index, path in enumerate(paths[:sample]):
         relative = path.relative_to(root).as_posix()
         try:
             before = path.stat()
@@ -39,7 +41,8 @@ def freeze(records: tuple[Occurrence, ...], prior: Inventory | None, profile: st
     signature = [(r.path, r.sha256, r.status) for r in records]
     revision = digest(json.dumps([profile, signature], separators=(",", ":")).encode())
     return Inventory(revision=revision, parent_revision=prior.revision if prior else None,
-        occurrences=records + missing, added=tuple(sorted(current.keys() - old.keys())),
+        occurrences=records + missing, selected_paths=tuple(r.path for r in records),
+        added=tuple(sorted(current.keys() - old.keys())),
         changed=tuple(sorted(p for p in current.keys() & old.keys() if current[p].sha256 != old[p].sha256)),
         removed=removed)
 

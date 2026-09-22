@@ -76,14 +76,17 @@ def execute(request: Request) -> Result:
                         raise
                     rows = []
                     save_rows(out, rows)
-                if rows:
-                    previews(settings)
+                preview_result = previews(settings)
                 save_model(out / "rows.json", Rows(rows=tuple(rows),
                     contents=tuple(file_digest(p) for p in request.paths)))
-                files = [out / "rows.json", out / "scan-rejected.json"]
+                files = [out / "rows.json", out / "scan-rejected.json",
+                         out / "previews-rejected.json", out / "previews-timing.json"]
                 files.extend(p for directory in (out / "thumbs", out / "previews")
                              for p in directory.glob("*.jpg"))
-                return Result(paths=tuple(files), items=len(request.paths))
+                rejected = len(request.paths) - len(rows)
+                reason = (f"scan rejected={rejected}; previews deferred={preview_result.deferred}"
+                          if rejected or preview_result.deferred else "")
+                return Result(paths=tuple(files), items=len(request.paths), reason=reason)
             case "detect":
                 from .identity_detect import detect
                 detect(out, settings.identity)

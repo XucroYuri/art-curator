@@ -20,6 +20,7 @@ COMMANDS = ("ingest", "ingest-run", "ingest-status", "ingest-pause", "ingest-res
 def add_arguments(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--corpus", default="default", help="Local out/ingest/<corpus> identifier")
     parser.add_argument("--inventory-only", action="store_true", help="Explicitly leave all model signals unavailable")
+    parser.add_argument("--sample", type=int, help="Ingest first N case-sensitive POSIX-relative paths in place")
     parser.add_argument("--ingest-profile-from", type=Path, help="Read-only saved SigLIP provenance and anchors")
     parser.add_argument("--ingest-folder-anchors", action="store_true", help="Explicit folder-name reference labels")
     parser.add_argument("--quota-gib", type=float, default=8)
@@ -31,6 +32,14 @@ def add_arguments(parser: argparse.ArgumentParser) -> None:
 
 
 def handle(args: argparse.Namespace, parser: argparse.ArgumentParser) -> None:
+    if args.sample is not None and args.limit is not None:
+        parser.error("use --sample or --limit, not both")
+    sample = args.sample if args.sample is not None else args.limit
+    if sample is not None:
+        if sample < 1:
+            parser.error("--sample/--limit must be positive")
+        if args.command not in {"ingest", "ingest-run"}:
+            parser.error("selection is set by ingest/ingest-run; resume uses its frozen snapshot")
     if Path(args.corpus).name != args.corpus or args.corpus in {".", "..", ""}:
         parser.error("--corpus must be a single local directory name")
     root = output_path(args.out or ROOT / "out" / "ingest" / args.corpus)
@@ -87,7 +96,7 @@ def handle(args: argparse.Namespace, parser: argparse.ArgumentParser) -> None:
                                      characters_root=source, out=root))
             else:
                 settings = load(args.config).model_copy(update={"out": root})
-            options = Options(analysis=not args.inventory_only, profile_from=args.ingest_profile_from,
+            options = Options(analysis=not args.inventory_only, sample=sample, profile_from=args.ingest_profile_from,
                 anchors_from_folders=args.ingest_folder_anchors,
                 quota_bytes=int(args.quota_gib * 1024**3), reserve_bytes=int(args.reserve_gib * 1024**3),
                 provider=args.wd_provider, cuda_dll_directory=args.wd_cuda_dlls)

@@ -137,7 +137,7 @@ def run(settings: Settings, options: Options | None = None, *,
                         runtime.job = runtime.job.model_copy(update={"progress":
                             runtime.job.progress.model_copy(update={"discovered": count})})
                     runtime.checkpoint()
-                inventory = freeze(discover(settings.input, notify), previous, profile)
+                inventory = freeze(discover(settings.input, notify, selected.sample), previous, profile)
             runtime.job = runtime.job.model_copy(update={"revision": inventory.revision,
                 "parent_revision": inventory.parent_revision})
             # Worst-case scan/preview metadata reservation plus replacement/headroom.

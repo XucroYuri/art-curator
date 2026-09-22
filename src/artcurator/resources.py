@@ -1,8 +1,9 @@
 """Availability-aware admission and owned byte reservations."""
+from collections import deque
 from collections.abc import Iterator
 from contextlib import contextmanager
 from dataclasses import dataclass, field
-from threading import Lock
+from threading import Condition
 from typing import TypedDict
 import json
 import uuid
@@ -43,27 +44,43 @@ class Budgets:
 
 @dataclass(slots=True)
 class ByteBudget:
-    """Mutable reservation owner; release on consumption, cancellation or exception."""
+    """FIFO admission: 0 <= used == sum(active reservations) <= cap.
+
+    Predicate checks and accounting share one condition lock. Contention waits,
+    never defers. Callers bound waiters by their worker pool; the ingest process
+    deadline bounds stalled consumers. Reservations must not be nested.
+    """
     cap: int
     used: int = 0
     peak: int = 0
     events: list[Deferral] = field(default_factory=list)
-    lock: Lock = field(default_factory=Lock)
+    condition: Condition = field(default_factory=Condition)
+    waiting: deque[int] = field(default_factory=deque)
+    next_ticket: int = 0
 
     @contextmanager
     def reserve(self, size: int) -> Iterator[None]:
-        with self.lock:
-            if size < 0 or size + self.used > self.cap:
+        with self.condition:
+            if size < 0 or size > self.cap:
                 self.events.append(Deferral(reason="byte_budget_exceeded", requested_bytes=size,
                                             used_bytes=self.used, cap_bytes=self.cap))
                 raise Deferred("byte_budget_exceeded")
+            ticket = self.next_ticket
+            self.next_ticket += 1
+            self.waiting.append(ticket)
+            try:
+                self.condition.wait_for(lambda: self.waiting[0] == ticket and self.used + size <= self.cap)
+            finally:
+                self.waiting.remove(ticket)
+                self.condition.notify_all()
             self.used += size
             self.peak = max(self.peak, self.used)
         try:
             yield
         finally:
-            with self.lock:
+            with self.condition:
                 self.used -= size
+                self.condition.notify_all()
 
 
 def decode_estimate(path: Path) -> int:

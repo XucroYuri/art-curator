@@ -11,7 +11,7 @@ from . import db
 from .config import Settings
 from .parallel import ordered_map
 from .scan import pixels
-from .resources import Budgets, ByteBudget, decode_estimate, record_budget
+from .resources import Budgets, ByteBudget, Deferred, decode_estimate, record_budget
 from .cache_identity import verify_content
 
 
@@ -21,6 +21,7 @@ class PreviewResult:
     unique: int
     generated: int
     seconds: float
+    deferred: int = 0
 
 
 def previews(settings: Settings) -> PreviewResult:
@@ -39,10 +40,10 @@ def previews(settings: Settings) -> PreviewResult:
     directory.mkdir(exist_ok=True)
     budget = ByteBudget(min(Budgets.current().host_bytes // 4, 512 * 1024**2))
 
-    def generate(row: db.Row) -> int:
+    def generate(row: db.Row) -> tuple[int, str]:
         destination = directory / f"{row.sha256}.jpg"
         if destination.exists():
-            return 0
+            return 0, ""
         temporary = destination.with_suffix(".jpg.tmp")
         try:
             verify_content(row)
@@ -51,16 +52,25 @@ def previews(settings: Settings) -> PreviewResult:
                 image.info.clear()
                 image.save(temporary, "JPEG", quality=88)
             temporary.replace(destination)
+        except Deferred as error:
+            return 0, str(error)
         finally:
             temporary.unlink(missing_ok=True)
-        return 1
+        return 1, ""
 
+    generated = 0
+    rejected = []
     with record_budget(settings.out, "previews", budget), ordered_map(generate, hashes.values(), workers=settings.workers, capacity=settings.workers * 2) as results:
-        generated = sum(results)
-    result = PreviewResult(len(rows), len(hashes), generated, time.perf_counter() - started)
+        for row, (count, reason) in zip(hashes.values(), results, strict=True):
+            generated += count
+            if reason:
+                rejected.append({"sha256": row.sha256, "path": row.abs_path, "reason": reason})
+                logging.warning("preview deferred path=%s reason=%s", row.abs_path, reason)
+    db.write_json(settings.out / "previews-rejected.json", rejected)
+    result = PreviewResult(len(rows), len(hashes), generated, time.perf_counter() - started, len(rejected))
     db.write_json(settings.out / "previews-timing.json", {
         "rows": result.rows, "unique": result.unique, "generated": generated,
-        "seconds": result.seconds, "workers": settings.workers})
+        "seconds": result.seconds, "workers": settings.workers, "deferred": result.deferred})
     logging.info("previews complete rows=%d unique=%d generated=%d seconds=%.3f",
                  result.rows, result.unique, generated, result.seconds)
     return result

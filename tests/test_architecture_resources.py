@@ -12,14 +12,14 @@ def test_budgets_when_available_memory_is_low() -> None:
     assert budgets.gpu_bytes == (340,)
 
 
-def test_queue_when_two_oversized_images_are_reserved() -> None:
-    # Given a byte budget fitting one image but not two.
+def test_queue_when_image_cannot_fit_alone() -> None:
+    # Given a byte budget smaller than an individual request.
     from artcurator.resources import ByteBudget, Deferred
     queue = ByteBudget(100)
-    # When a second reservation would exceed the budget; then it is deferred.
+    # When an individually oversized request arrives; then it is deferred.
     with queue.reserve(60):
         with pytest.raises(Deferred):
-            with queue.reserve(60):
+            with queue.reserve(101):
                 pytest.fail("overcommitted")
         assert queue.used == 60
     assert queue.used == 0
