@@ -28,7 +28,8 @@ testpaths = ["tests"]
 pythonVersion = "3.12"
 venvPath = "."
 venv = ".venv"
-include = ["src"]
+include = ["src/artcurator", "tools", "tests"]
+exclude = [".venv*", ".test-tmp", ".uv-cache", "out", "dist"]
 typeCheckingMode = "all"
 
 [tool.ruff]
